@@ -1,0 +1,35 @@
+div.logon {
+ position: absolute;
+ right: 0px;
+ top: 0px;
+ margin: 0px;
+ width: 50%;
+ height: 32px;
+ float: right;
+ text-align: right;
+ padding: 4px;
+ padding-right: 16px;
+}
+span.logon {
+ margin: 0px;
+ margin-right: 6px;
+ z-index: 2;
+ padding: 0px;
+ padding-right: 6px;
+ border-right: 0.5px solid #032753;
+ border-bottom: 0.5px solid #032753;
+}
+div.block {
+ margin-left: 40px;
+ padding-left: 0px;
+ padding-top: 6px;
+ padding-bottom: 6px;
+ padding-right: 8px;
+}
+div#footer {
+ position: fixed;
+ left: 5%;
+ bottom: 0px;
+ padding: 8px;
+ width: 90%;
+}
