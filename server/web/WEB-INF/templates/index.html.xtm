@@ -1,34 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>Cognitive Profile Inventory</title>
-    <style type="text/css">
-      div.logon {
-       position: absolute;
-       right: 0px;
-       top: 0px;
-       margin: 0px;
-       width: 50%;
-       height: 32px;
-       float: right;
-       text-align: right;
-       padding: 4px;
-       padding-right: 16px;
-      }
-      div.block {
-       margin-left: 40px;
-       padding-left: 0px;
-       padding-top: 6px;
-       padding-bottom: 6px;
-       padding-right: 8px;
-      }
-      div#footer {
-       position: fixed;
-       left: 5%;
-       bottom: 0px;
-       padding: 8px;
-       width: 90%;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="top.css" />
+    <link rel="icon" href="/favicon.ico" />
   </head>
   <body>
     <div class="logon">{{>div.logon.html}}
@@ -39,7 +13,7 @@
 
     </div>
     <div id="footer">
-      <center>Copyright © 2010 Lois Breur Krause</center>
+      <center>Copyright &copy; 2010 Lois Breur Krause</center>
     </div>
   </body>
 </html>
