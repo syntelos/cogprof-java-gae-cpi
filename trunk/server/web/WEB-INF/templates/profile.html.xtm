@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Cognitive Profile Inventory</title>
+    <link rel="stylesheet" type="text/css" href="http://cpi.cognitiveprofile.com/top.css" />
+    <link rel="icon" href="http://cpi.cognitiveprofile.com/favicon.ico" />
+  </head>
+  <body>
+    <div class="logon">{{>div.logon.html}}
+    </div>
+    <div class="block">
+      <applet code="cpi.Applet.class" archive="http://cpi.cognitiveprofile.com/{{=viewer_jarf}}" width="300" height="300">
+        <param name="logon" value="{{=logonText}}" />
+      </applet>
+      <pre>
+    SF   {{=inventory_sf}}
+    ST   {{=inventory_st}}
+    NF   {{=inventory_nf}}
+    NT   {{=inventory_nt}}
+      </pre>
+    </div>
+    <div class="block">
+      <center>Copy the URL of this page for future reference.</center>
+    </div>
+    <div id="footer">
+      <center>Copyright &copy; 2010 Lois Breur Krause</center>
+    </div>
+  </body>
+</html>

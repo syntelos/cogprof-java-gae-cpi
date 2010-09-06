@@ -1,15 +1,46 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>Cognitive Profile Inventory</title>
-    <link rel="stylesheet" type="text/css" href="/top.css" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="http://cpi.cognitiveprofile.com/top.css" />
+    <link rel="icon" href="http://cpi.cognitiveprofile.com/favicon.ico" />
   </head>
   <body>
     <div class="logon">{{>div.logon.html}}
     </div>
     <div class="block">
 
-      <i>Future home of the CPI Online.</i>
+      <h1><a href="/inventory">CPI </a></h1>
+
+      <p><i> Please login to use this service </i></p>
+
+      <blockquote>
+
+        <h3>Convenience</h3>
+
+        <p> Your personal profile data will be stored in the server
+          for a limited period for your convenience.
+        </p>
+
+        <h3>Personal record</h3>
+
+        <p> Save your personal profile URL for future reference.
+        </p>
+
+        <p> Your personal profile URL will be similar to the following
+          example.
+          <pre>
+            <a href="http://cpi.cognitiveprofile.com/profile/IhtIVUMYW0JBR18SV1QCCUgQXVFMGFlVXU0XUxdVX11VWAcDTkVLSxNSV1pDWkc*">http://cpi.cognitiveprofile.com/profile/IhtIVUMYW0JBR18SV1QCCUgQXVFMGFlVXU0XUxdVX11VWAcDTkVLSxNSV1pDWkc*</a>
+          </pre>
+          <i> This URL contains your anonymous result, without any
+            personally identifying information. </i>
+        </p>
+
+        <h3>No warranty</h3>
+
+        <p> Use this service at your own risk, no warranty of any kind
+          is offered or implied. </p>
+
+      </blockquote>
 
     </div>
     <div id="footer">

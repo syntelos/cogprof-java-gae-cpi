@@ -19,6 +19,7 @@
  */
 package oso.data;
 
+import cpi.Inventory;
 
 import gap.*;
 import gap.data.*;
@@ -38,7 +39,7 @@ import javax.annotation.Generated;
  *
  * @see Person
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2010-09-05T02:40:24.434Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2010-09-05T19:00:12.831Z")
 public abstract class PersonData
     extends gap.data.BigTable
     implements DataInheritance<Person>
@@ -255,7 +256,13 @@ public abstract class PersonData
         InheritFromKey("inheritFromKey",Type.Primitive),
         Key("key",Type.Primitive),
         Id("id",Type.Primitive),
-        LogonId("logonId",Type.Primitive);
+        LogonId("logonId",Type.Primitive),
+        Inventory("inventory",Type.PrimitiveCollection),
+        Nf("nf",Type.Primitive),
+        Nt("nt",Type.Primitive),
+        St("st",Type.Primitive),
+        Sf("sf",Type.Primitive),
+        Created("created",Type.Primitive);
 
         private final static lxl.Map<String,Field> FieldName = new lxl.Map<String,Field>();
         public static final String[] AllNames;
@@ -296,6 +303,18 @@ public abstract class PersonData
                 return instance.getId();
             case LogonId:
                 return instance.getLogonId(mayInherit);
+            case Inventory:
+                return instance.getInventory(mayInherit);
+            case Nf:
+                return instance.getNf(mayInherit);
+            case Nt:
+                return instance.getNt(mayInherit);
+            case St:
+                return instance.getSt(mayInherit);
+            case Sf:
+                return instance.getSf(mayInherit);
+            case Created:
+                return instance.getCreated(mayInherit);
             default:
                 throw new IllegalArgumentException(field.toString()+" in Person");
             }
@@ -310,6 +329,18 @@ public abstract class PersonData
                 return instance.setId(gap.Objects.StringFromObject(value));
             case LogonId:
                 return instance.setLogonId(gap.Objects.StringFromObject(value));
+            case Inventory:
+                return instance.setInventory((List.Primitive<Inventory>)value);
+            case Nf:
+                return instance.setNf(gap.Objects.FloatFromObject(value));
+            case Nt:
+                return instance.setNt(gap.Objects.FloatFromObject(value));
+            case St:
+                return instance.setSt(gap.Objects.FloatFromObject(value));
+            case Sf:
+                return instance.setSf(gap.Objects.FloatFromObject(value));
+            case Created:
+                return instance.setCreated(gap.Objects.DateFromObject(value));
             default:
                 throw new IllegalArgumentException(field.toString()+" in Person");
             }
@@ -408,6 +439,12 @@ public abstract class PersonData
 
 
     private volatile String logonId;
+    private volatile Float nf;
+    private volatile Float nt;
+    private volatile Float st;
+    private volatile Float sf;
+    private volatile Date created;
+    private volatile List.Primitive<Inventory> inventory;
 
 
 
@@ -429,6 +466,16 @@ public abstract class PersonData
         this.inheritFrom = null;
         this.datastoreEntity = null;
         this.logonId = null;
+        this.nf = null;
+        this.nt = null;
+        this.st = null;
+        this.sf = null;
+        this.created = null;
+        List.Primitive<Inventory> inventory = this.inventory;
+        if (null != inventory){
+            this.inventory = null;
+            inventory.destroy();
+        }
     }
     public final boolean hasInheritFrom(){
         return (null != this.inheritFrom || null != this.inheritFromKey);
@@ -495,6 +542,304 @@ public abstract class PersonData
         else
             return false;
     }
+    public final boolean hasNf(boolean mayInherit){
+        return (null != this.getNf(mayInherit));
+    }
+    public final boolean hasNotNf(boolean mayInherit){
+        return (null == this.getNf(mayInherit));
+    }
+    public final boolean dropNf(){
+        if (null != this.nf){
+            this.nf = null;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final Float getNf(){
+        return this.getNf(Notation.MayInherit);
+    }
+    public final Float getNf(boolean mayInherit){
+        if (mayInherit){
+            Float nf = this.nf;
+            if (null == nf && this.hasInheritFrom()){
+                Person inheritFrom = this.getInheritFrom();
+                return inheritFrom.getNf(Notation.MayInherit);
+            }
+            return nf;
+        }
+        else
+            return this.nf;
+    }
+    public final boolean setNf(Float nf, boolean withInheritance){
+        if (IsNotEqual(this.nf,this.getNf(withInheritance))){
+            this.nf = nf;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean setNf(Float nf){
+        if (IsNotEqual(this.nf,nf)){
+            this.nf = nf;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean hasNt(boolean mayInherit){
+        return (null != this.getNt(mayInherit));
+    }
+    public final boolean hasNotNt(boolean mayInherit){
+        return (null == this.getNt(mayInherit));
+    }
+    public final boolean dropNt(){
+        if (null != this.nt){
+            this.nt = null;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final Float getNt(){
+        return this.getNt(Notation.MayInherit);
+    }
+    public final Float getNt(boolean mayInherit){
+        if (mayInherit){
+            Float nt = this.nt;
+            if (null == nt && this.hasInheritFrom()){
+                Person inheritFrom = this.getInheritFrom();
+                return inheritFrom.getNt(Notation.MayInherit);
+            }
+            return nt;
+        }
+        else
+            return this.nt;
+    }
+    public final boolean setNt(Float nt, boolean withInheritance){
+        if (IsNotEqual(this.nt,this.getNt(withInheritance))){
+            this.nt = nt;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean setNt(Float nt){
+        if (IsNotEqual(this.nt,nt)){
+            this.nt = nt;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean hasSt(boolean mayInherit){
+        return (null != this.getSt(mayInherit));
+    }
+    public final boolean hasNotSt(boolean mayInherit){
+        return (null == this.getSt(mayInherit));
+    }
+    public final boolean dropSt(){
+        if (null != this.st){
+            this.st = null;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final Float getSt(){
+        return this.getSt(Notation.MayInherit);
+    }
+    public final Float getSt(boolean mayInherit){
+        if (mayInherit){
+            Float st = this.st;
+            if (null == st && this.hasInheritFrom()){
+                Person inheritFrom = this.getInheritFrom();
+                return inheritFrom.getSt(Notation.MayInherit);
+            }
+            return st;
+        }
+        else
+            return this.st;
+    }
+    public final boolean setSt(Float st, boolean withInheritance){
+        if (IsNotEqual(this.st,this.getSt(withInheritance))){
+            this.st = st;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean setSt(Float st){
+        if (IsNotEqual(this.st,st)){
+            this.st = st;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean hasSf(boolean mayInherit){
+        return (null != this.getSf(mayInherit));
+    }
+    public final boolean hasNotSf(boolean mayInherit){
+        return (null == this.getSf(mayInherit));
+    }
+    public final boolean dropSf(){
+        if (null != this.sf){
+            this.sf = null;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final Float getSf(){
+        return this.getSf(Notation.MayInherit);
+    }
+    public final Float getSf(boolean mayInherit){
+        if (mayInherit){
+            Float sf = this.sf;
+            if (null == sf && this.hasInheritFrom()){
+                Person inheritFrom = this.getInheritFrom();
+                return inheritFrom.getSf(Notation.MayInherit);
+            }
+            return sf;
+        }
+        else
+            return this.sf;
+    }
+    public final boolean setSf(Float sf, boolean withInheritance){
+        if (IsNotEqual(this.sf,this.getSf(withInheritance))){
+            this.sf = sf;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean setSf(Float sf){
+        if (IsNotEqual(this.sf,sf)){
+            this.sf = sf;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean hasCreated(boolean mayInherit){
+        return (null != this.getCreated(mayInherit));
+    }
+    public final boolean hasNotCreated(boolean mayInherit){
+        return (null == this.getCreated(mayInherit));
+    }
+    public final boolean dropCreated(){
+        if (null != this.created){
+            this.created = null;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final Date getCreated(){
+        return this.getCreated(Notation.MayInherit);
+    }
+    public final Date getCreated(boolean mayInherit){
+        if (mayInherit){
+            Date created = this.created;
+            if (null == created && this.hasInheritFrom()){
+                Person inheritFrom = this.getInheritFrom();
+                return inheritFrom.getCreated(Notation.MayInherit);
+            }
+            return created;
+        }
+        else
+            return this.created;
+    }
+    public final boolean setCreated(Date created, boolean withInheritance){
+        if (IsNotEqual(this.created,this.getCreated(withInheritance))){
+            this.created = created;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean setCreated(Date created){
+        if (IsNotEqual(this.created,created)){
+            this.created = created;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean hasInventory(boolean mayInherit){
+        return (this.getInventory(mayInherit).isNotEmpty());
+    }
+    public final boolean hasNotInventory(boolean mayInherit){
+        return (this.getInventory(mayInherit).isEmpty());
+    }
+    public final boolean dropInventory(){
+        List.Primitive<Inventory> inventory = this.inventory;
+        if (null != inventory){
+            this.inventory = null;
+            inventory.destroy();
+            return true;
+        }
+        else
+            return false;
+    }
+    public final List.Primitive<Inventory> getInventory(){
+        return this.getInventory(Notation.MayInherit);
+    }
+    public final List.Primitive<Inventory> getInventory(boolean mayInherit){
+        List.Primitive<Inventory> inventory = this.inventory;
+        if (null == inventory){
+            if (mayInherit && this.hasInheritFrom()){
+                Person inheritFrom = this.getInheritFrom();
+                if (null != inheritFrom){
+                    inventory = inheritFrom.getInventory(Notation.MayInherit);
+                    if (null != inventory)
+                        return inventory;
+                }
+            }
+            {
+                Object tmp = new ListPrimitiveEnum((Person)this);
+                inventory = (List.Primitive<Inventory>)tmp;
+            }
+            this.inventory = inventory;
+            inventory.init();
+        }
+        return inventory;
+    }
+    public final boolean setInventory(List.Primitive<Inventory> inventory){
+        if (IsNotEqual(this.inventory,inventory)){
+            this.inventory = inventory;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean isEmptyInventory(){
+        List.Primitive<Inventory> collection = this.inventory;
+        if (null != collection)
+            return collection.isEmpty();
+        else
+            return true;
+    }
+    public final boolean isNotEmptyInventory(){
+        List.Primitive<Inventory> collection = this.inventory;
+        if (null != collection)
+            return (!collection.isEmpty());
+        else
+            return false;
+    }
+    public final Inventory getInventory(gap.data.ListFilter<Inventory> filter){
+        if (null != filter){
+            List.Primitive<Inventory> list = this.getInventory(Notation.MayInherit);
+            for (Inventory item : list){
+                if (filter.accept(item))
+                    return item;
+            }
+            return null;
+        }
+        else
+            throw new IllegalArgumentException();
+    }
     /*
      * Data binding supports
      */
@@ -516,6 +861,56 @@ public abstract class PersonData
     }
     public boolean updateFrom(Request req) throws ValidationError {
         boolean change = false;
+        String nfRequest = req.getParameter("nf");
+        try {
+            Float nf = Strings.FloatFromString(nfRequest);
+            if (this.setNf(nf)){
+                change = true;
+            }
+        }
+        catch (RuntimeException exc){
+            throw new ValidationError(ClassName,"nf",nfRequest,exc);
+        }
+        String ntRequest = req.getParameter("nt");
+        try {
+            Float nt = Strings.FloatFromString(ntRequest);
+            if (this.setNt(nt)){
+                change = true;
+            }
+        }
+        catch (RuntimeException exc){
+            throw new ValidationError(ClassName,"nt",ntRequest,exc);
+        }
+        String stRequest = req.getParameter("st");
+        try {
+            Float st = Strings.FloatFromString(stRequest);
+            if (this.setSt(st)){
+                change = true;
+            }
+        }
+        catch (RuntimeException exc){
+            throw new ValidationError(ClassName,"st",stRequest,exc);
+        }
+        String sfRequest = req.getParameter("sf");
+        try {
+            Float sf = Strings.FloatFromString(sfRequest);
+            if (this.setSf(sf)){
+                change = true;
+            }
+        }
+        catch (RuntimeException exc){
+            throw new ValidationError(ClassName,"sf",sfRequest,exc);
+        }
+        String createdRequest = req.getParameter("created");
+        try {
+            Date created = Strings.DateFromString(createdRequest);
+            if (this.setCreated(created)){
+                change = true;
+            }
+        }
+        catch (RuntimeException exc){
+            throw new ValidationError(ClassName,"created",createdRequest,exc);
+        }
         return change;
     }
     public final boolean updateFrom(BigTable proto){
@@ -524,6 +919,26 @@ public abstract class PersonData
     public final boolean updateFrom(Person proto){
         boolean mayInherit = (!this.hasInheritFromKey());
         boolean change = false;
+        Float nf = proto.getNf(mayInherit);
+        if (null != nf && this.setNf(nf)){
+            change = true;
+        }
+        Float nt = proto.getNt(mayInherit);
+        if (null != nt && this.setNt(nt)){
+            change = true;
+        }
+        Float st = proto.getSt(mayInherit);
+        if (null != st && this.setSt(st)){
+            change = true;
+        }
+        Float sf = proto.getSf(mayInherit);
+        if (null != sf && this.setSf(sf)){
+            change = true;
+        }
+        Date created = proto.getCreated(mayInherit);
+        if (null != created && this.setCreated(created)){
+            change = true;
+        }
         return change;
     }
     public final gap.service.od.ClassDescriptor getClassDescriptorFor(){
@@ -541,6 +956,31 @@ public abstract class PersonData
                     throw new IllegalStateException(field.name());
                 else
                     return this.hasLogonId(true);
+            case Nf:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else
+                    return this.hasNf(true);
+            case Nt:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else
+                    return this.hasNt(true);
+            case St:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else
+                    return this.hasSt(true);
+            case Sf:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else
+                    return this.hasSf(true);
+            case Created:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else
+                    return this.hasCreated(true);
             default:
                 throw new IllegalStateException(field.name());
             }
@@ -558,6 +998,31 @@ public abstract class PersonData
                     throw new IllegalStateException(field.name());
                 else
                     return this.getLogonId(true);
+            case Nf:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else
+                    return gap.Strings.FloatToString(this.getNf(true));
+            case Nt:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else
+                    return gap.Strings.FloatToString(this.getNt(true));
+            case St:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else
+                    return gap.Strings.FloatToString(this.getSt(true));
+            case Sf:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else
+                    return gap.Strings.FloatToString(this.getSf(true));
+            case Created:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else
+                    return gap.Strings.DateToString(this.getCreated(true));
             default:
                 throw new IllegalStateException(field.name());
             }
@@ -572,6 +1037,16 @@ public abstract class PersonData
             if (name.has(1)){
                 switch (field){
                 case LogonId:
+                    throw new IllegalStateException(field.name());
+                case Nf:
+                    throw new IllegalStateException(field.name());
+                case Nt:
+                    throw new IllegalStateException(field.name());
+                case St:
+                    throw new IllegalStateException(field.name());
+                case Sf:
+                    throw new IllegalStateException(field.name());
+                case Created:
                     throw new IllegalStateException(field.name());
                 default:
                     throw new IllegalStateException(field.name());
@@ -589,6 +1064,16 @@ public abstract class PersonData
         if (null != field){
             switch (field){
             case LogonId:
+                return null;
+            case Nf:
+                return null;
+            case Nt:
+                return null;
+            case St:
+                return null;
+            case Sf:
+                return null;
+            case Created:
                 return null;
             default:
                 throw new IllegalStateException(field.name());

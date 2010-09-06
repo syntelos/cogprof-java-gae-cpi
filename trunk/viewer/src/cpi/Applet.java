@@ -21,13 +21,12 @@ package cpi;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.Polygon;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
@@ -35,13 +34,12 @@ import java.awt.print.PrinterJob;
 import java.net.URL;
 
 /**
- * Creates a 300x360 image at 0,0 
+ * Creates a 300x300 image at 0,0 
  */
 public class Applet
     extends java.applet.Applet
 {
     private final static Font FONT = new Font(Font.SANS_SERIF,Font.PLAIN,18);
-    private static final Font FONT_TITLE = new Font(Font.SANS_SERIF,Font.PLAIN, 14);
 
     private final static Color BG = Color.white;
     private final static Color FG = Color.black;
@@ -51,28 +49,21 @@ public class Applet
     private final static Color COLOR_NT = new Color(176);
     private final static Color COLOR_BORDER = new Color(9474192);
 
+    private final static int PAD = 1;
     private final static int IMG_WH = 300;
-    private final static int IMG_WH2 = 150;
-    private final static float IMG_WH2F = 150.0F;
+    private final static int IMG_WH1 = (IMG_WH-PAD);
+    private final static int IMG_WH2 = (IMG_WH>>1);
+    private final static float IMG_WH2F = IMG_WH2;
+    private final static int IMG_WH10 = (IMG_WH/10);
+    private final static int IMG_WH3 = (IMG_WH-IMG_WH10);
     private final static float SQRT12 = (float) Math.sqrt(0.5);
     private final static float IMG_V = IMG_WH2F / SQRT12;
 
-    private static final String Format(float f) {
-        String string = String.valueOf(f);
-        if (5 < string.length())
-            return string.substring(0, 5);
-        return string;
-    }
 
-
-    private volatile FontMetrics fm;
     private volatile BufferedImage backing;
 
 
-    private Float normalized_sf;
-    private Float normalized_st;
-    private Float normalized_nf;
-    private Float normalized_nt;
+    private volatile float normalized_sf, normalized_st, normalized_nf, normalized_nt;
 
 
     public Applet(){
@@ -101,6 +92,15 @@ public class Applet
     public void update(Graphics g){
         Graphics2D g2 = this.createGraphics();
         try {
+            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+            g2.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
+                                RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                                RenderingHints.VALUE_ANTIALIAS_ON);
+
             this.update(g2);
             this.blit(g);
         }
@@ -110,10 +110,10 @@ public class Applet
     }
     protected void update(Graphics2D g){
 
-        float n_sf = normalized_sf.floatValue();
-        float n_st = normalized_st.floatValue();
-        float n_nf = normalized_nf.floatValue();
-        float n_nt = normalized_nt.floatValue();
+        float n_sf = this.normalized_sf;
+        float n_st = this.normalized_st;
+        float n_nf = this.normalized_nf;
+        float n_nt = this.normalized_nt;
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, IMG_WH, IMG_WH);
         float v_sf = n_sf * IMG_V;
@@ -148,45 +148,25 @@ public class Applet
         g.setColor(COLOR_NT);
         g.fillPolygon(polygon);
 
-        g.setClip(0, 0, IMG_WH, IMG_WH + 60);
+        g.setClip(0, 0, IMG_WH, IMG_WH);
 
         g.setColor(COLOR_BORDER);
-        g.drawRect(0, 0, 299, 299);
-        g.drawLine(IMG_WH2, 0, IMG_WH2, IMG_WH);
-        g.drawLine(0, IMG_WH2, IMG_WH, IMG_WH2);
-        g.drawLine(30, 1, 30, 30);
-        g.drawLine(1, 30, 30, 30);
-        g.drawLine(1, 270, 30, 270);
-        g.drawLine(30, 270, 30, 299);
-        g.drawLine(270, 1, 270, 30);
-        g.drawLine(270, 30, 299, 30);
-        g.drawLine(270, 270, 299, 270);
-        g.drawLine(270, 270, 270, 299);
+        g.drawRect(       0,        0,  IMG_WH1,  IMG_WH1);
+        g.drawLine( IMG_WH2,        0,  IMG_WH2,   IMG_WH);
+        g.drawLine(       0,  IMG_WH2,   IMG_WH,  IMG_WH2);
+        g.drawLine(IMG_WH10,      PAD, IMG_WH10, IMG_WH10);
+        g.drawLine(     PAD, IMG_WH10, IMG_WH10, IMG_WH10);
+        g.drawLine(     PAD,  IMG_WH3, IMG_WH10,  IMG_WH3);
+        g.drawLine(IMG_WH10,  IMG_WH3, IMG_WH10,  IMG_WH1);
+        g.drawLine( IMG_WH3,      PAD,  IMG_WH3, IMG_WH10);
+        g.drawLine( IMG_WH3, IMG_WH10,  IMG_WH1, IMG_WH10);
+        g.drawLine( IMG_WH3,  IMG_WH3,  IMG_WH1,  IMG_WH3);
+        g.drawLine( IMG_WH3,  IMG_WH3,  IMG_WH3,  IMG_WH1);
         g.setFont(FONT);
         g.drawString("SF", 276, 22);
         g.drawString("ST", 4, 22);
         g.drawString("NT", 2, 292);
         g.drawString("NF", 274, 292);
-        FontMetrics fontmetrics = g.getFontMetrics(FONT);
-        int fm_h = fontmetrics.getHeight();
-        int fm_x = (IMG_WH2 - fontmetrics.stringWidth("SF ")
-                     + (fontmetrics.charWidth(' ') >> 1));
-        int fm_y = 310 + fm_h;
-        g.drawString("SF " + Format(n_sf), fm_x, fm_y);
-        fm_y += fm_h;
-        g.drawString("ST " + Format(n_st), fm_x, fm_y);
-        fm_y += fm_h;
-        g.drawString("NT " + Format(n_nt), fm_x, fm_y);
-        fm_y += fm_h;
-        g.drawString("NF " + Format(n_nf), fm_x, fm_y);
-
-        g.setFont(FONT_TITLE);
-        fontmetrics = g.getFontMetrics(FONT_TITLE);
-        String string = "Cognitive Profile Inventory Online";
-        int stringw = fontmetrics.stringWidth(string);
-        fm_x = IMG_WH2 - stringw / 2;
-        fm_y += 2 * fm_h;
-        g.drawString(string, fm_x, fm_y);
     }
 
     public final boolean hasComponentResized(){

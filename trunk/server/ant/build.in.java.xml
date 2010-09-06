@@ -30,6 +30,7 @@
           <filter token="VersionMajor"         value="${version.major}"/>
           <filter token="VersionMinor"         value="${version.minor}"/>
           <filter token="VersionBuild"         value="${version.build}"/>
+          <filter token="VersionAppletViewer"  value="${applet.viewer.name}"/>
         </filterset>
         <fileset dir="@{ver}">
           <include name="**/*.java"/>

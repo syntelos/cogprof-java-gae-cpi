@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="cpi-viewer" default="update">
   <tstamp/>
-  <property name="compiler.source" value="1.6"/>
-  <property name="compiler.target" value="1.6"/>
+  <property name="compiler.source" value="1.4"/>
+  <property name="compiler.target" value="1.4"/>
   <property name="compiler.optimize" value="false"/>
   <property name="compiler.debug" value="true"/>
   <property name="compiler.deprecation" value="false"/>
@@ -12,7 +12,7 @@
   <property name="bin" value="bin"/>
   <property name="lib" value="lib"/>
 
-  <property file="../../update.properties"/>
+  <property file="../update.properties"/>
 
   <import file="ant/build.in.java.xml"/>
   <import file="ant/build.in.update.xml"/>
@@ -22,6 +22,11 @@
   <path id="lib.path">
     <fileset dir="${lib}">
       <include name="**/*.jar" />
+    </fileset>
+  </path>
+  <path id="lib.path.code">
+    <fileset dir="${lib}">
+      <include name="**/cpi-code-*.jar" />
     </fileset>
   </path>
 
@@ -47,9 +52,7 @@
 
     <archive target="${target.jar}" bin="${bin}" manifest="${src}/Manifest.mf">
       <pack>
-        <zipfileset dir="${lib}">
-          <include name="**/cpi-code-*.jar" />
-        </zipfileset>
+        <zipfileset src="${toString:lib.path.code}" />
       </pack>
     </archive>
 
