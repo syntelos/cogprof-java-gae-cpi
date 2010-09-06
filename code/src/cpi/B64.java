@@ -19,39 +19,23 @@
 package cpi;
 
 /**
- * <p> Base 64 encoder and decoder from RFC 1521, section `5.2', and
- * with CRLF line terminals.</p>
+ * <p> Modified Base 64 encoder and decoder for path files, replaces
+ * '/' code character with '_', and '=' with '*'.</p>
  * 
- * <p> Condensed from the public domain <code>Base64.java
- * v2.0.2</code> by Robert Harder.  Modified for fewer configuration
- * options for I/O in standard RFC 1521 Base64, for essential output-
- * encode, input- decode API.  </p>
- *
  * @author Robert Harder
  * @author John Pritchard
- * @version 1.0
- * @since 1.1
  */
 public class B64 {
     
         
-    /** Maximum line length (76) of Base64 output. 
-     */
     public final static int MAX_LINE_LENGTH = 76;
-    
-    /** The equals sign (=) as a byte. 
-     */
-    public final static byte EQUALS_SIGN = (byte)'=';
-    
-    
-    /** The new line CRLF
-     */
+    public final static byte EQUALS_SIGN = (byte)'*';
     public final static byte[] NEW_LINE = {(byte)'\r',(byte)'\n'};
         
     
     /** The 64 valid Base64 values. 
      */
-    public final static byte[] ALPHABET = {
+    private final static byte[] ALPHABET = {
         (byte)'A', (byte)'B', (byte)'C', (byte)'D', (byte)'E', (byte)'F', (byte)'G',
         (byte)'H', (byte)'I', (byte)'J', (byte)'K', (byte)'L', (byte)'M', (byte)'N',
         (byte)'O', (byte)'P', (byte)'Q', (byte)'R', (byte)'S', (byte)'T', (byte)'U', 
@@ -61,14 +45,14 @@ public class B64 {
         (byte)'o', (byte)'p', (byte)'q', (byte)'r', (byte)'s', (byte)'t', (byte)'u', 
         (byte)'v', (byte)'w', (byte)'x', (byte)'y', (byte)'z',
         (byte)'0', (byte)'1', (byte)'2', (byte)'3', (byte)'4', (byte)'5', 
-        (byte)'6', (byte)'7', (byte)'8', (byte)'9', (byte)'+', (byte)'/'
+        (byte)'6', (byte)'7', (byte)'8', (byte)'9', (byte)'+', (byte)'_'
     };
     
     /** 
      * Translates a Base64 value to either its 6-bit reconstruction value
      * or a negative number indicating some other meaning.
      */
-    public final static byte[] DECODABET =
+    private final static byte[] DECODABET =
     {   
         -9,-9,-9,-9,-9,-9,-9,-9,-9,                 // Decimal  0 -  8
         -5,-5,                                      // Whitespace: Tab and Linefeed
@@ -77,17 +61,20 @@ public class B64 {
         -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,     // Decimal 14 - 26
         -9,-9,-9,-9,-9,                             // Decimal 27 - 31
         -5,                                         // Whitespace: Space
-        -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,              // Decimal 33 - 42
+        -9,-9,-9,-9,-9,-9,-9,-9,-9,                 // Decimal 33 - 42
+        -1,/*-9,*/                                  // Asterisk at decimal 42
         62,                                         // Plus sign at decimal 43
         -9,-9,-9,                                   // Decimal 44 - 46
-        63,                                         // Slash at decimal 47
+        -9,/*63,*/                                  // Slash at decimal 47
         52,53,54,55,56,57,58,59,60,61,              // Numbers zero through nine
         -9,-9,-9,                                   // Decimal 58 - 60
-        -1,                                         // Equals sign at decimal 61
-        -9,-9,-9,                                      // Decimal 62 - 64
+        -9,/*-1,*/                                  // Equals sign at decimal 61
+        -9,-9,-9,                                   // Decimal 62 - 64
         0,1,2,3,4,5,6,7,8,9,10,11,12,13,            // Letters 'A' through 'N'
         14,15,16,17,18,19,20,21,22,23,24,25,        // Letters 'O' through 'Z'
-        -9,-9,-9,-9,-9,-9,                          // Decimal 91 - 96
+        -9,-9,-9,-9,                                // Decimal 91 - 94
+        63,/*,-9*/                                  // Underscore at decimal 95
+        -9,                                         // Decimal 96
         26,27,28,29,30,31,32,33,34,35,36,37,38,     // Letters 'a' through 'm'
         39,40,41,42,43,44,45,46,47,48,49,50,51,     // Letters 'n' through 'z'
         -9,-9,-9,-9                                 // Decimal 123 - 126
@@ -103,9 +90,9 @@ public class B64 {
           -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9         // Decimal 244 - 255 */
     };
     
-    public final static byte BAD_ENCODING    = -9; // Indicates error in encoding
-    public final static byte WHITE_SPACE_ENC = -5; // Indicates white space in encoding
-    public final static byte EQUALS_SIGN_ENC = -1; // Indicates equals sign in encoding
+    private final static byte BAD_ENCODING    = -9; // Indicates error in encoding
+    private final static byte WHITE_SPACE_ENC = -5; // Indicates white space in encoding
+    private final static byte EQUALS_SIGN_ENC = -1; // Indicates equals sign in encoding
 
 
     /**
@@ -115,7 +102,7 @@ public class B64 {
      * @param threeBytes the array to convert
      * @return four byte array in Base64.
      */
-    public final static byte[] encode3to4( byte[] threeBytes){   
+    private final static byte[] encode3to4( byte[] threeBytes){   
         return encode3to4( threeBytes, 3 );
     }
     /**
@@ -130,7 +117,7 @@ public class B64 {
      * @param numSigBytes the number of significant bytes in your array
      * @return four byte array in Base64.
      */
-    public final static byte[] encode3to4( byte[] threeBytes, int numSigBytes){  
+    private final static byte[] encode3to4( byte[] threeBytes, int numSigBytes){  
         byte[] dest = new byte[4];
         encode3to4( threeBytes, 0, numSigBytes, dest, 0 );
         return dest;
@@ -150,7 +137,7 @@ public class B64 {
      * @param numSigBytes the number of significant bytes in your array
      * @return four byte array in Base64.
      */
-    public final static byte[] encode3to4( byte[] b4, byte[] threeBytes, int numSigBytes ){
+    private final static byte[] encode3to4( byte[] b4, byte[] threeBytes, int numSigBytes ){
         encode3to4( threeBytes, 0, numSigBytes, b4, 0 );
         return b4;
     }
@@ -175,7 +162,7 @@ public class B64 {
      * @param destOffset the index where output will be put
      * @return the <var>destination</var> array
      */
-    public final static byte[] encode3to4( byte[] source, int srcOffset, int numSigBytes,
+    private final static byte[] encode3to4( byte[] source, int srcOffset, int numSigBytes,
                                            byte[] destination, int destOffset)
     {
         //           1         2         3  
@@ -275,24 +262,6 @@ public class B64 {
     }
 
     /**
-     * <p> This method does not close either stream.  Reads input to
-     * exhaustion, writes code to output.</p>
-     * @return Number of bytes read from input
-     */
-    public final static int encode ( java.io.InputStream in, java.io.OutputStream out)
-        throws java.io.IOException 
-    {
-        Encoder enc = new Encoder(out);
-        int read, buflen = 512, acc = 0;
-        byte[] buf = new byte[buflen];
-        while (0 < (read = in.read(buf,0,buflen))){
-            enc.write(buf,0,read);
-            acc += read;
-        }
-        enc.flush();
-        return acc;
-    }
-    /**
      * <p>Encodes a byte array into Base64.</p>
      *
      * @param source The data to convert
@@ -346,7 +315,7 @@ public class B64 {
      * @param fourBytes the array with Base64 content
      * @return array with decoded values
      */
-    public final static byte[] decode4to3( byte[] fourBytes){
+    private final static byte[] decode4to3( byte[] fourBytes){
         byte[] outbuf1 = new byte[3];
         int    count    = decode4to3( fourBytes, 0, outbuf1, 0 );
         byte[] outbuf2 = new byte[ count ];
@@ -378,7 +347,7 @@ public class B64 {
      * @param destOffset the index where output will be put
      * @return the number of decoded bytes converted
      */
-    public final static int decode4to3( byte[] source, int srcOffset, byte[] destination, int destOffset )
+    private final static int decode4to3( byte[] source, int srcOffset, byte[] destination, int destOffset )
     {
         // Example: "Dk=="
         if( source[ srcOffset + 2] == EQUALS_SIGN )
@@ -438,23 +407,6 @@ public class B64 {
                 }
             }
     }
-
-    /**
-     * <p> This method does not close either stream.  Reads input to
-     * exhaustion, writes plain text to output.</p>
-     * @return Number of bytes written to output
-     */
-    public final static int decode ( java.io.InputStream in, java.io.OutputStream out) throws java.io.IOException {
-        Decoder dec = new Decoder(in);
-        int read, buflen = 512, acc = 0;
-        byte[] buf = new byte[buflen];
-        while (0 < (read = dec.read(buf,0,buflen))){
-            acc += read;
-            out.write(buf,0,read);
-        }
-        return acc;
-    }
-    
     public final static byte[] decode( String string){
         if (null == string)
             return null;
@@ -514,227 +466,4 @@ public class B64 {
         return out;
     }
 
-    
-    /**
-     * <p> Decode Base64 text on the fly.</p>
-     *
-     * @see B64
-     * @author Robert Harder
-     * @author John Pritchard
-     */
-    public static class Decoder extends java.io.FilterInputStream {
-
-        private final static int bufferLength = 3;
-
-        private int position = -1;
-        private byte[] buffer = new byte[bufferLength];
-        private int numSigBytes;
-        
-        /**
-         */
-        public Decoder( java.io.InputStream in){   
-            super(in);
-        }
-        
-        /**
-         * <p> Reads enough of the input stream to convert
-         * from Base64 and returns the next byte.</p>
-         */
-        public int read() throws java.io.IOException { 
-            if ( 0 > this.position){
-                byte[] b4 = new byte[4];
-                int cc = 0;
-                for ( cc = 0; cc < 4; cc++ ){
-                    // Read four "meaningful" bytes
-                    int b = 0;
-                    do {
-                        b = this.in.read(); 
-                    }
-                    while( b >= 0 && DECODABET[ b & 0x7f ] <= WHITE_SPACE_ENC );
-		    
-                    if ( b < 0 )
-                        break;
-                    else
-                        b4[cc] = (byte)b;
-                }
-		
-                if ( cc == 4 ){
-                    this.numSigBytes = decode4to3( b4, 0, this.buffer, 0);
-                    this.position = 0;
-                }
-                else if (0 == cc)
-                    return -1;
-                else 
-                    throw new java.io.IOException( "Improperly padded Base64 input." );
-            }
-            //
-            if ( -1 < this.position){
-                if ( this.numSigBytes <= this.position)
-                    return -1;
-                else {
-                    int b = this.buffer[this.position++];
-                    if ( this.position >= this.bufferLength )
-                        this.position = -1;
-                    return (b & 0xff);
-                }
-            }
-            else
-                throw new java.io.IOException( "Error in Base64 code reading stream." );
-        }
-        
-        
-        /**
-         * <p> Calls {@link #read()} repeatedly until the end of
-         * stream is reached or <var>len</var> bytes are read.</p>
-         *
-         * @param dest array to hold values
-         * @param off offset for array
-         * @param len max number of bytes to read into array
-         * @return bytes read into array or -1 if end of stream is encountered.
-         */
-        public int read( byte[] dest, int off, int len ) throws java.io.IOException {
-            int cc;
-            int ch;
-            for( cc = 0; cc < len; cc++ ){
-                ch = read();
-                if(-1 < ch)
-                    dest[off+cc] = (byte)ch;
-                else if (0 == cc)
-                    return -1;
-                else
-                    break;
-            }
-            return cc;
-        }
-    }
-    
-    /**
-     * <p> Encode Base64 text on the fly.</p>
-     *
-     * @see B64
-     * @author Robert Harder
-     * @author John Pritchard
-     */
-    public static class Encoder extends java.io.FilterOutputStream {
-
-        private final static int bufferLength = 3;
-
-        private int     position = 0;
-        private byte[]  buffer = new byte[ bufferLength ];
-        private int     linelen = 0;
-        private byte[]  b4 = new byte[4];
-
-        /**
-         */
-        public Encoder( java.io.OutputStream out){   
-            super(out);
-        }
-        /**
-         * <p> Three bytes are buffered for encoding, before the
-         * target stream actually gets a <code>write()</code>
-         * call.</p>
-         */
-        public void write(int bb) throws java.io.IOException {
-            this.buffer[this.position++] = (byte)bb;
-            if ( bufferLength <= this.position){
-                this.out.write( encode3to4( this.b4, this.buffer, bufferLength));
-                this.linelen += 4;
-                if( linelen >= MAX_LINE_LENGTH ){
-                    this.out.write( NEW_LINE );
-                    this.linelen = 0;
-                }
-                this.position = 0;
-            }
-        }
-        /**
-         * <p> Calls {@link #write(int)} repeatedly until
-         * <var>len</var> bytes are written.</p>
-         */
-        public void write( byte[] bbs, int off, int len ) throws java.io.IOException {
-            for( int cc = 0; cc < len; cc++)
-                this.write( bbs[off+cc]);
-        }        
-        /**
-         * <p> Pads the buffer without closing the stream.</p>
-         */
-        public void flush() throws java.io.IOException {
-            if (0 < this.position){
-                this.out.write( encode3to4( this.b4, this.buffer, this.position));
-                this.position = 0;
-            }
-            super.flush();
-        }
-    }
-
-  //
-
-    private final static void usage( java.io.PrintStream out){
-        out.println();
-        out.println(" Usage: B64 (-e|-d)");
-        out.println();
-        out.println("\tEncode or Decode stdin to stdout.");
-        out.println();
-        System.exit(1);
-    }
-    public static void main( String[] argv){
-        try {
-            boolean fwd = true;
-
-            if ( null != argv){
-                int alen = argv.length;
-                if ( 0 < alen){
-                    String arg;
-                    int arglen, ch;
-                    for ( int argc = 0; argc < alen; argc++){
-
-                        arg = argv[argc];
-
-                        arglen = arg.length();
-
-                        if ( '-' == arg.charAt(0)){
-                            if ( 1 < arglen){
-                                ch = arg.charAt(1);
-
-                                if ( 'e' == ch){
-
-                                    fwd = true;
-                                }
-                                else if ( 'd' == ch){
-
-                                    fwd = false;
-                                }
-                                else
-                                    usage(System.err);
-                            }
-                            else
-                                usage(System.err);
-                        }
-                        else 
-                            usage(System.err);
-                    }
-                }
-                else
-                    usage(System.err);
-            }
-            else 
-                usage(System.err);
-
-            if (fwd)
-                encode(System.in,System.out);
-            else
-                decode(System.in,System.out);
-
-            System.err.println();
-
-            System.exit(0);
-        }
-        catch ( IllegalArgumentException ilarg){
-            System.err.println("Error: "+ilarg.getMessage());
-        }
-        catch ( Exception exc){
-            exc.printStackTrace();
-            System.exit(1);
-        }
-
-    }	
 }

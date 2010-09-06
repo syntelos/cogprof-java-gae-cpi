@@ -1,6 +1,13 @@
 package oso.data;
 path /people;
+import cpi.Inventory;
 
 class Person version 4 {
     *unique String logonId;
+    List.Primitive<Inventory> inventory;
+    Float nf;
+    Float nt;
+    Float st;
+    Float sf;
+    Date created;
 }

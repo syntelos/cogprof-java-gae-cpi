@@ -133,6 +133,13 @@ public abstract class Code {
         }
     }
 
+    public final static String Format(float f) {
+        String string = String.valueOf(f);
+        if (5 < string.length())
+            return string.substring(0, 5);
+        return string;
+    }
+
 
     public final static class Encode 
         extends Code
@@ -155,7 +162,7 @@ public abstract class Code {
         }
 
         public final float nt, nf, st, sf;
-        public final String code;
+        public final String string, code;
 
         public Encode(float nt, float nf, float st, float sf){
             super();
@@ -172,13 +179,31 @@ public abstract class Code {
             str.append(st);
             str.append(";sf:");
             str.append(sf);
-            this.code = Encode(str.toString());
+            this.string = str.toString();
+            this.code = Encode(this.string);
         }
     }
 
     public final static class Decode
         extends Code
     {
+        final static String Clean(String string){
+            if (null == string || 1 > string.length())
+                return null;
+            else {
+                int idx = string.indexOf('/');
+                while (-1 != idx){
+
+                    string = string.substring(idx+1);
+
+                    if (1 > string.length())
+                        return null;
+                    else
+                        idx = string.indexOf('/');
+                }
+                return string;
+            }
+        }
         final static String Decode(String string){
             if (null == string)
                 return null;
@@ -197,13 +222,13 @@ public abstract class Code {
         }
 
         public final float nt, nf, st, sf;
-        public final String code;
+        public final String string, code;
 
         public Decode(String code){
             super();
-            this.code = code;
-            String text = Decode(code);
-            StringTokenizer strtok = new StringTokenizer(text,";");
+            this.code = Clean(code);
+            this.string = Decode(this.code);
+            StringTokenizer strtok = new StringTokenizer(this.string,";");
             String tok;
             int check = 0;
             float nt = 0, nf = 0, st = 0, sf = 0;
@@ -252,6 +277,19 @@ public abstract class Code {
             else
                 throw new IllegalArgumentException();
         }
+
+        public String toStringNt(){
+            return Format(this.nt);
+        }
+        public String toStringNf(){
+            return Format(this.nf);
+        }
+        public String toStringSt(){
+            return Format(this.st);
+        }
+        public String toStringSf(){
+            return Format(this.sf);
+        }
     }
 
 
@@ -261,7 +299,7 @@ public abstract class Code {
     public static void main(String[] argv){
         int errors = 0;
         Random prng = new Random();
-        int N = 20;
+        int N = 99;
         for (int T = 0; T < N; T++){
             float in_nt = prng.nextFloat();
             float in_nf = prng.nextFloat();
@@ -277,8 +315,10 @@ public abstract class Code {
             {
                 errors += 1;
             }
-            else
+            else {
+                System.out.println(enc.string);
                 System.out.println(enc.code);
+            }
         }
         System.err.println("Errors: "+errors);
         if (0 != errors)
