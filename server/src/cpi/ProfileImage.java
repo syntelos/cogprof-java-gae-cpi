@@ -64,7 +64,6 @@ public class ProfileImage
     private final static float IMG_V = IMG_WH2F / SQRT12;
 
 
-    private Graphics g;
 
 
     public ProfileImage(Code.Decode code){
@@ -81,6 +80,7 @@ public class ProfileImage
         else if (Err(n_nf))
             throw new IllegalArgumentException();
         else {
+            Graphics g;
             g = this.createGraphics();
             g.setAntialiasing(true);
 
