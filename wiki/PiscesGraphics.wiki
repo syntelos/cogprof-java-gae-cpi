@@ -1,0 +1,4 @@
+#summary The CPI Online as an example application of Pisces Graphics
+#labels Featured
+
+ The [http://code.google.com/p/cpi/source/browse/trunk/server/src/cpi/ProfileImage.java Profile Image] java class uses [http://pisces-graphics.googlecode.com/ Pisces Graphics] to generate the CPI result image.
