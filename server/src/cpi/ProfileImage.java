@@ -60,8 +60,6 @@ public class ProfileImage
     private final static float IMG_WH2F = IMG_WH2;
     private final static int IMG_WH10 = (IMG_WH/10);
     private final static int IMG_WH3 = (IMG_WH-IMG_WH10);
-    private final static float SQRT12 = (float) Math.sqrt(0.5);
-    private final static float IMG_V = IMG_WH2F / SQRT12;
 
 
 
@@ -87,14 +85,10 @@ public class ProfileImage
                 g.setColor(COLOR_BG);
                 g.fillRect(0, 0, IMG_WH, IMG_WH);
 
-                float v_sf = n_sf * IMG_V;
-                float v_st = n_st * IMG_V;
-                float v_nf = n_nf * IMG_V;
-                float v_nt = n_nt * IMG_V;
-                float s_sf = v_sf * SQRT12;
-                float s_st = v_st * SQRT12;
-                float s_nt = v_nt * SQRT12;
-                float s_nf = v_nf * SQRT12;
+                float s_sf = n_sf * IMG_WH2F;
+                float s_st = n_st * IMG_WH2F;
+                float s_nf = n_nf * IMG_WH2F;
+                float s_nt = n_nt * IMG_WH2F;
                 int[] p_x = new int[4];
                 int[] p_y = new int[4];
                 p_x[0] = (int) (IMG_WH2F - s_st);
