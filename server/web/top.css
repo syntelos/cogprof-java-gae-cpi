@@ -1,9 +1,28 @@
+body, div, table, tr, td {
+ font-family: verdana, arial, helvetica, sans-serif;
+ color: #000;
+}
+a:link, a:visited, a:active {
+ text-decoration: none;
+}
+div#footer {
+ position: fixed;
+ left: 5%;
+ bottom: 0px;
+ padding: 8px;
+ width: 90%;
+ color: #555;
+}
+div#first {
+ margin: 48px 0px 60px 0px;
+ padding: 0px;
+}
 div.logon {
  position: absolute;
  right: 0px;
  top: 0px;
  margin: 0px;
- width: 50%;
+ width: 90%;
  height: 32px;
  float: right;
  text-align: right;
@@ -25,11 +44,4 @@ div.block {
  padding-top: 6px;
  padding-bottom: 6px;
  padding-right: 8px;
-}
-div#footer {
- position: fixed;
- left: 5%;
- bottom: 0px;
- padding: 8px;
- width: 90%;
 }

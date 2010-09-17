@@ -31,8 +31,8 @@ import gap.service.Templates;
 import oso.data.Person;
 
 import java.io.IOException;
-import java.io.File;
-import java.io.FileFilter;
+import java.io.OutputStream;
+
 import javax.servlet.ServletException;
 
 /**
@@ -47,10 +47,11 @@ public class ProfileServlet
 
     private final static String JarfValue = cpi.Version.AppletViewer;
 
-    private final static TemplateName InventorySf = new TemplateName("inventory_sf");
-    private final static TemplateName InventorySt = new TemplateName("inventory_st");
-    private final static TemplateName InventoryNf = new TemplateName("inventory_nf");
-    private final static TemplateName InventoryNt = new TemplateName("inventory_nt");
+    private final static TemplateName InventorySf   = new TemplateName("inventory_sf");
+    private final static TemplateName InventorySt   = new TemplateName("inventory_st");
+    private final static TemplateName InventoryNf   = new TemplateName("inventory_nf");
+    private final static TemplateName InventoryNt   = new TemplateName("inventory_nt");
+    private final static TemplateName InventoryCode = new TemplateName("inventory_code");
 
 
 
@@ -77,13 +78,29 @@ public class ProfileServlet
         Code.Decode dec = this.getCode(req);
 
         if (null != dec){
+            String tail = req.getPath(1);
+            if (null != tail && tail.equals("image.png")){
 
-            req.setVariable(InventorySf,dec.toStringSf());
-            req.setVariable(InventorySt,dec.toStringSt());
-            req.setVariable(InventoryNf,dec.toStringNf());
-            req.setVariable(InventoryNt,dec.toStringNt());
+                ProfileImage image = new ProfileImage(dec);
 
-            super.render(req,rep);
+                final byte[] png = image.toPNG();
+                final int len = png.length;
+
+                rep.setHeader("Content-Type","image/png");
+                rep.setHeader("Content-Length",String.valueOf(len));
+                OutputStream out = rep.getOutputStream();
+                out.write(png,0,len);
+                out.flush();
+            }
+            else {
+                req.setVariable(InventorySf,dec.toStringSf());
+                req.setVariable(InventorySt,dec.toStringSt());
+                req.setVariable(InventoryNf,dec.toStringNf());
+                req.setVariable(InventoryNt,dec.toStringNt());
+                req.setVariable(InventoryCode,dec.code);
+
+                super.render(req,rep);
+            }
         }
         else if (req.hasViewer()){
 

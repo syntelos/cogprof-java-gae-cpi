@@ -7,7 +7,7 @@
   <body>
     <div class="logon">{{>logon}}
     </div>
-    <div class="block">
+    <div id="first">
       {{#error}}
       <div class="block inside">
         <h1 class="errors"> {{=error_status}}</h1>

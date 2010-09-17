@@ -8,29 +8,31 @@
   <body onload="init()">
     <div class="logon">{{>div.logon.html}}
     </div>
-    <div class="block">
-      <table border="0" cellpadding="5" cellspacing="0" width="500">
-        <tbody id="inv">
-          <tr>
-            <td align="center" bgcolor="#efefef" colspan="4"><font color="#505080" face="lucida,helvetica,arial">{{=inventory_lhs}}</font></td>
-            <td><br />
-            </td>
-            <td align="center" bgcolor="#efefef" colspan="4"><font color="#505080" face="lucida,helvetica,arial">{{=inventory_rhs}}</font></td>
-          </tr>
-          <tr>
-            <td align="center" bgcolor="#efefef"><a href="?id={{=inventory_current}}&ir=L4"><img border="0" height="14" name="L4" id="L4" src="http://cpi.cognitiveprofile.com/images/cpi3-white-L4-88x57.gif" height="18" width="26" /></a></td>
-            <td align="center" bgcolor="#efefef"><a href="?id={{=inventory_current}}&ir=L3"><img border="0" height="14" name="L3" id="L3" src="http://cpi.cognitiveprofile.com/images/cpi3-white-L3-70x57.gif" height="18" width="21" /></a></td>
-            <td align="center" bgcolor="#efefef"><a href="?id={{=inventory_current}}&ir=L2"><img border="0" height="14" name="L2" id="L2" src="http://cpi.cognitiveprofile.com/images/cpi3-white-L2-57x57.gif" height="18" width="18" /></a></td>
-            <td align="center" bgcolor="#efefef"><a href="?id={{=inventory_current}}&ir=L1"><img border="0" height="14" name="L1" id="L1" src="http://cpi.cognitiveprofile.com/images/cpi3-white-L1-57x57.gif" height="18" width="18" /></a></td>
-            <td><br />
-            </td>
-            <td align="center" bgcolor="#efefef"><a href="?id={{=inventory_current}}&ir=R1"><img border="0" height="14" name="R1" id="R1" src="http://cpi.cognitiveprofile.com/images/cpi3-white-R1-57x57.gif" height="18" width="18" /></a></td>
-            <td align="center" bgcolor="#efefef"><a href="?id={{=inventory_current}}&ir=R2"><img border="0" height="14" name="R2" id="R2" src="http://cpi.cognitiveprofile.com/images/cpi3-white-R2-57x57.gif" height="18" width="18" /></a></td>
-            <td align="center" bgcolor="#efefef"><a href="?id={{=inventory_current}}&ir=R3"><img border="0" height="14" name="R3" id="R3" src="http://cpi.cognitiveprofile.com/images/cpi3-white-R3-70x57.gif" height="18" width="21" /></a></td>
-            <td align="center" bgcolor="#efefef"><a href="?id={{=inventory_current}}&ir=R4"><img border="0" height="14" name="R4" id="R4" src="http://cpi.cognitiveprofile.com/images/cpi3-white-R4-88x57.gif" height="18" width="26" /></a></td>
-          </tr>
-        </tbody>
-      </table>
+    <div id="first">
+      <center>
+        <table border="0" cellpadding="5" cellspacing="0" width="500">
+          <tbody id="inv">
+            <tr>
+              <td align="center" bgcolor="#efefef" colspan="4"><font color="#505080" face="lucida,helvetica,arial">{{=inventory_lhs}}</font></td>
+              <td><br />
+              </td>
+              <td align="center" bgcolor="#efefef" colspan="4"><font color="#505080" face="lucida,helvetica,arial">{{=inventory_rhs}}</font></td>
+            </tr>
+            <tr>
+              <td align="center" bgcolor="#efefef"><a href="?id={{=inventory_current}}&ir=L4"><img border="0" height="14" name="L4" id="L4" src="http://cpi.cognitiveprofile.com/images/cpi3-white-L4-88x57.gif" height="18" width="26" /></a></td>
+              <td align="center" bgcolor="#efefef"><a href="?id={{=inventory_current}}&ir=L3"><img border="0" height="14" name="L3" id="L3" src="http://cpi.cognitiveprofile.com/images/cpi3-white-L3-70x57.gif" height="18" width="21" /></a></td>
+              <td align="center" bgcolor="#efefef"><a href="?id={{=inventory_current}}&ir=L2"><img border="0" height="14" name="L2" id="L2" src="http://cpi.cognitiveprofile.com/images/cpi3-white-L2-57x57.gif" height="18" width="18" /></a></td>
+              <td align="center" bgcolor="#efefef"><a href="?id={{=inventory_current}}&ir=L1"><img border="0" height="14" name="L1" id="L1" src="http://cpi.cognitiveprofile.com/images/cpi3-white-L1-57x57.gif" height="18" width="18" /></a></td>
+              <td><br />
+              </td>
+              <td align="center" bgcolor="#efefef"><a href="?id={{=inventory_current}}&ir=R1"><img border="0" height="14" name="R1" id="R1" src="http://cpi.cognitiveprofile.com/images/cpi3-white-R1-57x57.gif" height="18" width="18" /></a></td>
+              <td align="center" bgcolor="#efefef"><a href="?id={{=inventory_current}}&ir=R2"><img border="0" height="14" name="R2" id="R2" src="http://cpi.cognitiveprofile.com/images/cpi3-white-R2-57x57.gif" height="18" width="18" /></a></td>
+              <td align="center" bgcolor="#efefef"><a href="?id={{=inventory_current}}&ir=R3"><img border="0" height="14" name="R3" id="R3" src="http://cpi.cognitiveprofile.com/images/cpi3-white-R3-70x57.gif" height="18" width="21" /></a></td>
+              <td align="center" bgcolor="#efefef"><a href="?id={{=inventory_current}}&ir=R4"><img border="0" height="14" name="R4" id="R4" src="http://cpi.cognitiveprofile.com/images/cpi3-white-R4-88x57.gif" height="18" width="26" /></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </center>
     </div>
     <div id="footer">
       <center>Copyright &copy; 2010 Lois Breur Krause</center>

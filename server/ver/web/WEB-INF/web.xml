@@ -5,7 +5,7 @@
 
   <servlet>
     <servlet-name>Site</servlet-name>
-    <servlet-class>gap.service.Servlet</servlet-class>
+    <servlet-class>cpi.SiteServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet>
