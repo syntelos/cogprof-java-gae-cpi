@@ -80,65 +80,69 @@ public class ProfileImage
         else if (Err(n_nf))
             throw new IllegalArgumentException();
         else {
-            Graphics g;
-            g = this.createGraphics();
-            g.setAntialiasing(true);
+            Graphics g = this.createGraphics();
+            try {
+                g.setAntialiasing(true);
 
-            g.setColor(COLOR_BG);
-            g.fillRect(0, 0, IMG_WH, IMG_WH);
+                g.setColor(COLOR_BG);
+                g.fillRect(0, 0, IMG_WH, IMG_WH);
 
-            float v_sf = n_sf * IMG_V;
-            float v_st = n_st * IMG_V;
-            float v_nf = n_nf * IMG_V;
-            float v_nt = n_nt * IMG_V;
-            float s_sf = v_sf * SQRT12;
-            float s_st = v_st * SQRT12;
-            float s_nt = v_nt * SQRT12;
-            float s_nf = v_nf * SQRT12;
-            int[] p_x = new int[4];
-            int[] p_y = new int[4];
-            p_x[0] = (int) (IMG_WH2F - s_st);
-            p_y[0] = (int) (IMG_WH2F - s_st);
-            p_x[1] = (int) (IMG_WH2F + s_sf);
-            p_y[1] = (int) (IMG_WH2F - s_sf);
-            p_x[2] = (int) (IMG_WH2F + s_nf);
-            p_y[2] = (int) (IMG_WH2F + s_nf);
-            p_x[3] = (int) (IMG_WH2F - s_nt);
-            p_y[3] = (int) (IMG_WH2F + s_nt);
-            Polygon polygon = new Polygon(p_x, p_y);
-            g.setClip(0, 0, IMG_WH2, IMG_WH2);
-            g.setColor(COLOR_ST);
-            g.fill(polygon);
-            g.setClip(IMG_WH2, 0, IMG_WH2, IMG_WH2);
-            g.setColor(COLOR_SF);
-            g.fill(polygon);
-            g.setClip(IMG_WH2, IMG_WH2, IMG_WH2, IMG_WH2);
-            g.setColor(COLOR_NF);
-            g.fill(polygon);
-            g.setClip(0, IMG_WH2, IMG_WH2, IMG_WH2);
-            g.setColor(COLOR_NT);
-            g.fill(polygon);
+                float v_sf = n_sf * IMG_V;
+                float v_st = n_st * IMG_V;
+                float v_nf = n_nf * IMG_V;
+                float v_nt = n_nt * IMG_V;
+                float s_sf = v_sf * SQRT12;
+                float s_st = v_st * SQRT12;
+                float s_nt = v_nt * SQRT12;
+                float s_nf = v_nf * SQRT12;
+                int[] p_x = new int[4];
+                int[] p_y = new int[4];
+                p_x[0] = (int) (IMG_WH2F - s_st);
+                p_y[0] = (int) (IMG_WH2F - s_st);
+                p_x[1] = (int) (IMG_WH2F + s_sf);
+                p_y[1] = (int) (IMG_WH2F - s_sf);
+                p_x[2] = (int) (IMG_WH2F + s_nf);
+                p_y[2] = (int) (IMG_WH2F + s_nf);
+                p_x[3] = (int) (IMG_WH2F - s_nt);
+                p_y[3] = (int) (IMG_WH2F + s_nt);
+                Polygon polygon = new Polygon(p_x, p_y);
+                g.setClip(0, 0, IMG_WH2, IMG_WH2);
+                g.setColor(COLOR_ST);
+                g.fill(polygon);
+                g.setClip(IMG_WH2, 0, IMG_WH2, IMG_WH2);
+                g.setColor(COLOR_SF);
+                g.fill(polygon);
+                g.setClip(IMG_WH2, IMG_WH2, IMG_WH2, IMG_WH2);
+                g.setColor(COLOR_NF);
+                g.fill(polygon);
+                g.setClip(0, IMG_WH2, IMG_WH2, IMG_WH2);
+                g.setColor(COLOR_NT);
+                g.fill(polygon);
 
-            g.setClip(0, 0, IMG_WH, IMG_WH);
+                g.setClip(0, 0, IMG_WH, IMG_WH);
 
-            g.setColor(COLOR_BORDER);
-            g.drawRect(       0,        0,  IMG_WH1,  IMG_WH1);
-            g.drawLine( IMG_WH2,        0,  IMG_WH2,   IMG_WH);
-            g.drawLine(       0,  IMG_WH2,   IMG_WH,  IMG_WH2);
-            g.drawLine(IMG_WH10,      PAD, IMG_WH10, IMG_WH10);
-            g.drawLine(     PAD, IMG_WH10, IMG_WH10, IMG_WH10);
-            g.drawLine(     PAD,  IMG_WH3, IMG_WH10,  IMG_WH3);
-            g.drawLine(IMG_WH10,  IMG_WH3, IMG_WH10,  IMG_WH1);
-            g.drawLine( IMG_WH3,      PAD,  IMG_WH3, IMG_WH10);
-            g.drawLine( IMG_WH3, IMG_WH10,  IMG_WH1, IMG_WH10);
-            g.drawLine( IMG_WH3,  IMG_WH3,  IMG_WH1,  IMG_WH3);
-            g.drawLine( IMG_WH3,  IMG_WH3,  IMG_WH3,  IMG_WH1);
+                g.setColor(COLOR_BORDER);
+                g.drawRect(       0,        0,  IMG_WH1,  IMG_WH1);
+                g.drawLine( IMG_WH2,        0,  IMG_WH2,   IMG_WH);
+                g.drawLine(       0,  IMG_WH2,   IMG_WH,  IMG_WH2);
+                g.drawLine(IMG_WH10,      PAD, IMG_WH10, IMG_WH10);
+                g.drawLine(     PAD, IMG_WH10, IMG_WH10, IMG_WH10);
+                g.drawLine(     PAD,  IMG_WH3, IMG_WH10,  IMG_WH3);
+                g.drawLine(IMG_WH10,  IMG_WH3, IMG_WH10,  IMG_WH1);
+                g.drawLine( IMG_WH3,      PAD,  IMG_WH3, IMG_WH10);
+                g.drawLine( IMG_WH3, IMG_WH10,  IMG_WH1, IMG_WH10);
+                g.drawLine( IMG_WH3,  IMG_WH3,  IMG_WH1,  IMG_WH3);
+                g.drawLine( IMG_WH3,  IMG_WH3,  IMG_WH3,  IMG_WH1);
 
-            g.setFont(FONT);
-            g.blit("SF", 274, 6);
-            g.blit("ST", 4, 6);
-            g.blit("NT", 4, 274);
-            g.blit("NF", 274, 274);
+                g.setFont(FONT);
+                g.blit("SF", 274, 6);
+                g.blit("ST", 4, 6);
+                g.blit("NT", 4, 274);
+                g.blit("NF", 274, 274);
+            }
+            finally {
+                g.dispose();
+            }
         }
     }
 
