@@ -134,7 +134,7 @@ public class ProfileServlet
 
         String tail = ((Request)req).getPath(1);
         if (null != tail && tail.equals("image.png"))
-            return System.currentTimeMillis();
+            return 1L;
         else
             return -1L;
     }
