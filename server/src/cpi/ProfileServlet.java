@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Service for /profile/* 
@@ -88,6 +89,7 @@ public class ProfileServlet
 
                 rep.setHeader("Content-Type","image/png");
                 rep.setHeader("Content-Length",String.valueOf(len));
+                rep.setDateHeader("Last-Modified",System.currentTimeMillis());
                 OutputStream out = rep.getOutputStream();
                 out.write(png,0,len);
                 out.flush();
@@ -127,4 +129,14 @@ public class ProfileServlet
 
         return Templates.GetTemplate(TemplateFilename);
     }
+
+    protected long getLastModified(HttpServletRequest req) {
+
+        String tail = ((Request)req).getPath(1);
+        if (null != tail && tail.equals("image.png"))
+            return System.currentTimeMillis();
+        else
+            return -1L;
+    }
+
 }
