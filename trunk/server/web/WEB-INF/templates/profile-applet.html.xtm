@@ -8,18 +8,20 @@
     <div class="logon">{{>div.logon.html}}
     </div>
     <div id="first">
-      <center>
-        <img src="/profile/{{=inventory_code}}/image.png" width="300" height="300" />
-        <table border="0">
-          <tr><td>SF</td><td>{{=inventory_sf}}</td></tr>
-          <tr><td>ST</td><td>{{=inventory_st}}</td></tr>
-          <tr><td>NF</td><td>{{=inventory_nf}}</td></tr>
-          <tr><td>NT</td><td>{{=inventory_nt}}</td></tr>
-        </table>
-      </center>
+      <applet code="cpi.Applet.class" archive="http://cpi.cognitiveprofile.com/{{=viewer_jarf}}" width="300" height="300">
+        <param name="logon" value="{{=logonText}}" />
+      </applet>
+      <pre>
+    SF   {{=inventory_sf}}
+    ST   {{=inventory_st}}
+    NF   {{=inventory_nf}}
+    NT   {{=inventory_nt}}
+      </pre>
+    </div>
+    <div class="block">
+      <center>Copy the URL of this page for future reference.</center>
     </div>
     <div id="footer">
-      <center>Copy the URL of this page for future reference.</center>
       <center>Copyright &copy; 2010 Lois Breur Krause</center>
     </div>
   </body>

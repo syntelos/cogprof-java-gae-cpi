@@ -167,6 +167,25 @@ public class InventoryServlet
                         this.error(req,rep,500,"Input error",any);
                     }
                 }
+                else if (viewer.isNotEmptyInventory()){
+
+                    int next = viewer.getInventory().size();
+
+                    if (next >= Inventory.Size)
+                        rep.sendRedirect("/profile");
+                    else {
+                        Pair pair = EN_US.get(next);
+                        if (null != pair){
+                            req.setVariable(InventoryCurrent,String.valueOf(next));
+                            req.setVariable(InventoryLhs,pair.lhs);
+                            req.setVariable(InventoryRhs,pair.rhs);
+
+                            super.render(req,rep);
+                        }
+                        else
+                            this.error(req,rep,500,"Server error (ID[n] "+next+')');
+                    }
+                }
                 else {
                 
                     Pair pair = EN_US.get(0);
@@ -183,7 +202,7 @@ public class InventoryServlet
             }
         }
         else
-            rep.sendRedirect("/");
+            rep.sendRedirect(req.getLogonUrl());
     }
     protected TemplateRenderer getTemplate(Request req)
         throws TemplateException 

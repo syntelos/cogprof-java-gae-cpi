@@ -7,19 +7,15 @@
   <body>
     <div class="logon">{{>div.logon.html}}
     </div>
-    <div class="block">
+    <div id="first">
 
-      <h1><a href="/inventory">CPI </a></h1>
+      <h3><i> Please login to use this service </i></h3>
 
-      <p><i> Please login to use this service </i></p>
+      <p> Your personal profile session will be maintained on the server
+        for a limited period for your convenience.
+      </p>
 
-      <blockquote>
-
-        <h3>Convenience</h3>
-
-        <p> Your personal profile data will be stored in the server
-          for a limited period for your convenience.
-        </p>
+      <div class="block">
 
         <h3>Personal record</h3>
 
@@ -31,16 +27,17 @@
           <pre>
             <a href="http://cpi.cognitiveprofile.com/profile/IhtIVUMYW0JBR18SV1QCCUgQXVFMGFlVXU0XUxdVX11VWAcDTkVLSxNSV1pDWkc*">http://cpi.cognitiveprofile.com/profile/IhtIVUMYW0JBR18SV1QCCUgQXVFMGFlVXU0XUxdVX11VWAcDTkVLSxNSV1pDWkc*</a>
           </pre>
-          <i> This URL contains your anonymous result, without any
-            personally identifying information. </i>
+          <i> This URL contains your anonymous result. </i>
         </p>
 
-        <h3>No warranty</h3>
+        <div class="block">
 
-        <p> Use this service at your own risk, no warranty of any kind
-          is offered or implied. </p>
+          <h3>No warranty</h3>
 
-      </blockquote>
+          <p> Use this service at your own risk, no warranty of any kind
+            is offered or implied. </p>
+        </div>
+      </div>
 
     </div>
     <div id="footer">
