@@ -2,7 +2,7 @@ package oso.data;
 path /people;
 import cpi.Inventory;
 
-class Person version 4 {
+class Person version 5 {
     *unique String logonId;
     List.Primitive<Inventory> inventory;
     Float nf;
@@ -10,4 +10,5 @@ class Person version 4 {
     Float st;
     Float sf;
     Date created;
+    Date completed;
 }

@@ -39,13 +39,13 @@ import javax.annotation.Generated;
  *
  * @see Person
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2010-09-05T19:00:12.831Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2010-09-18T03:30:21.196Z")
 public abstract class PersonData
     extends gap.data.BigTable
     implements DataInheritance<Person>
 {
 
-    private final static long serialVersionUID = 4;
+    private final static long serialVersionUID = 5;
 
     public final static Kind KIND = Kind.Create("Person","oso.data","Person","/people");
 
@@ -262,7 +262,8 @@ public abstract class PersonData
         Nt("nt",Type.Primitive),
         St("st",Type.Primitive),
         Sf("sf",Type.Primitive),
-        Created("created",Type.Primitive);
+        Created("created",Type.Primitive),
+        Completed("completed",Type.Primitive);
 
         private final static lxl.Map<String,Field> FieldName = new lxl.Map<String,Field>();
         public static final String[] AllNames;
@@ -315,6 +316,8 @@ public abstract class PersonData
                 return instance.getSf(mayInherit);
             case Created:
                 return instance.getCreated(mayInherit);
+            case Completed:
+                return instance.getCompleted(mayInherit);
             default:
                 throw new IllegalArgumentException(field.toString()+" in Person");
             }
@@ -341,6 +344,8 @@ public abstract class PersonData
                 return instance.setSf(gap.Objects.FloatFromObject(value));
             case Created:
                 return instance.setCreated(gap.Objects.DateFromObject(value));
+            case Completed:
+                return instance.setCompleted(gap.Objects.DateFromObject(value));
             default:
                 throw new IllegalArgumentException(field.toString()+" in Person");
             }
@@ -444,6 +449,7 @@ public abstract class PersonData
     private volatile Float st;
     private volatile Float sf;
     private volatile Date created;
+    private volatile Date completed;
     private volatile List.Primitive<Inventory> inventory;
 
 
@@ -471,6 +477,7 @@ public abstract class PersonData
         this.st = null;
         this.sf = null;
         this.created = null;
+        this.completed = null;
         List.Primitive<Inventory> inventory = this.inventory;
         if (null != inventory){
             this.inventory = null;
@@ -767,6 +774,51 @@ public abstract class PersonData
         else
             return false;
     }
+    public final boolean hasCompleted(boolean mayInherit){
+        return (null != this.getCompleted(mayInherit));
+    }
+    public final boolean hasNotCompleted(boolean mayInherit){
+        return (null == this.getCompleted(mayInherit));
+    }
+    public final boolean dropCompleted(){
+        if (null != this.completed){
+            this.completed = null;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final Date getCompleted(){
+        return this.getCompleted(Notation.MayInherit);
+    }
+    public final Date getCompleted(boolean mayInherit){
+        if (mayInherit){
+            Date completed = this.completed;
+            if (null == completed && this.hasInheritFrom()){
+                Person inheritFrom = this.getInheritFrom();
+                return inheritFrom.getCompleted(Notation.MayInherit);
+            }
+            return completed;
+        }
+        else
+            return this.completed;
+    }
+    public final boolean setCompleted(Date completed, boolean withInheritance){
+        if (IsNotEqual(this.completed,this.getCompleted(withInheritance))){
+            this.completed = completed;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean setCompleted(Date completed){
+        if (IsNotEqual(this.completed,completed)){
+            this.completed = completed;
+            return true;
+        }
+        else
+            return false;
+    }
     public final boolean hasInventory(boolean mayInherit){
         return (this.getInventory(mayInherit).isNotEmpty());
     }
@@ -911,6 +963,16 @@ public abstract class PersonData
         catch (RuntimeException exc){
             throw new ValidationError(ClassName,"created",createdRequest,exc);
         }
+        String completedRequest = req.getParameter("completed");
+        try {
+            Date completed = Strings.DateFromString(completedRequest);
+            if (this.setCompleted(completed)){
+                change = true;
+            }
+        }
+        catch (RuntimeException exc){
+            throw new ValidationError(ClassName,"completed",completedRequest,exc);
+        }
         return change;
     }
     public final boolean updateFrom(BigTable proto){
@@ -937,6 +999,10 @@ public abstract class PersonData
         }
         Date created = proto.getCreated(mayInherit);
         if (null != created && this.setCreated(created)){
+            change = true;
+        }
+        Date completed = proto.getCompleted(mayInherit);
+        if (null != completed && this.setCompleted(completed)){
             change = true;
         }
         return change;
@@ -981,6 +1047,11 @@ public abstract class PersonData
                     throw new IllegalStateException(field.name());
                 else
                     return this.hasCreated(true);
+            case Completed:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else
+                    return this.hasCompleted(true);
             default:
                 throw new IllegalStateException(field.name());
             }
@@ -1023,6 +1094,11 @@ public abstract class PersonData
                     throw new IllegalStateException(field.name());
                 else
                     return gap.Strings.DateToString(this.getCreated(true));
+            case Completed:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else
+                    return gap.Strings.DateToString(this.getCompleted(true));
             default:
                 throw new IllegalStateException(field.name());
             }
@@ -1047,6 +1123,8 @@ public abstract class PersonData
                 case Sf:
                     throw new IllegalStateException(field.name());
                 case Created:
+                    throw new IllegalStateException(field.name());
+                case Completed:
                     throw new IllegalStateException(field.name());
                 default:
                     throw new IllegalStateException(field.name());
@@ -1074,6 +1152,8 @@ public abstract class PersonData
             case Sf:
                 return null;
             case Created:
+                return null;
+            case Completed:
                 return null;
             default:
                 throw new IllegalStateException(field.name());

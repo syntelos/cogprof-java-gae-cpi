@@ -1,0 +1,10 @@
+package cpi.groups;
+path /groups;
+import oso.data.Person;
+
+class Group version 1 {
+    *unique String name;
+    List.Long<Person> members;
+    Person owner;
+    Date created;
+}
