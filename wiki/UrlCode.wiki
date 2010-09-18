@@ -3,7 +3,11 @@
 
  = Overview =
 
- The URL Code is a modified [http://code.google.com/p/source/browse/trunk/code/src/cpi/B64.java Base64] transfer of a padded string.
+ The CPI Online result data is encoded into a URL.  The software that performs this function is [http://code.google.com/p/cpi/source/browse/trunk/code/src/cpi/Code.java cpi.Code].
+
+ = The code =
+
+ The URL code is a modified [http://code.google.com/p/source/browse/trunk/code/src/cpi/B64.java Base64] transfer of a padded string.
 
  == Pad ==
 
@@ -52,3 +56,15 @@
             return Pad(B64.decode(string));
         }
 }}}
+
+ = Eyeballs Privacy =
+
+ We hope that most people will want to share their CPI Online results with others.  Sharing can be a powerful aid.
+
+ But first we recognize our responsibility to provide a basic degree of privacy for any form of personal data, including the anonymous CPI Online result.
+
+ As the result URL is intended to be saved, the URL itself does not reveal any personal data to a casual glance at it. 
+
+ This is eyeballs privacy.  
+
+ One must have a copy of the URL, and decode the URL, in order to have the CPI result data.
