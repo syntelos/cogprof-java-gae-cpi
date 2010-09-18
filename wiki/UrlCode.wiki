@@ -46,9 +46,9 @@
 
  The plain text code string is a simple set of `name:value;` pairs.  Within the Code class, it can be seen as 
 {{{
-    nt:#.####;nf:#.####;st:#.####;nf:#.####
+    nt:N;nf:N;st:N;nf:N
 }}}
- It stores only the CPI result data.
+ For N a floating point number.  It stores only the CPI result data.
 
  = Eyeballs Privacy =
 
