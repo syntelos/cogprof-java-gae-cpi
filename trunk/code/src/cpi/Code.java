@@ -162,7 +162,7 @@ public abstract class Code {
         }
 
         public final float nt, nf, st, sf;
-        public final String string, code;
+        public final String code;
 
         public Encode(float nt, float nf, float st, float sf){
             super();
@@ -179,8 +179,8 @@ public abstract class Code {
             str.append(st);
             str.append(";sf:");
             str.append(sf);
-            this.string = str.toString();
-            this.code = Encode(this.string);
+
+            this.code = Encode(str.toString());
         }
     }
 
@@ -222,13 +222,13 @@ public abstract class Code {
         }
 
         public final float nt, nf, st, sf;
-        public final String string, code;
+        public final String code;
 
         public Decode(String code){
             super();
             this.code = Clean(code);
-            this.string = Decode(this.code);
-            StringTokenizer strtok = new StringTokenizer(this.string,";");
+
+            StringTokenizer strtok = new StringTokenizer(Decode(this.code),";");
             String tok;
             int check = 0;
             float nt = 0, nf = 0, st = 0, sf = 0;
@@ -316,7 +316,6 @@ public abstract class Code {
                 errors += 1;
             }
             else {
-                System.out.println(enc.string);
                 System.out.println(enc.code);
             }
         }

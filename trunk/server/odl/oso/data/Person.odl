@@ -1,8 +1,9 @@
 package oso.data;
 path /people;
 import cpi.Inventory;
+import cpi.groups.Group;
 
-class Person version 5 {
+class Person version 6 {
     *unique String logonId;
     List.Primitive<Inventory> inventory;
     Float nf;
@@ -11,4 +12,5 @@ class Person version 5 {
     Float sf;
     Date created;
     Date completed;
+    Group group;
 }

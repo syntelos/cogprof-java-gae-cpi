@@ -1,6 +1,11 @@
 *                                   -*-outline-*-
 
-* Enter inventory with id and ir w/o login, redirect to login with return to inventory
 
-* Some NAV
+* Multitenancy
+
+* Groups: create, use, join, export
+** select * from group
+** export group data to spreadsheet
+*** merge copy with user login sequence
+**** dump or select (columns)
 
