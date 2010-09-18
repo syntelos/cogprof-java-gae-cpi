@@ -1,6 +1,0 @@
-
-* The build script will run 'ant odl' before compile
-
-* Need to run 'ant run' and excercise the application thoroughly before 'ant update' or 'appcfg' 
-  in order to generate the war/WEB-INF/appengine-generated/datastore-indexes-auto.xml
-
