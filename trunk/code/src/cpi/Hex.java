@@ -172,32 +172,16 @@ public abstract class Hex
             int len = buffer.length;
             char[] cary = new char[(len*2)];
             int val, ca = 0;
-            int leadingzero = 0;
+
             for ( int cc = 0; cc < len; cc++){
 
                 val = (buffer[cc]&0xff);
 
-                if (cc == leadingzero && 0 == val){
-                    leadingzero += 1;
-                }
-                else {
-                    cary[ca++] = (chars[(val>>>4)&0xf]);
-                    cary[ca++] = (chars[ val&0xf]);
-                }
+                cary[ca++] = (chars[(val>>>4)&0xf]);
+                cary[ca++] = (chars[ val&0xf]);
             }
-            if (0 < leadingzero){
-                int trim = (leadingzero*2);
-                int nlen = (cary.length - trim);
-                if (0 < nlen){
-                    char[] copier = new char[nlen];
-                    System.arraycopy(cary,0,copier,0,nlen);
-                    return new java.lang.String(copier);
-                }
-                else
-                    return "00";//(consistent with value '1' encoded as '01')
-            }
-            else
-                return new java.lang.String(cary);
+
+            return new java.lang.String(cary);
         }
     }
 

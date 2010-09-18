@@ -23,26 +23,11 @@ import java.util.Random;
 import java.util.StringTokenizer;
 
 /**
- * CPI statistics basic privacy code.  This scheme permits CPI
- * statistics to be encoded into a URL for the user's benefit, without
- * any other storage, and maintaining the basic "eyeballs" privacy.
- * The encoded data requires a copy of the URL to be decoded.
- * 
- * Numeric accuracy is preserved within a margin of error of 1e-4 over
- * 16 bit fixed point values.
+ * Old CPI code.  
  * 
  * @author John Pritchard
  */
-public abstract class Code {
-
-    /**
-     * Fixed point bits.  A floating point value is multiplied by this
-     * value to convert into a 16 bit fixed point integer
-     * representation.  A 16 bit fixed point value is divided by this
-     * value to convert into a floating point representation.
-     */
-    protected final static float FX = 0xffff;
-
+public abstract class CodeIht {
     /**
      * A simple pad shared by all users.
      */
@@ -144,37 +129,32 @@ public abstract class Code {
         }
     }
 
+    public final static String Format(float f) {
+        String string = String.valueOf(f);
+        if (5 < string.length())
+            return string.substring(0, 5);
+        return string;
+    }
+
 
     public final static class Encode 
-        extends Code
+        extends CodeIht
     {
-
-        final static byte[] Bits(float nt, float nf, float st, float sf){
-
-            int b_nt = (int)(nt*FX);
-            int b_nf = (int)(nf*FX);
-            int b_st = (int)(st*FX);
-            int b_sf = (int)(sf*FX);
-            byte[] re = new byte[8];
-            re[0] = (byte)((b_nt>>8) & 0xff);
-            re[1] = (byte)(b_nt & 0xff);
-            re[2] = (byte)((b_nf>>8) & 0xff);
-            re[3] = (byte)(b_nf & 0xff);
-            re[4] = (byte)((b_st>>8) & 0xff);
-            re[5] = (byte)(b_st & 0xff);
-            re[6] = (byte)((b_sf>>8) & 0xff);
-            re[7] = (byte)(b_sf & 0xff);
-            return re;
-        }
-        final static String Encode(float nt, float nf, float st, float sf){
-
-            byte[] bits = Pad(Bits(nt,nf,st,sf));
-            if (null == bits)
-                throw new IllegalArgumentException("Bits null");
-            else if (8 != bits.length)
-                throw new IllegalArgumentException("Bits "+String.valueOf(bits.length));
-            else 
-                return Hex.encode(bits);
+        final static String Encode(String string){
+            if (null == string)
+                return null;
+            else {
+                try {
+                    byte[] re = Pad(string.getBytes("US-ASCII"));
+                    if (null == re)
+                        return null;
+                    else 
+                        return B64.encodeBytes(re);
+                }
+                catch (java.io.UnsupportedEncodingException exc){
+                    return null;
+                }
+            }
         }
 
         public final float nt, nf, st, sf;
@@ -186,49 +166,54 @@ public abstract class Code {
             this.nf = nf;
             this.st = st;
             this.sf = sf;
+            StringBuilder str = new StringBuilder();
+            str.append("nt:");
+            str.append(nt);
+            str.append(";nf:");
+            str.append(nf);
+            str.append(";st:");
+            str.append(st);
+            str.append(";sf:");
+            str.append(sf);
 
-            this.code = Encode(nt,nf,st,sf);
-        }
-
-        public String toString(){
-            return String.format("%9g %9g %9g %9g",this.nt,this.nf,this.st,this.sf);
+            this.code = Encode(str.toString());
         }
     }
 
     public final static class Decode
-        extends Code
+        extends CodeIht
     {
-        final static float[] Bits(byte[] bits){
-            if (8 == bits.length){
-
-                float b_nt = (((bits[0] & 0xff)<<8)|(bits[1] & 0xff));
-                float b_nf = (((bits[2] & 0xff)<<8)|(bits[3] & 0xff));
-                float b_st = (((bits[4] & 0xff)<<8)|(bits[5] & 0xff));
-                float b_sf = (((bits[6] & 0xff)<<8)|(bits[7] & 0xff));
-
-                return new float[]{
-                    (b_nt/FX),
-                    (b_nf/FX),
-                    (b_st/FX),
-                    (b_sf/FX)
-                };
-            }
-            else
-                throw new IllegalArgumentException();
-        }
-        final static float[] Decode(String string){
-            if (null == string)
-                throw new IllegalArgumentException("String null");
-            else if (16 != string.length())
-                throw new IllegalArgumentException("String "+String.valueOf(string.length()));
+        final static String Clean(String string){
+            if (null == string || 1 > string.length())
+                return null;
             else {
-                byte[] bits = Hex.decode(string);
-                if (null == bits)
-                    throw new IllegalArgumentException("Bits null");
-                else if (8 != bits.length)
-                    throw new IllegalArgumentException("Bits "+String.valueOf(bits.length));
-                else 
-                    return Bits(Pad(bits));
+                int idx = string.indexOf('/');
+                while (-1 != idx){
+
+                    string = string.substring(idx+1);
+
+                    if (1 > string.length())
+                        return null;
+                    else
+                        idx = string.indexOf('/');
+                }
+                return string;
+            }
+        }
+        final static String Decode(String string){
+            if (null == string)
+                return null;
+            else {
+                try {
+                    byte[] re = B64.decode(string);
+                    if (null == re)
+                        return null;
+                    else 
+                        return new String(Pad(re),"US-ASCII");
+                }
+                catch (java.io.UnsupportedEncodingException exc){
+                    return null;
+                }
             }
         }
 
@@ -238,27 +223,55 @@ public abstract class Code {
         public Decode(String code){
             super();
             this.code = Clean(code);
-            float nt, nf, st, sf;
-            if ('I' == this.code.charAt(0)){
-                CodeIht.Decode dec = new CodeIht.Decode(this.code);
 
-                nt = dec.nt;
-                nf = dec.nf;
-                st = dec.st;
-                sf = dec.sf;
-            }
-            else {
-                float[] value = Decode(this.code);
+            StringTokenizer strtok = new StringTokenizer(Decode(this.code),";");
+            String tok;
+            int check = 0;
+            float nt = 0, nf = 0, st = 0, sf = 0;
 
-                nt = value[0];
-                nf = value[1];
-                st = value[2];
-                sf = value[3];
+            while (strtok.hasMoreTokens()){
+                tok = strtok.nextToken();
+                switch (tok.charAt(0)){
+                case 'n':
+                    switch (tok.charAt(1)){
+                    case 'f':
+                        nf = Float.parseFloat(tok.substring(3));
+                        check += 1;
+                        break;
+                    case 't':
+                        nt = Float.parseFloat(tok.substring(3));
+                        check += 1;
+                        break;
+                    default:
+                        throw new IllegalArgumentException();
+                    }
+                    break;
+                case 's':
+                    switch (tok.charAt(1)){
+                    case 'f':
+                        sf = Float.parseFloat(tok.substring(3));
+                        check += 1;
+                        break;
+                    case 't':
+                        st = Float.parseFloat(tok.substring(3));
+                        check += 1;
+                        break;
+                    default:
+                        throw new IllegalArgumentException();
+                    }
+                    break;
+                default:
+                    throw new IllegalArgumentException();
+                }
             }
-            this.nt = nt;
             this.nf = nf;
+            this.nt = nt;
             this.st = st;
             this.sf = sf;
+            if (4 == check)
+                return;
+            else
+                throw new IllegalArgumentException();
         }
 
         public String toStringNt(){
@@ -273,9 +286,6 @@ public abstract class Code {
         public String toStringSf(){
             return Format(this.sf);
         }
-        public String toString(){
-            return String.format("%9g %9g %9g %9g",this.nt,this.nf,this.st,this.sf);
-        }
     }
 
 
@@ -283,98 +293,32 @@ public abstract class Code {
      * Test
      */
     public static void main(String[] argv){
+        int errors = 0;
+        Random prng = new Random();
         int N = 99;
+        for (int T = 0; T < N; T++){
+            float in_nt = prng.nextFloat();
+            float in_nf = prng.nextFloat();
+            float in_st = prng.nextFloat();
+            float in_sf = prng.nextFloat();
+            Encode enc = new Encode(in_nt,in_nf,in_st,in_sf);
+            Decode dec = new Decode(enc.code);
 
-        switch (argv.length){
-        case 1:
-            try {
-                N = Integer.parseInt(argv[0]);
+            if (dec.nt != in_nt ||
+                dec.nf != in_nf ||
+                dec.st != in_st ||
+                dec.sf != in_sf)
+            {
+                errors += 1;
             }
-            catch (Exception help){
-                System.err.println("Usage ");
-                System.err.println("    Code               -- Random test number "+N);
-                System.err.println("    Code  N            -- Random test number N");
-                System.err.println("    Code  -d code      -- Decode");
-                System.err.println("    Code  NT NF ST SF  -- Encode ");
-                System.exit(1);
+            else {
+                System.out.println(enc.code);
             }
-
-        case 0:
-
-            Random prng = new Random();
-
-            for (int T = 0; T < N; T++){
-
-                Encode enc = new Encode(prng.nextFloat(),prng.nextFloat(),prng.nextFloat(),prng.nextFloat());
-
-                Decode dec = new Decode(enc.code);
-            
-                if (ENE(dec.nt,enc.nt) ||
-                    ENE(dec.nf,enc.nf) ||
-                    ENE(dec.st,enc.st) ||
-                    ENE(dec.sf,enc.sf))
-                {
-                    System.err.println();
-                    System.err.println("Error");
-                    System.out.printf("%s %s %n",enc.code,enc);
-                    System.out.printf("%s %s %n",enc.code,dec);
-                    System.exit(1);
-                }
-                else { 
-                    System.out.printf("%s %s %n",enc.code,dec);
-                }
-            }
-            System.exit(0);
-            break;
-        case 2:
-            Decode dec = new Decode(argv[1]);
-            System.out.printf("%s %s %n",dec.code,dec);
-            System.exit(0);
-            break;
-        case 4:
-            Encode enc = new Encode(Float.parseFloat(argv[0]),Float.parseFloat(argv[1]),Float.parseFloat(argv[2]),Float.parseFloat(argv[3]));
-            System.out.printf("%s %s %n",enc.code,enc);
-            System.exit(0);
-            break;
         }
-    }
-
-
-    public final static String Format(float f) {
-        String string = String.valueOf(f);
-        if (5 < string.length())
-            return string.substring(0, 5);
-        return string;
-    }
-    final static String Clean(String string){
-        if (null == string || 1 > string.length())
-            return null;
-        else {
-
-            while ('/' == string.charAt(0)){
-
-                string = string.substring(1);
-
-                if (1 > string.length())
-                    return null;
-            }
-            while ('/' == string.charAt(string.length()-1)){
-
-                string = string.substring(0,(string.length()-1));
-
-                if (1 > string.length())
-                    return null;
-            }
-            return string;
-        }
-    }
-    public final static float EPS = 1e-4f;
-    public final static boolean EEQ(float a, float b){
-
-        return (Math.abs(a-b) < EPS);
-    }
-    public final static boolean ENE(float a, float b){
-
-        return (Math.abs(a-b) > EPS);
+        System.err.println("Errors: "+errors);
+        if (0 != errors)
+            System.exit(1);
+        else
+            System.exit(0);
     }
 }
