@@ -6,7 +6,7 @@ a:link, a:visited, a:active {
  text-decoration: none;
 }
 div#footer {
- position: fixed;
+ position: absolute;
  left: 5%;
  bottom: 0px;
  padding: 8px;
@@ -14,29 +14,28 @@ div#footer {
  color: #555;
 }
 div#first {
- position: fixed;
- left: 10%;
+ position: absolute;
  top: 48px;
- bottom: 120px;
+ left: 10%;
  padding: 8px;
  width: 40%;
+ float: left;
 }
 div#second {
- position: fixed;
- left: 60%;
- right: 10%;
+ position: absolute;
  top: 48px;
- bottom: 120px;
+ right: 10%;
  padding: 0px;
- width: 30%;
+ width: 240px;
+ float: right;
 }
 div#inventory {
  position: fixed;
  top: 68px;
  left: 10%;
+ padding: 10px;
  width: 650px;
  height: 50%;
- padding: 10px;
 }
 div.invq {
  width: 300px;
