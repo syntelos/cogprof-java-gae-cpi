@@ -17,7 +17,7 @@
         }
 }}}
 
- The [http://www.google.com/search?q=One+Time+Pad Pad] function is a well known cipher, used with a known key to scramble the plain text string.
+ The [http://www.google.com/search?q=One+Time+Pad Pad] function is a well known cipher, used with a known key to scramble the binary results data.
 {{{
     private final static byte[] Pad = {
         'L', 'o', 'r', 'e', 'm', ' ', 'i', 'p', 's', 'u', 'm', ' ', 'd', 'o', 'l', 
