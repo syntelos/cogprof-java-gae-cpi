@@ -3,6 +3,8 @@
 
  The CPI Online [http://code.google.com/p/cpi/source/browse/trunk/server server] is a [http://gap-data.googlecode.com/ Gap Data] application.
 
+ = Gap Data Bean =
+
  The Gap Data compiler generates java programming language source code for Google App Engine data beans.  The Gap Data Bean is defined in ODL.  
 
  The CPI Online defines one GD/ODL application bean, [http://code.google.com/p/cpi/source/browse/trunk/server/odl/oso/data/Person.odl Person].  Gap Data employs this class for any logged- in user, so the CPI Online simply extends the definition of the named location of this class.
