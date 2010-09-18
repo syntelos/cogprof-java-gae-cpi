@@ -20,6 +20,7 @@
 package oso.data;
 
 import cpi.Inventory;
+import cpi.groups.Group;
 
 import gap.*;
 import gap.data.*;
@@ -39,13 +40,13 @@ import javax.annotation.Generated;
  *
  * @see Person
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2010-09-18T03:30:21.196Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2010-09-18T07:35:12.697Z")
 public abstract class PersonData
     extends gap.data.BigTable
     implements DataInheritance<Person>
 {
 
-    private final static long serialVersionUID = 5;
+    private final static long serialVersionUID = 6;
 
     public final static Kind KIND = Kind.Create("Person","oso.data","Person","/people");
 
@@ -263,7 +264,8 @@ public abstract class PersonData
         St("st",Type.Primitive),
         Sf("sf",Type.Primitive),
         Created("created",Type.Primitive),
-        Completed("completed",Type.Primitive);
+        Completed("completed",Type.Primitive),
+        Group("group",Type.BigTable);
 
         private final static lxl.Map<String,Field> FieldName = new lxl.Map<String,Field>();
         public static final String[] AllNames;
@@ -318,6 +320,8 @@ public abstract class PersonData
                 return instance.getCreated(mayInherit);
             case Completed:
                 return instance.getCompleted(mayInherit);
+            case Group:
+                return instance.getGroup(mayInherit);
             default:
                 throw new IllegalArgumentException(field.toString()+" in Person");
             }
@@ -346,6 +350,8 @@ public abstract class PersonData
                 return instance.setCreated(gap.Objects.DateFromObject(value));
             case Completed:
                 return instance.setCompleted(gap.Objects.DateFromObject(value));
+            case Group:
+                return instance.setGroup(cpi.groups.Group.FromObject(value));
             default:
                 throw new IllegalArgumentException(field.toString()+" in Person");
             }
@@ -450,6 +456,8 @@ public abstract class PersonData
     private volatile Float sf;
     private volatile Date created;
     private volatile Date completed;
+    private volatile Key groupKey;
+    private volatile transient Group group;
     private volatile List.Primitive<Inventory> inventory;
 
 
@@ -478,6 +486,7 @@ public abstract class PersonData
         this.sf = null;
         this.created = null;
         this.completed = null;
+        this.group = null;
         List.Primitive<Inventory> inventory = this.inventory;
         if (null != inventory){
             this.inventory = null;
@@ -819,6 +828,63 @@ public abstract class PersonData
         else
             return false;
     }
+    public final boolean hasGroup(boolean mayInherit){
+        return (null != this.getGroup(mayInherit));
+    }
+    public final boolean hasNotGroup(boolean mayInherit){
+        return (null == this.getGroup(mayInherit));
+    }
+    public final boolean dropGroup(){
+        if (null != this.group){
+            this.group = null;
+            this.groupKey = null;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final Group getGroup(){
+        return this.getGroup(Notation.MayInherit);
+    }
+    public final Group getGroup(boolean mayInherit){
+        Group group = this.group;
+        if (null == group){
+            Key groupKey = this.groupKey;
+            if (null == groupKey && mayInherit && this.hasInheritFrom()){
+                Person inheritFrom = this.getInheritFrom();
+                return inheritFrom.getGroup(Notation.MayInherit);
+            }
+            else if (null != groupKey){
+                group = Group.Get(groupKey);
+                this.group = group;
+            }
+        }
+        return group;
+    }
+    public final boolean setGroup(Group group, boolean withInheritance){
+        if (IsNotEqual(this.group,this.getGroup(withInheritance))){
+            this.group = group;
+            if (null != group)
+                this.groupKey = group.getKey();
+            else
+                this.groupKey = null;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean setGroup(Group group){
+        if (IsNotEqual(this.group,group)){
+            this.group = group;
+            if (null != group)
+                this.groupKey = group.getKey();
+            else
+                this.groupKey = null;
+            return true;
+        }
+        else
+            return false;
+    }
     public final boolean hasInventory(boolean mayInherit){
         return (this.getInventory(mayInherit).isNotEmpty());
     }
@@ -1052,6 +1118,16 @@ public abstract class PersonData
                     throw new IllegalStateException(field.name());
                 else
                     return this.hasCompleted(true);
+            case Group:
+                if (name.has(1)){
+                    Group group = this.getGroup(true);
+                    if (null != group)
+                        return group.hasVariable(new TemplateName(name));
+                    else
+                        return false;
+                }
+                else
+                    return this.hasGroup(true);
             default:
                 throw new IllegalStateException(field.name());
             }
@@ -1099,6 +1175,16 @@ public abstract class PersonData
                     throw new IllegalStateException(field.name());
                 else
                     return gap.Strings.DateToString(this.getCompleted(true));
+            case Group:
+                if (name.has(1)){
+                    Group group = this.getGroup(true);
+                    if (null != group)
+                        return group.getVariable(new TemplateName(name));
+                    else
+                        return null;
+                }
+                else
+                    return null;
             default:
                 throw new IllegalStateException(field.name());
             }
@@ -1126,6 +1212,13 @@ public abstract class PersonData
                     throw new IllegalStateException(field.name());
                 case Completed:
                     throw new IllegalStateException(field.name());
+                case Group:
+
+                    Group group = this.getGroup(true);
+                    if (null != group)
+                        group.setVariable(new TemplateName(name),value);
+
+                    return ;
                 default:
                     throw new IllegalStateException(field.name());
                 }
@@ -1155,6 +1248,12 @@ public abstract class PersonData
                 return null;
             case Completed:
                 return null;
+            case Group:
+                Group group = this.getGroup(true);
+                if (null != group)
+                    return group.getSection(new TemplateName(name));
+                else
+                    return null;
             default:
                 throw new IllegalStateException(field.name());
             }

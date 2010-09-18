@@ -39,7 +39,7 @@ import javax.annotation.Generated;
  *
  * @see Group
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2010-09-18T03:30:21.820Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2010-09-18T07:35:13.364Z")
 public abstract class GroupData
     extends gap.data.BigTable
     implements DataInheritance<Group>
@@ -257,7 +257,6 @@ public abstract class GroupData
         Key("key",Type.Primitive),
         Id("id",Type.Primitive),
         Name("name",Type.Primitive),
-        Members("members",Type.Collection),
         Owner("owner",Type.BigTable),
         Created("created",Type.Primitive);
 
@@ -300,8 +299,6 @@ public abstract class GroupData
                 return instance.getId();
             case Name:
                 return instance.getName(mayInherit);
-            case Members:
-                return instance.getMembers(mayInherit);
             case Owner:
                 return instance.getOwner(mayInherit);
             case Created:
@@ -320,10 +317,8 @@ public abstract class GroupData
                 return instance.setId(gap.Objects.StringFromObject(value));
             case Name:
                 return instance.setName(gap.Objects.StringFromObject(value));
-            case Members:
-                return instance.setMembers((List.Long<Person>)value);
             case Owner:
-                return instance.setOwner(Person.FromObject(value));
+                return instance.setOwner(oso.data.Person.FromObject(value));
             case Created:
                 return instance.setCreated(gap.Objects.DateFromObject(value));
             default:
@@ -427,7 +422,6 @@ public abstract class GroupData
     private volatile Key ownerKey;
     private volatile transient Person owner;
     private volatile Date created;
-    private volatile List.Long<Person> members;
 
 
 
@@ -451,11 +445,6 @@ public abstract class GroupData
         this.name = null;
         this.owner = null;
         this.created = null;
-        List.Long<Person> members = this.members;
-        if (null != members){
-            this.members = null;
-            members.destroy();
-        }
     }
     public final boolean hasInheritFrom(){
         return (null != this.inheritFrom || null != this.inheritFromKey);
@@ -623,87 +612,6 @@ public abstract class GroupData
         }
         else
             return false;
-    }
-    public final boolean hasMembers(boolean mayInherit){
-        return (this.getMembers(mayInherit).isNotEmpty());
-    }
-    public final boolean hasNotMembers(boolean mayInherit){
-        return (this.getMembers(mayInherit).isEmpty());
-    }
-    public final boolean dropMembers(){
-        List.Long<Person> members = this.members;
-        if (null != members){
-            this.members = null;
-            members.destroy();
-            return true;
-        }
-        else
-            return false;
-    }
-    public final List.Long<Person> getMembers(){
-        return this.getMembers(Notation.MayInherit);
-    }
-    public final List.Long<Person> getMembers(boolean mayInherit){
-        List.Long<Person> members = this.members;
-        if (null == members){
-            if (mayInherit && this.hasInheritFrom()){
-                Group inheritFrom = this.getInheritFrom();
-                if (null != inheritFrom){
-                    members = inheritFrom.getMembers(Notation.MayInherit);
-                    if (null != members)
-                        return members;
-                }
-            }
-            {
-                Object tmp = new ListLongGroupPerson((Group)this);
-                members = (List.Long<Person>)tmp;
-            }
-            this.members = members;
-            members.init();
-        }
-        return members;
-    }
-    public final boolean setMembers(List.Long<Person> members){
-        if (IsNotEqual(this.members,members)){
-            this.members = members;
-            return true;
-        }
-        else
-            return false;
-    }
-    public final boolean isEmptyMembers(){
-        List.Long<Person> collection = this.members;
-        if (null != collection)
-            return collection.isEmpty();
-        else
-            return true;
-    }
-    public final boolean isNotEmptyMembers(){
-        List.Long<Person> collection = this.members;
-        if (null != collection)
-            return (!collection.isEmpty());
-        else
-            return false;
-    }
-    public final Person fetchMembers(Filter filter){
-        if (null != filter && KIND == filter.kind){
-            List.Long<Person> collection = this.getMembers(Notation.MayInherit);
-            return collection.fetch(filter);
-        }
-        else
-            throw new IllegalArgumentException();
-    }
-    public final Person getMembers(gap.data.ListFilter<Person> filter){
-        if (null != filter){
-            List.Long<Person> list = this.getMembers(Notation.MayInherit);
-            for (Person item : list){
-                if (filter.accept(item))
-                    return item;
-            }
-            return null;
-        }
-        else
-            throw new IllegalArgumentException();
     }
     /*
      * Data binding supports
