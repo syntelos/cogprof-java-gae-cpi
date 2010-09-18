@@ -1,0 +1,54 @@
+#summary The CPI Online result URL Code
+#labels Featured
+
+ = Overview =
+
+ The URL Code is a modified [http://code.google.com/p/source/browse/trunk/code/src/cpi/B64.java Base64] transfer of a padded string.
+
+ == Pad ==
+
+ The pad cipher is used with a known key to scramble the plain text string.
+{{{
+    private final static byte[] Pad = {
+        'L', 'o', 'r', 'e', 'm', ' ', 'i', 'p', 's', 'u', 'm', ' ', 'd', 'o', 'l', 
+        'o', 'r', ' ', 's', 'i', 't', ' ', 'a', 'm', 'e', 't', ',', ' ', 'c', 'o', 
+    };
+
+    static byte[] Pad(byte[] text){
+        int len = text.length;
+        byte[] re = new byte[len];
+        for (int cc = 0; cc < len; cc++){
+
+           re[cc] = (byte)(text[cc] ^ Pad[cc]);
+        }
+        return re;
+    }
+}}}
+ This function, known as the [http://www.google.com/search?q=One+Time+Pad One Time Pad] or [http://www.google.com/search?q=Vernam+Cipher Vernam Cipher], works in both forward and inverse directions to encrypt and decrypt.  
+
+ While the One Time Pad is the most secure encryption algorithm, in our case here the cipher key (pad) is published in the [http://code.google.com/p/cpi/source/browse/trunk/code/src/cpi/Code.java Code] class.  So it's not secure.  Just a fast scrambler.
+
+ We use the scrambler just for some basic "eyeballs" privacy, as well as a minor degree of integrity assurance (in combination with parsing the plain text).
+
+ = Plain text =
+
+ The plain text code string is a simple set of `name:value;` pairs.  Within the Code class, it can be seen as 
+{{{
+    nt:#.####;nf:#.####;st:#.####;nf:#.####
+}}}
+
+ = Encoding =
+
+{{{
+        static String Encode(String string){
+            return B64.encode(Pad(string));
+        }
+}}}
+
+ = Decoding =
+
+{{{
+        static String Decode(String string){
+            return Pad(B64.decode(string));
+        }
+}}}
