@@ -9,17 +9,15 @@
 
  The functions that handle the plain text string are the following.
 {{{
-        static String Encode(String string){
-            return B64.encode(Pad(string));
+        static String Encode(float nt, float nf, float st, float sf){
+            return Hex.encode(Pad(Bits(nt,nf,st,sf)));
         }
-        static String Decode(String string){
-            return Pad(B64.decode(string));
+        static float[] Decode(String string){
+            return Bits(Pad(Hex.decode(string)));
         }
 }}}
 
- The B64 function is a modified [http://code.google.com/p/source/browse/trunk/code/src/cpi/B64.java Base64] transfer of a padded string.
-
- The Pad function is a well known cipher, used with a known key to scramble the plain text string.
+ The [http://www.google.com/search?q=One+Time+Pad Pad] function is a well known cipher, used with a known key to scramble the plain text string.
 {{{
     private final static byte[] Pad = {
         'L', 'o', 'r', 'e', 'm', ' ', 'i', 'p', 's', 'u', 'm', ' ', 'd', 'o', 'l', 
@@ -36,19 +34,12 @@
         return re;
     }
 }}}
- This function, known as the [http://www.google.com/search?q=One+Time+Pad One Time Pad] or [http://www.google.com/search?q=Vernam+Cipher Vernam Cipher], works in both forward and inverse directions to encrypt and decrypt.  
 
- While the One Time Pad is the most secure encryption algorithm, in our case here the cipher key (pad) is published in the [http://code.google.com/p/cpi/source/browse/trunk/code/src/cpi/Code.java Code] class.  So it's not secure.  Just a fast scrambler.
-
- We use the scrambler just for some basic "eyeballs" privacy, as well as a minor degree of integrity assurance (in combination with parsing the plain text).
+ The Bits function performs the 16 bit encoding and decoding of the quadrant values.  It does this using a fixed point representation for the values, known to exist between zero and one, and needing only a modest 1e-4 margin of error.
 
  = Plain text =
 
- The plain text code string is a simple set of `name:value;` pairs.  Within the Code class, it can be seen as 
-{{{
-    nt:N;nf:N;st:N;nf:N
-}}}
- For N a floating point number.  It stores only the CPI result data.
+ The plain text embedded in this code is a binary 16 bit fixed point representation of the four CPI Quadrant values: NT, NF, ST, and SF.  
 
  = Eyeballs Privacy =
 
