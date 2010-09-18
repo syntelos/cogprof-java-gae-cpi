@@ -5,7 +5,7 @@
 
  The CPI Online result data is encoded into a URL.  The software that performs this function is [http://code.google.com/p/cpi/source/browse/trunk/code/src/cpi/Code.java cpi.Code].
 
- = The code =
+ = Code =
 
  The URL code is a modified [http://code.google.com/p/source/browse/trunk/code/src/cpi/B64.java Base64] transfer of a padded string.
 
