@@ -25,20 +25,16 @@
         <p> Your personal profile URL will be similar to the following
           example.
           <pre>
-            <a href="http://cpi.cognitiveprofile.com/profile/IhtIVUMYW0JBR18SV1QCCUgQXVFMGFlVXU0XUxdVX11VWAcDTkVLSxNSV1pDWkc*">http://cpi.cognitiveprofile.com/profile/IhtIVUMYW0JBR18SV1QCCUgQXVFMGFlVXU0XUxdVX11VWAcDTkVLSxNSV1pDWkc*</a>
+            <a href="http://cpi.cognitiveprofile.com/profile/b390bea9de12f0e9">http://cpi.cognitiveprofile.com/profile/b390bea9de12f0e9</a>
           </pre>
           <i> This URL contains your anonymous result. </i>
         </p>
 
-        <div class="block">
-
-          <h3>No warranty</h3>
-
-          <p> Use this service at your own risk, no warranty of any kind
-            is offered or implied. </p>
-        </div>
       </div>
 
+    </div>
+    <div id="second">
+      <img src="http://cpi.cognitiveprofile.com/images/cognitive-profile-240x240.gif" width="240" height="240" />
     </div>
     <div id="footer">
       <center>Copyright &copy; 2010 Lois Breur Krause</center>

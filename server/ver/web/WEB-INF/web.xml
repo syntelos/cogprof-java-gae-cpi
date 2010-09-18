@@ -5,7 +5,7 @@
 
   <servlet>
     <servlet-name>Site</servlet-name>
-    <servlet-class>gap.service.Servlet</servlet-class>
+    <servlet-class>cpi.SiteServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet>
@@ -16,17 +16,6 @@
   <servlet>
     <servlet-name>Inventory</servlet-name>
     <servlet-class>cpi.InventoryServlet</servlet-class>
-    <load-on-startup>-1</load-on-startup>
-  </servlet>
-
-  <servlet>
-    <servlet-name>Person</servlet-name>
-    <servlet-class>oso.data.PersonServlet</servlet-class>
-    <load-on-startup>-1</load-on-startup>
-  </servlet>
-  <servlet>
-    <servlet-name>Group</servlet-name>
-    <servlet-class>cpi.groups.GroupServlet</servlet-class>
     <load-on-startup>-1</load-on-startup>
   </servlet>
 
@@ -41,15 +30,6 @@
   <servlet-mapping>
     <servlet-name>Inventory</servlet-name>
     <url-pattern>/inventory/*</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>Person</servlet-name>
-    <url-pattern>/people/*</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>Group</servlet-name>
-    <url-pattern>/groups/*</url-pattern>
   </servlet-mapping>
 
   <error-page>
