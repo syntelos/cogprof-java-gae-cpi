@@ -19,15 +19,7 @@
 
         <h3>Personal record</h3>
 
-        <p> Save your personal profile URL for future reference.
-        </p>
-
-        <p> Your personal profile URL will be similar to the following
-          example.
-          <pre>
-            <a href="http://cpi.cognitiveprofile.com/profile/b390bea9de12f0e9">http://cpi.cognitiveprofile.com/profile/b390bea9de12f0e9</a>
-          </pre>
-          <i> This URL contains your anonymous result. </i>
+        <p> Save your personal profile result URL for future reference.
         </p>
 
       </div>

@@ -1,8 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>Gap Data Error</title>
-    <link rel="stylesheet" type="text/css" href="/top.css" />
-    <link rel="icon" href="/icons/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="http://cpi.cognitiveprofile.com/top.css" />
+    <link rel="icon" href="http://cpi.cognitiveprofile.com/favicon.ico" />
   </head>
   <body>
     <div class="logon">{{>logon}}
@@ -19,6 +19,5 @@
       </div>
       {{/error}}
     </div>
-    <div class="logo rhs" onclick="javascript:document.location = 'http://gap-data.appspot.com/'; return true;" />
   </body>
 </html>
