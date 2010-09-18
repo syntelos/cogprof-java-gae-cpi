@@ -1,6 +1,6 @@
 #summary The CPI Online as an example of Gap Data
 #labels Featured
 
- The directory [http://code.google.com/p/cpi/source/browse/trunk/server server] is a [http://gap-data.googlecode.com/ Gap Data] application.
+ The CPI Online [http://code.google.com/p/cpi/source/browse/trunk/server server] is a [http://gap-data.googlecode.com/ Gap Data] application.
 
  
