@@ -2,3 +2,8 @@
 #labels Featured
 
  The [http://code.google.com/p/cpi/source/browse/trunk/server/src/cpi/ProfileImage.java Profile Image] java class uses [http://pisces-graphics.googlecode.com/ Pisces Graphics] to generate the CPI result image.
+
+
+ <wiki:gadget url="http://pisces-graphics.googlecode.com/svn/gadgets/cpi.xml" width="300" height="300" />
+
+ 
