@@ -122,7 +122,7 @@ public enum Inventory
 
                 for (int cc = 0; cc < Inventory.Size; cc++) {
                     Inventory usr_ri = inventory.get(cc);
-                    Group usr_grp = Group.For(usr_ri.isLeft(), cc);
+                    Quadrant usr_grp = Quadrant.For(usr_ri.isLeft(), cc);
                     float usr_val = Inventory.ValueOf(usr_ri);
 
                     switch(usr_grp){
@@ -170,7 +170,7 @@ public enum Inventory
 
                 for (int cc = 0; cc < Inventory.Size; cc++) {
                     Inventory usr_ri = inventory.get(cc);
-                    Group usr_grp = Group.For(usr_ri.isLeft(), cc);
+                    Quadrant usr_grp = Quadrant.For(usr_ri.isLeft(), cc);
                     float usr_val = Inventory.ValueOf(usr_ri);
 
                     switch(usr_grp){
