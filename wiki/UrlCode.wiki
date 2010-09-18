@@ -7,11 +7,19 @@
 
  = Code =
 
- The URL code is a modified [http://code.google.com/p/source/browse/trunk/code/src/cpi/B64.java Base64] transfer of a padded string.
+ The functions that handle the plain text string are the following.
+{{{
+        static String Encode(String string){
+            return B64.encode(Pad(string));
+        }
+        static String Decode(String string){
+            return Pad(B64.decode(string));
+        }
+}}}
 
- == Pad ==
+ The B64 function is a modified [http://code.google.com/p/source/browse/trunk/code/src/cpi/B64.java Base64] transfer of a padded string.
 
- The pad cipher is used with a known key to scramble the plain text string.
+ The Pad function is a well known cipher, used with a known key to scramble the plain text string.
 {{{
     private final static byte[] Pad = {
         'L', 'o', 'r', 'e', 'm', ' ', 'i', 'p', 's', 'u', 'm', ' ', 'd', 'o', 'l', 
@@ -40,22 +48,7 @@
 {{{
     nt:#.####;nf:#.####;st:#.####;nf:#.####
 }}}
-
- = Encoding =
-
-{{{
-        static String Encode(String string){
-            return B64.encode(Pad(string));
-        }
-}}}
-
- = Decoding =
-
-{{{
-        static String Decode(String string){
-            return Pad(B64.decode(string));
-        }
-}}}
+ It stores only the CPI result data.
 
  = Eyeballs Privacy =
 
