@@ -14,8 +14,68 @@ div#footer {
  color: #555;
 }
 div#first {
- margin: 48px 0px 60px 0px;
+ position: fixed;
+ left: 10%;
+ top: 48px;
+ bottom: 120px;
+ padding: 8px;
+ width: 40%;
+}
+div#second {
+ position: fixed;
+ left: 60%;
+ right: 10%;
+ top: 48px;
+ bottom: 120px;
  padding: 0px;
+ width: 30%;
+}
+div#inventory {
+ position: fixed;
+ top: 68px;
+ left: 10%;
+ width: 650px;
+ height: 50%;
+ padding: 10px;
+}
+div.invq {
+ width: 300px;
+ height: 50%;
+ border: 1px solid #101010;
+ padding-top: 20px;
+}
+div#lhs {
+  float: left;
+}
+div#rhs {
+  float: right;
+}
+div.invqq {
+ width: 300px;
+ margin-top: 20px;
+ margin-bottom: 40px;
+ margin-left: 0px;
+ margin-right: 0px;
+ text-align: center;
+ padding: 0px;
+}
+div.invqt {
+ width: 300px;
+ padding: 0;
+ margin-top: 20px;
+ margin-bottom: 40px;
+ text-align: center;
+ align: center;
+}
+span.invqq {
+ font-size: 24px;
+}
+table.invqtt {
+ width: 300px;
+ margin: 0px;
+ padding: 0px;
+ text-align: center;
+ align: center;
 }
 div.logon {
  position: absolute;

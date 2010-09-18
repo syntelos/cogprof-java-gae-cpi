@@ -1,18 +1,18 @@
-<!-- Indices written at Fri, 17 Sep 2010 01:07:57 UTC -->
+<!-- Indices written at Sat, 18 Sep 2010 10:37:58 UTC -->
 
 <datastore-indexes>
 
-    <!-- Used 72 times in query history -->
+    <!-- Used 66 times in query history -->
     <datastore-index kind="Person" ancestor="true" source="auto">
         <property name="logonId" direction="asc"/>
     </datastore-index>
 
-    <!-- Used 131 times in query history -->
+    <!-- Used 125 times in query history -->
     <datastore-index kind="Template" ancestor="true" source="auto">
         <property name="name" direction="asc"/>
     </datastore-index>
 
-    <!-- Used 262 times in query history -->
+    <!-- Used 250 times in query history -->
     <datastore-index kind="TemplateNode" ancestor="true" source="auto">
         <property name="offset" direction="asc"/>
     </datastore-index>
