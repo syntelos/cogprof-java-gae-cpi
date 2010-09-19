@@ -29,7 +29,7 @@ public final class Version {
     /**
      * Major version number.
      */
-    public final static int Major = 1;
+    public final static int Major = 3;
     /**
      * Minor version number.
      */

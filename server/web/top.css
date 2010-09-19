@@ -104,3 +104,15 @@ div.block {
  padding-bottom: 6px;
  padding-right: 8px;
 }
+a.sharing {
+ text-decoration: none;
+ margin: 0px;
+ padding: 0px;
+}
+img.sharing {
+ border: 0;
+ margin: 0px 1px 1px 1px;
+ padding: 0px;
+ vertical-align: middle;
+ display: inline;
+}

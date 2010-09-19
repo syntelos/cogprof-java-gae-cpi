@@ -1,8 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>Cognitive Profile Inventory</title>
-    <link rel="stylesheet" type="text/css" href="http://cpi.cognitiveprofile.com/top.css" />
-    <link rel="icon" href="http://cpi.cognitiveprofile.com/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="{{=pageUrlRoot}}/top.css" />
+    <link rel="icon" href="{{=pageUrlRoot}}/favicon.ico" />
   </head>
   <body>
     <div class="logon">{{>div.logon.html}}
@@ -26,7 +26,7 @@
 
     </div>
     <div id="second">
-      <img src="http://cpi.cognitiveprofile.com/images/cognitive-profile-240x240.gif" width="240" height="240" />
+      <img src="{{=pageUrlRoot}}/images/cognitive-profile-240x240.gif" width="240" height="240" />
     </div>
     <div id="footer">
       <center>Copyright &copy; 2010 Lois Breur Krause</center>
