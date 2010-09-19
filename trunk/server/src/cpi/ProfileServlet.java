@@ -108,6 +108,11 @@ public class ProfileServlet
                 out.write(png,0,len);
                 out.flush();
             }
+            else if (dec.old){
+
+                rep.sendRedirect("/profile/"+dec.code); /* (show new code in web user interface)
+                                                         */
+            }
             else {
                 req.setVariable(InventorySf,dec.toStringSf());
                 req.setVariable(InventorySt,dec.toStringSt());
