@@ -7,7 +7,7 @@
                width="301" height="301">
     <Require feature="setprefs"/>
   </ModulePrefs>
-  <UserPref name="resultIdentifier" display_name="Hexidecimal CPI result identifier" default_value="8914b71e8f9d968f"/>
+  <UserPref name="resultIdentifier" display_name="Hexidecimal CPI result identifier" default_value="b390a019eff70566"/>
   <Content preferred_height="301" preferred_width="301" />
   <Content type="html"><![CDATA[<a target="_top" style="margin: 0; padding: 0;" href="http://cpi.cognitiveprofile.com/"><img border="0" width="300" height="300" src="http://cpi.cognitiveprofile.com/profile/__UP_resultIdentifier__/image.png" style="margin: 0; padding: 0;" /></a>]]></Content>
 </Module>

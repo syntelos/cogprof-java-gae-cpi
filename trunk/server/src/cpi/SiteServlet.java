@@ -67,6 +67,12 @@ public class SiteServlet
             if (null != target){
                 req.setVariable(ExampleTarget,target);
             }
+            else {
+                target = req.getParameter("ir");
+                if (null != target){
+                    req.setVariable(ExampleTarget,target);
+                }
+            }
             {
                 InventoryServlet.Pair pair = InventoryServlet.Examples.get(0);
 
