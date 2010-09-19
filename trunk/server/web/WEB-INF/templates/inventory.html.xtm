@@ -8,42 +8,7 @@
   <body onload="init()">
     <div class="logon">{{>div.logon.html}}
     </div>
-    <div id="inventory">
-      <div class="invq" id="lhs">
-        <div class="invqq">
-          <span class="invqq">{{=inventory_lhs}}</span>
-        </div>
-        <div class="invqt">
-          <table class="invqtt" border="0" cellpadding="0" cellspacing="12">
-            <tbody>
-              <tr>
-                <td align="center"><a href="?id={{=inventory_current}}&ir=L4"><img border="0" name="L4" id="L4" src="{{=pageUrlRoot}}/images/cpi3-white-L4-88x57.gif" height="36" width="52" /></a></td>
-                <td align="center"><a href="?id={{=inventory_current}}&ir=L3"><img border="0" name="L3" id="L3" src="{{=pageUrlRoot}}/images/cpi3-white-L3-70x57.gif" height="36" width="42" /></a></td>
-                <td align="center"><a href="?id={{=inventory_current}}&ir=L2"><img border="0" name="L2" id="L2" src="{{=pageUrlRoot}}/images/cpi3-white-L2-57x57.gif" height="36" width="36" /></a></td>
-                <td align="center"><a href="?id={{=inventory_current}}&ir=L1"><img border="0" name="L1" id="L1" src="{{=pageUrlRoot}}/images/cpi3-white-L1-57x57.gif" height="36" width="36" /></a></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="invq" id="rhs">
-        <div class="invqq">
-          <span class="invqq">{{=inventory_rhs}}</span>
-        </div>
-        <div class="invqt">
-          <table class="invqtt" border="0" cellpadding="0" cellspacing="12">
-            <tbody>
-              <tr>
-                <td align="center"><a href="?id={{=inventory_current}}&ir=R1"><img border="0" name="R1" id="R1" src="{{=pageUrlRoot}}/images/cpi3-white-R1-57x57.gif" height="36" width="36" /></a></td>
-                <td align="center"><a href="?id={{=inventory_current}}&ir=R2"><img border="0" name="R2" id="R2" src="{{=pageUrlRoot}}/images/cpi3-white-R2-57x57.gif" height="36" width="36" /></a></td>
-                <td align="center"><a href="?id={{=inventory_current}}&ir=R3"><img border="0" name="R3" id="R3" src="{{=pageUrlRoot}}/images/cpi3-white-R3-70x57.gif" height="36" width="42" /></a></td>
-                <td align="center"><a href="?id={{=inventory_current}}&ir=R4"><img border="0" name="R4" id="R4" src="{{=pageUrlRoot}}/images/cpi3-white-R4-88x57.gif" height="36" width="52" /></a></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+{{>div.inventory.html}}
     <div id="footer">
       <center>Copyright &copy; 2010 Lois Breur Krause</center>
     </div>

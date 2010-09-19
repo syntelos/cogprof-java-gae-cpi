@@ -24,6 +24,7 @@ import cpi.Code;
 import gap.Request;
 import gap.Response;
 import gap.data.List;
+import gap.hapax.TemplateDataDictionary;
 import gap.hapax.TemplateException;
 import gap.hapax.TemplateName;
 import gap.hapax.TemplateRenderer;
@@ -41,6 +42,7 @@ public class InventoryServlet
 {
     private final static String TemplateFilename = "inventory.html";
 
+    private final static TemplateName DivInventory = new TemplateName("div.inventory.html");
     private final static TemplateName InventoryCurrent = new TemplateName("inventory_current");
     private final static TemplateName InventoryLhs = new TemplateName("inventory_lhs");
     private final static TemplateName InventoryRhs = new TemplateName("inventory_rhs");
@@ -85,23 +87,27 @@ public class InventoryServlet
                             catch (IllegalArgumentException skip){
                             }
                         }
-                        if (Inventory.Size != this.size())
-                            throw new IllegalArgumentException("Incomplete");
                     }
                     finally {
                         in.close();
                     }
                 }
                 else
-                    throw new IllegalArgumentException("Resource not found");
+                    throw new Error("Resource not found");
             }
             catch (IOException exc){
-                throw new IllegalArgumentException("Resource error",exc);
+                throw new Error("Resource error",exc);
             }
         }
     }
 
     private final static Set EN_US = new Set();
+    static {
+        if (Inventory.Size != EN_US.size())
+            throw new Error("Inventory Incomplete");
+    }
+
+    protected final static Set Examples = new Set("examples.txt","US-ASCII");
 
 
     public InventoryServlet(){
@@ -151,9 +157,8 @@ public class InventoryServlet
                         else {
                             Pair pair = EN_US.get(next);
                             if (null != pair){
-                                req.setVariable(InventoryCurrent,String.valueOf(next));
-                                req.setVariable(InventoryLhs,pair.lhs);
-                                req.setVariable(InventoryRhs,pair.rhs);
+
+                                DefineInventory(req,next,pair);
 
                                 super.render(req,rep);
                             }
@@ -176,9 +181,8 @@ public class InventoryServlet
                     else {
                         Pair pair = EN_US.get(next);
                         if (null != pair){
-                            req.setVariable(InventoryCurrent,String.valueOf(next));
-                            req.setVariable(InventoryLhs,pair.lhs);
-                            req.setVariable(InventoryRhs,pair.rhs);
+
+                            DefineInventory(req,next,pair);
 
                             super.render(req,rep);
                         }
@@ -190,9 +194,8 @@ public class InventoryServlet
                 
                     Pair pair = EN_US.get(0);
                     if (null != pair){
-                        req.setVariable(InventoryCurrent,"0");
-                        req.setVariable(InventoryLhs,pair.lhs);
-                        req.setVariable(InventoryRhs,pair.rhs);
+
+                        DefineInventory(req,0,pair);
 
                         super.render(req,rep);
                     }
@@ -210,5 +213,16 @@ public class InventoryServlet
 
 
         return Templates.GetTemplate(TemplateFilename);
+    }
+
+    protected static TemplateDataDictionary DefineInventory(Request req, int id, Pair pair){
+
+        TemplateDataDictionary div = req.addSection(DivInventory);
+        {
+            div.setVariable(InventoryCurrent,String.valueOf(id));
+            div.setVariable(InventoryLhs,pair.lhs);
+            div.setVariable(InventoryRhs,pair.rhs);
+        }
+        return div;
     }
 }

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Module>
-  <ModulePrefs title="Generic CPI Result Display" url="http://cpi.googlecode.com/svn/trunk/gadgets/result.xml" description="Display a CPI result in a 300x300 gadget with a link to the generic CPI site, not the specific result." author="John Pritchard" author_email="cpi@cognitiveprofile.com" width="301" height="301">
+  <ModulePrefs title="Generic CPI Result Display"
+                 url="http://cpi.googlecode.com/svn/trunk/gadgets/result.xml"
+         description="Display a CPI result in a 300x300 gadget with a link to the generic CPI site, not the specific result."
+              author="John Pritchard" author_email="cpi@cognitiveprofile.com"
+               width="301" height="301">
     <Require feature="setprefs"/>
   </ModulePrefs>
   <UserPref name="resultIdentifier" display_name="Hexidecimal CPI result identifier" default_value="8914b71e8f9d968f"/>
