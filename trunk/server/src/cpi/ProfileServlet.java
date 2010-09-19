@@ -54,6 +54,20 @@ public class ProfileServlet
     private final static TemplateName InventoryNt   = new TemplateName("inventory_nt");
     private final static TemplateName InventoryCode = new TemplateName("inventory_code");
 
+    private final static TemplateName LogonEtc = new TemplateName("logonEtc");
+    private final static TemplateName ThisPageUrlEncoded = new TemplateName("thisPageUrlEncoded");
+
+    protected static void Sharing(Request req, String url)
+        throws java.io.UnsupportedEncodingException
+    {
+
+        req.setVariable(LogonEtc,"div.logon.sharing.html");
+
+        String urlEnc = java.net.URLEncoder.encode(url,"US-ASCII");
+
+        req.addSection(LogonEtc).setVariable(ThisPageUrlEncoded,urlEnc);
+    }
+
 
 
     public ProfileServlet(){
@@ -100,6 +114,8 @@ public class ProfileServlet
                 req.setVariable(InventoryNf,dec.toStringNf());
                 req.setVariable(InventoryNt,dec.toStringNt());
                 req.setVariable(InventoryCode,dec.code);
+
+                Sharing(req,req.getRequestURL().toString());
 
                 super.render(req,rep);
             }
