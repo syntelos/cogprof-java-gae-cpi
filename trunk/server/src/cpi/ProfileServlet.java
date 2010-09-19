@@ -67,7 +67,38 @@ public class ProfileServlet
 
         req.addSection(LogonEtc).setVariable(ThisPageUrlEncoded,urlEnc);
     }
+    /**
+     * 
+     */
+    public static abstract class Tail 
+        extends Object
+    {
+        public final static int None = -1;
+        public final static int ImagePng = 1;
+        public final static int DataJson = 2;
 
+
+        public final static int For(String tail){
+            if (null == tail || 0 == tail.length())
+                return Tail.None;
+            else {
+                switch (tail.charAt(0)){
+                case 'i':
+                    if (tail.equals("image.png"))
+                        return Tail.ImagePng;
+                    else
+                        return Tail.None;
+                case 'd':
+                    if (tail.equals("data.json"))
+                        return Tail.DataJson;
+                    else
+                        return Tail.None;
+                default:
+                    return Tail.None;
+                }
+            }
+        }
+    }
 
 
     public ProfileServlet(){
@@ -93,36 +124,60 @@ public class ProfileServlet
         Code.Decode dec = this.getCode(req);
 
         if (null != dec){
-            String tail = req.getPath(1);
-            if (null != tail && tail.equals("image.png")){
+            switch(Tail.For(req.getPath(1))){
+            case Tail.ImagePng:{
 
                 ProfileImage image = new ProfileImage(dec);
 
                 final byte[] png = image.toPNG();
                 final int len = png.length;
 
-                rep.setHeader("Content-Type","image/png");
+                if (null != req.getParameter("download"))
+                    rep.setHeader("Content-Type","application/octet-stream");
+                else
+                    rep.setHeader("Content-Type","image/png");
+
                 rep.setHeader("Content-Length",String.valueOf(len));
                 rep.setDateHeader("Last-Modified",System.currentTimeMillis());
                 OutputStream out = rep.getOutputStream();
                 out.write(png,0,len);
                 out.flush();
+                return;
             }
-            else if (dec.old){
+            case Tail.DataJson:{
+                java.io.PrintWriter out = rep.getWriter();
 
-                rep.sendRedirect("/profile/"+dec.code); /* (show new code in web user interface)
-                                                         */
+                if (null != req.getParameter("download"))
+                    rep.setHeader("Content-Type","application/octet-stream");
+                else
+                    rep.setHeader("Content-Type","application/json");
+
+                out.println("{");
+                out.printf("  \"nt\": %s,%n",dec.toStringNt());
+                out.printf("  \"nf\": %s,%n",dec.toStringNf());
+                out.printf("  \"st\": %s,%n",dec.toStringSt());
+                out.printf("  \"sf\": %s%n",dec.toStringSf());
+                out.println("}");
+                return;
             }
-            else {
-                req.setVariable(InventorySf,dec.toStringSf());
-                req.setVariable(InventorySt,dec.toStringSt());
-                req.setVariable(InventoryNf,dec.toStringNf());
-                req.setVariable(InventoryNt,dec.toStringNt());
-                req.setVariable(InventoryCode,dec.code);
+            default:
+                if (dec.old){
 
-                Sharing(req,req.getRequestURL().toString());
+                    rep.sendRedirect("/profile/"+dec.code); /* (show new code in web user interface)
+                                                             */
+                }
+                else {
+                    req.setVariable(InventorySf,dec.toStringSf());
+                    req.setVariable(InventorySt,dec.toStringSt());
+                    req.setVariable(InventoryNf,dec.toStringNf());
+                    req.setVariable(InventoryNt,dec.toStringNt());
+                    req.setVariable(InventoryCode,dec.code);
 
-                super.render(req,rep);
+                    Sharing(req,req.getRequestURL().toString());
+
+                    super.render(req,rep);
+                }
+                return;
             }
         }
         else if (req.hasViewer()){

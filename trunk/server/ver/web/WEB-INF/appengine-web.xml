@@ -3,12 +3,4 @@
   <application>@ProjectTarget@</application>
   <version>@VersionMajor@-@VersionMinor@-@VersionBuild@</version>
   <sessions-enabled>true</sessions-enabled>
-  <!-- inbound-services>
-    <service>xmpp_message</service>
-  </inbound-services  -->
-  <system-properties>
-    <property name="com.google.gdata.DisableCookieHandler" value="true"/>
-    <property name="com.google.appengine.repackaged.com.google.common.base.FinalizableReferenceQueue.level" value="DEBUG"/>
-  </system-properties>
-  <precompilation-enabled>false</precompilation-enabled>
 </appengine-web-app>

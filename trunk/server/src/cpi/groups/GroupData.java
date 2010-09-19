@@ -39,7 +39,7 @@ import javax.annotation.Generated;
  *
  * @see Group
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2010-09-18T07:35:13.364Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2010-09-19T10:30:59.453Z")
 public abstract class GroupData
     extends gap.data.BigTable
     implements DataInheritance<Group>
