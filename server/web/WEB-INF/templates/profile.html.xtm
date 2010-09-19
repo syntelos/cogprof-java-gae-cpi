@@ -9,7 +9,7 @@
     </div>
     <div id="first">
       <center>
-        <img src="/profile/{{=inventory_code}}/image.png" width="300" height="300" />
+        <img src="{{=pageUrlRoot}}/profile/{{=inventory_code}}/image.png" width="300" height="300" />
         <table border="0">
           <tr><td>SF</td><td>{{=inventory_sf}}</td></tr>
           <tr><td>ST</td><td>{{=inventory_st}}</td></tr>
