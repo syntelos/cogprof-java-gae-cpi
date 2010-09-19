@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs title="CPI Example Display" url="http://cpi.googlecode.com/svn/trunk/gadgets/example.xml"
+         description="Display a CPI example with one choice selected."
+             author="John Pritchard" author_email="cpi@cognitiveprofile.com" 
+              width="670" height="320">
+  </ModulePrefs>
+  <Content preferred_height="320" preferred_width="670" />
+  <Content type="url" href="http://cpi.cognitiveprofile.com/example.html?target=L1" />
+</Module>
