@@ -37,10 +37,17 @@ import javax.servlet.ServletException;
 
 /**
  * Service for /* 
+ * 
+ * Includes 
+ * <pre>
+ *   /example.html?target={L4,L3,L2,L1,R1,R2,R3,R4} (one of)
+ * </pre>
  */
 public class SiteServlet
     extends gap.service.Servlet
 {
+
+    private final static TemplateName ExampleTarget = new TemplateName("example_target");
 
 
 
@@ -52,7 +59,22 @@ public class SiteServlet
     protected void doGet(Request req, Response rep)
         throws ServletException, IOException
     {
-        if (req.hasViewer()){
+        String path = req.getPath(0);
+
+        if (null != path && "example.html".equals(path)){
+
+            String target = req.getParameter("target");
+            if (null != target){
+                req.setVariable(ExampleTarget,target);
+            }
+            {
+                InventoryServlet.Pair pair = InventoryServlet.Examples.get(0);
+
+                InventoryServlet.DefineInventory(req,0,pair);
+            }
+            this.render(req,rep,"example.html");
+        }
+        else if (req.hasViewer()){
 
             Person viewer = req.getViewer();
 
