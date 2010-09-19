@@ -234,21 +234,28 @@ public abstract class Code {
 
         public final float nt, nf, st, sf;
         public final String code;
+        public final boolean old;
 
         public Decode(String code){
             super();
-            this.code = Clean(code);
+            code = Clean(code);
             float nt, nf, st, sf;
-            if ('I' == this.code.charAt(0)){
-                CodeIht.Decode dec = new CodeIht.Decode(this.code);
+            if ('I' == code.charAt(0)){
+                this.old = true;
+                CodeIht.Decode dec = new CodeIht.Decode(code);
 
                 nt = dec.nt;
                 nf = dec.nf;
                 st = dec.st;
                 sf = dec.sf;
+
+                this.code = (new Encode(nt,nf,st,sf)).code;
+
             }
             else {
-                float[] value = Decode(this.code);
+                this.old = false;
+                this.code = code;
+                float[] value = Decode(code);
 
                 nt = value[0];
                 nf = value[1];
