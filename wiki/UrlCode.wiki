@@ -7,24 +7,24 @@
 
  = Code =
 
- The functions that handle the plain text string are the following.
+ The coding functions are the following.
 {{{
-        static String Encode(float nt, float nf, float st, float sf){
-            return Hex.encode(Pad(Bits(nt,nf,st,sf)));
+        String Encode(float nt, float nf, float st, float sf){
+            return Hex(Pad(Bits(nt,nf,st,sf)));
         }
-        static float[] Decode(String string){
-            return Bits(Pad(Hex.decode(string)));
+        float[] Decode(String string){
+            return Bits(Pad(Hex(string)));
         }
 }}}
 
  The [http://www.google.com/search?q=One+Time+Pad Pad] function is a well known cipher, used with a known key to scramble the binary results data.
 {{{
-    private final static byte[] Pad = {
+    byte[] Pad = {
         'L', 'o', 'r', 'e', 'm', ' ', 'i', 'p', 's', 'u', 'm', ' ', 'd', 'o', 'l', 
         'o', 'r', ' ', 's', 'i', 't', ' ', 'a', 'm', 'e', 't', ',', ' ', 'c', 'o', 
     };
 
-    static byte[] Pad(byte[] text){
+    byte[] Pad(byte[] text){
         int len = text.length;
         byte[] re = new byte[len];
         for (int cc = 0; cc < len; cc++){
