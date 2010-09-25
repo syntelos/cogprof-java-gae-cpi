@@ -1,11 +1,11 @@
 #summary CPI Online Application Programming Interface
 #labels Featured
 
- = Service =
+= Service =
 
  The CPI Online is running at [http://cpi.cognitiveprofile.com/ cpi.cognitiveprofile.com].
 
- = Result Data =
+= Result Data =
 
  The CPI Online includes [http://www.json.org/ JSON] data access via a Result URL as 
 {{{
@@ -17,7 +17,7 @@
    http://cpi.cognitiveprofile.com/profile/b390a019eff70566/data.json
 }}}
 
- = Result Display Image =
+= Result Display Image =
 
   The CPI Online includes result display image access via a Result URL as 
 {{{
