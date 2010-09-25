@@ -1,11 +1,11 @@
 #summary The CPI Online result URL Code
 #labels Featured
 
- = Overview =
+= Overview =
 
  The CPI Online result data is encoded into a URL.  The software that performs this function is [http://code.google.com/p/cpi/source/browse/trunk/code/src/cpi/Code.java cpi.Code].
 
- = Code =
+= Code =
 
  The coding functions are the following.
 {{{
@@ -73,11 +73,11 @@
     }
 }}}
 
- = Plain text =
+= Plain text =
 
  The plain text embedded in this code is a binary 16 bit fixed point representation of the four CPI Quadrant values: NT, NF, ST, and SF.  
 
- = Eyeballs Privacy =
+= Eyeballs Privacy =
 
  We hope that most people will want to share their CPI Online results with others.  Sharing can be a powerful aid.
 
