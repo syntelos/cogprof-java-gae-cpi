@@ -12,8 +12,10 @@
    URL/data.json
 }}}
  
- For example, [http://cpi.cognitiveprofile.com/profile/b390a019eff70566/data.json http://cpi.cognitiveprofile.com/profile/b390a019eff70566/data.json].
-
+ For example, 
+{{{
+   http://cpi.cognitiveprofile.com/profile/b390a019eff70566/data.json
+}}}
 
  = Result Display Image =
 
@@ -22,4 +24,7 @@
    URL/image.png
 }}}
  
- For example, [http://cpi.cognitiveprofile.com/profile/b390a019eff70566/image.png http://cpi.cognitiveprofile.com/profile/b390a019eff70566/image.png].
+ For example, 
+{{{
+   http://cpi.cognitiveprofile.com/profile/b390a019eff70566/image.png
+}}}
