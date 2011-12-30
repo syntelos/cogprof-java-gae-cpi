@@ -1,0 +1,57 @@
+<project name="cpi" default="all">
+
+ <target name="all">
+
+   <ant dir="code" />
+
+   <ant dir="server" />
+ </target>
+
+ <target name="odl">
+
+   <ant dir="server" target="odl"/>
+ </target>
+
+ <target name="clean">
+
+   <ant dir="code" target="clean"/>
+
+   <ant dir="server" target="clean"/>
+ </target>
+
+ <target name="test">
+
+   <ant dir="code" target="test"/>
+
+   <ant dir="server" target="test"/>
+ </target>
+
+ <target name="build">
+
+   <ant dir="code" target="build"/>
+
+   <ant dir="server" target="build"/>
+ </target>
+
+ <target name="minor">
+
+   <ant dir="code" target="minor"/>
+
+   <ant dir="server" target="minor"/>
+ </target>
+
+ <target name="major">
+
+   <ant dir="code" target="major"/>
+
+   <ant dir="server" target="major"/>
+ </target>
+
+ <target name="version">
+
+   <ant dir="code" target="version"/>
+
+   <ant dir="server" target="version"/>
+ </target>
+
+</project>

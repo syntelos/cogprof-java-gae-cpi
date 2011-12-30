@@ -39,7 +39,7 @@ import javax.annotation.Generated;
  *
  * @see Group
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2010-09-19T10:30:59.453Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2011-12-29T22:45:54.493Z")
 public abstract class GroupData
     extends gap.data.BigTable
     implements DataInheritance<Group>
@@ -57,16 +57,42 @@ public abstract class GroupData
     public final static gap.service.od.ClassDescriptor ClassDescriptorFor(){
         return ClassDescriptorFor(Group.class);
     }
+    /**
+     * @see gap.data.Kind#pathto()
+     */
+    public final static String PathTo(){
+        return KIND.pathto();
+    }
+    public final static String PathTo(String subpath){
+        return KIND.pathto(subpath);
+    }
 
-
-
-
+    /**
+     * Long instance key without parent key
+     */
     public final static Key KeyLongIdFor(String name){
         String id = IdFor( name);
         return KeyLongFor(id);
     }
-
-
+    /**
+     * Used by gap.data.Kind
+     *
+     * Calls {@link #KeyLongIdFor}
+     */
+    public final static Key KeyIdFor(Object... args){
+        return KeyLongIdFor((String)args[0]);
+    }
+    /**
+     * Used by setId
+     *
+     * Calls {@link #KeyLongFor}
+     */
+    public final static Key KeyFor(Object... args){
+        return KeyLongFor( (String)args[0]);
+    }
+    /**
+     * Identifier for unique fields
+     */
     public final static String IdFor(String name){
         if (null != name){
             String nameString = name;
@@ -76,32 +102,35 @@ public abstract class GroupData
             throw new IllegalArgumentException();
     }
 
-
+    /**
+     * Instance lookup
+     */
     public final static Group ForLongName(String name){
         if (null != name){
             Key key = KeyLongIdFor( name);
-            Group instance = (Group)gap.data.Store.Get(key);
+            Group instance = (Group)gap.data.Store.GetClass(key);
             if (null != instance)
                 return instance;
             else {
                 Query q = CreateQueryFor(key);
-                return (Group)gap.data.Store.Query1(q);
+                return (Group)gap.data.Store.Query1Class(q);
             }
         }
         else
             throw new IllegalArgumentException();
     }
 
-
+    /**
+     * Instance lookup or create
+     */
     public final static Group GetCreateLong(String name){
         Group group = ForLongName( name);
         if (null == group){
             group = new Group( name);
-            group = (Group)gap.data.Store.Put(group);
+            group = (Group)gap.data.Store.PutClass(group);
         }
         return group;
     }
-
 
 
     public final static Key KeyLongFor(String id){
@@ -112,26 +141,29 @@ public abstract class GroupData
     public final static Group ForLongId(String id){
         if (null != id){
             Key key = KeyLongFor(id);
-            Group instance = (Group)gap.data.Store.Get(key);
+            Group instance = (Group)gap.data.Store.GetClass(key);
             if (null != instance)
                 return instance;
             else {
                 Query q = CreateQueryFor(key);
-                return (Group)gap.data.Store.Query1(q);
+                return (Group)gap.data.Store.Query1Class(q);
             }
         }
         else
             throw new IllegalArgumentException();
     }
 
+    /**
+     * Used by gap.data.Kind
+     */
     public final static Group Get(Key key){
         if (null != key){
-            Group instance = (Group)gap.data.Store.Get(key);
+            Group instance = (Group)gap.data.Store.GetClass(key);
             if (null != instance)
                 return instance;
             else {
                 Query q = CreateQueryFor(key);
-                return (Group)gap.data.Store.Query1(q);
+                return (Group)gap.data.Store.Query1Class(q);
             }
         }
         else
@@ -140,7 +172,7 @@ public abstract class GroupData
     public final static Key GetKey(Key key){
         if (null != key){
             Query q = CreateQueryFor(key);
-            return gap.data.Store.QueryKey1(q);
+            return gap.data.Store.Query1Key(q);
         }
         else
             throw new IllegalArgumentException();
@@ -164,16 +196,43 @@ public abstract class GroupData
     }
 
 
-
     /**
-     * Drop the instance and any children of its key from the world,
-     * memcache and store.
+     * Test for uniqueness and iterate under collisions.
+     */
+    public final static Key NewRandomKeyLong(){
+        /*
+         * Source matter for data local uniqueness
+         */
+        long matter = (gap.data.Hash.Djb64(ClassName) ^ (serialVersionUID<<3) ^ serialVersionUID);
+        /*
+         * Random matter for network global uniqueness
+         */
+        java.util.Random random = new java.util.Random();
+        do {
+            matter ^= random.nextLong();
+            String idString = gap.data.Hash.Hex(matter);
+            Key key = KeyFactory.createKey(KIND.getName(),idString);
+            if (null == GetKey(key))
+                return key;
+        }
+        while (true);
+    }
+    /**
+     * Drop the instance from memcache and datastore.
      */
     public final static void Delete(Group instance){
         if (null != instance){
-            Key key = instance.getKey();
-            gap.data.Store.DeleteCollection(KIND,new Query(key));
-            gap.data.Store.Delete(key);
+
+            Delete(instance.getKey());
+        }
+    }
+    /**
+     * Drop the instance from memcache and datastore.
+     */
+    public final static void Delete(Key instanceKey){
+        if (null != instanceKey){
+
+            gap.data.Store.DeleteKey(instanceKey);
         }
     }
     /**
@@ -182,7 +241,7 @@ public abstract class GroupData
     public final static void Clean(Group instance){
         if (null != instance){
             Key key = instance.getKey();
-            gap.data.Store.Clean(key);
+            gap.data.Store.CleanKey(key);
         }
     }
     /**
@@ -190,7 +249,7 @@ public abstract class GroupData
      */
     public final static void Save(Group instance){
         if (null != instance){
-            gap.data.Store.Put(instance);
+            gap.data.Store.PutClass(instance);
         }
     }
     /**
@@ -198,7 +257,7 @@ public abstract class GroupData
      */
     public final static void Store(Group instance){
         if (null != instance){
-            gap.data.Store.Put(instance);
+            gap.data.Store.PutClass(instance);
         }
     }
     /**
@@ -221,28 +280,33 @@ public abstract class GroupData
         return filter.update(query);
     }
     
-    
     public final static Group Query1(Query query){
         if (null != query)
-            return (Group)gap.data.Store.Query1(query);
+            return (Group)gap.data.Store.Query1Class(query);
         else
             throw new IllegalArgumentException();
     }
     public final static BigTableIterator<Group> QueryN(Query query, Page page){
         if (null != query && null != page)
-            return gap.data.Store.QueryN(query,page);
+            return gap.data.Store.QueryNClass(query,page);
         else
             throw new IllegalArgumentException();
     }
     public final static Key QueryKey1(Query query){
         if (null != query)
-            return gap.data.Store.QueryKey1(query);
+            return gap.data.Store.Query1Key(query);
         else
             throw new IllegalArgumentException();
     }
-    public final static List.Primitive<Key> QueryKeyN(Query query, Page page){
+    public final static List.Primitive<Key> QueryNKey(Query query, Page page){
         if (null != query)
-            return gap.data.Store.QueryKeyN(query,page);
+            return gap.data.Store.QueryNKey(query,page);
+        else
+            throw new IllegalArgumentException();
+    }
+    public final static List.Primitive<Key> QueryNKey(Query query){
+        if (null != query)
+            return gap.data.Store.QueryNKey(query);
         else
             throw new IllegalArgumentException();
     }
@@ -289,6 +353,21 @@ public abstract class GroupData
             else
                 return field;
         }
+        /**
+         * Field statistics are maintained for persistent fields exclusively
+         */
+        public final static class Statistics
+            extends gap.data.Field.Statistics<Group.Field>
+        {
+            public Statistics(){
+                super(Group.Field.class);
+            }
+        }
+        /**
+         * Dynamic binding operator for field data type
+         *
+         * Persistent BigTable fields are represented by the string ID.
+         */
         public static Object Get(Field field, Group instance, boolean mayInherit){
             switch(field){
             case InheritFromKey:
@@ -300,13 +379,18 @@ public abstract class GroupData
             case Name:
                 return instance.getName(mayInherit);
             case Owner:
-                return instance.getOwner(mayInherit);
+                return instance.getOwnerId();
             case Created:
                 return instance.getCreated(mayInherit);
             default:
                 throw new IllegalArgumentException(field.toString()+" in Group");
             }
         }
+        /**
+         * Dynamic binding operator for field data type
+         *
+         * Persistent BigTable fields are represented by the string ID.
+         */
         public static boolean Set(Field field, Group instance, Object value){
             switch(field){
             case InheritFromKey:
@@ -318,13 +402,66 @@ public abstract class GroupData
             case Name:
                 return instance.setName(gap.Objects.StringFromObject(value));
             case Owner:
-                return instance.setOwner(oso.data.Person.FromObject(value));
+                return instance.setOwnerId(gap.Objects.StringFromObject(value));
             case Created:
                 return instance.setCreated(gap.Objects.DateFromObject(value));
             default:
                 throw new IllegalArgumentException(field.toString()+" in Group");
             }
         }
+        /**
+         * Dynamic binding operator for field storage type
+         *
+         * Persistent BigTable fields are represented by the string ID.
+         */
+        public static java.io.Serializable Storage(Field field, Group instance){
+            switch(field){
+            case InheritFromKey:
+                return instance.getInheritFromKey();
+            case Key:
+                return instance.getKey();
+            case Id:
+                return instance.getId();
+            case Name:
+                return instance.getName(MayNotInherit);
+            case Owner:
+                return instance.getOwnerId();
+            case Created:
+                return instance.getCreated(MayNotInherit);
+            default:
+                throw new IllegalArgumentException(field.toString()+" in Group");
+            }
+        }
+        /**
+         * Dynamic binding operator for field storage type
+         *
+         * Persistent BigTable fields are represented by the string ID.
+         */
+        public static void Storage(Field field, Group instance, java.io.Serializable value){
+            switch(field){
+            case InheritFromKey:
+                instance.setInheritFromKey( (Key)value);
+                return;
+            case Key:
+                instance.setKey( (Key)value);
+                return;
+            case Id:
+                instance.setId( (String)value);
+                return;
+            case Name:
+                instance.setName( (String)value);
+                return;
+            case Owner:
+                instance.setOwnerId( (String)value);
+                return;
+            case Created:
+                instance.setCreated( (Date)value);
+                return;
+            default:
+                throw new IllegalArgumentException(field.toString()+" in Group");
+            }
+        }
+
 
         public final static class List
             extends gap.util.ArrayList<Group.Field>
@@ -349,11 +486,14 @@ public abstract class GroupData
 
         private final boolean fieldTypePrimitive, fieldTypeBigTable, fieldTypeCollection;
 
+        private final boolean fieldNameKeyOrId;
+
 
         Field(String fieldName, Type fieldType){
             if (null != fieldName && null != fieldType){
                 this.fieldName = fieldName;
                 this.fieldType = fieldType;
+                this.fieldNameKeyOrId = BigTable.IsKeyOrId(fieldName);
                 /*
                  * Using a switch here causes a null pointer
                  * initializing the switch map.
@@ -410,18 +550,27 @@ public abstract class GroupData
         public boolean isNotFieldTypeCollection(){
             return (!this.fieldTypeCollection);
         }
+        public boolean isFieldNameKeyOrId(){
+            return this.fieldNameKeyOrId;
+        }
+        public boolean isNotFieldNameKeyOrId(){
+            return (!this.fieldNameKeyOrId);
+        }
         public String toString(){
             return this.fieldName;
         }
     }
 
-    private volatile transient Group inheritFrom;
+    private final Group.Field.Statistics fieldStatistics = new Group.Field.Statistics();
+
+    private transient Group inheritFrom;
 
 
-    private volatile String name;
-    private volatile Key ownerKey;
-    private volatile transient Person owner;
-    private volatile Date created;
+    private String name;
+    private String ownerId;
+    private transient Key ownerKey;
+    private transient Person owner;
+    private Date created;
 
 
 
@@ -432,19 +581,43 @@ public abstract class GroupData
     protected GroupData(String name) {
         super();
         this.setName(name);
-        String id = IdFor( name);
-        Key key = KeyLongFor(id);
-        this.setKey(key);
+        {
+            final String id = IdFor(name);
+            final Key key = KeyLongFor(id);
+            this.setKey(key);
+        }
     }
-
 
 
     public void destroy(){
         this.inheritFrom = null;
-        this.datastoreEntity = null;
         this.name = null;
         this.owner = null;
         this.created = null;
+    }
+    public final String getId(){
+
+        String id = IdFor(KIND.name, this.key);
+        if (null != id)
+            return id;
+        else
+            return IdFor(this.name);
+    }
+    public final boolean setId(String id){
+        if (null == id){
+            if (null != this.key){
+                this.key = null;
+                return true;
+            }
+            else
+                return false;
+        }
+        else if (null == this.key){
+            this.key = KeyLongFor(id);
+            return true;
+        }
+        else
+            return false;
     }
     public final boolean hasInheritFrom(){
         return (null != this.inheritFrom || null != this.inheritFromKey);
@@ -465,6 +638,7 @@ public abstract class GroupData
     }
     public final boolean setInheritFrom(Group ancestor){
         if (IsNotEqual(this.inheritFrom,ancestor)){
+
             this.inheritFrom = ancestor;
             if (null != ancestor)
                 this.inheritFromKey = ancestor.getKey();
@@ -475,6 +649,7 @@ public abstract class GroupData
     }
     public final boolean inheritFrom(Group ancestor){
         if (IsNotEqual(this.inheritFrom,ancestor)){
+
             this.inheritFrom = ancestor;
             if (null != ancestor)
                 this.inheritFromKey = ancestor.getKey();
@@ -491,6 +666,7 @@ public abstract class GroupData
     }
     public final boolean dropName(){
         if (null != this.name){
+            this.fieldStatistics.markDirty(Field.Name);
             this.name = null;
             return true;
         }
@@ -505,6 +681,7 @@ public abstract class GroupData
     }
     public final boolean setName(String name){
         if (IsNotEqual(this.name,name)){
+            this.fieldStatistics.markDirty(Field.Name);
             this.name = name;
             return true;
         }
@@ -519,12 +696,60 @@ public abstract class GroupData
     }
     public final boolean dropOwner(){
         if (null != this.owner){
+            this.fieldStatistics.markDirty(Field.Owner);
             this.owner = null;
+            this.ownerId = null;
             this.ownerKey = null;
             return true;
         }
         else
             return false;
+    }
+    public final String getOwnerId(){
+        return this.ownerId;
+    }
+    public final boolean setOwnerId(String ownerId){
+        if (IsNotEqual(this.ownerId,ownerId)){
+            this.fieldStatistics.markDirty(Field.Owner);
+            this.ownerId = ownerId;
+            this.ownerKey = null;
+            this.owner = null;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final Key getOwnerKey(){
+        if (null == this.ownerKey){
+            /*
+             * BigTable dereferencing
+             */
+            if (null != this.ownerId){
+                this.ownerKey = Person.KeyLongFor(this.ownerId);
+            }
+        }
+        return this.ownerKey;
+    }
+    public final String getOwnerId(boolean mayInherit){
+        if (null != this.ownerId)
+            return this.ownerId;
+        else if (mayInherit && this.hasInheritFrom()){
+            Group inheritFrom = this.getInheritFrom();
+            return inheritFrom.getOwnerId(mayInherit);
+        }
+        else
+            return null;
+    }
+    public final Key getOwnerKey(boolean mayInherit){
+        Key ownerKey = this.getOwnerKey();
+        if (null != ownerKey)
+            return ownerKey;
+        else if (mayInherit && this.hasInheritFrom()){
+            Group inheritFrom = this.getInheritFrom();
+            return inheritFrom.getOwnerKey(mayInherit);
+        }
+        else
+            return null;
     }
     public final Person getOwner(){
         return this.getOwner(Notation.MayInherit);
@@ -532,25 +757,36 @@ public abstract class GroupData
     public final Person getOwner(boolean mayInherit){
         Person owner = this.owner;
         if (null == owner){
-            Key ownerKey = this.ownerKey;
-            if (null == ownerKey && mayInherit && this.hasInheritFrom()){
-                Group inheritFrom = this.getInheritFrom();
-                return inheritFrom.getOwner(Notation.MayInherit);
-            }
-            else if (null != ownerKey){
+            /*
+             * BigTable dereference
+             */
+            Key ownerKey = this.getOwnerKey(mayInherit);
+
+            if (null != ownerKey){
                 owner = Person.Get(ownerKey);
                 this.owner = owner;
             }
         }
-        return owner;
+
+        if (null == owner && mayInherit && this.hasInheritFrom()){
+            Group inheritFrom = this.getInheritFrom();
+            return inheritFrom.getOwner(Notation.MayInherit);
+        }
+        else
+            return owner;
     }
     public final boolean setOwner(Person owner, boolean withInheritance){
         if (IsNotEqual(this.owner,this.getOwner(withInheritance))){
+            this.fieldStatistics.markDirty(Field.Owner);
             this.owner = owner;
-            if (null != owner)
+            if (null != owner){
+                this.ownerId = owner.getId();
                 this.ownerKey = owner.getKey();
-            else
+            }
+            else {
+                this.ownerId = null;
                 this.ownerKey = null;
+            }
             return true;
         }
         else
@@ -558,11 +794,16 @@ public abstract class GroupData
     }
     public final boolean setOwner(Person owner){
         if (IsNotEqual(this.owner,owner)){
+            this.fieldStatistics.markDirty(Field.Owner);
             this.owner = owner;
-            if (null != owner)
+            if (null != owner){
+                this.ownerId = owner.getId();
                 this.ownerKey = owner.getKey();
-            else
+            }
+            else {
+                this.ownerId = null;
                 this.ownerKey = null;
+            }
             return true;
         }
         else
@@ -576,6 +817,7 @@ public abstract class GroupData
     }
     public final boolean dropCreated(){
         if (null != this.created){
+            this.fieldStatistics.markDirty(Field.Created);
             this.created = null;
             return true;
         }
@@ -599,6 +841,7 @@ public abstract class GroupData
     }
     public final boolean setCreated(Date created, boolean withInheritance){
         if (IsNotEqual(this.created,this.getCreated(withInheritance))){
+            this.fieldStatistics.markDirty(Field.Created);
             this.created = created;
             return true;
         }
@@ -607,6 +850,7 @@ public abstract class GroupData
     }
     public final boolean setCreated(Date created){
         if (IsNotEqual(this.created,created)){
+            this.fieldStatistics.markDirty(Field.Created);
             this.created = created;
             return true;
         }
@@ -635,14 +879,16 @@ public abstract class GroupData
     public boolean updateFrom(Request req) throws ValidationError {
         boolean change = false;
         String createdRequest = req.getParameter("created");
-        try {
-            Date created = Strings.DateFromString(createdRequest);
-            if (this.setCreated(created)){
-                change = true;
+        if (null != createdRequest && 0 < createdRequest.length()){
+            try {
+                Date created = gap.Strings.DateFromString(createdRequest);
+                if (this.setCreated(created)){
+                    change = true;
+                }
             }
-        }
-        catch (RuntimeException exc){
-            throw new ValidationError(ClassName,"created",createdRequest,exc);
+            catch (RuntimeException exc){
+                throw new ValidationError(ClassName,"created",createdRequest,exc);
+            }
         }
         return change;
     }
@@ -658,6 +904,40 @@ public abstract class GroupData
         }
         return change;
     }
+    public java.io.Serializable valueStorage(gap.data.Field field){
+
+        return Field.Storage( (Field)field, (Group)this);
+    }
+    public void defineStorage(gap.data.Field field, java.io.Serializable value){
+
+        Field.Storage( (Field)field, (Group)this, value);
+    }
+    public final Group markClean(){
+
+        this.fieldStatistics.markClean();
+        return (Group)this;
+    }
+    public final Group markDirty(){
+
+        this.fieldStatistics.markDirty();
+        return (Group)this;
+    }
+    public final Iterable<gap.data.Field> listClean(){
+
+        return this.fieldStatistics.listClean();
+    }
+    public final Iterable<gap.data.Field> listDirty(){
+
+        return this.fieldStatistics.listDirty();
+    }
+    public final boolean isClean(){
+
+        return this.fieldStatistics.isClean();
+    }
+    public final boolean isDirty(){
+
+        return this.fieldStatistics.isDirty();
+    }
     public final gap.service.od.ClassDescriptor getClassDescriptorFor(){
         return ClassDescriptorFor();
     }
@@ -665,14 +945,25 @@ public abstract class GroupData
      * Template Data Dictionary
      */
     public boolean hasVariable(TemplateName name){
-        Field field = Field.For(name.getComponent(0));
+        Field field = Field.For(name.getTerm());
         if (null != field){
             switch (field){
+            case Id:
+                if (name.is(0)){
+                    String id = this.getId();
+                    return (null != id);
+                }
+                else
+                    return false;
             case Name:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
-                else
+                else {
+                    /*
+                     * Synthesize section for Field (EXISTS)
+                     */
                     return this.hasName(true);
+                }
             case Owner:
                 if (name.has(1)){
                     Person owner = this.getOwner(true);
@@ -681,13 +972,21 @@ public abstract class GroupData
                     else
                         return false;
                 }
-                else
+                else {
+                    /*
+                     * Synthesize section for Field (EXISTS)
+                     */
                     return this.hasOwner(true);
+                }
             case Created:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
-                else
+                else {
+                    /*
+                     * Synthesize section for Field (EXISTS)
+                     */
                     return this.hasCreated(true);
+                }
             default:
                 throw new IllegalStateException(field.name());
             }
@@ -697,9 +996,14 @@ public abstract class GroupData
         }
     }
     public String getVariable(TemplateName name){
-        Field field = Field.For(name.getComponent(0));
+        Field field = Field.For(name.getTerm());
         if (null != field){
             switch (field){
+            case Id:
+                if (name.is(0))
+                    return this.getId();
+                else
+                    return null;
             case Name:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
@@ -707,14 +1011,14 @@ public abstract class GroupData
                     return this.getName(true);
             case Owner:
                 if (name.has(1)){
-                    Person owner = this.getOwner(true);
+                    Person owner = this.getOwner(Notation.MayInherit);
                     if (null != owner)
                         return owner.getVariable(new TemplateName(name));
                     else
                         return null;
                 }
                 else
-                    return null;
+                    return this.getOwnerId(Notation.MayInherit);
             case Created:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
@@ -729,10 +1033,12 @@ public abstract class GroupData
         }
     }
     public void setVariable(TemplateName name, String value){
-        Field field = Field.For(name.getComponent(0));
+        Field field = Field.For(name.getTerm());
         if (null != field){
             if (name.has(1)){
                 switch (field){
+                case Id:
+                    throw new UnsupportedOperationException(field.name());
                 case Name:
                     throw new IllegalStateException(field.name());
                 case Owner:
@@ -756,7 +1062,7 @@ public abstract class GroupData
         }
     }
     public List.Short<TemplateDataDictionary> getSection(TemplateName name){
-        Field field = Field.For(name.getComponent(0));
+        Field field = Field.For(name.getTerm());
         if (null != field){
             switch (field){
             case Name:
@@ -776,5 +1082,21 @@ public abstract class GroupData
         else {
             return super.getSection(name);
         }
+    }
+    public Group clone(){
+        return (Group)super.clone();
+    }
+    public String pathto(){
+        return PathTo(this.getId());
+    }
+    public String pathto(String subpath){
+        StringBuilder string = new StringBuilder();
+        string.append(this.getId());
+        if (null != subpath){
+            if (0 == subpath.length() || '/' != subpath.charAt(0))
+                string.append('/');
+            string.append(subpath);
+        }
+        return PathTo(string.toString());
     }
 }
