@@ -91,24 +91,14 @@ public final class Version {
         Index.put("target",4);
     }
     public final static boolean HasVariable(TemplateName name){
-        if (name.is(0)){
-            switch(Index.get(name.getComponent(0))){
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                return true;
-            default:
-                return false;
-            }
-        }
+        if (name.is(0))
+            return (-1 < name.indexOf(Index));
         else
             return false;
     }
     public final static String GetVariable(TemplateName name){
         if (name.is(0)){
-            switch(Index.get(name.getComponent(0))){
+            switch(name.indexOf(Index)){
             case 0:
                 return Version.Long;
             case 1:

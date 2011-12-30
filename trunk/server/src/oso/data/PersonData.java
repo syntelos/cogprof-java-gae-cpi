@@ -40,7 +40,7 @@ import javax.annotation.Generated;
  *
  * @see Person
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2010-09-19T10:30:58.755Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2011-12-29T22:45:53.446Z")
 public abstract class PersonData
     extends gap.data.BigTable
     implements DataInheritance<Person>
@@ -58,16 +58,42 @@ public abstract class PersonData
     public final static gap.service.od.ClassDescriptor ClassDescriptorFor(){
         return ClassDescriptorFor(Person.class);
     }
+    /**
+     * @see gap.data.Kind#pathto()
+     */
+    public final static String PathTo(){
+        return KIND.pathto();
+    }
+    public final static String PathTo(String subpath){
+        return KIND.pathto(subpath);
+    }
 
-
-
-
+    /**
+     * Long instance key without parent key
+     */
     public final static Key KeyLongIdFor(String logonId){
         String id = IdFor( logonId);
         return KeyLongFor(id);
     }
-
-
+    /**
+     * Used by gap.data.Kind
+     *
+     * Calls {@link #KeyLongIdFor}
+     */
+    public final static Key KeyIdFor(Object... args){
+        return KeyLongIdFor((String)args[0]);
+    }
+    /**
+     * Used by setId
+     *
+     * Calls {@link #KeyLongFor}
+     */
+    public final static Key KeyFor(Object... args){
+        return KeyLongFor( (String)args[0]);
+    }
+    /**
+     * Identifier for unique fields
+     */
     public final static String IdFor(String logonId){
         if (null != logonId){
             String logonIdString = logonId;
@@ -77,32 +103,35 @@ public abstract class PersonData
             throw new IllegalArgumentException();
     }
 
-
+    /**
+     * Instance lookup
+     */
     public final static Person ForLongLogonId(String logonId){
         if (null != logonId){
             Key key = KeyLongIdFor( logonId);
-            Person instance = (Person)gap.data.Store.Get(key);
+            Person instance = (Person)gap.data.Store.GetClass(key);
             if (null != instance)
                 return instance;
             else {
                 Query q = CreateQueryFor(key);
-                return (Person)gap.data.Store.Query1(q);
+                return (Person)gap.data.Store.Query1Class(q);
             }
         }
         else
             throw new IllegalArgumentException();
     }
 
-
+    /**
+     * Instance lookup or create
+     */
     public final static Person GetCreateLong(String logonId){
         Person person = ForLongLogonId( logonId);
         if (null == person){
             person = new Person( logonId);
-            person = (Person)gap.data.Store.Put(person);
+            person = (Person)gap.data.Store.PutClass(person);
         }
         return person;
     }
-
 
 
     public final static Key KeyLongFor(String id){
@@ -113,26 +142,29 @@ public abstract class PersonData
     public final static Person ForLongId(String id){
         if (null != id){
             Key key = KeyLongFor(id);
-            Person instance = (Person)gap.data.Store.Get(key);
+            Person instance = (Person)gap.data.Store.GetClass(key);
             if (null != instance)
                 return instance;
             else {
                 Query q = CreateQueryFor(key);
-                return (Person)gap.data.Store.Query1(q);
+                return (Person)gap.data.Store.Query1Class(q);
             }
         }
         else
             throw new IllegalArgumentException();
     }
 
+    /**
+     * Used by gap.data.Kind
+     */
     public final static Person Get(Key key){
         if (null != key){
-            Person instance = (Person)gap.data.Store.Get(key);
+            Person instance = (Person)gap.data.Store.GetClass(key);
             if (null != instance)
                 return instance;
             else {
                 Query q = CreateQueryFor(key);
-                return (Person)gap.data.Store.Query1(q);
+                return (Person)gap.data.Store.Query1Class(q);
             }
         }
         else
@@ -141,7 +173,7 @@ public abstract class PersonData
     public final static Key GetKey(Key key){
         if (null != key){
             Query q = CreateQueryFor(key);
-            return gap.data.Store.QueryKey1(q);
+            return gap.data.Store.Query1Key(q);
         }
         else
             throw new IllegalArgumentException();
@@ -165,16 +197,43 @@ public abstract class PersonData
     }
 
 
-
     /**
-     * Drop the instance and any children of its key from the world,
-     * memcache and store.
+     * Test for uniqueness and iterate under collisions.
+     */
+    public final static Key NewRandomKeyLong(){
+        /*
+         * Source matter for data local uniqueness
+         */
+        long matter = (gap.data.Hash.Djb64(ClassName) ^ (serialVersionUID<<3) ^ serialVersionUID);
+        /*
+         * Random matter for network global uniqueness
+         */
+        java.util.Random random = new java.util.Random();
+        do {
+            matter ^= random.nextLong();
+            String idString = gap.data.Hash.Hex(matter);
+            Key key = KeyFactory.createKey(KIND.getName(),idString);
+            if (null == GetKey(key))
+                return key;
+        }
+        while (true);
+    }
+    /**
+     * Drop the instance from memcache and datastore.
      */
     public final static void Delete(Person instance){
         if (null != instance){
-            Key key = instance.getKey();
-            gap.data.Store.DeleteCollection(KIND,new Query(key));
-            gap.data.Store.Delete(key);
+
+            Delete(instance.getKey());
+        }
+    }
+    /**
+     * Drop the instance from memcache and datastore.
+     */
+    public final static void Delete(Key instanceKey){
+        if (null != instanceKey){
+
+            gap.data.Store.DeleteKey(instanceKey);
         }
     }
     /**
@@ -183,7 +242,7 @@ public abstract class PersonData
     public final static void Clean(Person instance){
         if (null != instance){
             Key key = instance.getKey();
-            gap.data.Store.Clean(key);
+            gap.data.Store.CleanKey(key);
         }
     }
     /**
@@ -191,7 +250,7 @@ public abstract class PersonData
      */
     public final static void Save(Person instance){
         if (null != instance){
-            gap.data.Store.Put(instance);
+            gap.data.Store.PutClass(instance);
         }
     }
     /**
@@ -199,7 +258,7 @@ public abstract class PersonData
      */
     public final static void Store(Person instance){
         if (null != instance){
-            gap.data.Store.Put(instance);
+            gap.data.Store.PutClass(instance);
         }
     }
     /**
@@ -222,28 +281,33 @@ public abstract class PersonData
         return filter.update(query);
     }
     
-    
     public final static Person Query1(Query query){
         if (null != query)
-            return (Person)gap.data.Store.Query1(query);
+            return (Person)gap.data.Store.Query1Class(query);
         else
             throw new IllegalArgumentException();
     }
     public final static BigTableIterator<Person> QueryN(Query query, Page page){
         if (null != query && null != page)
-            return gap.data.Store.QueryN(query,page);
+            return gap.data.Store.QueryNClass(query,page);
         else
             throw new IllegalArgumentException();
     }
     public final static Key QueryKey1(Query query){
         if (null != query)
-            return gap.data.Store.QueryKey1(query);
+            return gap.data.Store.Query1Key(query);
         else
             throw new IllegalArgumentException();
     }
-    public final static List.Primitive<Key> QueryKeyN(Query query, Page page){
+    public final static List.Primitive<Key> QueryNKey(Query query, Page page){
         if (null != query)
-            return gap.data.Store.QueryKeyN(query,page);
+            return gap.data.Store.QueryNKey(query,page);
+        else
+            throw new IllegalArgumentException();
+    }
+    public final static List.Primitive<Key> QueryNKey(Query query){
+        if (null != query)
+            return gap.data.Store.QueryNKey(query);
         else
             throw new IllegalArgumentException();
     }
@@ -296,6 +360,21 @@ public abstract class PersonData
             else
                 return field;
         }
+        /**
+         * Field statistics are maintained for persistent fields exclusively
+         */
+        public final static class Statistics
+            extends gap.data.Field.Statistics<Person.Field>
+        {
+            public Statistics(){
+                super(Person.Field.class);
+            }
+        }
+        /**
+         * Dynamic binding operator for field data type
+         *
+         * Persistent BigTable fields are represented by the string ID.
+         */
         public static Object Get(Field field, Person instance, boolean mayInherit){
             switch(field){
             case InheritFromKey:
@@ -321,11 +400,16 @@ public abstract class PersonData
             case Completed:
                 return instance.getCompleted(mayInherit);
             case Group:
-                return instance.getGroup(mayInherit);
+                return instance.getGroupId();
             default:
                 throw new IllegalArgumentException(field.toString()+" in Person");
             }
         }
+        /**
+         * Dynamic binding operator for field data type
+         *
+         * Persistent BigTable fields are represented by the string ID.
+         */
         public static boolean Set(Field field, Person instance, Object value){
             switch(field){
             case InheritFromKey:
@@ -351,11 +435,116 @@ public abstract class PersonData
             case Completed:
                 return instance.setCompleted(gap.Objects.DateFromObject(value));
             case Group:
-                return instance.setGroup(cpi.groups.Group.FromObject(value));
+                return instance.setGroupId(gap.Objects.StringFromObject(value));
             default:
                 throw new IllegalArgumentException(field.toString()+" in Person");
             }
         }
+        /**
+         * Dynamic binding operator for field storage type
+         *
+         * Persistent BigTable fields are represented by the string ID.
+         */
+        public static java.io.Serializable Storage(Field field, Person instance){
+            switch(field){
+            case InheritFromKey:
+                return instance.getInheritFromKey();
+            case Key:
+                return instance.getKey();
+            case Id:
+                return instance.getId();
+            case LogonId:
+                return instance.getLogonId(MayNotInherit);
+            case Inventory:{
+                List.Primitive<Inventory> inventory = instance.getInventory(MayNotInherit);
+                if (null != inventory)
+                    return Serialize.To(field,inventory);
+                else
+                    return null;
+            }
+            case Nf:{
+                return instance.getNf(MayNotInherit);
+            }
+            case Nt:{
+                return instance.getNt(MayNotInherit);
+            }
+            case St:{
+                return instance.getSt(MayNotInherit);
+            }
+            case Sf:{
+                return instance.getSf(MayNotInherit);
+            }
+            case Created:
+                return instance.getCreated(MayNotInherit);
+            case Completed:
+                return instance.getCompleted(MayNotInherit);
+            case Group:
+                return instance.getGroupId();
+            default:
+                throw new IllegalArgumentException(field.toString()+" in Person");
+            }
+        }
+        /**
+         * Dynamic binding operator for field storage type
+         *
+         * Persistent BigTable fields are represented by the string ID.
+         */
+        public static void Storage(Field field, Person instance, java.io.Serializable value){
+            switch(field){
+            case InheritFromKey:
+                instance.setInheritFromKey( (Key)value);
+                return;
+            case Key:
+                instance.setKey( (Key)value);
+                return;
+            case Id:
+                instance.setId( (String)value);
+                return;
+            case LogonId:
+                instance.setLogonId( (String)value);
+                return;
+            case Inventory:{
+                List.Primitive<Inventory> _inventory = null;
+                if (null != value){
+                    _inventory = (List.Primitive<Inventory>)Serialize.From(field,value);
+                }
+                instance.setInventory( _inventory);
+                return;
+            }
+            case Nf:{
+
+                instance.setNf( (Number)value);
+                return;
+            }
+            case Nt:{
+
+                instance.setNt( (Number)value);
+                return;
+            }
+            case St:{
+
+                instance.setSt( (Number)value);
+                return;
+            }
+            case Sf:{
+
+                instance.setSf( (Number)value);
+                return;
+            }
+            case Created:
+                instance.setCreated( (Date)value);
+                return;
+            case Completed:
+                instance.setCompleted( (Date)value);
+                return;
+            case Group:
+                instance.setGroupId( (String)value);
+                return;
+            default:
+                throw new IllegalArgumentException(field.toString()+" in Person");
+            }
+        }
+
 
         public final static class List
             extends gap.util.ArrayList<Person.Field>
@@ -380,11 +569,14 @@ public abstract class PersonData
 
         private final boolean fieldTypePrimitive, fieldTypeBigTable, fieldTypeCollection;
 
+        private final boolean fieldNameKeyOrId;
+
 
         Field(String fieldName, Type fieldType){
             if (null != fieldName && null != fieldType){
                 this.fieldName = fieldName;
                 this.fieldType = fieldType;
+                this.fieldNameKeyOrId = BigTable.IsKeyOrId(fieldName);
                 /*
                  * Using a switch here causes a null pointer
                  * initializing the switch map.
@@ -441,24 +633,33 @@ public abstract class PersonData
         public boolean isNotFieldTypeCollection(){
             return (!this.fieldTypeCollection);
         }
+        public boolean isFieldNameKeyOrId(){
+            return this.fieldNameKeyOrId;
+        }
+        public boolean isNotFieldNameKeyOrId(){
+            return (!this.fieldNameKeyOrId);
+        }
         public String toString(){
             return this.fieldName;
         }
     }
 
-    private volatile transient Person inheritFrom;
+    private final Person.Field.Statistics fieldStatistics = new Person.Field.Statistics();
+
+    private transient Person inheritFrom;
 
 
-    private volatile String logonId;
-    private volatile Float nf;
-    private volatile Float nt;
-    private volatile Float st;
-    private volatile Float sf;
-    private volatile Date created;
-    private volatile Date completed;
-    private volatile Key groupKey;
-    private volatile transient Group group;
-    private volatile List.Primitive<Inventory> inventory;
+    private String logonId;
+    private Float nf;
+    private Float nt;
+    private Float st;
+    private Float sf;
+    private Date created;
+    private Date completed;
+    private String groupId;
+    private transient Key groupKey;
+    private transient Group group;
+    private List.Primitive<Inventory> inventory;
 
 
 
@@ -469,16 +670,16 @@ public abstract class PersonData
     protected PersonData(String logonId) {
         super();
         this.setLogonId(logonId);
-        String id = IdFor( logonId);
-        Key key = KeyLongFor(id);
-        this.setKey(key);
+        {
+            final String id = IdFor(logonId);
+            final Key key = KeyLongFor(id);
+            this.setKey(key);
+        }
     }
-
 
 
     public void destroy(){
         this.inheritFrom = null;
-        this.datastoreEntity = null;
         this.logonId = null;
         this.nf = null;
         this.nt = null;
@@ -492,6 +693,30 @@ public abstract class PersonData
             this.inventory = null;
             inventory.destroy();
         }
+    }
+    public final String getId(){
+
+        String id = IdFor(KIND.name, this.key);
+        if (null != id)
+            return id;
+        else
+            return IdFor(this.logonId);
+    }
+    public final boolean setId(String id){
+        if (null == id){
+            if (null != this.key){
+                this.key = null;
+                return true;
+            }
+            else
+                return false;
+        }
+        else if (null == this.key){
+            this.key = KeyLongFor(id);
+            return true;
+        }
+        else
+            return false;
     }
     public final boolean hasInheritFrom(){
         return (null != this.inheritFrom || null != this.inheritFromKey);
@@ -512,6 +737,7 @@ public abstract class PersonData
     }
     public final boolean setInheritFrom(Person ancestor){
         if (IsNotEqual(this.inheritFrom,ancestor)){
+
             this.inheritFrom = ancestor;
             if (null != ancestor)
                 this.inheritFromKey = ancestor.getKey();
@@ -522,6 +748,7 @@ public abstract class PersonData
     }
     public final boolean inheritFrom(Person ancestor){
         if (IsNotEqual(this.inheritFrom,ancestor)){
+
             this.inheritFrom = ancestor;
             if (null != ancestor)
                 this.inheritFromKey = ancestor.getKey();
@@ -538,6 +765,7 @@ public abstract class PersonData
     }
     public final boolean dropLogonId(){
         if (null != this.logonId){
+            this.fieldStatistics.markDirty(Field.LogonId);
             this.logonId = null;
             return true;
         }
@@ -552,6 +780,7 @@ public abstract class PersonData
     }
     public final boolean setLogonId(String logonId){
         if (IsNotEqual(this.logonId,logonId)){
+            this.fieldStatistics.markDirty(Field.LogonId);
             this.logonId = logonId;
             return true;
         }
@@ -566,6 +795,7 @@ public abstract class PersonData
     }
     public final boolean dropNf(){
         if (null != this.nf){
+            this.fieldStatistics.markDirty(Field.Nf);
             this.nf = null;
             return true;
         }
@@ -589,6 +819,7 @@ public abstract class PersonData
     }
     public final boolean setNf(Float nf, boolean withInheritance){
         if (IsNotEqual(this.nf,this.getNf(withInheritance))){
+            this.fieldStatistics.markDirty(Field.Nf);
             this.nf = nf;
             return true;
         }
@@ -597,7 +828,20 @@ public abstract class PersonData
     }
     public final boolean setNf(Float nf){
         if (IsNotEqual(this.nf,nf)){
+            this.fieldStatistics.markDirty(Field.Nf);
             this.nf = nf;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean setNf(Number nf){
+        if (IsNotEqual(this.nf,nf)){
+            this.fieldStatistics.markDirty(Field.Nf);
+            if (nf instanceof Float)
+                this.nf = (Float)nf;
+            else
+                this.nf = new Float( nf.floatValue());
             return true;
         }
         else
@@ -611,6 +855,7 @@ public abstract class PersonData
     }
     public final boolean dropNt(){
         if (null != this.nt){
+            this.fieldStatistics.markDirty(Field.Nt);
             this.nt = null;
             return true;
         }
@@ -634,6 +879,7 @@ public abstract class PersonData
     }
     public final boolean setNt(Float nt, boolean withInheritance){
         if (IsNotEqual(this.nt,this.getNt(withInheritance))){
+            this.fieldStatistics.markDirty(Field.Nt);
             this.nt = nt;
             return true;
         }
@@ -642,7 +888,20 @@ public abstract class PersonData
     }
     public final boolean setNt(Float nt){
         if (IsNotEqual(this.nt,nt)){
+            this.fieldStatistics.markDirty(Field.Nt);
             this.nt = nt;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean setNt(Number nt){
+        if (IsNotEqual(this.nt,nt)){
+            this.fieldStatistics.markDirty(Field.Nt);
+            if (nt instanceof Float)
+                this.nt = (Float)nt;
+            else
+                this.nt = new Float( nt.floatValue());
             return true;
         }
         else
@@ -656,6 +915,7 @@ public abstract class PersonData
     }
     public final boolean dropSt(){
         if (null != this.st){
+            this.fieldStatistics.markDirty(Field.St);
             this.st = null;
             return true;
         }
@@ -679,6 +939,7 @@ public abstract class PersonData
     }
     public final boolean setSt(Float st, boolean withInheritance){
         if (IsNotEqual(this.st,this.getSt(withInheritance))){
+            this.fieldStatistics.markDirty(Field.St);
             this.st = st;
             return true;
         }
@@ -687,7 +948,20 @@ public abstract class PersonData
     }
     public final boolean setSt(Float st){
         if (IsNotEqual(this.st,st)){
+            this.fieldStatistics.markDirty(Field.St);
             this.st = st;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean setSt(Number st){
+        if (IsNotEqual(this.st,st)){
+            this.fieldStatistics.markDirty(Field.St);
+            if (st instanceof Float)
+                this.st = (Float)st;
+            else
+                this.st = new Float( st.floatValue());
             return true;
         }
         else
@@ -701,6 +975,7 @@ public abstract class PersonData
     }
     public final boolean dropSf(){
         if (null != this.sf){
+            this.fieldStatistics.markDirty(Field.Sf);
             this.sf = null;
             return true;
         }
@@ -724,6 +999,7 @@ public abstract class PersonData
     }
     public final boolean setSf(Float sf, boolean withInheritance){
         if (IsNotEqual(this.sf,this.getSf(withInheritance))){
+            this.fieldStatistics.markDirty(Field.Sf);
             this.sf = sf;
             return true;
         }
@@ -732,7 +1008,20 @@ public abstract class PersonData
     }
     public final boolean setSf(Float sf){
         if (IsNotEqual(this.sf,sf)){
+            this.fieldStatistics.markDirty(Field.Sf);
             this.sf = sf;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean setSf(Number sf){
+        if (IsNotEqual(this.sf,sf)){
+            this.fieldStatistics.markDirty(Field.Sf);
+            if (sf instanceof Float)
+                this.sf = (Float)sf;
+            else
+                this.sf = new Float( sf.floatValue());
             return true;
         }
         else
@@ -746,6 +1035,7 @@ public abstract class PersonData
     }
     public final boolean dropCreated(){
         if (null != this.created){
+            this.fieldStatistics.markDirty(Field.Created);
             this.created = null;
             return true;
         }
@@ -769,6 +1059,7 @@ public abstract class PersonData
     }
     public final boolean setCreated(Date created, boolean withInheritance){
         if (IsNotEqual(this.created,this.getCreated(withInheritance))){
+            this.fieldStatistics.markDirty(Field.Created);
             this.created = created;
             return true;
         }
@@ -777,6 +1068,7 @@ public abstract class PersonData
     }
     public final boolean setCreated(Date created){
         if (IsNotEqual(this.created,created)){
+            this.fieldStatistics.markDirty(Field.Created);
             this.created = created;
             return true;
         }
@@ -791,6 +1083,7 @@ public abstract class PersonData
     }
     public final boolean dropCompleted(){
         if (null != this.completed){
+            this.fieldStatistics.markDirty(Field.Completed);
             this.completed = null;
             return true;
         }
@@ -814,6 +1107,7 @@ public abstract class PersonData
     }
     public final boolean setCompleted(Date completed, boolean withInheritance){
         if (IsNotEqual(this.completed,this.getCompleted(withInheritance))){
+            this.fieldStatistics.markDirty(Field.Completed);
             this.completed = completed;
             return true;
         }
@@ -822,6 +1116,7 @@ public abstract class PersonData
     }
     public final boolean setCompleted(Date completed){
         if (IsNotEqual(this.completed,completed)){
+            this.fieldStatistics.markDirty(Field.Completed);
             this.completed = completed;
             return true;
         }
@@ -836,12 +1131,60 @@ public abstract class PersonData
     }
     public final boolean dropGroup(){
         if (null != this.group){
+            this.fieldStatistics.markDirty(Field.Group);
             this.group = null;
+            this.groupId = null;
             this.groupKey = null;
             return true;
         }
         else
             return false;
+    }
+    public final String getGroupId(){
+        return this.groupId;
+    }
+    public final boolean setGroupId(String groupId){
+        if (IsNotEqual(this.groupId,groupId)){
+            this.fieldStatistics.markDirty(Field.Group);
+            this.groupId = groupId;
+            this.groupKey = null;
+            this.group = null;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final Key getGroupKey(){
+        if (null == this.groupKey){
+            /*
+             * BigTable dereferencing
+             */
+            if (null != this.groupId){
+                this.groupKey = Group.KeyLongFor(this.groupId);
+            }
+        }
+        return this.groupKey;
+    }
+    public final String getGroupId(boolean mayInherit){
+        if (null != this.groupId)
+            return this.groupId;
+        else if (mayInherit && this.hasInheritFrom()){
+            Person inheritFrom = this.getInheritFrom();
+            return inheritFrom.getGroupId(mayInherit);
+        }
+        else
+            return null;
+    }
+    public final Key getGroupKey(boolean mayInherit){
+        Key groupKey = this.getGroupKey();
+        if (null != groupKey)
+            return groupKey;
+        else if (mayInherit && this.hasInheritFrom()){
+            Person inheritFrom = this.getInheritFrom();
+            return inheritFrom.getGroupKey(mayInherit);
+        }
+        else
+            return null;
     }
     public final Group getGroup(){
         return this.getGroup(Notation.MayInherit);
@@ -849,25 +1192,36 @@ public abstract class PersonData
     public final Group getGroup(boolean mayInherit){
         Group group = this.group;
         if (null == group){
-            Key groupKey = this.groupKey;
-            if (null == groupKey && mayInherit && this.hasInheritFrom()){
-                Person inheritFrom = this.getInheritFrom();
-                return inheritFrom.getGroup(Notation.MayInherit);
-            }
-            else if (null != groupKey){
+            /*
+             * BigTable dereference
+             */
+            Key groupKey = this.getGroupKey(mayInherit);
+
+            if (null != groupKey){
                 group = Group.Get(groupKey);
                 this.group = group;
             }
         }
-        return group;
+
+        if (null == group && mayInherit && this.hasInheritFrom()){
+            Person inheritFrom = this.getInheritFrom();
+            return inheritFrom.getGroup(Notation.MayInherit);
+        }
+        else
+            return group;
     }
     public final boolean setGroup(Group group, boolean withInheritance){
         if (IsNotEqual(this.group,this.getGroup(withInheritance))){
+            this.fieldStatistics.markDirty(Field.Group);
             this.group = group;
-            if (null != group)
+            if (null != group){
+                this.groupId = group.getId();
                 this.groupKey = group.getKey();
-            else
+            }
+            else {
+                this.groupId = null;
                 this.groupKey = null;
+            }
             return true;
         }
         else
@@ -875,11 +1229,16 @@ public abstract class PersonData
     }
     public final boolean setGroup(Group group){
         if (IsNotEqual(this.group,group)){
+            this.fieldStatistics.markDirty(Field.Group);
             this.group = group;
-            if (null != group)
+            if (null != group){
+                this.groupId = group.getId();
                 this.groupKey = group.getKey();
-            else
+            }
+            else {
+                this.groupId = null;
                 this.groupKey = null;
+            }
             return true;
         }
         else
@@ -915,6 +1274,9 @@ public abstract class PersonData
                         return inventory;
                 }
             }
+            /*
+             * Collection type coersion
+             */
             {
                 Object tmp = new ListPrimitiveEnum((Person)this);
                 inventory = (List.Primitive<Inventory>)tmp;
@@ -926,6 +1288,7 @@ public abstract class PersonData
     }
     public final boolean setInventory(List.Primitive<Inventory> inventory){
         if (IsNotEqual(this.inventory,inventory)){
+
             this.inventory = inventory;
             return true;
         }
@@ -980,64 +1343,76 @@ public abstract class PersonData
     public boolean updateFrom(Request req) throws ValidationError {
         boolean change = false;
         String nfRequest = req.getParameter("nf");
-        try {
-            Float nf = Strings.FloatFromString(nfRequest);
-            if (this.setNf(nf)){
-                change = true;
+        if (null != nfRequest && 0 < nfRequest.length()){
+            try {
+                Float nf = gap.Strings.FloatFromString(nfRequest);
+                if (this.setNf(nf)){
+                    change = true;
+                }
             }
-        }
-        catch (RuntimeException exc){
-            throw new ValidationError(ClassName,"nf",nfRequest,exc);
+            catch (RuntimeException exc){
+                throw new ValidationError(ClassName,"nf",nfRequest,exc);
+            }
         }
         String ntRequest = req.getParameter("nt");
-        try {
-            Float nt = Strings.FloatFromString(ntRequest);
-            if (this.setNt(nt)){
-                change = true;
+        if (null != ntRequest && 0 < ntRequest.length()){
+            try {
+                Float nt = gap.Strings.FloatFromString(ntRequest);
+                if (this.setNt(nt)){
+                    change = true;
+                }
             }
-        }
-        catch (RuntimeException exc){
-            throw new ValidationError(ClassName,"nt",ntRequest,exc);
+            catch (RuntimeException exc){
+                throw new ValidationError(ClassName,"nt",ntRequest,exc);
+            }
         }
         String stRequest = req.getParameter("st");
-        try {
-            Float st = Strings.FloatFromString(stRequest);
-            if (this.setSt(st)){
-                change = true;
+        if (null != stRequest && 0 < stRequest.length()){
+            try {
+                Float st = gap.Strings.FloatFromString(stRequest);
+                if (this.setSt(st)){
+                    change = true;
+                }
             }
-        }
-        catch (RuntimeException exc){
-            throw new ValidationError(ClassName,"st",stRequest,exc);
+            catch (RuntimeException exc){
+                throw new ValidationError(ClassName,"st",stRequest,exc);
+            }
         }
         String sfRequest = req.getParameter("sf");
-        try {
-            Float sf = Strings.FloatFromString(sfRequest);
-            if (this.setSf(sf)){
-                change = true;
+        if (null != sfRequest && 0 < sfRequest.length()){
+            try {
+                Float sf = gap.Strings.FloatFromString(sfRequest);
+                if (this.setSf(sf)){
+                    change = true;
+                }
             }
-        }
-        catch (RuntimeException exc){
-            throw new ValidationError(ClassName,"sf",sfRequest,exc);
+            catch (RuntimeException exc){
+                throw new ValidationError(ClassName,"sf",sfRequest,exc);
+            }
         }
         String createdRequest = req.getParameter("created");
-        try {
-            Date created = Strings.DateFromString(createdRequest);
-            if (this.setCreated(created)){
-                change = true;
+        if (null != createdRequest && 0 < createdRequest.length()){
+            try {
+                Date created = gap.Strings.DateFromString(createdRequest);
+                if (this.setCreated(created)){
+                    change = true;
+                }
             }
-        }
-        catch (RuntimeException exc){
-            throw new ValidationError(ClassName,"created",createdRequest,exc);
+            catch (RuntimeException exc){
+                throw new ValidationError(ClassName,"created",createdRequest,exc);
+            }
         }
         String completedRequest = req.getParameter("completed");
-        try {
-            Date completed = Strings.DateFromString(completedRequest);
-            if (this.setCompleted(completed)){
-                change = true;
+        if (null != completedRequest && 0 < completedRequest.length()){
+            try {
+                Date completed = gap.Strings.DateFromString(completedRequest);
+                if (this.setCompleted(completed)){
+                    change = true;
+                }
             }
-        }
-        catch (RuntimeException exc){
-            throw new ValidationError(ClassName,"completed",completedRequest,exc);
+            catch (RuntimeException exc){
+                throw new ValidationError(ClassName,"completed",completedRequest,exc);
+            }
         }
         return change;
     }
@@ -1073,6 +1448,40 @@ public abstract class PersonData
         }
         return change;
     }
+    public java.io.Serializable valueStorage(gap.data.Field field){
+
+        return Field.Storage( (Field)field, (Person)this);
+    }
+    public void defineStorage(gap.data.Field field, java.io.Serializable value){
+
+        Field.Storage( (Field)field, (Person)this, value);
+    }
+    public final Person markClean(){
+
+        this.fieldStatistics.markClean();
+        return (Person)this;
+    }
+    public final Person markDirty(){
+
+        this.fieldStatistics.markDirty();
+        return (Person)this;
+    }
+    public final Iterable<gap.data.Field> listClean(){
+
+        return this.fieldStatistics.listClean();
+    }
+    public final Iterable<gap.data.Field> listDirty(){
+
+        return this.fieldStatistics.listDirty();
+    }
+    public final boolean isClean(){
+
+        return this.fieldStatistics.isClean();
+    }
+    public final boolean isDirty(){
+
+        return this.fieldStatistics.isDirty();
+    }
     public final gap.service.od.ClassDescriptor getClassDescriptorFor(){
         return ClassDescriptorFor();
     }
@@ -1080,44 +1489,79 @@ public abstract class PersonData
      * Template Data Dictionary
      */
     public boolean hasVariable(TemplateName name){
-        Field field = Field.For(name.getComponent(0));
+        Field field = Field.For(name.getTerm());
         if (null != field){
             switch (field){
+            case Id:
+                if (name.is(0)){
+                    String id = this.getId();
+                    return (null != id);
+                }
+                else
+                    return false;
             case LogonId:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
-                else
+                else {
+                    /*
+                     * Synthesize section for Field (EXISTS)
+                     */
                     return this.hasLogonId(true);
+                }
             case Nf:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
-                else
+                else {
+                    /*
+                     * Synthesize section for Field (EXISTS)
+                     */
                     return this.hasNf(true);
+                }
             case Nt:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
-                else
+                else {
+                    /*
+                     * Synthesize section for Field (EXISTS)
+                     */
                     return this.hasNt(true);
+                }
             case St:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
-                else
+                else {
+                    /*
+                     * Synthesize section for Field (EXISTS)
+                     */
                     return this.hasSt(true);
+                }
             case Sf:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
-                else
+                else {
+                    /*
+                     * Synthesize section for Field (EXISTS)
+                     */
                     return this.hasSf(true);
+                }
             case Created:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
-                else
+                else {
+                    /*
+                     * Synthesize section for Field (EXISTS)
+                     */
                     return this.hasCreated(true);
+                }
             case Completed:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
-                else
+                else {
+                    /*
+                     * Synthesize section for Field (EXISTS)
+                     */
                     return this.hasCompleted(true);
+                }
             case Group:
                 if (name.has(1)){
                     Group group = this.getGroup(true);
@@ -1126,8 +1570,12 @@ public abstract class PersonData
                     else
                         return false;
                 }
-                else
+                else {
+                    /*
+                     * Synthesize section for Field (EXISTS)
+                     */
                     return this.hasGroup(true);
+                }
             default:
                 throw new IllegalStateException(field.name());
             }
@@ -1137,9 +1585,14 @@ public abstract class PersonData
         }
     }
     public String getVariable(TemplateName name){
-        Field field = Field.For(name.getComponent(0));
+        Field field = Field.For(name.getTerm());
         if (null != field){
             switch (field){
+            case Id:
+                if (name.is(0))
+                    return this.getId();
+                else
+                    return null;
             case LogonId:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
@@ -1177,14 +1630,14 @@ public abstract class PersonData
                     return gap.Strings.DateToString(this.getCompleted(true));
             case Group:
                 if (name.has(1)){
-                    Group group = this.getGroup(true);
+                    Group group = this.getGroup(Notation.MayInherit);
                     if (null != group)
                         return group.getVariable(new TemplateName(name));
                     else
                         return null;
                 }
                 else
-                    return null;
+                    return this.getGroupId(Notation.MayInherit);
             default:
                 throw new IllegalStateException(field.name());
             }
@@ -1194,10 +1647,12 @@ public abstract class PersonData
         }
     }
     public void setVariable(TemplateName name, String value){
-        Field field = Field.For(name.getComponent(0));
+        Field field = Field.For(name.getTerm());
         if (null != field){
             if (name.has(1)){
                 switch (field){
+                case Id:
+                    throw new UnsupportedOperationException(field.name());
                 case LogonId:
                     throw new IllegalStateException(field.name());
                 case Nf:
@@ -1231,7 +1686,7 @@ public abstract class PersonData
         }
     }
     public List.Short<TemplateDataDictionary> getSection(TemplateName name){
-        Field field = Field.For(name.getComponent(0));
+        Field field = Field.For(name.getTerm());
         if (null != field){
             switch (field){
             case LogonId:
@@ -1261,5 +1716,21 @@ public abstract class PersonData
         else {
             return super.getSection(name);
         }
+    }
+    public Person clone(){
+        return (Person)super.clone();
+    }
+    public String pathto(){
+        return PathTo(this.getId());
+    }
+    public String pathto(String subpath){
+        StringBuilder string = new StringBuilder();
+        string.append(this.getId());
+        if (null != subpath){
+            if (0 == subpath.length() || '/' != subpath.charAt(0))
+                string.append('/');
+            string.append(subpath);
+        }
+        return PathTo(string.toString());
     }
 }
