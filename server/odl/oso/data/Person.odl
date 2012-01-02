@@ -2,9 +2,18 @@ package oso.data;
 path /people;
 import cpi.Inventory;
 import cpi.groups.Group;
+import cpi.groups.Project;
 
-class Person version 6 {
+/**
+ * Accept Accounts or OAuth Logon Id for viewer identity
+ * 
+ * Application access by random identifier
+ * 
+ * @review(Identifier,Random)
+ */
+class Person version 8 {
     *unique String logonId;
+    String identifier;
     List.Primitive<Inventory> inventory;
     Float nf;
     Float nt;
@@ -13,4 +22,5 @@ class Person version 6 {
     Date created;
     Date completed;
     Group group;
+    Project admin;
 }
