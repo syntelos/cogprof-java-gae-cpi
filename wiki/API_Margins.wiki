@@ -16,4 +16,4 @@
 
  == CSS ==
 
- The [http://www.w3c.org/CSS CSS] value of "margin" for the BODY of the embedded HTML page.
+ The [http://www.w3c.org/Style/CSS CSS] value of "margin" for the BODY of the embedded HTML page.
