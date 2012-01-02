@@ -13,8 +13,8 @@
 || *Name* || *Value* || *Interaction* ||
 || name || Project name || read/write ||
 || count || Number of members  || read/write ||
-|| redirect || See [API_Redirect Redirect]  || read/write (optional group override) ||
-|| margins || See [API_Margins Margins]  || read/write (optional group override) ||
+|| redirect || Optional group override ([API_Redirect Redirect])  || read/write ||
+|| margins || Optional group override ([API_Margins Margins])  || read/write ||
 || identifier  || Project identifier || read-only ||
 || members  || Project membership || read-only ||
 
