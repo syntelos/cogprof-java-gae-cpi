@@ -12,7 +12,7 @@
 
  Groups are created by the [mailto:cpi@cognitiveprofile.com?Subject=CPI+Groups service administrator]
 
-== Identify ==
+== Query/Identify ==
 
 {{{
  GET /groups/data.json
