@@ -38,9 +38,12 @@ A frame name will cause the redirect to target a browser window frame, or a new 
 
 === Sequence ===
 
- *inject* causes the inventory process to redirect before displaying a result page (with graph image).
+ ==== inject ====
+ Cause the inventory process to redirect before displaying a result page (with graph image).
 
- *timeout* causes the inventory process to proceed to the result page, and then timeout and redirect.
+ 
+ ==== timeout ====
+ Causes the inventory process to proceed to the result page, and then timeout and redirect.
 
 === Timeout ===
 
