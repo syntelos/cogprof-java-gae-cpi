@@ -1,0 +1,21 @@
+#summary API Margins
+#labels API
+
+= Margins =
+
+ Both [API_Project Project] and [API_Group Group] may have a margins property.
+
+ This JSON fragment is a field in Project or Group.
+
+ When not found in Project, the field in Group will be used.
+
+
+{{{
+  "margins": {
+    "css": "20px"
+  }
+}}}
+
+ == CSS ==
+
+ The CSS value of "margin" for the BODY of the embedded HTML page.

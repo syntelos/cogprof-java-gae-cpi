@@ -34,3 +34,7 @@ HTTP Admin   http://cpi.cognitiveprofile.com/groups
 == Redirect ==
 
  See [API_Redirect Redirect] 
+
+== Margins ==
+
+ See [API_Margins Margins] 
