@@ -71,6 +71,40 @@
  ]
 }}}
 
+== List Results ==
+
+ Access HTTP OAuth Project admin 
+
+{{{
+  GET /projects/0fac9/results.json
+}}}
+ for response JSON (Mime-Type application/json)
+{{{
+ [
+   {
+     "identifier": "0fac9",
+     "name": "Example",
+     "count": "10",
+     "members": {
+       "ofc001": {
+         "R_ST": "1.0",
+         "R_NT": "1.0",
+         "R_NF": "1.0",
+         "R_SF": "1.0"
+       },
+       "ofc002": {
+       },
+       "ofc003": {
+         "R_ST": "1.0",
+         "R_NT": "1.0",
+         "R_NF": "1.0",
+         "R_SF": "1.0"
+       }
+     }
+   }
+ ]
+}}}
+
 == Redirect ==
 
  See [API_Redirect Redirect] 
