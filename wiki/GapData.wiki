@@ -11,12 +11,11 @@
 
 == Person ==
 
- The CPI Online redefines [http://code.google.com/p/cpi/source/browse/trunk/server/odl/oso/data/Person.odl Person] (from [http://code.google.com/p/gap-data/source/browse/trunk/gae/odl/oso/data/Person.odl gap-data]) to implement the principal data table.  
+ This application redefines [http://code.google.com/p/cpi/source/browse/trunk/server/odl/oso/data/Person.odl Person] from [http://code.google.com/p/gap-data/source/browse/trunk/gae/odl/oso/data/Person.odl gap-data].
 {{{
 package oso.data;
 path /people;
 import cpi.Inventory;
-import cpi.groups.Group;
 import cpi.groups.Project;
 
 /**
@@ -24,11 +23,13 @@ import cpi.groups.Project;
  * 
  * Application access by random identifier
  * 
+ * Logon Id is optional with Project and identifier
+ * 
  * @review(Identifier,Random)
  */
 class Person version 8 {
-    *unique String logonId;
-    String identifier;
+    String logonId;
+    *unique String identifier;
     List.Primitive<Inventory> inventory;
     Float nf;
     Float nt;
@@ -36,60 +37,71 @@ class Person version 8 {
     Float sf;
     Date created;
     Date completed;
-    Group group;
-    Project admin;
+    Project project;
 }
 }}}
 
- Person is used by Gap Data for any logged- in user.  The Google Accounts service provides a reusable storage root identity for the CPI Online data store.
+ Person is used by Gap Data for any logged- in user
+
+ A Person with a Project may not have a logonId
+
+ See also [API_Result API Result]
 
 == Group ==
 
- A Person may have membership in one [http://code.google.com/p/cpi/source/browse/trunk/server/odl/cpi/groups/Group.odl Group].
 {{{
 package cpi.groups;
 path /groups;
 import oso.data.Person;
 
 /**
+ * A [http://code.google.com/p/cpi/source/browse/trunk/server/odl/cpi/groups/Group.odl Group] has many [http://code.google.com/p/cpi/source/browse/trunk/server/odl/cpi/groups/Project.odl Projects]
+ * 
  * Accept logon member of scope for name.
  * 
  * Access OAuth random identifier
  */
 class Group version 1 {
-    String name;
-    *unique String identifier;
-    Project project;
+    *unique String name;
+    unique String identifier;
+    Person owner;
+    Person admin;
     Date created;
     Date cleaned;
     /*
      * If not Project, use Group
      */
-    Link redirect;
+    Redirect redirect;
 }
 }}}
 
+ See also [API_Group API Group]
+
+ 
 == Project ==
 
- A Person may have membership in one [http://code.google.com/p/cpi/source/browse/trunk/server/odl/cpi/groups/Project.odl Project].
 {{{
 package cpi.groups;
 path /projects;
 import oso.data.Person;
 
 /**
- * Name is unique for lookups, random identifier is 
- * the public parameter key.
+ * A [http://code.google.com/p/cpi/source/browse/trunk/server/odl/cpi/groups/Group.odl Group] has many [http://code.google.com/p/cpi/source/browse/trunk/server/odl/cpi/groups/Project.odl Projects]
  * 
  * Accept logon member of scope for name.
  * 
  * Access OAuth random identifier.
  */
 class Project version 1 {
-    *unique String name;
-    String identifier;
-    Person owner;
-    Person admin;
+    unique String name;
+    *String identifier;
+    /*
+     * Parent group
+     */
+    Group group;
+    /* 
+     * Could add (Person admin) for delegation
+     */
     Date created;
     Date cleaned;
     /*
@@ -99,12 +111,10 @@ class Project version 1 {
     /*
      * If not Project, use Group
      */
-    Link redirect;
+    Redirect redirect;
 }
 }}}
 
- A Project is created by the service administrator.
-
- See also [API_Project API Project].
+ See also [API_Project API Project]
 
  
