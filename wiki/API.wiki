@@ -12,3 +12,12 @@
 = Operation =
 
  The CPI Online is running at [http://cpi.cognitiveprofile.com/ cpi.cognitiveprofile.com]
+
+= Listing =
+
+  * [API_Group Group]
+  * [API_Inventory Inventory]
+  * [API_Project Project]
+  * [API_Result Result]
+  * [API_Redirect Redirect]
+  * [API_Margins Margins]
