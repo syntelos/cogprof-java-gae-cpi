@@ -27,15 +27,23 @@ When not found in Project, the field in Group will be used.
 
 === HREF ===
 
-The link url accepts the following template variables
+The redirect link url accepts the following template variables
 
 || *Name* || *Value* ||
-|| R_ST || Result (double 0.0 - 1.0) ||
-|| R_NT || Result  ||
-|| R_SF || Result  ||
-|| R_NF || Result  ||
-|| ID   || Profile identifier ||
-|| ID_P ||  Project identifier ||
+|| st || Result (0.0 - 1.0) ||
+|| nt || Result  ||
+|| sf || Result  ||
+|| nf || Result  ||
+|| identifier  || Profile identifier ||
+|| project  || Project identifier ||
+
+These names may be employed with Hapax syntax in the redirect HREF string.
+
+Example
+
+{{{
+ http://redirect.net/for?st={{=st}}&sf={{=sf}}&nf={{=nf}}&nt={{=nt}}&y={{=identifer}}&x={{=project}}
+}}}
 
 === Target Frame Name ===
 
