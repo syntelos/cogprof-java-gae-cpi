@@ -3,9 +3,9 @@
 
 = Project =
 
-== Create ==
+ Access Project Admin 
 
- Access HTTP OAuth Project admin 
+== Create ==
 
  Create a Group in the Project with
 {{{
@@ -42,9 +42,6 @@
 
 == List members ==
 
- Access HTTP OAuth Project admin 
-
- Read a Group in the Project with
 {{{
   GET /projects/0fac9/data.json
 }}}
@@ -72,8 +69,6 @@
 }}}
 
 == List Results ==
-
- Access HTTP OAuth Project admin 
 
 {{{
   GET /projects/0fac9/results.json

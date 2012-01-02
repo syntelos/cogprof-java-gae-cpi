@@ -5,19 +5,35 @@
 
 == Create ==
 
+ Access Service Admin
 
 {{{
-HTTP Admin   http://cpi.cognitiveprofile.com/groups
+ POST /groups
 }}}
 
  Groups are created by the [mailto:cpi@cognitiveprofile.com?Subject=CPI+Groups service administrator]
 
+== Identify ==
 
-== Read/Test ==
+ Access Project Admin
 
- Access HTTP OAuth Project admin
+{{{
+  GET /groups/data.json
+}}}
+ for response Mime-Type application/json
+{{{
+ [
+   {
+     "identifier": "03efdbc",
+     "name": "Example"
+   }
+ ]
+}}}
 
- Read project data in JSON with
+== Read/Copy/Test ==
+
+ Access Project Admin
+
 {{{
   GET /groups/03efdbc/data.json
 }}}
