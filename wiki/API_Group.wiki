@@ -10,7 +10,7 @@
 HTTP Admin   http://cpi.cognitiveprofile.com/groups
 }}}
 
- Groups are created by the service administrator.
+ Groups are created by the [mailto:cpi@cognitiveprofile.com?Subject=CPI+Groups service administrator]
 
 
 == Read/Test ==
