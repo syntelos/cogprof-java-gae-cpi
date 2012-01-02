@@ -12,7 +12,7 @@
  
  Example
 {{{
-   http://cpi.cognitiveprofile.com/profile/b390a019eff70566/data.json
+   [http://cpi.cognitiveprofile.com/profile/b390a019eff70566/data.json /profile/b390a019eff70566/data.json]
 }}}
 
 == Display Image ==
@@ -24,5 +24,5 @@
  
  Example 
 {{{
-   http://cpi.cognitiveprofile.com/profile/b390a019eff70566/image.png
+   http://cpi.cognitiveprofile.com/profile/b390a019eff70566/image.png /profile/b390a019eff70566/image.png]
 }}}
