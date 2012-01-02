@@ -3,6 +3,11 @@
 
 = Result =
 
+|| Protocol || HTTP ||
+|| Control || Identifier ||
+|| Data || JSON, PNG ||
+|| Access || Public ||
+
 == Data ==
 
  The CPI Online includes [http://www.json.org/ JSON] data access via a Result URL as 

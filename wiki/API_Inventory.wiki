@@ -3,13 +3,18 @@
 
 = Inventory =
 
+|| Protocol || HTTP ||
+|| Control || Identifier ||
+|| Data || HTML ||
+|| Access || Public ||
 
 {{{
-HTTP Public   http://cpi.cognitiveprofile.com/inventory/aef001
+ GET /inventory/aef0000
+ POST /inventory/aef0000
 }}}
 
  Person with Group is in a group session
 
-   HTML user interface includes logon headline for non group sessions
+ Group sessions are for embedding in IFRAME
 
-   Group sessions are for embedding via IFRAME
+
