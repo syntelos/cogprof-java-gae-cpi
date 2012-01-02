@@ -3,11 +3,18 @@ path /groups;
 import oso.data.Person;
 
 /**
- * Accept only random identifier for application access.
+ * Accept logon member of scope for name.
+ * 
+ * Access OAuth random identifier
  */
 class Group version 1 {
     String name;
     *unique String identifier;
     Person owner;
     Date created;
+    Date cleaned;
+    /*
+     * If not Project, use Group
+     */
+    Link redirect;
 }

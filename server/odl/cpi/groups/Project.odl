@@ -6,13 +6,18 @@ import oso.data.Person;
  * Name is unique for lookups, random identifier is 
  * the public parameter key.
  * 
- * Accept name for logon member of scope.
+ * Accept logon member of scope for name.
  * 
- * Accept identifier for OAuth access.
+ * Access OAuth random identifier.
  */
 class Project version 1 {
     *unique String name;
     String identifier;
     Person owner;
     Date created;
+    Date cleaned;
+    /*
+     * If not Project, use Group
+     */
+    Link redirect;
 }
