@@ -6,14 +6,9 @@
 || Protocol || HTTP ||
 || Control || OAuth ||
 || Data || JSON ||
+|| Access || Group Admin ||
 
 == Create ==
-
- Access Service Admin
-
-{{{
- POST /groups
-}}}
 
  Groups are created by the [mailto:cpi@cognitiveprofile.com?Subject=CPI+Groups service administrator]
 

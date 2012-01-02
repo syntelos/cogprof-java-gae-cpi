@@ -3,7 +3,12 @@
 
 = Redirect =
 
-Both [API_Project Project] and [API_Group Group] have a redirect function
+|| Protocol || HTTP ||
+|| Control || OAuth ||
+|| Data || JSON ||
+|| Access || Group Admin ||
+
+Both [API_Project Project] and [API_Group Group] have a redirect function.
 
 This JSON fragment is a field in Project or Group.
 
