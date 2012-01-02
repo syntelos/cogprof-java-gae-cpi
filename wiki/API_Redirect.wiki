@@ -73,13 +73,13 @@ For sequence timeout, wait for this number of milliseconds before redirecting.
  GET /groups/034f/data.json
  GET /projects/8932/data.json
 }}}
-for response (Mime-Type application/json)
+ for response Mime-Type `application/json`
 
 See [API_Group Group] and  [API_Project Project]
 
 
 === Update ===
-
+ With request and response Mime-Type `application/json`
 {{{
  POST /groups/034f/data.json
  POST /projects/8932/data.json

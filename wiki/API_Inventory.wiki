@@ -8,6 +8,7 @@
 || Data || HTML ||
 || Access || Public ||
 
+ With request Mime-Type `application/x-www-form-urlencoded` and response Mime-Type `text/html`
 {{{
  GET /inventory/aef0000
  POST /inventory/aef0000

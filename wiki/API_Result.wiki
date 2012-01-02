@@ -8,6 +8,13 @@
 || Data || JSON, PNG ||
 || Access || Public ||
 
+== Page ==
+
+{{{
+ GET /profile
+}}}
+ Mime-Type `text/html`
+
 == Data ==
 
  The CPI Online includes [http://www.json.org/ JSON] data access via a Result URL as 

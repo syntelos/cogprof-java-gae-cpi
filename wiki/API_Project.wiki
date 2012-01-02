@@ -10,7 +10,7 @@
 
 == Create ==
 
- Create a Group in the Project with
+ Create a Project with
 {{{
  GET /projects/data.json?name=Example&Count=10
 }}}
@@ -20,7 +20,7 @@
  --
  name=Example&Count=10
 }}}
- for response JSON (Mime-Type application/json)
+ for request Mime-Type `application/x-www-form-urlencoded` and response Mime-Type `application/json`
 {{{
  [
    {
@@ -48,7 +48,7 @@
 {{{
  GET /projects/0fac9/data.json
 }}}
- for response JSON (Mime-Type application/json)
+ for response Mime-Type `application/json`
 {{{
  [
    {
@@ -76,7 +76,7 @@
 {{{
  GET /projects/0fac9/results.json
 }}}
- for response JSON (Mime-Type application/json)
+ for response Mime-Type `application/json`
 {{{
  [
    {

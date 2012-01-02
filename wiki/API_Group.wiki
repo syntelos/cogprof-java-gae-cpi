@@ -17,7 +17,7 @@
 {{{
  GET /groups/data.json
 }}}
- for response Mime-Type application/json
+ for response Mime-Type `application/json`
 {{{
  [
    {
@@ -32,7 +32,7 @@
 {{{
  GET /groups/03efdbc/data.json
 }}}
- for response Mime-Type application/json
+ for response Mime-Type `application/json`
 {{{
  [
    {
@@ -45,11 +45,11 @@
 }}}
 
 == Update/Modify ==
-
+ With request Mime-Type `application/json`
 {{{
  POST /groups/03efdbc/data.json
 }}}
- for response Mime-Type application/json
+ for response Mime-Type `application/json`
 {{{
  [
    {
