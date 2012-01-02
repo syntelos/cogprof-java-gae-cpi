@@ -49,13 +49,13 @@ class Person version 8 {
 
 == Group ==
 
+ A [http://code.google.com/p/cpi/source/browse/trunk/server/odl/cpi/groups/Group.odl Group] has many [http://code.google.com/p/cpi/source/browse/trunk/server/odl/cpi/groups/Project.odl Projects]
 {{{
 package cpi.groups;
 path /groups;
 import oso.data.Person;
 
 /**
- * A [http://code.google.com/p/cpi/source/browse/trunk/server/odl/cpi/groups/Group.odl Group] has many [http://code.google.com/p/cpi/source/browse/trunk/server/odl/cpi/groups/Project.odl Projects]
  * 
  * Accept logon member of scope for name.
  * 
@@ -80,13 +80,13 @@ class Group version 1 {
  
 == Project ==
 
+ A [http://code.google.com/p/cpi/source/browse/trunk/server/odl/cpi/groups/Group.odl Group] has many [http://code.google.com/p/cpi/source/browse/trunk/server/odl/cpi/groups/Project.odl Projects]
 {{{
 package cpi.groups;
 path /projects;
 import oso.data.Person;
 
 /**
- * A [http://code.google.com/p/cpi/source/browse/trunk/server/odl/cpi/groups/Group.odl Group] has many [http://code.google.com/p/cpi/source/browse/trunk/server/odl/cpi/groups/Project.odl Projects]
  * 
  * Accept logon member of scope for name.
  * 
