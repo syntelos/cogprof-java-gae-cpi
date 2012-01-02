@@ -3,7 +3,8 @@
 
 = Status =
 
- * [API_Result API Result] is currently available
+ * [API_Inventory Inventory] is *available*
+ * [API_Result Result] is *available*
 
 = Overview =
 

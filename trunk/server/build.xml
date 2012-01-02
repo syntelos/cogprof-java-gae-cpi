@@ -243,4 +243,40 @@
     </appcfg>
   </target>
 
+  <!--  Ant 1.8 + Junit 3.8 -->
+  <target name="test.compile" depends="version" description="Compile unit tests">
+    <path id="test.lib.path">
+      <pathelement location="${out.bin}" />
+      <pathelement path="test/bin" />
+      <fileset dir="${lib}">
+        <include name="**/*.jar" />
+      </fileset>
+      <path location="${appengine.sdk.home}/lib/appengine-tools-api.jar" />
+      <path location="${appengine.sdk.home}/lib/impl/appengine-api.jar" />
+      <path location="${appengine.sdk.home}/lib/impl/appengine-api-labs.jar" />
+      <path location="${appengine.sdk.home}/lib/impl/appengine-api-stubs.jar" />
+      <path location="${appengine.sdk.home}/lib/impl/appengine-local-runtime.jar" />
+      <path location="${appengine.sdk.home}/lib/shared/servlet-api.jar" />
+      <path location="${appengine.sdk.home}/lib/testing/appengine-testing.jar" />
+      <path location="${ant.home}/lib/junit.jar" />
+    </path>
+
+    <mkdir dir="test/bin" />
+    <javac srcdir="test/src" destdir="test/bin" includeAntRuntime="false" debug="true">
+      <classpath refid="test.lib.path"/>
+    </javac>
+  </target>
+
+  <target name="test" depends="test.compile" description="Run defined unit tests">
+
+    <junit haltonerror="true" includeAntRuntime="true" fork="true" dir="test">
+      <classpath refid="test.lib.path"/>
+      <formatter type="plain" usefile="false"/>
+
+      <test name="Inventory" />
+
+    </junit>
+
+  </target>
+
 </project>
