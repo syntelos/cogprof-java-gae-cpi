@@ -13,7 +13,7 @@
 
  The CPI Online is running at [http://cpi.cognitiveprofile.com/ cpi.cognitiveprofile.com]
 
-= Listing =
+= Work in progress =
 
   * [API_Group Group]
   * [API_Inventory Inventory]
