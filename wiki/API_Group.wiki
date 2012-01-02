@@ -45,11 +45,11 @@
 }}}
 
 == Update/Modify ==
- With request Mime-Type `application/json`
+
 {{{
  POST /groups/03efdbc/data.json
 }}}
- for response Mime-Type `application/json`
+ for request and response Mime-Type `application/json`
 {{{
  [
    {
