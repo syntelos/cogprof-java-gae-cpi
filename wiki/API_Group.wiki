@@ -3,6 +3,10 @@
 
 = Group =
 
+|| Protocol || HTTP ||
+|| Control || OAuth ||
+|| Data || JSON ||
+
 == Create ==
 
  Access Service Admin
