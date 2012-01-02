@@ -14,7 +14,7 @@
 || name || Group name || read/write ||
 || redirect || See [API_Redirect Redirect]  || read/write ||
 || margins || See [API_Margins Margins]  || read/write ||
-|| identifier  || Group identifier || readonly ||
+|| identifier  || Group identifier || read-only ||
 
 == Create ==
 
@@ -52,7 +52,7 @@
  ]
 }}}
 
-== Update/Modify ==
+== Update/Modify/Write ==
 
 {{{
  POST /groups/03efdbc/data.json
@@ -68,6 +68,8 @@
    }
  ]
 }}}
+
+ Read-only fields are optional
 
 == Redirect ==
 

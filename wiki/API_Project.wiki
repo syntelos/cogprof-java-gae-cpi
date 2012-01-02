@@ -13,10 +13,10 @@
 || *Name* || *Value* || *Interaction* ||
 || name || Project name || read/write ||
 || count || Number of members  || read/write ||
-|| redirect || See [API_Redirect Redirect]  || read/write ||
-|| margins || See [API_Margins Margins]  || read/write ||
-|| identifier  || Project identifier || readonly ||
-|| members  || Project membership || readonly ||
+|| redirect || See [API_Redirect Redirect]  || read/write (use group if not project) ||
+|| margins || See [API_Margins Margins]  || read/write (use group if not project) ||
+|| identifier  || Project identifier || read-only ||
+|| members  || Project membership || read-only ||
 
 == Create ==
 
@@ -69,6 +69,8 @@
  ]
 }}}
  for request and response Mime-Type `application/json`
+
+ Read-only fields are optional
 
 == List members ==
 
