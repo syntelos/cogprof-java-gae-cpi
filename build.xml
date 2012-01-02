@@ -12,18 +12,16 @@
    <ant dir="server" target="odl"/>
  </target>
 
+ <target name="test">
+
+   <ant dir="server" target="test"/>
+ </target>
+
  <target name="clean">
 
    <ant dir="code" target="clean"/>
 
    <ant dir="server" target="clean"/>
- </target>
-
- <target name="test">
-
-   <ant dir="code" target="test"/>
-
-   <ant dir="server" target="test"/>
  </target>
 
  <target name="build">
