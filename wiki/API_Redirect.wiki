@@ -1,6 +1,8 @@
 #summary API Redirect
 #labels API
 
+<wiki:toc />
+
 = Redirect =
 
 || Protocol || HTTP ||
