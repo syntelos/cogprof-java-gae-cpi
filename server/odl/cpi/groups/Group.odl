@@ -12,10 +12,8 @@ import oso.data.Person;
 class Group version 1 {
     *unique String name;
     unique String identifier;
-    /* 
-     * Could add (Person admin) for delegation
-     */
-    Project project;
+    Person owner;
+    Person admin;
     Date created;
     Date cleaned;
     /*
