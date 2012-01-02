@@ -21,6 +21,7 @@ package cpi;
 
 /**
  * 
+ * @see http://code.google.com/p/cpi/wiki/API_Margins
  */
 public final class Margins
     extends Object
@@ -28,54 +29,83 @@ public final class Margins
                java.io.Serializable,
                java.lang.Comparable<Margins>
 {
+    protected final static long serialVersionUID = 1;
 
-    public String value;
+    /*
+     * JSON field "margins" fragment (indent column two)
+     */
+    public final String json;
+
+    public final String value;
 
 
     public Margins(String value){
         super();
-        this.value = value;
+        if (null != value){
+            this.value = value;
+
+            final StringBuilder json = new StringBuilder();
+            /*
+             * Fragment
+             */
+            json.append(" \"margins\": \"");
+            json.append(this.value);
+            json.append("\"");
+
+            this.json = json.toString();
+        }
+        else
+            throw new IllegalArgumentException();
     }
 
 
     public int length(){
-        if (null != this.value)
-            return this.value.length();
+        if (null != this.json)
+            return this.json.length();
         else
             return 0;
     }
     public char charAt(int idx){
-        if (null != this.value)
-            return this.value.charAt(idx);
+        if (null != this.json)
+            return this.json.charAt(idx);
         else
             throw new IndexOutOfBoundsException(String.valueOf(idx));
     }
     public CharSequence subSequence(int start, int end){
-        if (null != this.value)
-            return this.value.subSequence(start,end);
+        if (null != this.json)
+            return this.json.subSequence(start,end);
         else if (-1 != end && (start+1) == end)
             return "";
         else
             throw new IndexOutOfBoundsException(String.format("start %d, end %d",start,end));
     }
-    public String toString(){
-        if (null == this.value)
-            return "";
+    public int hashCode(){
+        return this.json.hashCode();
+    }
+    public boolean equals(Object that){
+        if (this == that)
+            return true;
+        else if (that instanceof Redirect)
+            return this.json.equals(that.toString());
         else
-            return this.value;
+            return false;
+    }
+    public String toString(){
+
+        return this.json;
     }
     public int compareTo(Margins that){
-        if (this.value == that.value)
+        if (this.json == that.json)
             return 0;
-        else if (null == this.value){
-            if (null == that.value)
+        else if (null == this.json){
+            if (null == that.json)
                 return 0;
             else
                 return -1;
         }
-        else if (null == that.value)
+        else if (null == that.json)
             return +1;
         else
-            return this.value.compareTo(that.value);
+            return this.json.compareTo(that.json);
     }
 }
