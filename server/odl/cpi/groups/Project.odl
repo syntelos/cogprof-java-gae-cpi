@@ -3,18 +3,22 @@ path /projects;
 import oso.data.Person;
 
 /**
- * Name is unique for lookups, random identifier is 
- * the public parameter key.
+ * A {@link Group} has many {@link Project Projects}
  * 
  * Accept logon member of scope for name.
  * 
  * Access OAuth random identifier.
  */
 class Project version 1 {
-    *unique String name;
-    String identifier;
-    Person owner;
-    Person admin;
+    unique String name;
+    *String identifier;
+    /*
+     * Parent group
+     */
+    Group group;
+    /* 
+     * Could add (Person admin) for delegation
+     */
     Date created;
     Date cleaned;
     /*
@@ -24,5 +28,5 @@ class Project version 1 {
     /*
      * If not Project, use Group
      */
-    Link redirect;
+    Redirect redirect;
 }

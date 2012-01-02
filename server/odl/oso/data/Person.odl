@@ -1,7 +1,6 @@
 package oso.data;
 path /people;
 import cpi.Inventory;
-import cpi.groups.Group;
 import cpi.groups.Project;
 
 /**
@@ -9,11 +8,13 @@ import cpi.groups.Project;
  * 
  * Application access by random identifier
  * 
+ * Logon Id is optional with Project and identifier
+ * 
  * @review(Identifier,Random)
  */
 class Person version 8 {
-    *unique String logonId;
-    String identifier;
+    String logonId;
+    *unique String identifier;
     List.Primitive<Inventory> inventory;
     Float nf;
     Float nt;
@@ -21,6 +22,5 @@ class Person version 8 {
     Float sf;
     Date created;
     Date completed;
-    Group group;
     Project project;
 }
