@@ -1,9 +1,9 @@
 #summary API Project
 #labels API
 
-= Project =
+= API Project =
 
 
 {{{
-HTTP OAuth   http://cpi.cognitiveprofile.com/project/b390a019eff70566
+HTTP OAuth   http://cpi.cognitiveprofile.com/projects/b390a019eff70566
 }}}

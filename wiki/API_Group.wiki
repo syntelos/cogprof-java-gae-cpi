@@ -1,9 +1,9 @@
-#summary API Project
+#summary API Group
 #labels API
 
-= Group =
+= API Group =
 
 
 {{{
-HTTP OAuth   http://cpi.cognitiveprofile.com/group/b390a019eff70566
+HTTP OAuth   http://cpi.cognitiveprofile.com/groups/b390a019eff70566
 }}}

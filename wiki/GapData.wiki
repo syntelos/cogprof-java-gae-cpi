@@ -28,7 +28,7 @@ import cpi.groups.Project;
  */
 class Person version 8 {
     *unique String logonId;
-    *unique String identifier;
+    String identifier;
     List.Primitive<Inventory> inventory;
     Float nf;
     Float nt;
@@ -68,7 +68,7 @@ class Group version 1 {
  A Person may have membership in one [http://code.google.com/p/cpi/source/browse/trunk/server/odl/cpi/groups/Project.odl Project].
 {{{
 package cpi.groups;
-path /groups;
+path /projects;
 import oso.data.Person;
 
 /**
@@ -81,7 +81,7 @@ import oso.data.Person;
  */
 class Project version 1 {
     *unique String name;
-    *unique String identifier;
+    String identifier;
     Person owner;
     Date created;
     Date cleaned;
@@ -89,4 +89,7 @@ class Project version 1 {
 }}}
 
  A Project is created by the service administrator.
+
+ See also [API_Project API Project].
+
  

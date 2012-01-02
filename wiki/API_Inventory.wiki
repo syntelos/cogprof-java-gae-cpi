@@ -1,0 +1,9 @@
+#summary API Inventory
+#labels API
+
+= API Inventory =
+
+
+{{{
+HTTP Public   http://cpi.cognitiveprofile.com/inventory/b390a019eff70566
+}}}
