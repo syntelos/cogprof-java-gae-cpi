@@ -20,4 +20,8 @@ class Group version 1 {
      * If not Project, use Group
      */
     Redirect redirect;
+    /*
+     * If not Project, use Group
+     */
+    Margins margins;
 }
