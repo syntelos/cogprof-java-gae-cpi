@@ -11,14 +11,24 @@
 
 == Person ==
 
- The CPI Online redefines [http://code.google.com/p/cpi/source/browse/trunk/server/odl/oso/data/Person.odl Person] to implement the principal data table.  
+ The CPI Online redefines [http://code.google.com/p/cpi/source/browse/trunk/server/odl/oso/data/Person.odl Person] (from [http://code.google.com/p/gap-data/source/browse/trunk/gae/odl/oso/data/Person.odl gap-data]) to implement the principal data table.  
 {{{
 package oso.data;
 path /people;
 import cpi.Inventory;
+import cpi.groups.Group;
+import cpi.groups.Project;
 
-class Person version 5 {
+/**
+ * Accept Accounts or OAuth Logon Id for viewer identity
+ * 
+ * Application access by random identifier
+ * 
+ * @review(Identifier,Random)
+ */
+class Person version 8 {
     *unique String logonId;
+    *unique String identifier;
     List.Primitive<Inventory> inventory;
     Float nf;
     Float nt;
@@ -26,8 +36,57 @@ class Person version 5 {
     Float sf;
     Date created;
     Date completed;
+    Group group;
+    Project admin;
 }
 }}}
 
- Gap Data employs this class for any logged- in user, so the CPI Online simply extends the definition of the named location of this class.
+ Person is used by Gap Data for any logged- in user.  The Google Accounts service provides a reusable storage root identity for the CPI Online data store.
 
+== Group ==
+
+ A Person may have membership in one [http://code.google.com/p/cpi/source/browse/trunk/server/odl/cpi/groups/Group.odl Group].
+{{{
+package cpi.groups;
+path /groups;
+import oso.data.Person;
+
+/**
+ * Accept only random identifier for application access.
+ */
+class Group version 1 {
+    String name;
+    *unique String identifier;
+    Person owner;
+    Date created;
+    Date modified;
+}
+}}}
+
+== Project ==
+
+ A Person may have membership in one [http://code.google.com/p/cpi/source/browse/trunk/server/odl/cpi/groups/Project.odl Project].
+{{{
+package cpi.groups;
+path /groups;
+import oso.data.Person;
+
+/**
+ * Name is unique for lookups, random identifier is 
+ * the public parameter key.
+ * 
+ * Accept name for logon member of scope.
+ * 
+ * Accept identifier for OAuth access.
+ */
+class Project version 1 {
+    *unique String name;
+    *unique String identifier;
+    Person owner;
+    Date created;
+    Date cleaned;
+}
+}}}
+
+ A Project is created by the service administrator.
+ 

@@ -5,26 +5,3 @@
 
  The CPI Online is running at [http://cpi.cognitiveprofile.com/ cpi.cognitiveprofile.com].
 
-= Result Data =
-
- The CPI Online includes [http://www.json.org/ JSON] data access via a Result URL as 
-{{{
-   URL/data.json
-}}}
- 
- For example, 
-{{{
-   http://cpi.cognitiveprofile.com/profile/b390a019eff70566/data.json
-}}}
-
-= Result Display Image =
-
-  The CPI Online includes result display image access via a Result URL as 
-{{{
-   URL/image.png
-}}}
- 
- For example, 
-{{{
-   http://cpi.cognitiveprofile.com/profile/b390a019eff70566/image.png
-}}}
