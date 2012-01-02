@@ -3,7 +3,7 @@
 
 = Status =
 
- In development
+ * [API_Result API Result] is currently available
 
 = Overview =
 
