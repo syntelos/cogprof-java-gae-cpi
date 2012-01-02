@@ -9,11 +9,28 @@
 
  When not found in Project, the field in Group will be used.
 
-
 {{{
   "margins": "20px"
 }}}
 
- == CSS ==
+ Value of the [http://www.w3.org/TR/CSS2/box.html#margin-properties CSS property "margin"] for the BODY of the embedded HTML page
 
- The [http://www.w3c.org/Style/CSS CSS] value of "margin" for the BODY of the embedded HTML page.
+== Read/Copy ==
+
+{{{
+HTTP OAuth GET /groups/034f/data.json
+HTTP OAuth GET /projects/8932/data.json
+}}}
+for response (Mime-Type application/json)
+
+See [API_Group Group] and  [API_Project Project]
+
+
+== Update ==
+
+{{{
+HTTP OAuth POST /groups/034f/data.json
+HTTP OAuth POST /projects/8932/data.json
+}}}
+
+See [API_Group Group] and  [API_Project Project]
