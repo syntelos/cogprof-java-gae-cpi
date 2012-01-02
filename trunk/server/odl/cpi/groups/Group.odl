@@ -10,7 +10,7 @@ import oso.data.Person;
 class Group version 1 {
     String name;
     *unique String identifier;
-    Person owner;
+    Project project;
     Date created;
     Date cleaned;
     /*

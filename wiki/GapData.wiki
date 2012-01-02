@@ -59,7 +59,7 @@ import oso.data.Person;
 class Group version 1 {
     String name;
     *unique String identifier;
-    Person owner;
+    Project project;
     Date created;
     Date cleaned;
     /*
@@ -89,8 +89,13 @@ class Project version 1 {
     *unique String name;
     String identifier;
     Person owner;
+    Person admin;
     Date created;
     Date cleaned;
+    /*
+     * Quota on query Person.project = Project.identifier
+     */
+    Integer count;
     /*
      * If not Project, use Group
      */

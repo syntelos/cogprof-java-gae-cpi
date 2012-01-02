@@ -22,5 +22,5 @@ class Person version 8 {
     Date created;
     Date completed;
     Group group;
-    Project admin;
+    Project project;
 }
