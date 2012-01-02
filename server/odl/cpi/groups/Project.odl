@@ -14,8 +14,13 @@ class Project version 1 {
     *unique String name;
     String identifier;
     Person owner;
+    Person admin;
     Date created;
     Date cleaned;
+    /*
+     * Quota on query Person.project = Project.identifier
+     */
+    Integer count;
     /*
      * If not Project, use Group
      */
