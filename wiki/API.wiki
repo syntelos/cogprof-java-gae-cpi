@@ -1,8 +1,9 @@
 #summary CPI Online Application Programming Interface
 #labels Featured
 
+
+= [https://docs.google.com/presentation/d/15kK0sOkXVtMUXhv_DLNJDOEAJz8OcU0sJlvsqFL154Q/edit Overview] =
+
 = Operation =
 
  The CPI Online is running at [http://cpi.cognitiveprofile.com/ cpi.cognitiveprofile.com]
-
-== [https://docs.google.com/presentation/d/15kK0sOkXVtMUXhv_DLNJDOEAJz8OcU0sJlvsqFL154Q/edit?hl=en_US#slide=id.g160549b_2_5 CPI API presentation in progress] ==
