@@ -1,0 +1,32 @@
+#summary API Redirect
+#labels API
+
+= Redirect =
+
+ Both [API_Project Project] and [API_Group Group] have a redirect function
+
+ This JSON fragment is a field in Project or Group.
+
+ When not found in Project, the field in Group will be used.
+
+
+{{{
+  "redirect": {
+    "href": "http://host.net/url",
+    "target": "frame_name",
+    "sequence": ( "inject" | "timeout" ) , 
+  }
+}}}
+
+ == HREF ==
+
+ The link url accepts the following template variables
+
+ || *Name* || *Value* ||
+ || R_ST || Result (double 0.0 - 1.0) ||
+ || R_NT || Result  ||
+ || R_SF || Result  ||
+ || R_NF || Result  ||
+ || ID   || Profile identifier ||
+ || ID_P ||  Project identifier ||
+
