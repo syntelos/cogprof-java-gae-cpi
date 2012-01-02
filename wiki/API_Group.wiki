@@ -12,8 +12,8 @@
 
 || *Name* || *Value* || *Interaction* ||
 || name || Group name || read/write ||
-|| redirect || See [API_Redirect Redirect]  || read/write ||
-|| margins || See [API_Margins Margins]  || read/write ||
+|| redirect || See [API_Redirect Redirect]  || read/write (project default) ||
+|| margins || See [API_Margins Margins]  || read/write (project default) ||
 || identifier  || Group identifier || read-only ||
 
 == Create ==
