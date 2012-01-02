@@ -15,6 +15,7 @@
     "href": "http://host.net/url",
     "target": "frame_name",
     "sequence": ( "inject" | "timeout" ) , 
+    "timeout": "millis"
   }
 }}}
 
@@ -29,4 +30,18 @@
  || R_NF || Result  ||
  || ID   || Profile identifier ||
  || ID_P ||  Project identifier ||
+
+ == Target Frame Name ==
+
+ A frame name will cause the redirect to target a browser window frame, or a new browser window (for any unknown name).
+
+ == Sequence ==
+
+ *inject* causes the inventory process to redirect before displaying a result page (with graph image).
+
+ *timeout* causes the inventory process to proceed to the result page, and then timeout and redirect.
+
+ == Timeout ==
+
+ For sequence timeout, wait for this number of milliseconds before redirecting.
 
