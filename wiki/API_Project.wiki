@@ -12,13 +12,13 @@
 
  Create a Group in the Project with
 {{{
-  GET /projects/data.json?name=Example&Count=10
+ GET /projects/data.json?name=Example&Count=10
 }}}
  or
 {{{
-  POST /projects
-  --
-  name=Example&Count=10
+ POST /projects
+ --
+ name=Example&Count=10
 }}}
  for response JSON (Mime-Type application/json)
 {{{
@@ -46,7 +46,7 @@
 == List members ==
 
 {{{
-  GET /projects/0fac9/data.json
+ GET /projects/0fac9/data.json
 }}}
  for response JSON (Mime-Type application/json)
 {{{
@@ -74,7 +74,7 @@
 == List Results ==
 
 {{{
-  GET /projects/0fac9/results.json
+ GET /projects/0fac9/results.json
 }}}
  for response JSON (Mime-Type application/json)
 {{{

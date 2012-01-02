@@ -12,7 +12,7 @@
 
  The CPI Online includes [http://www.json.org/ JSON] data access via a Result URL as 
 {{{
-   /profile/b390a019eff70566/data.json
+ GET /profile/b390a019eff70566/data.json
 }}}
  
  Example
@@ -23,7 +23,7 @@
 
   The CPI Online includes result display image access via a Result URL as 
 {{{
-   /profile/b390a019eff70566/image.png
+ GET /profile/b390a019eff70566/image.png
 }}}
  
  Example 

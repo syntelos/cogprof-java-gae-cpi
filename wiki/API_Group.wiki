@@ -17,7 +17,7 @@
  Access Project Admin
 
 {{{
-  GET /groups/data.json
+ GET /groups/data.json
 }}}
  for response Mime-Type application/json
 {{{
@@ -34,7 +34,7 @@
  Access Project Admin
 
 {{{
-  GET /groups/03efdbc/data.json
+ GET /groups/03efdbc/data.json
 }}}
  for response Mime-Type application/json
 {{{
