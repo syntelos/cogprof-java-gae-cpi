@@ -8,6 +8,14 @@
 || Data || JSON ||
 || Access || Group Admin ||
 
+== Properties ==
+
+|| *Name* || *Value* || *Interaction* ||
+|| name || Group name || read/write ||
+|| redirect || See [API_Redirect Redirect]  || read/write ||
+|| margins || See [API_Margins Margins]  || read/write ||
+|| identifier  || Group identifier || readonly ||
+
 == Create ==
 
  Groups are created by the [mailto:cpi@cognitiveprofile.com?Subject=CPI+Groups service administrator]

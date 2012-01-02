@@ -8,17 +8,27 @@
 || Data || JSON ||
 || Access || Group Admin ||
 
+== Properties ==
+
+|| *Name* || *Value* || *Interaction* ||
+|| name || Project name || read/write ||
+|| count || Number of members  || write once on create ||
+|| redirect || See [API_Redirect Redirect]  || read/write ||
+|| margins || See [API_Margins Margins]  || read/write ||
+|| identifier  || Project identifier || readonly ||
+|| members  || Project membership || readonly ||
+
 == Create ==
 
  Create a Project with
 {{{
- GET /projects/data.json?name=Example&Count=10
+ GET /projects/data.json?name=Example&count=10
 }}}
  or
 {{{
  POST /projects
  --
- name=Example&Count=10
+ name=Example&count=10
 }}}
  for request Mime-Type `application/x-www-form-urlencoded` and response Mime-Type `application/json`
 {{{
