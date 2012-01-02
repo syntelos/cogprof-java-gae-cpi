@@ -1,11 +1,11 @@
-#summary The CPI Online as an example of Gap Data
+#summary CPI Online Data Schema
 #labels Featured
 
  The CPI Online [http://code.google.com/p/cpi/source/browse/trunk/server server] uses the [http://gap-data.googlecode.com/ Gap Data] software framework.
 
-= Gap Data Bean =
+= Data Schema =
 
- A bean represents the storage and caching and application I/O for a record in a relational database table.  It communicates with the Datastore and Memcache, and implements HTTP and XMPP applications with GAE.
+ A "data programming bean" defines the storage and caching and application I/O for a record in a relational database table.  It communicates with the Datastore and Memcache, and implements HTTP and XMPP applications with GAE.
 
  The Gap Data compiler generates java programming language source code for Google App Engine data beans.  The Gap Data Bean is defined in ODL.  
 
