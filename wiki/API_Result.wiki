@@ -1,26 +1,28 @@
 #summary API Result
 #labels API
 
-= Result Data =
+= Result =
+
+== Data ==
 
  The CPI Online includes [http://www.json.org/ JSON] data access via a Result URL as 
 {{{
-   URL/data.json
+   /profile/b390a019eff70566/data.json
 }}}
  
- For example, 
+ Example
 {{{
    http://cpi.cognitiveprofile.com/profile/b390a019eff70566/data.json
 }}}
 
-= Result Display Image =
+== Display Image ==
 
   The CPI Online includes result display image access via a Result URL as 
 {{{
-   URL/image.png
+   /profile/b390a019eff70566/image.png
 }}}
  
- For example, 
+ Example 
 {{{
    http://cpi.cognitiveprofile.com/profile/b390a019eff70566/image.png
 }}}

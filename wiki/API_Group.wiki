@@ -1,9 +1,77 @@
 #summary API Group
 #labels API
 
-= API Group =
+= Group =
 
 
 {{{
 HTTP OAuth   http://cpi.cognitiveprofile.com/groups/b390a019eff70566
+}}}
+
+== Create ==
+
+ Access HTTP OAuth Project admin 
+
+ Create a Group in the Project with
+{{{
+  GET /groups/data.json?name=Example&Count=10
+}}}
+ or
+{{{
+  POST /groups
+  --
+  name=Example&Count=10
+}}}
+ for response JSON (Mime-Type application/json)
+{{{
+ [
+   {
+     "identifier": "0aefed",
+     "name": "Example",
+     "count": "10",
+     "members": [
+       "aef001",
+       "aef002",
+       "aef003",
+       "aef004",
+       "aef005",
+       "aef006",
+       "aef007",
+       "aef008",
+       "aef009",
+       "aef00a"
+     ]
+   }
+ ]
+}}}
+
+== Read/Test ==
+
+ Access HTTP OAuth Project admin 
+
+ Read a Group in the Project with
+{{{
+  GET /groups/0fac9/data.json
+}}}
+ for response JSON (Mime-Type application/json)
+{{{
+ [
+   {
+     "identifier": "0fac9",
+     "name": "Example",
+     "count": "10",
+     "members": [
+       "ofc001",
+       "ofc002",
+       "ofc003",
+       "ofc004",
+       "ofc005",
+       "ofc006",
+       "ofc007",
+       "ofc008",
+       "ofc009",
+       "ofc00a"
+     ]
+   }
+ ]
 }}}

@@ -1,9 +1,29 @@
 #summary API Project
 #labels API
 
-= API Project =
+= Project =
 
 
 {{{
-HTTP OAuth   http://cpi.cognitiveprofile.com/projects/b390a019eff70566
+HTTP Admin   http://cpi.cognitiveprofile.com/projects
+}}}
+
+ Projects are created by the service administrator.
+
+== Read/Test ==
+
+ Access HTTP OAuth Project admin
+
+ Read project data in JSON with
+{{{
+  GET /projects/03efdbc/data.json
+}}}
+ for response Mime-Type application/json
+{{{
+ [
+   {
+     "identifier": "03efdbc",
+     "name": "Example"
+   }
+ ]
 }}}
