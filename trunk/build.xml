@@ -17,6 +17,11 @@
    <ant dir="server" target="test"/>
  </target>
 
+ <target name="run">
+
+   <ant dir="server" target="run"/>
+ </target>
+
  <target name="clean">
 
    <ant dir="code" target="clean"/>

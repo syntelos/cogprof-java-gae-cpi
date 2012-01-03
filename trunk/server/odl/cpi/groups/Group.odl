@@ -1,6 +1,8 @@
 package cpi.groups;
 path /groups;
 import oso.data.Person;
+import cpi.Redirect;
+import cpi.Margins;
 
 /**
  * A {@link Group} has many {@link Project Projects}
@@ -10,8 +12,8 @@ import oso.data.Person;
  * Access OAuth random identifier
  */
 class Group version 1 {
-    *unique String name;
-    unique String identifier;
+    String name;
+    *unique String identifier;
     Person owner;
     Person admin;
     Date created;

@@ -21,12 +21,31 @@ import java.util.Date;
 public final class Person
     extends PersonData
 {
+    public final static Person ForLongLogonId(String logonId){
+
+        final Filter filter = new Filter(Person.KIND).add(Person.Field.LogonId,Filter.Op.eq,logonId);
+
+        return Person.Query1(Person.CreateQueryFor(filter));
+
+    }
+    public final static Person GetCreateLong(String logonId){
+
+        Person logon = Person.ForLongLogonId(logonId);
+        if (null == logon){
+
+            logon = new Person(Strings.RandomIdentifier());
+            logon.setLogonId(logonId);
+            logon.save();
+        }
+        return logon;
+    }
+
 
     public Person() {
         super();
     }
-    public Person(String logonId) {
-        super( logonId);
+    public Person(String identifier) {
+        super( identifier);
     }
 
 

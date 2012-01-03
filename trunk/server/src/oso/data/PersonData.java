@@ -20,7 +20,7 @@
 package oso.data;
 
 import cpi.Inventory;
-import cpi.groups.Group;
+import cpi.groups.Project;
 
 import gap.*;
 import gap.data.*;
@@ -40,19 +40,19 @@ import javax.annotation.Generated;
  *
  * @see Person
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2011-12-29T22:45:53.446Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2012-01-03T19:10:40.952Z")
 public abstract class PersonData
     extends gap.data.BigTable
     implements DataInheritance<Person>
 {
 
-    private final static long serialVersionUID = 6;
+    private final static long serialVersionUID = 8;
 
     public final static Kind KIND = Kind.Create("Person","oso.data","Person","/people");
 
     public final static String ClassName = "Person";
 
-    public final static String DefaultSortBy = "logonId";
+    public final static String DefaultSortBy = "identifier";
 
 
     public final static gap.service.od.ClassDescriptor ClassDescriptorFor(){
@@ -71,8 +71,8 @@ public abstract class PersonData
     /**
      * Long instance key without parent key
      */
-    public final static Key KeyLongIdFor(String logonId){
-        String id = IdFor( logonId);
+    public final static Key KeyLongIdFor(String identifier){
+        String id = Person.IdFor( identifier);
         return KeyLongFor(id);
     }
     /**
@@ -81,7 +81,7 @@ public abstract class PersonData
      * Calls {@link #KeyLongIdFor}
      */
     public final static Key KeyIdFor(Object... args){
-        return KeyLongIdFor((String)args[0]);
+        return Person.KeyLongIdFor((String)args[0]);
     }
     /**
      * Used by setId
@@ -89,15 +89,15 @@ public abstract class PersonData
      * Calls {@link #KeyLongFor}
      */
     public final static Key KeyFor(Object... args){
-        return KeyLongFor( (String)args[0]);
+        return Person.KeyLongFor( (String)args[0]);
     }
     /**
      * Identifier for unique fields
      */
-    public final static String IdFor(String logonId){
-        if (null != logonId){
-            String logonIdString = logonId;
-            return gap.data.Hash.For(logonIdString);
+    public final static String IdFor(String identifier){
+        if (null != identifier){
+            String identifierString = identifier;
+            return gap.data.Hash.For(identifierString);
         }
         else
             throw new IllegalArgumentException();
@@ -106,14 +106,14 @@ public abstract class PersonData
     /**
      * Instance lookup
      */
-    public final static Person ForLongLogonId(String logonId){
-        if (null != logonId){
-            Key key = KeyLongIdFor( logonId);
+    public final static Person ForLongIdentifier(String identifier){
+        if (null != identifier){
+            Key key = Person.KeyLongIdFor( identifier);
             Person instance = (Person)gap.data.Store.GetClass(key);
             if (null != instance)
                 return instance;
             else {
-                Query q = CreateQueryFor(key);
+                Query q = Person.CreateQueryFor(key);
                 return (Person)gap.data.Store.Query1Class(q);
             }
         }
@@ -124,10 +124,16 @@ public abstract class PersonData
     /**
      * Instance lookup or create
      */
-    public final static Person GetCreateLong(String logonId){
-        Person person = ForLongLogonId( logonId);
+    public static Person GetCreateLong(String identifier){
+        return GetCreateLongIdentifier( identifier);
+    }
+    /**
+     * Instance lookup or create
+     */
+    public final static Person GetCreateLongIdentifier(String identifier){
+        Person person = Person.ForLongIdentifier( identifier);
         if (null == person){
-            person = new Person( logonId);
+            person = new Person( identifier);
             person = (Person)gap.data.Store.PutClass(person);
         }
         return person;
@@ -141,12 +147,12 @@ public abstract class PersonData
 
     public final static Person ForLongId(String id){
         if (null != id){
-            Key key = KeyLongFor(id);
+            Key key = Person.KeyLongFor(id);
             Person instance = (Person)gap.data.Store.GetClass(key);
             if (null != instance)
                 return instance;
             else {
-                Query q = CreateQueryFor(key);
+                Query q = Person.CreateQueryFor(key);
                 return (Person)gap.data.Store.Query1Class(q);
             }
         }
@@ -163,7 +169,7 @@ public abstract class PersonData
             if (null != instance)
                 return instance;
             else {
-                Query q = CreateQueryFor(key);
+                Query q = Person.CreateQueryFor(key);
                 return (Person)gap.data.Store.Query1Class(q);
             }
         }
@@ -172,7 +178,7 @@ public abstract class PersonData
     }
     public final static Key GetKey(Key key){
         if (null != key){
-            Query q = CreateQueryFor(key);
+            Query q = Person.CreateQueryFor(key);
             return gap.data.Store.Query1Key(q);
         }
         else
@@ -198,6 +204,9 @@ public abstract class PersonData
 
 
     /**
+     * Anonymous random key cannot be mapped to network identifier
+     * @see Person#IdFor
+     *
      * Test for uniqueness and iterate under collisions.
      */
     public final static Key NewRandomKeyLong(){
@@ -322,6 +331,7 @@ public abstract class PersonData
         Key("key",Type.Primitive),
         Id("id",Type.Primitive),
         LogonId("logonId",Type.Primitive),
+        Identifier("identifier",Type.Primitive),
         Inventory("inventory",Type.PrimitiveCollection),
         Nf("nf",Type.Primitive),
         Nt("nt",Type.Primitive),
@@ -329,7 +339,7 @@ public abstract class PersonData
         Sf("sf",Type.Primitive),
         Created("created",Type.Primitive),
         Completed("completed",Type.Primitive),
-        Group("group",Type.BigTable);
+        Project("project",Type.BigTable);
 
         private final static lxl.Map<String,Field> FieldName = new lxl.Map<String,Field>();
         public static final String[] AllNames;
@@ -385,6 +395,8 @@ public abstract class PersonData
                 return instance.getId();
             case LogonId:
                 return instance.getLogonId(mayInherit);
+            case Identifier:
+                return instance.getIdentifier(mayInherit);
             case Inventory:
                 return instance.getInventory(mayInherit);
             case Nf:
@@ -399,8 +411,8 @@ public abstract class PersonData
                 return instance.getCreated(mayInherit);
             case Completed:
                 return instance.getCompleted(mayInherit);
-            case Group:
-                return instance.getGroupId();
+            case Project:
+                return instance.getProjectId();
             default:
                 throw new IllegalArgumentException(field.toString()+" in Person");
             }
@@ -420,6 +432,8 @@ public abstract class PersonData
                 return instance.setId(gap.Objects.StringFromObject(value));
             case LogonId:
                 return instance.setLogonId(gap.Objects.StringFromObject(value));
+            case Identifier:
+                return instance.setIdentifier(gap.Objects.StringFromObject(value));
             case Inventory:
                 return instance.setInventory((List.Primitive<Inventory>)value);
             case Nf:
@@ -434,8 +448,8 @@ public abstract class PersonData
                 return instance.setCreated(gap.Objects.DateFromObject(value));
             case Completed:
                 return instance.setCompleted(gap.Objects.DateFromObject(value));
-            case Group:
-                return instance.setGroupId(gap.Objects.StringFromObject(value));
+            case Project:
+                return instance.setProjectId(gap.Objects.StringFromObject(value));
             default:
                 throw new IllegalArgumentException(field.toString()+" in Person");
             }
@@ -455,6 +469,8 @@ public abstract class PersonData
                 return instance.getId();
             case LogonId:
                 return instance.getLogonId(MayNotInherit);
+            case Identifier:
+                return instance.getIdentifier(MayNotInherit);
             case Inventory:{
                 List.Primitive<Inventory> inventory = instance.getInventory(MayNotInherit);
                 if (null != inventory)
@@ -478,8 +494,8 @@ public abstract class PersonData
                 return instance.getCreated(MayNotInherit);
             case Completed:
                 return instance.getCompleted(MayNotInherit);
-            case Group:
-                return instance.getGroupId();
+            case Project:
+                return instance.getProjectId();
             default:
                 throw new IllegalArgumentException(field.toString()+" in Person");
             }
@@ -502,6 +518,9 @@ public abstract class PersonData
                 return;
             case LogonId:
                 instance.setLogonId( (String)value);
+                return;
+            case Identifier:
+                instance.setIdentifier( (String)value);
                 return;
             case Inventory:{
                 List.Primitive<Inventory> _inventory = null;
@@ -537,8 +556,8 @@ public abstract class PersonData
             case Completed:
                 instance.setCompleted( (Date)value);
                 return;
-            case Group:
-                instance.setGroupId( (String)value);
+            case Project:
+                instance.setProjectId( (String)value);
                 return;
             default:
                 throw new IllegalArgumentException(field.toString()+" in Person");
@@ -650,15 +669,16 @@ public abstract class PersonData
 
 
     private String logonId;
+    private String identifier;
     private Float nf;
     private Float nt;
     private Float st;
     private Float sf;
     private Date created;
     private Date completed;
-    private String groupId;
-    private transient Key groupKey;
-    private transient Group group;
+    private String projectId;
+    private transient Key projectKey;
+    private transient Project project;
     private List.Primitive<Inventory> inventory;
 
 
@@ -667,12 +687,12 @@ public abstract class PersonData
     protected PersonData() {
         super();
     }
-    protected PersonData(String logonId) {
+    protected PersonData(String identifier) {
         super();
-        this.setLogonId(logonId);
+        this.setIdentifier(identifier);
         {
-            final String id = IdFor(logonId);
-            final Key key = KeyLongFor(id);
+            final String id = Person.IdFor(identifier);
+            final Key key = Person.KeyLongFor(id);
             this.setKey(key);
         }
     }
@@ -681,13 +701,14 @@ public abstract class PersonData
     public void destroy(){
         this.inheritFrom = null;
         this.logonId = null;
+        this.identifier = null;
         this.nf = null;
         this.nt = null;
         this.st = null;
         this.sf = null;
         this.created = null;
         this.completed = null;
-        this.group = null;
+        this.project = null;
         List.Primitive<Inventory> inventory = this.inventory;
         if (null != inventory){
             this.inventory = null;
@@ -696,11 +717,11 @@ public abstract class PersonData
     }
     public final String getId(){
 
-        String id = IdFor(KIND.name, this.key);
+        String id = Person.IdFor(KIND.name, this.key);
         if (null != id)
             return id;
         else
-            return IdFor(this.logonId);
+            return Person.IdFor(this.identifier);
     }
     public final boolean setId(String id){
         if (null == id){
@@ -712,7 +733,7 @@ public abstract class PersonData
                 return false;
         }
         else if (null == this.key){
-            this.key = KeyLongFor(id);
+            this.key = Person.KeyLongFor(id);
             return true;
         }
         else
@@ -773,15 +794,63 @@ public abstract class PersonData
             return false;
     }
     public final String getLogonId(){
-        return this.logonId;
+        return this.getLogonId(Notation.MayInherit);
     }
     public final String getLogonId(boolean mayInherit){
-        return this.getLogonId();
+        if (mayInherit){
+            String logonId = this.logonId;
+            if (null == logonId && this.hasInheritFrom()){
+                Person inheritFrom = this.getInheritFrom();
+                return inheritFrom.getLogonId(Notation.MayInherit);
+            }
+            return logonId;
+        }
+        else
+            return this.logonId;
+    }
+    public final boolean setLogonId(String logonId, boolean withInheritance){
+        if (IsNotEqual(this.logonId,this.getLogonId(withInheritance))){
+            this.fieldStatistics.markDirty(Field.LogonId);
+            this.logonId = logonId;
+            return true;
+        }
+        else
+            return false;
     }
     public final boolean setLogonId(String logonId){
         if (IsNotEqual(this.logonId,logonId)){
             this.fieldStatistics.markDirty(Field.LogonId);
             this.logonId = logonId;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean hasIdentifier(boolean mayInherit){
+        return (null != this.getIdentifier(mayInherit));
+    }
+    public final boolean hasNotIdentifier(boolean mayInherit){
+        return (null == this.getIdentifier(mayInherit));
+    }
+    public final boolean dropIdentifier(){
+        if (null != this.identifier){
+            this.fieldStatistics.markDirty(Field.Identifier);
+            this.identifier = null;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final String getIdentifier(){
+        return this.identifier;
+    }
+    public final String getIdentifier(boolean mayInherit){
+        return this.getIdentifier();
+    }
+    public final boolean setIdentifier(String identifier){
+        if (IsNotEqual(this.identifier,identifier)){
+            this.fieldStatistics.markDirty(Field.Identifier);
+            this.identifier = identifier;
             return true;
         }
         else
@@ -1123,121 +1192,121 @@ public abstract class PersonData
         else
             return false;
     }
-    public final boolean hasGroup(boolean mayInherit){
-        return (null != this.getGroup(mayInherit));
+    public final boolean hasProject(boolean mayInherit){
+        return (null != this.getProject(mayInherit));
     }
-    public final boolean hasNotGroup(boolean mayInherit){
-        return (null == this.getGroup(mayInherit));
+    public final boolean hasNotProject(boolean mayInherit){
+        return (null == this.getProject(mayInherit));
     }
-    public final boolean dropGroup(){
-        if (null != this.group){
-            this.fieldStatistics.markDirty(Field.Group);
-            this.group = null;
-            this.groupId = null;
-            this.groupKey = null;
+    public final boolean dropProject(){
+        if (null != this.project){
+            this.fieldStatistics.markDirty(Field.Project);
+            this.project = null;
+            this.projectId = null;
+            this.projectKey = null;
             return true;
         }
         else
             return false;
     }
-    public final String getGroupId(){
-        return this.groupId;
+    public final String getProjectId(){
+        return this.projectId;
     }
-    public final boolean setGroupId(String groupId){
-        if (IsNotEqual(this.groupId,groupId)){
-            this.fieldStatistics.markDirty(Field.Group);
-            this.groupId = groupId;
-            this.groupKey = null;
-            this.group = null;
+    public final boolean setProjectId(String projectId){
+        if (IsNotEqual(this.projectId,projectId)){
+            this.fieldStatistics.markDirty(Field.Project);
+            this.projectId = projectId;
+            this.projectKey = null;
+            this.project = null;
             return true;
         }
         else
             return false;
     }
-    public final Key getGroupKey(){
-        if (null == this.groupKey){
+    public final Key getProjectKey(){
+        if (null == this.projectKey){
             /*
              * BigTable dereferencing
              */
-            if (null != this.groupId){
-                this.groupKey = Group.KeyLongFor(this.groupId);
+            if (null != this.projectId){
+                this.projectKey = Project.KeyLongFor(this.projectId);
             }
         }
-        return this.groupKey;
+        return this.projectKey;
     }
-    public final String getGroupId(boolean mayInherit){
-        if (null != this.groupId)
-            return this.groupId;
+    public final String getProjectId(boolean mayInherit){
+        if (null != this.projectId)
+            return this.projectId;
         else if (mayInherit && this.hasInheritFrom()){
             Person inheritFrom = this.getInheritFrom();
-            return inheritFrom.getGroupId(mayInherit);
+            return inheritFrom.getProjectId(mayInherit);
         }
         else
             return null;
     }
-    public final Key getGroupKey(boolean mayInherit){
-        Key groupKey = this.getGroupKey();
-        if (null != groupKey)
-            return groupKey;
+    public final Key getProjectKey(boolean mayInherit){
+        Key projectKey = this.getProjectKey();
+        if (null != projectKey)
+            return projectKey;
         else if (mayInherit && this.hasInheritFrom()){
             Person inheritFrom = this.getInheritFrom();
-            return inheritFrom.getGroupKey(mayInherit);
+            return inheritFrom.getProjectKey(mayInherit);
         }
         else
             return null;
     }
-    public final Group getGroup(){
-        return this.getGroup(Notation.MayInherit);
+    public final Project getProject(){
+        return this.getProject(Notation.MayInherit);
     }
-    public final Group getGroup(boolean mayInherit){
-        Group group = this.group;
-        if (null == group){
+    public final Project getProject(boolean mayInherit){
+        Project project = this.project;
+        if (null == project){
             /*
              * BigTable dereference
              */
-            Key groupKey = this.getGroupKey(mayInherit);
+            Key projectKey = this.getProjectKey(mayInherit);
 
-            if (null != groupKey){
-                group = Group.Get(groupKey);
-                this.group = group;
+            if (null != projectKey){
+                project = Project.Get(projectKey);
+                this.project = project;
             }
         }
 
-        if (null == group && mayInherit && this.hasInheritFrom()){
+        if (null == project && mayInherit && this.hasInheritFrom()){
             Person inheritFrom = this.getInheritFrom();
-            return inheritFrom.getGroup(Notation.MayInherit);
+            return inheritFrom.getProject(Notation.MayInherit);
         }
         else
-            return group;
+            return project;
     }
-    public final boolean setGroup(Group group, boolean withInheritance){
-        if (IsNotEqual(this.group,this.getGroup(withInheritance))){
-            this.fieldStatistics.markDirty(Field.Group);
-            this.group = group;
-            if (null != group){
-                this.groupId = group.getId();
-                this.groupKey = group.getKey();
+    public final boolean setProject(Project project, boolean withInheritance){
+        if (IsNotEqual(this.project,this.getProject(withInheritance))){
+            this.fieldStatistics.markDirty(Field.Project);
+            this.project = project;
+            if (null != project){
+                this.projectId = project.getId();
+                this.projectKey = project.getKey();
             }
             else {
-                this.groupId = null;
-                this.groupKey = null;
+                this.projectId = null;
+                this.projectKey = null;
             }
             return true;
         }
         else
             return false;
     }
-    public final boolean setGroup(Group group){
-        if (IsNotEqual(this.group,group)){
-            this.fieldStatistics.markDirty(Field.Group);
-            this.group = group;
-            if (null != group){
-                this.groupId = group.getId();
-                this.groupKey = group.getKey();
+    public final boolean setProject(Project project){
+        if (IsNotEqual(this.project,project)){
+            this.fieldStatistics.markDirty(Field.Project);
+            this.project = project;
+            if (null != project){
+                this.projectId = project.getId();
+                this.projectKey = project.getKey();
             }
             else {
-                this.groupId = null;
-                this.groupKey = null;
+                this.projectId = null;
+                this.projectKey = null;
             }
             return true;
         }
@@ -1342,6 +1411,18 @@ public abstract class PersonData
     }
     public boolean updateFrom(Request req) throws ValidationError {
         boolean change = false;
+        String logonIdRequest = req.getParameter("logonId");
+        if (null != logonIdRequest && 0 < logonIdRequest.length()){
+            try {
+                String logonId = logonIdRequest;
+                if (this.setLogonId(logonId)){
+                    change = true;
+                }
+            }
+            catch (RuntimeException exc){
+                throw new ValidationError(ClassName,"logonId",logonIdRequest,exc);
+            }
+        }
         String nfRequest = req.getParameter("nf");
         if (null != nfRequest && 0 < nfRequest.length()){
             try {
@@ -1422,6 +1503,10 @@ public abstract class PersonData
     public final boolean updateFrom(Person proto){
         boolean mayInherit = (!this.hasInheritFromKey());
         boolean change = false;
+        String logonId = proto.getLogonId(mayInherit);
+        if (null != logonId && this.setLogonId(logonId)){
+            change = true;
+        }
         Float nf = proto.getNf(mayInherit);
         if (null != nf && this.setNf(nf)){
             change = true;
@@ -1483,13 +1568,13 @@ public abstract class PersonData
         return this.fieldStatistics.isDirty();
     }
     public final gap.service.od.ClassDescriptor getClassDescriptorFor(){
-        return ClassDescriptorFor();
+        return Person.ClassDescriptorFor();
     }
     /*
      * Template Data Dictionary
      */
     public boolean hasVariable(TemplateName name){
-        Field field = Field.For(name.getTerm());
+        Field field = Person.Field.For(name.getTerm());
         if (null != field){
             switch (field){
             case Id:
@@ -1507,6 +1592,15 @@ public abstract class PersonData
                      * Synthesize section for Field (EXISTS)
                      */
                     return this.hasLogonId(true);
+                }
+            case Identifier:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else {
+                    /*
+                     * Synthesize section for Field (EXISTS)
+                     */
+                    return this.hasIdentifier(true);
                 }
             case Nf:
                 if (name.has(1))
@@ -1562,11 +1656,11 @@ public abstract class PersonData
                      */
                     return this.hasCompleted(true);
                 }
-            case Group:
+            case Project:
                 if (name.has(1)){
-                    Group group = this.getGroup(true);
-                    if (null != group)
-                        return group.hasVariable(new TemplateName(name));
+                    Project project = this.getProject(true);
+                    if (null != project)
+                        return project.hasVariable(new TemplateName(name));
                     else
                         return false;
                 }
@@ -1574,7 +1668,7 @@ public abstract class PersonData
                     /*
                      * Synthesize section for Field (EXISTS)
                      */
-                    return this.hasGroup(true);
+                    return this.hasProject(true);
                 }
             default:
                 throw new IllegalStateException(field.name());
@@ -1585,7 +1679,7 @@ public abstract class PersonData
         }
     }
     public String getVariable(TemplateName name){
-        Field field = Field.For(name.getTerm());
+        Field field = Person.Field.For(name.getTerm());
         if (null != field){
             switch (field){
             case Id:
@@ -1598,6 +1692,11 @@ public abstract class PersonData
                     throw new IllegalStateException(field.name());
                 else
                     return this.getLogonId(true);
+            case Identifier:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else
+                    return this.getIdentifier(true);
             case Nf:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
@@ -1628,16 +1727,16 @@ public abstract class PersonData
                     throw new IllegalStateException(field.name());
                 else
                     return gap.Strings.DateToString(this.getCompleted(true));
-            case Group:
+            case Project:
                 if (name.has(1)){
-                    Group group = this.getGroup(Notation.MayInherit);
-                    if (null != group)
-                        return group.getVariable(new TemplateName(name));
+                    Project project = this.getProject(Notation.MayInherit);
+                    if (null != project)
+                        return project.getVariable(new TemplateName(name));
                     else
                         return null;
                 }
                 else
-                    return this.getGroupId(Notation.MayInherit);
+                    return this.getProjectId(Notation.MayInherit);
             default:
                 throw new IllegalStateException(field.name());
             }
@@ -1647,13 +1746,15 @@ public abstract class PersonData
         }
     }
     public void setVariable(TemplateName name, String value){
-        Field field = Field.For(name.getTerm());
+        Field field = Person.Field.For(name.getTerm());
         if (null != field){
             if (name.has(1)){
                 switch (field){
                 case Id:
                     throw new UnsupportedOperationException(field.name());
                 case LogonId:
+                    throw new IllegalStateException(field.name());
+                case Identifier:
                     throw new IllegalStateException(field.name());
                 case Nf:
                     throw new IllegalStateException(field.name());
@@ -1667,11 +1768,11 @@ public abstract class PersonData
                     throw new IllegalStateException(field.name());
                 case Completed:
                     throw new IllegalStateException(field.name());
-                case Group:
+                case Project:
 
-                    Group group = this.getGroup(true);
-                    if (null != group)
-                        group.setVariable(new TemplateName(name),value);
+                    Project project = this.getProject(true);
+                    if (null != project)
+                        project.setVariable(new TemplateName(name),value);
 
                     return ;
                 default:
@@ -1686,10 +1787,12 @@ public abstract class PersonData
         }
     }
     public List.Short<TemplateDataDictionary> getSection(TemplateName name){
-        Field field = Field.For(name.getTerm());
+        Field field = Person.Field.For(name.getTerm());
         if (null != field){
             switch (field){
             case LogonId:
+                return null;
+            case Identifier:
                 return null;
             case Nf:
                 return null;
@@ -1703,10 +1806,10 @@ public abstract class PersonData
                 return null;
             case Completed:
                 return null;
-            case Group:
-                Group group = this.getGroup(true);
-                if (null != group)
-                    return group.getSection(new TemplateName(name));
+            case Project:
+                Project project = this.getProject(true);
+                if (null != project)
+                    return project.getSection(new TemplateName(name));
                 else
                     return null;
             default:
