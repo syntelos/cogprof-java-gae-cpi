@@ -1,6 +1,8 @@
 #summary CPI Online Application Programming Interface
 #labels Featured
 
+<wiki:tok/>
+
 = Status =
 
  * [API_Inventory Inventory] is *available*
