@@ -34,6 +34,11 @@
     <servlet-class>cpi.groups.GroupServlet</servlet-class>
     <load-on-startup>-1</load-on-startup>
   </servlet>
+  <servlet>
+    <servlet-name>Project</servlet-name>
+    <servlet-class>cpi.groups.ProjectServlet</servlet-class>
+    <load-on-startup>-1</load-on-startup>
+  </servlet>
 
   <servlet-mapping>
     <servlet-name>Site</servlet-name>
@@ -59,6 +64,10 @@
   <servlet-mapping>
     <servlet-name>Group</servlet-name>
     <url-pattern>/groups/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Project</servlet-name>
+    <url-pattern>/projects/*</url-pattern>
   </servlet-mapping>
 
   <error-page>
