@@ -5,8 +5,7 @@
     <link rel="icon" href="{{=pageUrlRoot}}/favicon.ico" />
   </head>
   <body>
-    <div class="logon">{{>logon}}
-    </div>
+{{>div.logon.html}}
     <div id="first">
       {{#error}}
       <div class="block inside">
@@ -19,5 +18,6 @@
       </div>
       {{/error}}
     </div>
+{{>div.copyright.html}}
   </body>
 </html>

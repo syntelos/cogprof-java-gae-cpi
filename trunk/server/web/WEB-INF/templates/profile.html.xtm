@@ -5,8 +5,7 @@
     <link rel="icon" href="{{=pageUrlRoot}}/favicon.ico" />
   </head>
   <body>
-    <div class="logon">{{>div.logon.html}}
-    </div>
+{{>div.logon.html}}
     <div id="first">
       <center>
         <img src="{{=pageUrlRoot}}/profile/{{=inventory_code}}/image.png" width="300" height="300" />
@@ -18,8 +17,6 @@
         </table>
       </center>
     </div>
-    <div id="footer">
-      <center>Copyright &copy; 2010 Lois Breur Krause</center>
-    </div>
+{{>div.copyright.html}}
   </body>
 </html>
