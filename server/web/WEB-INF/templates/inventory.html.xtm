@@ -6,11 +6,8 @@
     <script src="{{=pageUrlRoot}}/inventory.js" type="text/javascript"><!--  --></script>
   </head>
   <body onload="init()">
-    <div class="logon">{{>div.logon.html}}
-    </div>
+{{>div.logon.html}}
 {{>div.inventory.html}}
-    <div id="footer">
-      <center>Copyright &copy; 2010 Lois Breur Krause</center>
-    </div>
+{{>div.copyright.html}}
   </body>
 </html>

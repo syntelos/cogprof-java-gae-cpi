@@ -5,8 +5,7 @@
     <link rel="icon" href="{{=pageUrlRoot}}/favicon.ico" />
   </head>
   <body>
-    <div class="logon">{{>div.logon.html}}
-    </div>
+{{>div.logon.html}}
     <div id="first">
 
       <h3><i> Please login to use this service </i></h3>
@@ -28,8 +27,6 @@
     <div id="second">
       <img src="{{=pageUrlRoot}}/images/cognitive-profile-240x240.gif" width="240" height="240" />
     </div>
-    <div id="footer">
-      <center>Copyright &copy; 2010 Lois Breur Krause</center>
-    </div>
+{{>div.copyright.html}}
   </body>
 </html>
