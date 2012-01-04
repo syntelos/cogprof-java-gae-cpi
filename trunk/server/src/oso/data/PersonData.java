@@ -40,7 +40,7 @@ import javax.annotation.Generated;
  *
  * @see Person
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-01-03T19:10:40.952Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2012-01-03T23:58:59.753Z")
 public abstract class PersonData
     extends gap.data.BigTable
     implements DataInheritance<Person>
@@ -663,7 +663,7 @@ public abstract class PersonData
         }
     }
 
-    private final Person.Field.Statistics fieldStatistics = new Person.Field.Statistics();
+    private transient final Person.Field.Statistics fieldStatistics = new Person.Field.Statistics();
 
     private transient Person inheritFrom;
 
@@ -786,7 +786,7 @@ public abstract class PersonData
     }
     public final boolean dropLogonId(){
         if (null != this.logonId){
-            this.fieldStatistics.markDirty(Field.LogonId);
+            this.fieldStatistics.markDirty(Person.Field.LogonId);
             this.logonId = null;
             return true;
         }
@@ -810,7 +810,7 @@ public abstract class PersonData
     }
     public final boolean setLogonId(String logonId, boolean withInheritance){
         if (IsNotEqual(this.logonId,this.getLogonId(withInheritance))){
-            this.fieldStatistics.markDirty(Field.LogonId);
+            this.fieldStatistics.markDirty(Person.Field.LogonId);
             this.logonId = logonId;
             return true;
         }
@@ -819,7 +819,7 @@ public abstract class PersonData
     }
     public final boolean setLogonId(String logonId){
         if (IsNotEqual(this.logonId,logonId)){
-            this.fieldStatistics.markDirty(Field.LogonId);
+            this.fieldStatistics.markDirty(Person.Field.LogonId);
             this.logonId = logonId;
             return true;
         }
@@ -834,7 +834,7 @@ public abstract class PersonData
     }
     public final boolean dropIdentifier(){
         if (null != this.identifier){
-            this.fieldStatistics.markDirty(Field.Identifier);
+            this.fieldStatistics.markDirty(Person.Field.Identifier);
             this.identifier = null;
             return true;
         }
@@ -849,7 +849,7 @@ public abstract class PersonData
     }
     public final boolean setIdentifier(String identifier){
         if (IsNotEqual(this.identifier,identifier)){
-            this.fieldStatistics.markDirty(Field.Identifier);
+            this.fieldStatistics.markDirty(Person.Field.Identifier);
             this.identifier = identifier;
             return true;
         }
@@ -864,7 +864,7 @@ public abstract class PersonData
     }
     public final boolean dropNf(){
         if (null != this.nf){
-            this.fieldStatistics.markDirty(Field.Nf);
+            this.fieldStatistics.markDirty(Person.Field.Nf);
             this.nf = null;
             return true;
         }
@@ -888,7 +888,7 @@ public abstract class PersonData
     }
     public final boolean setNf(Float nf, boolean withInheritance){
         if (IsNotEqual(this.nf,this.getNf(withInheritance))){
-            this.fieldStatistics.markDirty(Field.Nf);
+            this.fieldStatistics.markDirty(Person.Field.Nf);
             this.nf = nf;
             return true;
         }
@@ -897,7 +897,7 @@ public abstract class PersonData
     }
     public final boolean setNf(Float nf){
         if (IsNotEqual(this.nf,nf)){
-            this.fieldStatistics.markDirty(Field.Nf);
+            this.fieldStatistics.markDirty(Person.Field.Nf);
             this.nf = nf;
             return true;
         }
@@ -906,7 +906,7 @@ public abstract class PersonData
     }
     public final boolean setNf(Number nf){
         if (IsNotEqual(this.nf,nf)){
-            this.fieldStatistics.markDirty(Field.Nf);
+            this.fieldStatistics.markDirty(Person.Field.Nf);
             if (nf instanceof Float)
                 this.nf = (Float)nf;
             else
@@ -924,7 +924,7 @@ public abstract class PersonData
     }
     public final boolean dropNt(){
         if (null != this.nt){
-            this.fieldStatistics.markDirty(Field.Nt);
+            this.fieldStatistics.markDirty(Person.Field.Nt);
             this.nt = null;
             return true;
         }
@@ -948,7 +948,7 @@ public abstract class PersonData
     }
     public final boolean setNt(Float nt, boolean withInheritance){
         if (IsNotEqual(this.nt,this.getNt(withInheritance))){
-            this.fieldStatistics.markDirty(Field.Nt);
+            this.fieldStatistics.markDirty(Person.Field.Nt);
             this.nt = nt;
             return true;
         }
@@ -957,7 +957,7 @@ public abstract class PersonData
     }
     public final boolean setNt(Float nt){
         if (IsNotEqual(this.nt,nt)){
-            this.fieldStatistics.markDirty(Field.Nt);
+            this.fieldStatistics.markDirty(Person.Field.Nt);
             this.nt = nt;
             return true;
         }
@@ -966,7 +966,7 @@ public abstract class PersonData
     }
     public final boolean setNt(Number nt){
         if (IsNotEqual(this.nt,nt)){
-            this.fieldStatistics.markDirty(Field.Nt);
+            this.fieldStatistics.markDirty(Person.Field.Nt);
             if (nt instanceof Float)
                 this.nt = (Float)nt;
             else
@@ -984,7 +984,7 @@ public abstract class PersonData
     }
     public final boolean dropSt(){
         if (null != this.st){
-            this.fieldStatistics.markDirty(Field.St);
+            this.fieldStatistics.markDirty(Person.Field.St);
             this.st = null;
             return true;
         }
@@ -1008,7 +1008,7 @@ public abstract class PersonData
     }
     public final boolean setSt(Float st, boolean withInheritance){
         if (IsNotEqual(this.st,this.getSt(withInheritance))){
-            this.fieldStatistics.markDirty(Field.St);
+            this.fieldStatistics.markDirty(Person.Field.St);
             this.st = st;
             return true;
         }
@@ -1017,7 +1017,7 @@ public abstract class PersonData
     }
     public final boolean setSt(Float st){
         if (IsNotEqual(this.st,st)){
-            this.fieldStatistics.markDirty(Field.St);
+            this.fieldStatistics.markDirty(Person.Field.St);
             this.st = st;
             return true;
         }
@@ -1026,7 +1026,7 @@ public abstract class PersonData
     }
     public final boolean setSt(Number st){
         if (IsNotEqual(this.st,st)){
-            this.fieldStatistics.markDirty(Field.St);
+            this.fieldStatistics.markDirty(Person.Field.St);
             if (st instanceof Float)
                 this.st = (Float)st;
             else
@@ -1044,7 +1044,7 @@ public abstract class PersonData
     }
     public final boolean dropSf(){
         if (null != this.sf){
-            this.fieldStatistics.markDirty(Field.Sf);
+            this.fieldStatistics.markDirty(Person.Field.Sf);
             this.sf = null;
             return true;
         }
@@ -1068,7 +1068,7 @@ public abstract class PersonData
     }
     public final boolean setSf(Float sf, boolean withInheritance){
         if (IsNotEqual(this.sf,this.getSf(withInheritance))){
-            this.fieldStatistics.markDirty(Field.Sf);
+            this.fieldStatistics.markDirty(Person.Field.Sf);
             this.sf = sf;
             return true;
         }
@@ -1077,7 +1077,7 @@ public abstract class PersonData
     }
     public final boolean setSf(Float sf){
         if (IsNotEqual(this.sf,sf)){
-            this.fieldStatistics.markDirty(Field.Sf);
+            this.fieldStatistics.markDirty(Person.Field.Sf);
             this.sf = sf;
             return true;
         }
@@ -1086,7 +1086,7 @@ public abstract class PersonData
     }
     public final boolean setSf(Number sf){
         if (IsNotEqual(this.sf,sf)){
-            this.fieldStatistics.markDirty(Field.Sf);
+            this.fieldStatistics.markDirty(Person.Field.Sf);
             if (sf instanceof Float)
                 this.sf = (Float)sf;
             else
@@ -1104,7 +1104,7 @@ public abstract class PersonData
     }
     public final boolean dropCreated(){
         if (null != this.created){
-            this.fieldStatistics.markDirty(Field.Created);
+            this.fieldStatistics.markDirty(Person.Field.Created);
             this.created = null;
             return true;
         }
@@ -1128,7 +1128,7 @@ public abstract class PersonData
     }
     public final boolean setCreated(Date created, boolean withInheritance){
         if (IsNotEqual(this.created,this.getCreated(withInheritance))){
-            this.fieldStatistics.markDirty(Field.Created);
+            this.fieldStatistics.markDirty(Person.Field.Created);
             this.created = created;
             return true;
         }
@@ -1137,7 +1137,7 @@ public abstract class PersonData
     }
     public final boolean setCreated(Date created){
         if (IsNotEqual(this.created,created)){
-            this.fieldStatistics.markDirty(Field.Created);
+            this.fieldStatistics.markDirty(Person.Field.Created);
             this.created = created;
             return true;
         }
@@ -1152,7 +1152,7 @@ public abstract class PersonData
     }
     public final boolean dropCompleted(){
         if (null != this.completed){
-            this.fieldStatistics.markDirty(Field.Completed);
+            this.fieldStatistics.markDirty(Person.Field.Completed);
             this.completed = null;
             return true;
         }
@@ -1176,7 +1176,7 @@ public abstract class PersonData
     }
     public final boolean setCompleted(Date completed, boolean withInheritance){
         if (IsNotEqual(this.completed,this.getCompleted(withInheritance))){
-            this.fieldStatistics.markDirty(Field.Completed);
+            this.fieldStatistics.markDirty(Person.Field.Completed);
             this.completed = completed;
             return true;
         }
@@ -1185,7 +1185,7 @@ public abstract class PersonData
     }
     public final boolean setCompleted(Date completed){
         if (IsNotEqual(this.completed,completed)){
-            this.fieldStatistics.markDirty(Field.Completed);
+            this.fieldStatistics.markDirty(Person.Field.Completed);
             this.completed = completed;
             return true;
         }
@@ -1200,7 +1200,7 @@ public abstract class PersonData
     }
     public final boolean dropProject(){
         if (null != this.project){
-            this.fieldStatistics.markDirty(Field.Project);
+            this.fieldStatistics.markDirty(Person.Field.Project);
             this.project = null;
             this.projectId = null;
             this.projectKey = null;
@@ -1214,7 +1214,7 @@ public abstract class PersonData
     }
     public final boolean setProjectId(String projectId){
         if (IsNotEqual(this.projectId,projectId)){
-            this.fieldStatistics.markDirty(Field.Project);
+            this.fieldStatistics.markDirty(Person.Field.Project);
             this.projectId = projectId;
             this.projectKey = null;
             this.project = null;
@@ -1281,7 +1281,7 @@ public abstract class PersonData
     }
     public final boolean setProject(Project project, boolean withInheritance){
         if (IsNotEqual(this.project,this.getProject(withInheritance))){
-            this.fieldStatistics.markDirty(Field.Project);
+            this.fieldStatistics.markDirty(Person.Field.Project);
             this.project = project;
             if (null != project){
                 this.projectId = project.getId();
@@ -1298,7 +1298,7 @@ public abstract class PersonData
     }
     public final boolean setProject(Project project){
         if (IsNotEqual(this.project,project)){
-            this.fieldStatistics.markDirty(Field.Project);
+            this.fieldStatistics.markDirty(Person.Field.Project);
             this.project = project;
             if (null != project){
                 this.projectId = project.getId();
@@ -1550,6 +1550,55 @@ public abstract class PersonData
 
         this.fieldStatistics.markDirty();
         return (Person)this;
+    }
+    public final Person markDirty(gap.data.Field field){
+
+        this.fieldStatistics.markDirty(field);
+        return (Person)this;
+    }
+    public final Person markDirty(java.io.Serializable instance){
+        if (instance == this.logonId){
+            gap.data.Field field = Person.Field.LogonId;
+            return this.markDirty(field);
+        }
+        else if (instance == this.identifier){
+            gap.data.Field field = Person.Field.Identifier;
+            return this.markDirty(field);
+        }
+        else if (instance == this.inventory){
+            gap.data.Field field = Person.Field.Inventory;
+            return this.markDirty(field);
+        }
+        else if (instance == this.nf){
+            gap.data.Field field = Person.Field.Nf;
+            return this.markDirty(field);
+        }
+        else if (instance == this.nt){
+            gap.data.Field field = Person.Field.Nt;
+            return this.markDirty(field);
+        }
+        else if (instance == this.st){
+            gap.data.Field field = Person.Field.St;
+            return this.markDirty(field);
+        }
+        else if (instance == this.sf){
+            gap.data.Field field = Person.Field.Sf;
+            return this.markDirty(field);
+        }
+        else if (instance == this.created){
+            gap.data.Field field = Person.Field.Created;
+            return this.markDirty(field);
+        }
+        else if (instance == this.completed){
+            gap.data.Field field = Person.Field.Completed;
+            return this.markDirty(field);
+        }
+        else if (instance == this.project){
+            gap.data.Field field = Person.Field.Project;
+            return this.markDirty(field);
+        }
+        else
+            return (Person)this;
     }
     public final Iterable<gap.data.Field> listClean(){
 
