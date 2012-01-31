@@ -24,6 +24,17 @@ import java.util.Date;
 public final class Project
     extends ProjectData
 {
+    public static List.Primitive<Key> List(Group group){
+        Query query = Project.CreateQueryFor();
+        {
+            Filter filter = new Filter(Project.KIND);
+            filter.add(Project.Field.Group,Filter.Op.eq,group.getId());
+            filter.update(query);
+        }
+        return Project.QueryNKey(query);
+    }
+
+
 
     public Project() {
         super();
@@ -55,4 +66,56 @@ public final class Project
     public void store(){
         Store(this);
     }
+    public Redirect getCreateRedirect(){
+        Redirect redirect = this.getRedirect();
+        if (null == redirect){
+            Group group = this.getGroup();
+            if (null == group)
+                throw new IllegalStateException("Missing parent group");
+            else
+                redirect = group.getCreateRedirect();
+        }
+        return redirect;
+    }
+    public Margins getCreateMargins(){
+        Margins margins = this.getMargins();
+        if (null == margins){
+            Group group = this.getGroup();
+            if (null == group)
+                throw new IllegalStateException("Missing parent group");
+            else
+                margins = group.getCreateMargins();
+        }
+        return margins;
+    }
+    public boolean setIdentifier(json.Json json){
+        return false;
+    }
+    public boolean setName(json.Json json){
+        if (json.isNull())
+            return false;
+        else if (json.isString())
+            return this.setName(json.asString());
+        else
+            return false;
+     }
+    public boolean setGroup(json.Json json){
+        return false;
+    }
+    public boolean setCreated(json.Json json){
+        return false;
+    }
+    public boolean setCleaned(json.Json json){
+        return false;
+    }
+    public boolean setCount(json.Json json){
+        return false;
+    }
+    // public boolean setRedirect(json.Json json){
+    //     return false;
+    // }
+    // public boolean setMargins(json.Json json){
+    //     return false;
+    // }
+
 }

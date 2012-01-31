@@ -1,3 +1,6 @@
 oso.data.Person
 cpi.groups.Group
+cpi.groups.Member
 cpi.groups.Project
+cpi.groups.Account
+cpi.groups.Note

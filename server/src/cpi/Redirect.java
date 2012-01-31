@@ -19,8 +19,13 @@
  */
 package cpi;
 
+import gap.Request;
+import gap.data.ValidationError;
+
 import hapax.Template;
 import hapax.TemplateDataDictionary;
+
+import json.Json;
 
 import oso.data.Person;
 
@@ -30,12 +35,47 @@ import oso.data.Person;
  */
 public final class Redirect
     extends hapax.TemplateDictionary
-    implements java.lang.CharSequence,
-               java.io.Serializable,
-               java.lang.Comparable<Redirect>
+    implements java.io.Serializable,
+               json.Builder
 {
     protected final static long serialVersionUID = 1;
 
+    public final static class Names {
+        public final static String Href = "redirect_href";
+        public final static String Target = "redirect_target";
+        public final static String Sequence = "redirect_sequence";
+        public final static String Timeout = "redirect_timeout";
+        public final static String SequenceSelectInject = "redirect_sequence_select_inject";
+        public final static String SequenceSelectTimeout = "redirect_sequence_select_timeout";
+    }
+    public final static class TemplateNames {
+        public final static gap.hapax.TemplateName Href = new gap.hapax.TemplateName(Redirect.Names.Href);
+        public final static gap.hapax.TemplateName Target = new gap.hapax.TemplateName(Redirect.Names.Target);
+        public final static gap.hapax.TemplateName Sequence = new gap.hapax.TemplateName(Redirect.Names.Sequence);
+        public final static gap.hapax.TemplateName Timeout = new gap.hapax.TemplateName(Redirect.Names.Timeout);
+
+        public final static gap.hapax.TemplateName SequenceSelectInject = new gap.hapax.TemplateName(Redirect.Names.SequenceSelectInject);
+        public final static gap.hapax.TemplateName SequenceSelectTimeout = new gap.hapax.TemplateName(Redirect.Names.SequenceSelectTimeout);
+    }
+    public final static class Defaults {
+        public final static String Href = "/profile";
+        public final static String Target = null;
+        public final static Redirect.Sequence Sequence = Redirect.Sequence.timeout;
+        public final static long Timeout = 0L;
+    }
+    public final static class Data {
+
+        public final static Long Timeout(String timeout){
+            if (null != timeout && 0 < timeout.length()){
+                try {
+                    return new Long(Integer.decode(timeout));
+                }
+                catch (NumberFormatException exc){
+                }
+            }
+            return null;
+        }
+    }
 
     public enum Sequence {
         inject, timeout;
@@ -110,76 +150,59 @@ public final class Redirect
     /*
      * JSON field "redirect" fragment (indent column two)
      */
-    public final String json;
-
     public final String href, target;
 
     public final Sequence sequence;
 
     public final long timeout;
 
+    private transient Json json;
+
     private transient Template template;
 
 
-    public Redirect(String href, String target, String sequence, String timeout){
-        this(href,target,sequence,Integer.decode(timeout));
+    public Redirect(Request req){
+        this(req.getParameter(Redirect.Names.Href),req.getParameter(Redirect.Names.Target),req.getParameter(Redirect.Names.Sequence),req.getParameter(Redirect.Names.Timeout));
     }
-    public Redirect(String href, String target, String sequence, long timeout){
+    public Redirect(String href, String target, String sequence, String timeout){
+        this(href,target,sequence,Redirect.Data.Timeout(timeout));
+    }
+    public Redirect(String href, String target, String sequence, Long timeout){
         this(href,target,Sequence.For(sequence),timeout);
     }
-    public Redirect(String href, String target, Sequence sequence, long timeout){
+    public Redirect(String href, String target, Sequence sequence, Long timeout){
         super();
 
-        if (null != href)
+        if (null != href && 0 < href.length())
             this.href = href;
         else
-            this.href= "/profile";
-        this.target = target;
+            this.href= Redirect.Defaults.Href;
+
+        if (null != target && 0 < target.length())
+            this.target = target;
+        else
+            this.target = null;
 
         if (null != sequence)
             this.sequence = sequence;
         else
-            this.sequence = Sequence.timeout;
+            this.sequence = Redirect.Defaults.Sequence;
 
-        if (0L < timeout)
+        if (null != timeout && 0L < timeout)
             this.timeout = timeout;
         else
-            this.timeout = 0L;
-
-        final StringBuilder json = new StringBuilder();
-        /*
-         * Fragment Head
-         */
-        json.append(" \"redirect\": {\n");
-        json.append("  \"href\": \"");
-        json.append(this.href);
-        json.append("\",\n");
-
-        if (null != target){
-            json.append("  \"target\": ");
-            json.append(target);
-            json.append("\",\n");
-        }
-        /*
-         * Fragment Tail
-         */
-        if (0 < this.timeout){
-            json.append("  \"sequence\": \"");
-            json.append(sequence.name());
-            json.append("\",\n");
-
-            json.append("  \"timeout\": \"");
-            json.append(this.timeout);
-            json.append("\"\n");
-        }
-        else {
-            json.append("  \"sequence\": \"");
-            json.append(sequence.name());
-            json.append("\"\n");
-        }
-        json.append(" }");
-
-        this.json = json.toString();
+            this.timeout = Redirect.Defaults.Timeout;
+    }
+    public Redirect(){
+        super();
+        this.href = Redirect.Defaults.Href;
+        this.target = Redirect.Defaults.Target;
+        this.sequence = Redirect.Defaults.Sequence;
+        this.timeout = Redirect.Defaults.Timeout;
+    }
+    public Redirect(Json json){
+        this( (String)json.getValue("href",String.class), (String)json.getValue("target",String.class), 
+              (Sequence)json.getValue("sequence",Sequence.class), (Long)json.getValue("timeout",Long.class));
     }
 
 
@@ -222,53 +245,54 @@ public final class Redirect
         this.setVariable("identifier",id);
         this.setVariable("project",pr);
     }
-    public int length(){
-        if (null != this.json)
-            return this.json.length();
-        else
-            return 0;
-    }
-    public char charAt(int idx){
-        if (null != this.json)
-            return this.json.charAt(idx);
-        else
-            throw new IndexOutOfBoundsException(String.valueOf(idx));
-    }
-    public CharSequence subSequence(int start, int end){
-        if (null != this.json)
-            return this.json.subSequence(start,end);
-        else if (-1 != end && (start+1) == end)
-            return "";
-        else
-            throw new IndexOutOfBoundsException(String.format("start %d, end %d",start,end));
-    }
     public int hashCode(){
-        return this.json.hashCode();
+        return this.toJson().hashCode();
     }
     public boolean equals(Object that){
         if (this == that)
             return true;
         else if (that instanceof Redirect)
-            return this.json.equals(that.toString());
+            return this.toString().equals(that.toString());
         else
             return false;
     }
     public String toString(){
 
-        return this.json;
+        return this.toJson().toString();
     }
-    public int compareTo(Redirect that){
-        if (this.json == that.json)
-            return 0;
-        else if (null == this.json){
-            if (null == that.json)
-                return 0;
-            else
-                return -1;
+    public Json toJson(){
+        Json json = this.json;
+        if (null == json){
+            json = new json.ObjectJson();
+            json.set("href",this.href);
+            json.set("target",this.target);
+            json.set("sequence",this.sequence);
+            json.set("timeout",this.timeout);
+            this.json = json;
         }
-        else if (null == that.json)
-            return +1;
-        else
-            return this.json.compareTo(that.json);
+        return json;
+    }
+    public boolean fromJson(Json json){
+
+        throw new Immutable();
+    }
+    public final void dictionaryInto(gap.hapax.TemplateDataDictionary dict){
+
+        dict.setVariable(TemplateNames.Href,this.href);
+        dict.setVariable(TemplateNames.Target,this.target);
+        dict.setVariable(TemplateNames.Sequence,this.sequence.toString());
+        dict.setVariable(TemplateNames.Timeout,String.valueOf(this.timeout));
+
+        switch (this.sequence){
+        case inject:
+            dict.setVariable(TemplateNames.SequenceSelectInject,"selected");
+            break;
+        case timeout:
+            dict.setVariable(TemplateNames.SequenceSelectTimeout,"selected");
+            break;
+        default:
+            throw new IllegalArgumentException();
+        }
+        
     }
 }

@@ -1,0 +1,32 @@
+//                       -*-Java-*-
+package cpi.groups;
+path /notes;
+import oso.data.Person;
+import cpi.Redirect;
+import cpi.Margins;
+
+/**
+ * A mutable {@link Note} permits editing
+ */
+child Note
+    version 1
+    parent Account
+{
+    *unique String identifier;
+    /*
+     * Note writer
+     */
+    Person writer;
+    /* 
+     * Note created
+     */
+    Date created;
+    /* 
+     * Note updated
+     */
+    Date updated;
+    /*
+     * Note text
+     */
+    Text text;
+}

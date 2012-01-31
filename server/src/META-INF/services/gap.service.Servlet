@@ -1,3 +1,4 @@
 oso.data.PersonServlet
 cpi.groups.GroupServlet
 cpi.groups.ProjectServlet
+cpi.groups.AccountServlet

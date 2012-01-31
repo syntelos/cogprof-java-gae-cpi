@@ -1,0 +1,47 @@
+//                       -*-Java-*-
+package cpi.groups;
+path /accounts;
+import oso.data.Person;
+import cpi.Redirect;
+import cpi.Margins;
+
+/**
+ * A {@link Group} has many {@link Account Accounts}
+ * 
+ * Accept logon member of scope for name.
+ * 
+ * Access OAuth random identifier.
+ * 
+ * @note Could add (Person admin) for delegation
+ */
+parent Account
+    version 1
+    child Note
+{
+    *unique String identifier;
+    /*
+     * Associated Group, required
+     */
+    Group group;
+    /*
+     * Associated Project, optional
+     */
+    Project project;
+    /* 
+     * Debit is receivable while not paid
+     */
+    Boolean paid;
+    /*
+     * Transaction amount: +credit, -debit.
+     */
+    Float amount;
+    /*
+     * ISO Code
+     * @see java.util.Currency
+     */
+    String currency;
+    /*
+     * Required for creation and each modification
+     */
+    List.Short<Note> notes;
+}

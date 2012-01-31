@@ -44,9 +44,6 @@ public class ProfileServlet
 {
     private final static String TemplateFilename = "profile.html";
 
-    private final static TemplateName JarfName = new TemplateName("viewer_jarf");
-
-    private final static String JarfValue = cpi.Version.AppletViewer;
 
     private final static TemplateName InventorySf   = new TemplateName("inventory_sf");
     private final static TemplateName InventorySt   = new TemplateName("inventory_st");
@@ -66,38 +63,6 @@ public class ProfileServlet
         String urlEnc = java.net.URLEncoder.encode(url,"US-ASCII");
 
         req.addSection(LogonEtc).setVariable(ThisPageUrlEncoded,urlEnc);
-    }
-    /**
-     * 
-     */
-    public static abstract class Tail 
-        extends Object
-    {
-        public final static int None = -1;
-        public final static int ImagePng = 1;
-        public final static int DataJson = 2;
-
-
-        public final static int For(String tail){
-            if (null == tail || 0 == tail.length())
-                return Tail.None;
-            else {
-                switch (tail.charAt(0)){
-                case 'i':
-                    if (tail.equals("image.png"))
-                        return Tail.ImagePng;
-                    else
-                        return Tail.None;
-                case 'd':
-                    if (tail.equals("data.json"))
-                        return Tail.DataJson;
-                    else
-                        return Tail.None;
-                default:
-                    return Tail.None;
-                }
-            }
-        }
     }
 
 
@@ -201,7 +166,7 @@ public class ProfileServlet
     protected TemplateRenderer getTemplate(Request req)
         throws TemplateException 
     {
-        req.setVariable(JarfName,JarfValue);
+
 
         return Templates.GetTemplate(TemplateFilename);
     }

@@ -39,6 +39,11 @@
     <servlet-class>cpi.groups.ProjectServlet</servlet-class>
     <load-on-startup>-1</load-on-startup>
   </servlet>
+  <servlet>
+    <servlet-name>Account</servlet-name>
+    <servlet-class>cpi.groups.AccountServlet</servlet-class>
+    <load-on-startup>-1</load-on-startup>
+  </servlet>
 
   <servlet-mapping>
     <servlet-name>Site</servlet-name>
@@ -68,6 +73,10 @@
   <servlet-mapping>
     <servlet-name>Project</servlet-name>
     <url-pattern>/projects/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Account</servlet-name>
+    <url-pattern>/accounts/*</url-pattern>
   </servlet-mapping>
 
   <error-page>

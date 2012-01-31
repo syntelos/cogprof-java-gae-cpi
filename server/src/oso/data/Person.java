@@ -6,6 +6,8 @@ import gap.*;
 import gap.data.*;
 import gap.util.*;
 
+import json.Json;
+
 import com.google.appengine.api.datastore.*;
 import com.google.appengine.api.blobstore.*;
 
@@ -30,12 +32,22 @@ public final class Person
     }
     public final static Person GetCreateLong(String logonId){
 
+        return Person.GetCreateLongLogonId(logonId);
+    }
+    public final static Person GetCreateLongLogonId(String logonId){
+
         Person logon = Person.ForLongLogonId(logonId);
         if (null == logon){
 
             logon = new Person(Strings.RandomIdentifier());
             logon.setLogonId(logonId);
             logon.save();
+        }
+        else {
+            /*
+             * Old data conversion update
+             */
+            logon.getCreateIdentifier();
         }
         return logon;
     }
@@ -46,6 +58,25 @@ public final class Person
     }
     public Person(String identifier) {
         super( identifier);
+    }
+    public Person(Json json){
+        super();
+        String identifier = (String)json.getValue("identifier",String.class);
+        if (null != identifier){
+            Key key = Person.KeyLongIdFor(identifier);
+            this.setIdentifier(identifier);
+            this.setKey(key);
+            this.fillFrom(gap.data.Store.Get(key));
+            this.markClean();
+        }
+        else {
+            identifier = gap.Strings.RandomIdentifier();
+            this.setIdentifier(identifier);
+            this.setKey(Person.KeyLongIdFor(identifier));
+        }
+        this.fromJson(json);
+        if (this.isDirty())
+            this.save();
     }
 
 
@@ -71,5 +102,26 @@ public final class Person
     }
     public void store(){
         Store(this);
+    }
+    public boolean equals(Person that){
+        if (null == that)
+            return false;
+        else {
+            Key thisKey = this.getKey();
+            Key thatKey = that.getKey();
+            if (null == thisKey || null == thatKey)
+                return false;
+            else
+                return ToString(thisKey).equals(ToString(thatKey));
+        }
+    }
+    public String getCreateIdentifier(){
+        String identifier = this.getIdentifier();
+        if (null == identifier){
+            identifier = gap.Strings.RandomIdentifier();
+            this.setIdentifier(identifier);
+            this.save();
+        }
+        return identifier;
     }
 }

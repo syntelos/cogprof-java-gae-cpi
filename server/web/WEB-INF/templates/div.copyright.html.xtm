@@ -1,3 +1,3 @@
-    <div id="footer">{{>div.copyright.html}}
+    <div id="footer">
       <center>Copyright &copy; 2012 Lois Breur Krause</center>
     </div>
