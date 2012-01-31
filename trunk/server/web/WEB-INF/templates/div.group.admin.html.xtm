@@ -1,0 +1,128 @@
+   <div id="first">
+     <h1>Group</h1>
+     <table class="editing">{{#group}}
+       <form method="POST">
+         <tr class="editing">
+           <td class="editing lhs"><label for="identifier">Identifier</label>
+           </td>
+           <td class="editing rhs"><input readonly type="text" id="identifier" name="identifier" value="{{=identifier}}" />
+           </td>
+         </tr>
+         <tr class="editing">
+           <td class="editing lhs"><label for="name">Name</label>
+           </td>
+           <td class="editing rhs"><input type="text" id="name" name="name" value="{{=name}}" tabindex="1" />
+           </td>
+         </tr>
+         <tr class="editing">
+           <td class="editing lhs"><label for="owner">Owner</label>
+           </td>
+           <td class="editing rhs"><input type="text" id="owner" name="owner_logonId" value="{{=owner/logonId}}" tabindex="2" />
+           </td>
+         </tr>
+         <tr class="editing">
+           <td class="editing lhs"><label for="admin">Admin</label>
+           </td>
+           <td class="editing rhs"><input type="text" id="admin" name="admin_logonId" value="{{=admin/logonId}}" tabindex="3" />
+           </td>
+         </tr>
+         <tr class="editing">
+           <td class="editing lhs"><label for="created">Created</label>
+           </td>
+           <td class="editing rhs"><input readonly type="text" id="created" name="created" value="{{=created}}" />
+           </td>
+         </tr>
+         <tr class="editing">
+           <td class="editing lhs"><label for="billed">Billed</label>
+           </td>
+           <td class="editing rhs"><input readonly type="text" id="billed" name="billed" value="{{=billed}}" />
+           </td>
+         </tr>
+         <tr class="editing">
+           <td class="editing lhs"><label for="paid">Paid</label>
+           </td>
+           <td class="editing rhs"><input readonly type="text" id="paid" name="paid" value="{{=paid}}" />
+           </td>
+         </tr>
+         <tr class="editing">
+           <td class="editing lhs"><label for="redirect">Redirect</label>
+           </td>
+           <td class="editing in">
+             <table class="editing in rhs">
+               <tr class="editing">
+                 <td class="editing lhs"><label for="href">Href</label>
+                 </td>
+                 <td class="editing rhs"><input type="text" id="href" name="redirect_href" value="{{=redirect_href}}" tabindex="4" />
+                 </td>
+               </tr>
+               <tr class="editing">
+                 <td class="editing lhs"><label for="target">Target</label>
+                 </td>
+                 <td class="editing rhs"><input type="text" id="target" name="redirect_target" value="{{=redirect_target}}" tabindex="5" />
+                 </td>
+               </tr>
+               <tr class="editing">
+                 <td class="editing lhs"><label for="sequence">Sequence</label>
+                 </td>
+                 <td class="editing rhs">
+                   <select id="sequence" name="redirect_sequence" class="editing" tabindex="5">
+                     <option {{=redirect_sequence_select_inject}} name="inject">Inject</option>
+                     <option {{=redirect_sequence_select_timeout}} name="timeout">Timeout</option>
+                   </select>
+                 </td>
+               </tr>
+               <tr class="editing">
+                 <td class="editing lhs"><label for="timeout">Timeout</label>
+                 </td>
+                 <td class="editing rhs"><input type="text" id="timeout" name="redirect_timeout" value="{{=redirect_timeout}}" tabindex="6" />
+                 </td>
+               </tr>
+             </table>
+           </td>
+         </tr>
+         <tr class="editing">
+           <td class="editing lhs"><label for="margins">Margins</label>
+           </td>
+           <td class="editing rhs"><input type="text" id="margins" name="margins_css" value="{{=margins_css}}" tabindex="7" />
+           </td>
+         </tr>
+         <tr class="editing">
+           <td class="editing lhs"><label for="note">Note</label>
+           </td>
+           <td class="editing rhs"><input type="text" size="40" id="note" name="note_text" value="{{=note_text}}" tabindex="8" />
+           </td>
+         </tr>{{/group}}
+         <tr class="editing">
+           <td class="editing in" colspan="3">
+             <table class="editing in">
+               <tr class="editing">
+                 <td class="editing lhs">
+                   <input type="submit" name="op" value="List" tabindex="9" />
+                 </td>
+                 <td class="editing mid">
+                   <input type="submit" name="op" value="Delete" tabindex="10" />
+                 </td>
+                 <td class="editing mid">
+                   <input type="submit" name="op" value="Create" tabindex="11" />
+                 </td>
+                 <td class="editing rhs">
+                   <input type="submit" name="op" value="Save" tabindex="12" />
+                 </td>
+                 <td class="editing rhs">
+                   <input type="submit" name="op" value="Accounts" tabindex="13" />
+                 </td>
+               </tr>
+             </table>
+           </td>
+         </tr>
+       </form>
+     </table>
+   </div>
+   <script type="text/javascript"><!-- //
+
+    var tabone = document.getElementById('name');
+    if (tabone){
+      tabone.focus();
+    }
+
+   // --></script>

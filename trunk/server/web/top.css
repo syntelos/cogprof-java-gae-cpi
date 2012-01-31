@@ -37,6 +37,52 @@ div#inventory {
  width: 650px;
  height: 50%;
 }
+input, select {
+ border: 1px solid #000;
+ background-color: #FFF;
+}
+input[readonly] {
+ background-color: #EEE;
+}
+table.listing {
+ width: 90%;
+ margin: 12px;
+ border: 0;
+}
+table.editing {
+ width: 90%;
+ margin: 12px;
+ border: 0;
+}
+table.editing.in {
+ width: 100%;
+ margin: 0;
+ padding: 0;
+ border: 0;
+}
+table.editing.in.rhs {
+ border: 1px solid #000;
+}
+tr.editing {
+ margin: 0;
+ padding: 0;
+}
+td.editing {
+ padding: 8px;
+}
+td.editing.in {
+ margin: 0;
+ padding: 0;
+}
+td.editing.lhs {
+ text-align: right;
+}
+td.editing.mid {
+ text-align: center;
+}
+td.editing.rhs {
+ text-align: left;
+}
 div.invq {
  width: 300px;
  height: 50%;

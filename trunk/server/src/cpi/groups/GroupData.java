@@ -41,7 +41,7 @@ import javax.annotation.Generated;
  *
  * @see Group
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-01-03T23:59:01.769Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2012-01-30T18:48:57.211Z")
 public abstract class GroupData
     extends gap.data.BigTable
     implements DataInheritance<Group>
@@ -243,7 +243,7 @@ public abstract class GroupData
     public final static void Delete(Key instanceKey){
         if (null != instanceKey){
 
-            gap.data.Store.DeleteKey(instanceKey);
+            gap.data.Store.Delete(instanceKey);
         }
     }
     /**
@@ -251,8 +251,8 @@ public abstract class GroupData
      */
     public final static void Clean(Group instance){
         if (null != instance){
-            Key key = instance.getKey();
-            gap.data.Store.CleanKey(key);
+
+            gap.data.Store.Clean(instance.getKey());
         }
     }
     /**
@@ -260,6 +260,7 @@ public abstract class GroupData
      */
     public final static void Save(Group instance){
         if (null != instance){
+
             gap.data.Store.PutClass(instance);
         }
     }
@@ -268,6 +269,7 @@ public abstract class GroupData
      */
     public final static void Store(Group instance){
         if (null != instance){
+
             gap.data.Store.PutClass(instance);
         }
     }
@@ -296,6 +298,10 @@ public abstract class GroupData
             return (Group)gap.data.Store.Query1Class(query);
         else
             throw new IllegalArgumentException();
+    }
+    public final static BigTableIterator<Group> ListPage(Page page){
+
+        return Group.QueryN(Group.CreateQueryFor(),page);
     }
     public final static BigTableIterator<Group> QueryN(Query query, Page page){
         if (null != query && null != page)
@@ -331,12 +337,13 @@ public abstract class GroupData
         InheritFromKey("inheritFromKey",Type.Primitive),
         Key("key",Type.Primitive),
         Id("id",Type.Primitive),
-        Name("name",Type.Primitive),
         Identifier("identifier",Type.Primitive),
+        Name("name",Type.Primitive),
         Owner("owner",Type.BigTable),
         Admin("admin",Type.BigTable),
         Created("created",Type.Primitive),
-        Cleaned("cleaned",Type.Primitive),
+        Billed("billed",Type.Primitive),
+        Paid("paid",Type.Primitive),
         Redirect("redirect",Type.Primitive),
         Margins("margins",Type.Primitive);
 
@@ -392,18 +399,20 @@ public abstract class GroupData
                 return instance.getKey();
             case Id:
                 return instance.getId();
-            case Name:
-                return instance.getName(mayInherit);
             case Identifier:
                 return instance.getIdentifier(mayInherit);
+            case Name:
+                return instance.getName(mayInherit);
             case Owner:
                 return instance.getOwnerId();
             case Admin:
                 return instance.getAdminId();
             case Created:
                 return instance.getCreated(mayInherit);
-            case Cleaned:
-                return instance.getCleaned(mayInherit);
+            case Billed:
+                return instance.getBilled(mayInherit);
+            case Paid:
+                return instance.getPaid(mayInherit);
             case Redirect:
                 return instance.getRedirect(mayInherit);
             case Margins:
@@ -425,18 +434,20 @@ public abstract class GroupData
                 return instance.setKey(gap.Objects.KeyFromObject(value));
             case Id:
                 return instance.setId(gap.Objects.StringFromObject(value));
-            case Name:
-                return instance.setName(gap.Objects.StringFromObject(value));
             case Identifier:
                 return instance.setIdentifier(gap.Objects.StringFromObject(value));
+            case Name:
+                return instance.setName(gap.Objects.StringFromObject(value));
             case Owner:
                 return instance.setOwnerId(gap.Objects.StringFromObject(value));
             case Admin:
                 return instance.setAdminId(gap.Objects.StringFromObject(value));
             case Created:
                 return instance.setCreated(gap.Objects.DateFromObject(value));
-            case Cleaned:
-                return instance.setCleaned(gap.Objects.DateFromObject(value));
+            case Billed:
+                return instance.setBilled(gap.Objects.DateFromObject(value));
+            case Paid:
+                return instance.setPaid(gap.Objects.DateFromObject(value));
             case Redirect:
                 return instance.setRedirect((Redirect)gap.Objects.SerializableFromObject(value));
             case Margins:
@@ -458,18 +469,20 @@ public abstract class GroupData
                 return instance.getKey();
             case Id:
                 return instance.getId();
-            case Name:
-                return instance.getName(MayNotInherit);
             case Identifier:
                 return instance.getIdentifier(MayNotInherit);
+            case Name:
+                return instance.getName(MayNotInherit);
             case Owner:
                 return instance.getOwnerId();
             case Admin:
                 return instance.getAdminId();
             case Created:
                 return instance.getCreated(MayNotInherit);
-            case Cleaned:
-                return instance.getCleaned(MayNotInherit);
+            case Billed:
+                return instance.getBilled(MayNotInherit);
+            case Paid:
+                return instance.getPaid(MayNotInherit);
             case Redirect:{
                 Redirect _redirect = instance.getRedirect(MayNotInherit);
                 return Serialize.To(field,_redirect);
@@ -498,11 +511,11 @@ public abstract class GroupData
             case Id:
                 instance.setId( (String)value);
                 return;
-            case Name:
-                instance.setName( (String)value);
-                return;
             case Identifier:
                 instance.setIdentifier( (String)value);
+                return;
+            case Name:
+                instance.setName( (String)value);
                 return;
             case Owner:
                 instance.setOwnerId( (String)value);
@@ -513,8 +526,11 @@ public abstract class GroupData
             case Created:
                 instance.setCreated( (Date)value);
                 return;
-            case Cleaned:
-                instance.setCleaned( (Date)value);
+            case Billed:
+                instance.setBilled( (Date)value);
+                return;
+            case Paid:
+                instance.setPaid( (Date)value);
                 return;
             case Redirect:{
                 Redirect _redirect = (Redirect)Serialize.From(field,value);
@@ -635,8 +651,8 @@ public abstract class GroupData
     private transient Group inheritFrom;
 
 
-    private String name;
     private String identifier;
+    private String name;
     private String ownerId;
     private transient Key ownerKey;
     private transient Person owner;
@@ -644,7 +660,8 @@ public abstract class GroupData
     private transient Key adminKey;
     private transient Person admin;
     private Date created;
-    private Date cleaned;
+    private Date billed;
+    private Date paid;
     private Redirect redirect;
     private Margins margins;
 
@@ -667,12 +684,13 @@ public abstract class GroupData
 
     public void destroy(){
         this.inheritFrom = null;
-        this.name = null;
         this.identifier = null;
+        this.name = null;
         this.owner = null;
         this.admin = null;
         this.created = null;
-        this.cleaned = null;
+        this.billed = null;
+        this.paid = null;
         this.redirect = null;
         this.margins = null;
     }
@@ -739,6 +757,42 @@ public abstract class GroupData
         else
             return false;
     }
+    public final boolean hasIdentifier(boolean mayInherit){
+        return (null != this.getIdentifier(mayInherit));
+    }
+    public final boolean hasNotIdentifier(boolean mayInherit){
+        return (null == this.getIdentifier(mayInherit));
+    }
+    public final boolean dropIdentifier(){
+        if (null != this.identifier){
+            this.fieldStatistics.markDirty(Group.Field.Identifier);
+            this.identifier = null;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final String getIdentifier(){
+        return this.identifier;
+    }
+    public final String getIdentifier(boolean mayInherit){
+        return this.getIdentifier();
+    }
+    public final boolean setIdentifier(String identifier){
+        if (IsNotEqual(this.identifier,identifier)){
+            this.fieldStatistics.markDirty(Group.Field.Identifier);
+            this.identifier = identifier;
+            return true;
+        }
+        else
+            return false;
+    }
+    public boolean setIdentifier(json.Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setIdentifier((String)json.getValue(String.class));
+    }
     public final boolean hasName(boolean mayInherit){
         return (null != this.getName(mayInherit));
     }
@@ -787,35 +841,11 @@ public abstract class GroupData
         else
             return false;
     }
-    public final boolean hasIdentifier(boolean mayInherit){
-        return (null != this.getIdentifier(mayInherit));
-    }
-    public final boolean hasNotIdentifier(boolean mayInherit){
-        return (null == this.getIdentifier(mayInherit));
-    }
-    public final boolean dropIdentifier(){
-        if (null != this.identifier){
-            this.fieldStatistics.markDirty(Group.Field.Identifier);
-            this.identifier = null;
-            return true;
-        }
-        else
+    public boolean setName(json.Json json){
+        if (null == json)
             return false;
-    }
-    public final String getIdentifier(){
-        return this.identifier;
-    }
-    public final String getIdentifier(boolean mayInherit){
-        return this.getIdentifier();
-    }
-    public final boolean setIdentifier(String identifier){
-        if (IsNotEqual(this.identifier,identifier)){
-            this.fieldStatistics.markDirty(Group.Field.Identifier);
-            this.identifier = identifier;
-            return true;
-        }
         else
-            return false;
+            return this.setName((String)json.getValue(String.class));
     }
     public final boolean hasOwner(boolean mayInherit){
         return (null != this.getOwner(mayInherit));
@@ -938,6 +968,12 @@ public abstract class GroupData
         else
             return false;
     }
+    public boolean setOwner(json.Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setOwner((Person)json.getValue(Person.class));
+    }
     public final boolean hasAdmin(boolean mayInherit){
         return (null != this.getAdmin(mayInherit));
     }
@@ -1059,6 +1095,12 @@ public abstract class GroupData
         else
             return false;
     }
+    public boolean setAdmin(json.Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setAdmin((Person)json.getValue(Person.class));
+    }
     public final boolean hasCreated(boolean mayInherit){
         return (null != this.getCreated(mayInherit));
     }
@@ -1107,53 +1149,119 @@ public abstract class GroupData
         else
             return false;
     }
-    public final boolean hasCleaned(boolean mayInherit){
-        return (null != this.getCleaned(mayInherit));
+    public boolean setCreated(json.Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setCreated((Date)json.getValue(Date.class));
     }
-    public final boolean hasNotCleaned(boolean mayInherit){
-        return (null == this.getCleaned(mayInherit));
+    public final boolean hasBilled(boolean mayInherit){
+        return (null != this.getBilled(mayInherit));
     }
-    public final boolean dropCleaned(){
-        if (null != this.cleaned){
-            this.fieldStatistics.markDirty(Group.Field.Cleaned);
-            this.cleaned = null;
+    public final boolean hasNotBilled(boolean mayInherit){
+        return (null == this.getBilled(mayInherit));
+    }
+    public final boolean dropBilled(){
+        if (null != this.billed){
+            this.fieldStatistics.markDirty(Group.Field.Billed);
+            this.billed = null;
             return true;
         }
         else
             return false;
     }
-    public final Date getCleaned(){
-        return this.getCleaned(Notation.MayInherit);
+    public final Date getBilled(){
+        return this.getBilled(Notation.MayInherit);
     }
-    public final Date getCleaned(boolean mayInherit){
+    public final Date getBilled(boolean mayInherit){
         if (mayInherit){
-            Date cleaned = this.cleaned;
-            if (null == cleaned && this.hasInheritFrom()){
+            Date billed = this.billed;
+            if (null == billed && this.hasInheritFrom()){
                 Group inheritFrom = this.getInheritFrom();
-                return inheritFrom.getCleaned(Notation.MayInherit);
+                return inheritFrom.getBilled(Notation.MayInherit);
             }
-            return cleaned;
+            return billed;
         }
         else
-            return this.cleaned;
+            return this.billed;
     }
-    public final boolean setCleaned(Date cleaned, boolean withInheritance){
-        if (IsNotEqual(this.cleaned,this.getCleaned(withInheritance))){
-            this.fieldStatistics.markDirty(Group.Field.Cleaned);
-            this.cleaned = cleaned;
+    public final boolean setBilled(Date billed, boolean withInheritance){
+        if (IsNotEqual(this.billed,this.getBilled(withInheritance))){
+            this.fieldStatistics.markDirty(Group.Field.Billed);
+            this.billed = billed;
             return true;
         }
         else
             return false;
     }
-    public final boolean setCleaned(Date cleaned){
-        if (IsNotEqual(this.cleaned,cleaned)){
-            this.fieldStatistics.markDirty(Group.Field.Cleaned);
-            this.cleaned = cleaned;
+    public final boolean setBilled(Date billed){
+        if (IsNotEqual(this.billed,billed)){
+            this.fieldStatistics.markDirty(Group.Field.Billed);
+            this.billed = billed;
             return true;
         }
         else
             return false;
+    }
+    public boolean setBilled(json.Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setBilled((Date)json.getValue(Date.class));
+    }
+    public final boolean hasPaid(boolean mayInherit){
+        return (null != this.getPaid(mayInherit));
+    }
+    public final boolean hasNotPaid(boolean mayInherit){
+        return (null == this.getPaid(mayInherit));
+    }
+    public final boolean dropPaid(){
+        if (null != this.paid){
+            this.fieldStatistics.markDirty(Group.Field.Paid);
+            this.paid = null;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final Date getPaid(){
+        return this.getPaid(Notation.MayInherit);
+    }
+    public final Date getPaid(boolean mayInherit){
+        if (mayInherit){
+            Date paid = this.paid;
+            if (null == paid && this.hasInheritFrom()){
+                Group inheritFrom = this.getInheritFrom();
+                return inheritFrom.getPaid(Notation.MayInherit);
+            }
+            return paid;
+        }
+        else
+            return this.paid;
+    }
+    public final boolean setPaid(Date paid, boolean withInheritance){
+        if (IsNotEqual(this.paid,this.getPaid(withInheritance))){
+            this.fieldStatistics.markDirty(Group.Field.Paid);
+            this.paid = paid;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean setPaid(Date paid){
+        if (IsNotEqual(this.paid,paid)){
+            this.fieldStatistics.markDirty(Group.Field.Paid);
+            this.paid = paid;
+            return true;
+        }
+        else
+            return false;
+    }
+    public boolean setPaid(json.Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setPaid((Date)json.getValue(Date.class));
     }
     public final boolean hasRedirect(boolean mayInherit){
         return (null != this.getRedirect(mayInherit));
@@ -1203,6 +1311,12 @@ public abstract class GroupData
         else
             return false;
     }
+    public boolean setRedirect(json.Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setRedirect((Redirect)json.getValue(Redirect.class));
+    }
     public final boolean hasMargins(boolean mayInherit){
         return (null != this.getMargins(mayInherit));
     }
@@ -1251,6 +1365,12 @@ public abstract class GroupData
         else
             return false;
     }
+    public boolean setMargins(json.Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setMargins((Margins)json.getValue(Margins.class));
+    }
     /*
      * Data binding supports
      */
@@ -1269,6 +1389,40 @@ public abstract class GroupData
     }
     public final gap.data.Field getClassFieldByName(String name){
         return Field.getField(name);
+    }
+    public json.Json toJson(){
+        json.Json json = new json.ObjectJson();
+        String identifier = this.getIdentifier();
+        json.set("identifier",identifier);
+        String name = this.getName();
+        json.set("name",name);
+        Person owner = this.getOwner();
+        json.set("owner",owner);
+        Person admin = this.getAdmin();
+        json.set("admin",admin);
+        Date created = this.getCreated();
+        json.set("created",created);
+        Date billed = this.getBilled();
+        json.set("billed",billed);
+        Date paid = this.getPaid();
+        json.set("paid",paid);
+        Redirect redirect = this.getRedirect();
+        json.set("redirect",redirect);
+        Margins margins = this.getMargins();
+        json.set("margins",margins);
+        return json;
+    }
+    public boolean fromJson(json.Json json){
+        boolean modified = false;
+        modified = (this.setName(json.at("name")) || modified);
+        modified = (this.setOwner(json.at("owner")) || modified);
+        modified = (this.setAdmin(json.at("admin")) || modified);
+        modified = (this.setCreated(json.at("created")) || modified);
+        modified = (this.setBilled(json.at("billed")) || modified);
+        modified = (this.setPaid(json.at("paid")) || modified);
+        modified = (this.setRedirect(json.at("redirect")) || modified);
+        modified = (this.setMargins(json.at("margins")) || modified);
+        return modified;
     }
     public boolean updateFrom(Request req) throws ValidationError {
         boolean change = false;
@@ -1296,16 +1450,28 @@ public abstract class GroupData
                 throw new ValidationError(ClassName,"created",createdRequest,exc);
             }
         }
-        String cleanedRequest = req.getParameter("cleaned");
-        if (null != cleanedRequest && 0 < cleanedRequest.length()){
+        String billedRequest = req.getParameter("billed");
+        if (null != billedRequest && 0 < billedRequest.length()){
             try {
-                Date cleaned = gap.Strings.DateFromString(cleanedRequest);
-                if (this.setCleaned(cleaned)){
+                Date billed = gap.Strings.DateFromString(billedRequest);
+                if (this.setBilled(billed)){
                     change = true;
                 }
             }
             catch (RuntimeException exc){
-                throw new ValidationError(ClassName,"cleaned",cleanedRequest,exc);
+                throw new ValidationError(ClassName,"billed",billedRequest,exc);
+            }
+        }
+        String paidRequest = req.getParameter("paid");
+        if (null != paidRequest && 0 < paidRequest.length()){
+            try {
+                Date paid = gap.Strings.DateFromString(paidRequest);
+                if (this.setPaid(paid)){
+                    change = true;
+                }
+            }
+            catch (RuntimeException exc){
+                throw new ValidationError(ClassName,"paid",paidRequest,exc);
             }
         }
         String redirectRequest = req.getParameter("redirect");
@@ -1348,8 +1514,12 @@ public abstract class GroupData
         if (null != created && this.setCreated(created)){
             change = true;
         }
-        Date cleaned = proto.getCleaned(mayInherit);
-        if (null != cleaned && this.setCleaned(cleaned)){
+        Date billed = proto.getBilled(mayInherit);
+        if (null != billed && this.setBilled(billed)){
+            change = true;
+        }
+        Date paid = proto.getPaid(mayInherit);
+        if (null != paid && this.setPaid(paid)){
             change = true;
         }
         Redirect redirect = proto.getRedirect(mayInherit);
@@ -1386,12 +1556,12 @@ public abstract class GroupData
         return (Group)this;
     }
     public final Group markDirty(java.io.Serializable instance){
-        if (instance == this.name){
-            gap.data.Field field = Group.Field.Name;
+        if (instance == this.identifier){
+            gap.data.Field field = Group.Field.Identifier;
             return this.markDirty(field);
         }
-        else if (instance == this.identifier){
-            gap.data.Field field = Group.Field.Identifier;
+        else if (instance == this.name){
+            gap.data.Field field = Group.Field.Name;
             return this.markDirty(field);
         }
         else if (instance == this.owner){
@@ -1406,8 +1576,12 @@ public abstract class GroupData
             gap.data.Field field = Group.Field.Created;
             return this.markDirty(field);
         }
-        else if (instance == this.cleaned){
-            gap.data.Field field = Group.Field.Cleaned;
+        else if (instance == this.billed){
+            gap.data.Field field = Group.Field.Billed;
+            return this.markDirty(field);
+        }
+        else if (instance == this.paid){
+            gap.data.Field field = Group.Field.Paid;
             return this.markDirty(field);
         }
         else if (instance == this.redirect){
@@ -1454,15 +1628,6 @@ public abstract class GroupData
                 }
                 else
                     return false;
-            case Name:
-                if (name.has(1))
-                    throw new IllegalStateException(field.name());
-                else {
-                    /*
-                     * Synthesize section for Field (EXISTS)
-                     */
-                    return this.hasName(true);
-                }
             case Identifier:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
@@ -1471,6 +1636,15 @@ public abstract class GroupData
                      * Synthesize section for Field (EXISTS)
                      */
                     return this.hasIdentifier(true);
+                }
+            case Name:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else {
+                    /*
+                     * Synthesize section for Field (EXISTS)
+                     */
+                    return this.hasName(true);
                 }
             case Owner:
                 if (name.has(1)){
@@ -1509,14 +1683,23 @@ public abstract class GroupData
                      */
                     return this.hasCreated(true);
                 }
-            case Cleaned:
+            case Billed:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
                 else {
                     /*
                      * Synthesize section for Field (EXISTS)
                      */
-                    return this.hasCleaned(true);
+                    return this.hasBilled(true);
+                }
+            case Paid:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else {
+                    /*
+                     * Synthesize section for Field (EXISTS)
+                     */
+                    return this.hasPaid(true);
                 }
             case Redirect:
                 if (name.has(1))
@@ -1553,16 +1736,16 @@ public abstract class GroupData
                     return this.getId();
                 else
                     return null;
-            case Name:
-                if (name.has(1))
-                    throw new IllegalStateException(field.name());
-                else
-                    return this.getName(true);
             case Identifier:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
                 else
                     return this.getIdentifier(true);
+            case Name:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else
+                    return this.getName(true);
             case Owner:
                 if (name.has(1)){
                     Person owner = this.getOwner(Notation.MayInherit);
@@ -1588,11 +1771,16 @@ public abstract class GroupData
                     throw new IllegalStateException(field.name());
                 else
                     return gap.Strings.DateToString(this.getCreated(true));
-            case Cleaned:
+            case Billed:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
                 else
-                    return gap.Strings.DateToString(this.getCleaned(true));
+                    return gap.Strings.DateToString(this.getBilled(true));
+            case Paid:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else
+                    return gap.Strings.DateToString(this.getPaid(true));
             case Redirect:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
@@ -1618,9 +1806,9 @@ public abstract class GroupData
                 switch (field){
                 case Id:
                     throw new UnsupportedOperationException(field.name());
-                case Name:
-                    throw new IllegalStateException(field.name());
                 case Identifier:
+                    throw new IllegalStateException(field.name());
+                case Name:
                     throw new IllegalStateException(field.name());
                 case Owner:
 
@@ -1638,7 +1826,9 @@ public abstract class GroupData
                     return ;
                 case Created:
                     throw new IllegalStateException(field.name());
-                case Cleaned:
+                case Billed:
+                    throw new IllegalStateException(field.name());
+                case Paid:
                     throw new IllegalStateException(field.name());
                 case Redirect:
                     throw new IllegalStateException(field.name());
@@ -1659,9 +1849,9 @@ public abstract class GroupData
         Field field = Group.Field.For(name.getTerm());
         if (null != field){
             switch (field){
-            case Name:
-                return null;
             case Identifier:
+                return null;
+            case Name:
                 return null;
             case Owner:
                 Person owner = this.getOwner(true);
@@ -1677,7 +1867,9 @@ public abstract class GroupData
                     return null;
             case Created:
                 return null;
-            case Cleaned:
+            case Billed:
+                return null;
+            case Paid:
                 return null;
             case Redirect:
                 return null;

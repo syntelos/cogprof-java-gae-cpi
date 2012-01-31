@@ -1,0 +1,27 @@
+   <div id="first">
+     <h1>Groups</h1>
+     <table class="listing">{{#group}}
+       <tr class="listing">
+         <td class="listing" colspan="3"><a href="/groups/{{=identifier}}/index.html">{{=name}}</a>
+         </td>
+       </tr>{{/group}}{{#page}}
+       <tr class="listing">
+         <td class="listing">
+           <form method="POST">
+             <input type="hidden" name="startIndex" value="{{=startIndexPrev}}" />
+             <input type="hidden" name="count" value="{{=count}}" />
+             <input type="submit" value="&lt;" />
+           </form>
+         </td>
+         <td class="listing">&nbsp;
+         </td>
+         <td class="listing">
+           <form method="POST">
+             <input type="hidden" name="startIndex" value="{{=startIndexNext}}" />
+             <input type="hidden" name="count" value="{{=count}}" />
+             <input type="submit" value="&gt;" />
+           </form>
+         </td>
+       </tr>{{/page}}
+     </table>
+   </div>

@@ -39,25 +39,25 @@ import javax.annotation.Generated;
 /**
  * Generated bean data binding.
  *
- * @see Project
+ * @see Account
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-01-30T18:48:58.408Z")
-public abstract class ProjectData
+@Generated(value={"gap.service.OD","BeanData.java"},date="2012-01-30T18:48:58.942Z")
+public abstract class AccountData
     extends gap.data.BigTable
-    implements DataInheritance<Project>
+    implements DataInheritance<Account>
 {
 
     private final static long serialVersionUID = 1;
 
-    public final static Kind KIND = Kind.Create("Project","cpi.groups","Project","/projects");
+    public final static Kind KIND = Kind.Create("Account","cpi.groups","Account","/accounts");
 
-    public final static String ClassName = "Project";
+    public final static String ClassName = "Account";
 
     public final static String DefaultSortBy = "identifier";
 
 
     public final static gap.service.od.ClassDescriptor ClassDescriptorFor(){
-        return ClassDescriptorFor(Project.class);
+        return ClassDescriptorFor(Account.class);
     }
     /**
      * @see gap.data.Kind#pathto()
@@ -73,7 +73,7 @@ public abstract class ProjectData
      * Long instance key without parent key
      */
     public final static Key KeyLongIdFor(String identifier){
-        String id = Project.IdFor( identifier);
+        String id = Account.IdFor( identifier);
         return KeyLongFor(id);
     }
     /**
@@ -82,7 +82,7 @@ public abstract class ProjectData
      * Calls {@link #KeyLongIdFor}
      */
     public final static Key KeyIdFor(Object... args){
-        return Project.KeyLongIdFor((String)args[0]);
+        return Account.KeyLongIdFor((String)args[0]);
     }
     /**
      * Used by setId
@@ -90,7 +90,7 @@ public abstract class ProjectData
      * Calls {@link #KeyLongFor}
      */
     public final static Key KeyFor(Object... args){
-        return Project.KeyLongFor( (String)args[0]);
+        return Account.KeyLongFor( (String)args[0]);
     }
     /**
      * Identifier for unique fields
@@ -107,15 +107,15 @@ public abstract class ProjectData
     /**
      * Instance lookup
      */
-    public final static Project ForLongIdentifier(String identifier){
+    public final static Account ForLongIdentifier(String identifier){
         if (null != identifier){
-            Key key = Project.KeyLongIdFor( identifier);
-            Project instance = (Project)gap.data.Store.GetClass(key);
+            Key key = Account.KeyLongIdFor( identifier);
+            Account instance = (Account)gap.data.Store.GetClass(key);
             if (null != instance)
                 return instance;
             else {
-                Query q = Project.CreateQueryFor(key);
-                return (Project)gap.data.Store.Query1Class(q);
+                Query q = Account.CreateQueryFor(key);
+                return (Account)gap.data.Store.Query1Class(q);
             }
         }
         else
@@ -125,19 +125,19 @@ public abstract class ProjectData
     /**
      * Instance lookup or create
      */
-    public static Project GetCreateLong(String identifier){
+    public static Account GetCreateLong(String identifier){
         return GetCreateLongIdentifier( identifier);
     }
     /**
      * Instance lookup or create
      */
-    public final static Project GetCreateLongIdentifier(String identifier){
-        Project project = Project.ForLongIdentifier( identifier);
-        if (null == project){
-            project = new Project( identifier);
-            project = (Project)gap.data.Store.PutClass(project);
+    public final static Account GetCreateLongIdentifier(String identifier){
+        Account account = Account.ForLongIdentifier( identifier);
+        if (null == account){
+            account = new Account( identifier);
+            account = (Account)gap.data.Store.PutClass(account);
         }
-        return project;
+        return account;
     }
 
 
@@ -146,15 +146,15 @@ public abstract class ProjectData
     }
 
 
-    public final static Project ForLongId(String id){
+    public final static Account ForLongId(String id){
         if (null != id){
-            Key key = Project.KeyLongFor(id);
-            Project instance = (Project)gap.data.Store.GetClass(key);
+            Key key = Account.KeyLongFor(id);
+            Account instance = (Account)gap.data.Store.GetClass(key);
             if (null != instance)
                 return instance;
             else {
-                Query q = Project.CreateQueryFor(key);
-                return (Project)gap.data.Store.Query1Class(q);
+                Query q = Account.CreateQueryFor(key);
+                return (Account)gap.data.Store.Query1Class(q);
             }
         }
         else
@@ -164,14 +164,14 @@ public abstract class ProjectData
     /**
      * Used by gap.data.Kind
      */
-    public final static Project Get(Key key){
+    public final static Account Get(Key key){
         if (null != key){
-            Project instance = (Project)gap.data.Store.GetClass(key);
+            Account instance = (Account)gap.data.Store.GetClass(key);
             if (null != instance)
                 return instance;
             else {
-                Query q = Project.CreateQueryFor(key);
-                return (Project)gap.data.Store.Query1Class(q);
+                Query q = Account.CreateQueryFor(key);
+                return (Account)gap.data.Store.Query1Class(q);
             }
         }
         else
@@ -179,17 +179,17 @@ public abstract class ProjectData
     }
     public final static Key GetKey(Key key){
         if (null != key){
-            Query q = Project.CreateQueryFor(key);
+            Query q = Account.CreateQueryFor(key);
             return gap.data.Store.Query1Key(q);
         }
         else
             throw new IllegalArgumentException();
     }
-    public final static Project FromObject(Object value){
+    public final static Account FromObject(Object value){
         if (null == value)
             return null;
-        else if (value instanceof Project)
-            return (Project)value;
+        else if (value instanceof Account)
+            return (Account)value;
         else if (value instanceof Key)
             return Get( (Key)value);
         else if (value instanceof String){
@@ -206,7 +206,7 @@ public abstract class ProjectData
 
     /**
      * Anonymous random key cannot be mapped to network identifier
-     * @see Project#IdFor
+     * @see Account#IdFor
      *
      * Test for uniqueness and iterate under collisions.
      */
@@ -231,7 +231,7 @@ public abstract class ProjectData
     /**
      * Drop the instance from memcache and datastore.
      */
-    public final static void Delete(Project instance){
+    public final static void Delete(Account instance){
         if (null != instance){
 
             Delete(instance.getKey());
@@ -249,7 +249,7 @@ public abstract class ProjectData
     /**
      * Drop the instance from memcache, exclusively.
      */
-    public final static void Clean(Project instance){
+    public final static void Clean(Account instance){
         if (null != instance){
 
             gap.data.Store.Clean(instance.getKey());
@@ -258,7 +258,7 @@ public abstract class ProjectData
     /**
      * Store the instance.
      */
-    public final static void Save(Project instance){
+    public final static void Save(Account instance){
         if (null != instance){
 
             gap.data.Store.PutClass(instance);
@@ -267,7 +267,7 @@ public abstract class ProjectData
     /**
      * Write the instance to store.
      */
-    public final static void Store(Project instance){
+    public final static void Store(Account instance){
         if (null != instance){
 
             gap.data.Store.PutClass(instance);
@@ -293,17 +293,17 @@ public abstract class ProjectData
         return filter.update(query);
     }
     
-    public final static Project Query1(Query query){
+    public final static Account Query1(Query query){
         if (null != query)
-            return (Project)gap.data.Store.Query1Class(query);
+            return (Account)gap.data.Store.Query1Class(query);
         else
             throw new IllegalArgumentException();
     }
-    public final static BigTableIterator<Project> ListPage(Page page){
+    public final static BigTableIterator<Account> ListPage(Page page){
 
-        return Project.QueryN(Project.CreateQueryFor(),page);
+        return Account.QueryN(Account.CreateQueryFor(),page);
     }
-    public final static BigTableIterator<Project> QueryN(Query query, Page page){
+    public final static BigTableIterator<Account> QueryN(Query query, Page page){
         if (null != query && null != page)
             return gap.data.Store.QueryNClass(query,page);
         else
@@ -329,23 +329,21 @@ public abstract class ProjectData
     }
 
     /**
-     * Persistent fields' binding for {@link Project}
+     * Persistent fields' binding for {@link Account}
      */
     public static enum Field
-        implements gap.data.Field<Project.Field>
+        implements gap.data.Field<Account.Field>
     {
         InheritFromKey("inheritFromKey",Type.Primitive),
         Key("key",Type.Primitive),
         Id("id",Type.Primitive),
         Identifier("identifier",Type.Primitive),
-        Name("name",Type.Primitive),
         Group("group",Type.BigTable),
-        Created("created",Type.Primitive),
-        Cleaned("cleaned",Type.Primitive),
-        Count("count",Type.Primitive),
-        Redirect("redirect",Type.Primitive),
-        Margins("margins",Type.Primitive),
-        Members("members",Type.Collection);
+        Project("project",Type.BigTable),
+        Paid("paid",Type.Primitive),
+        Amount("amount",Type.Primitive),
+        Currency("currency",Type.Primitive),
+        Notes("notes",Type.Collection);
 
         private final static lxl.Map<String,Field> FieldName = new lxl.Map<String,Field>();
         public static final String[] AllNames;
@@ -380,10 +378,10 @@ public abstract class ProjectData
          * Field statistics are maintained for persistent fields exclusively
          */
         public final static class Statistics
-            extends gap.data.Field.Statistics<Project.Field>
+            extends gap.data.Field.Statistics<Account.Field>
         {
             public Statistics(){
-                super(Project.Field.class);
+                super(Account.Field.class);
             }
         }
         /**
@@ -391,7 +389,7 @@ public abstract class ProjectData
          *
          * Persistent BigTable fields are represented by the string ID.
          */
-        public static Object Get(Field field, Project instance, boolean mayInherit){
+        public static Object Get(Field field, Account instance, boolean mayInherit){
             switch(field){
             case InheritFromKey:
                 return instance.getInheritFromKey();
@@ -401,24 +399,20 @@ public abstract class ProjectData
                 return instance.getId();
             case Identifier:
                 return instance.getIdentifier(mayInherit);
-            case Name:
-                return instance.getName(mayInherit);
             case Group:
                 return instance.getGroupId();
-            case Created:
-                return instance.getCreated(mayInherit);
-            case Cleaned:
-                return instance.getCleaned(mayInherit);
-            case Count:
-                return instance.getCount(mayInherit);
-            case Redirect:
-                return instance.getRedirect(mayInherit);
-            case Margins:
-                return instance.getMargins(mayInherit);
-            case Members:
-                return instance.getMembers(mayInherit);
+            case Project:
+                return instance.getProjectId();
+            case Paid:
+                return instance.getPaid(mayInherit);
+            case Amount:
+                return instance.getAmount(mayInherit);
+            case Currency:
+                return instance.getCurrency(mayInherit);
+            case Notes:
+                return instance.getNotes(mayInherit);
             default:
-                throw new IllegalArgumentException(field.toString()+" in Project");
+                throw new IllegalArgumentException(field.toString()+" in Account");
             }
         }
         /**
@@ -426,7 +420,7 @@ public abstract class ProjectData
          *
          * Persistent BigTable fields are represented by the string ID.
          */
-        public static boolean Set(Field field, Project instance, Object value){
+        public static boolean Set(Field field, Account instance, Object value){
             switch(field){
             case InheritFromKey:
                 return instance.setInheritFromKey(gap.Objects.KeyFromObject(value));
@@ -436,24 +430,20 @@ public abstract class ProjectData
                 return instance.setId(gap.Objects.StringFromObject(value));
             case Identifier:
                 return instance.setIdentifier(gap.Objects.StringFromObject(value));
-            case Name:
-                return instance.setName(gap.Objects.StringFromObject(value));
             case Group:
                 return instance.setGroupId(gap.Objects.StringFromObject(value));
-            case Created:
-                return instance.setCreated(gap.Objects.DateFromObject(value));
-            case Cleaned:
-                return instance.setCleaned(gap.Objects.DateFromObject(value));
-            case Count:
-                return instance.setCount(gap.Objects.IntegerFromObject(value));
-            case Redirect:
-                return instance.setRedirect((Redirect)gap.Objects.SerializableFromObject(value));
-            case Margins:
-                return instance.setMargins((Margins)gap.Objects.SerializableFromObject(value));
-            case Members:
-                return instance.setMembers((List.Short<Member>)value);
+            case Project:
+                return instance.setProjectId(gap.Objects.StringFromObject(value));
+            case Paid:
+                return instance.setPaid(gap.Objects.BooleanFromObject(value));
+            case Amount:
+                return instance.setAmount(gap.Objects.FloatFromObject(value));
+            case Currency:
+                return instance.setCurrency(gap.Objects.StringFromObject(value));
+            case Notes:
+                return instance.setNotes((List.Short<Note>)value);
             default:
-                throw new IllegalArgumentException(field.toString()+" in Project");
+                throw new IllegalArgumentException(field.toString()+" in Account");
             }
         }
         /**
@@ -461,7 +451,7 @@ public abstract class ProjectData
          *
          * Persistent BigTable fields are represented by the string ID.
          */
-        public static java.io.Serializable Storage(Field field, Project instance){
+        public static java.io.Serializable Storage(Field field, Account instance){
             switch(field){
             case InheritFromKey:
                 return instance.getInheritFromKey();
@@ -471,30 +461,22 @@ public abstract class ProjectData
                 return instance.getId();
             case Identifier:
                 return instance.getIdentifier(MayNotInherit);
-            case Name:
-                return instance.getName(MayNotInherit);
             case Group:
                 return instance.getGroupId();
-            case Created:
-                return instance.getCreated(MayNotInherit);
-            case Cleaned:
-                return instance.getCleaned(MayNotInherit);
-            case Count:{
-                return instance.getCount(MayNotInherit);
+            case Project:
+                return instance.getProjectId();
+            case Paid:
+                return instance.getPaid(MayNotInherit);
+            case Amount:{
+                return instance.getAmount(MayNotInherit);
             }
-            case Redirect:{
-                Redirect _redirect = instance.getRedirect(MayNotInherit);
-                return Serialize.To(field,_redirect);
-            }
-            case Margins:{
-                Margins _margins = instance.getMargins(MayNotInherit);
-                return Serialize.To(field,_margins);
-            }
-            case Members:{
+            case Currency:
+                return instance.getCurrency(MayNotInherit);
+            case Notes:{
                 return null;
             }
             default:
-                throw new IllegalArgumentException(field.toString()+" in Project");
+                throw new IllegalArgumentException(field.toString()+" in Account");
             }
         }
         /**
@@ -502,7 +484,7 @@ public abstract class ProjectData
          *
          * Persistent BigTable fields are represented by the string ID.
          */
-        public static void Storage(Field field, Project instance, java.io.Serializable value){
+        public static void Storage(Field field, Account instance, java.io.Serializable value){
             switch(field){
             case InheritFromKey:
                 instance.setInheritFromKey( (Key)value);
@@ -516,44 +498,34 @@ public abstract class ProjectData
             case Identifier:
                 instance.setIdentifier( (String)value);
                 return;
-            case Name:
-                instance.setName( (String)value);
-                return;
             case Group:
                 instance.setGroupId( (String)value);
                 return;
-            case Created:
-                instance.setCreated( (Date)value);
+            case Project:
+                instance.setProjectId( (String)value);
                 return;
-            case Cleaned:
-                instance.setCleaned( (Date)value);
+            case Paid:
+                instance.setPaid( (Boolean)value);
                 return;
-            case Count:{
+            case Amount:{
 
-                instance.setCount( (Number)value);
+                instance.setAmount( (Number)value);
                 return;
             }
-            case Redirect:{
-                Redirect _redirect = (Redirect)Serialize.From(field,value);
-                instance.setRedirect( _redirect);
+            case Currency:
+                instance.setCurrency( (String)value);
                 return;
-            }
-            case Margins:{
-                Margins _margins = (Margins)Serialize.From(field,value);
-                instance.setMargins( _margins);
-                return;
-            }
-            case Members:{
+            case Notes:{
                 return;
             }
             default:
-                throw new IllegalArgumentException(field.toString()+" in Project");
+                throw new IllegalArgumentException(field.toString()+" in Account");
             }
         }
 
 
         public final static class List
-            extends gap.util.ArrayList<Project.Field>
+            extends gap.util.ArrayList<Account.Field>
         {
             public List(){
                 super();
@@ -650,35 +622,35 @@ public abstract class ProjectData
         }
     }
 
-    private transient final Project.Field.Statistics fieldStatistics = new Project.Field.Statistics();
+    private transient final Account.Field.Statistics fieldStatistics = new Account.Field.Statistics();
 
-    private transient Project inheritFrom;
+    private transient Account inheritFrom;
 
 
     private String identifier;
-    private String name;
     private String groupId;
     private transient Key groupKey;
     private transient Group group;
-    private Date created;
-    private Date cleaned;
-    private Integer count;
-    private Redirect redirect;
-    private Margins margins;
-    private transient List.Short<Member> members;
+    private String projectId;
+    private transient Key projectKey;
+    private transient Project project;
+    private Boolean paid;
+    private Float amount;
+    private String currency;
+    private transient List.Short<Note> notes;
 
 
 
 
-    protected ProjectData() {
+    protected AccountData() {
         super();
     }
-    protected ProjectData(String identifier) {
+    protected AccountData(String identifier) {
         super();
         this.setIdentifier(identifier);
         {
-            final String id = Project.IdFor(identifier);
-            final Key key = Project.KeyLongFor(id);
+            final String id = Account.IdFor(identifier);
+            final Key key = Account.KeyLongFor(id);
             this.setKey(key);
         }
     }
@@ -687,26 +659,24 @@ public abstract class ProjectData
     public void destroy(){
         this.inheritFrom = null;
         this.identifier = null;
-        this.name = null;
         this.group = null;
-        this.created = null;
-        this.cleaned = null;
-        this.count = null;
-        this.redirect = null;
-        this.margins = null;
-        List.Short<Member> members = this.members;
-        if (null != members){
-            this.members = null;
-            members.destroy();
+        this.project = null;
+        this.paid = null;
+        this.amount = null;
+        this.currency = null;
+        List.Short<Note> notes = this.notes;
+        if (null != notes){
+            this.notes = null;
+            notes.destroy();
         }
     }
     public final String getId(){
 
-        String id = Project.IdFor(KIND.name, this.key);
+        String id = Account.IdFor(KIND.name, this.key);
         if (null != id)
             return id;
         else
-            return Project.IdFor(this.identifier);
+            return Account.IdFor(this.identifier);
     }
     public final boolean setId(String id){
         if (null == id){
@@ -718,7 +688,7 @@ public abstract class ProjectData
                 return false;
         }
         else if (null == this.key){
-            this.key = Project.KeyLongFor(id);
+            this.key = Account.KeyLongFor(id);
             return true;
         }
         else
@@ -730,18 +700,18 @@ public abstract class ProjectData
     public final boolean hasNotInheritFrom(){
         return (null == this.inheritFrom && null == this.inheritFromKey);
     }
-    public final Project getInheritFrom(){
-        Project inheritFrom = this.inheritFrom;
+    public final Account getInheritFrom(){
+        Account inheritFrom = this.inheritFrom;
         if (null == inheritFrom){
             Key inheritFromKey = this.inheritFromKey;
             if (null != inheritFromKey){
-                inheritFrom = Project.Get(inheritFromKey);
+                inheritFrom = Account.Get(inheritFromKey);
                 this.inheritFrom = inheritFrom;
             }
         }
         return inheritFrom;
     }
-    public final boolean setInheritFrom(Project ancestor){
+    public final boolean setInheritFrom(Account ancestor){
         if (IsNotEqual(this.inheritFrom,ancestor)){
 
             this.inheritFrom = ancestor;
@@ -752,7 +722,7 @@ public abstract class ProjectData
         else
             return false;
     }
-    public final boolean inheritFrom(Project ancestor){
+    public final boolean inheritFrom(Account ancestor){
         if (IsNotEqual(this.inheritFrom,ancestor)){
 
             this.inheritFrom = ancestor;
@@ -771,7 +741,7 @@ public abstract class ProjectData
     }
     public final boolean dropIdentifier(){
         if (null != this.identifier){
-            this.fieldStatistics.markDirty(Project.Field.Identifier);
+            this.fieldStatistics.markDirty(Account.Field.Identifier);
             this.identifier = null;
             return true;
         }
@@ -786,7 +756,7 @@ public abstract class ProjectData
     }
     public final boolean setIdentifier(String identifier){
         if (IsNotEqual(this.identifier,identifier)){
-            this.fieldStatistics.markDirty(Project.Field.Identifier);
+            this.fieldStatistics.markDirty(Account.Field.Identifier);
             this.identifier = identifier;
             return true;
         }
@@ -799,60 +769,6 @@ public abstract class ProjectData
         else
             return this.setIdentifier((String)json.getValue(String.class));
     }
-    public final boolean hasName(boolean mayInherit){
-        return (null != this.getName(mayInherit));
-    }
-    public final boolean hasNotName(boolean mayInherit){
-        return (null == this.getName(mayInherit));
-    }
-    public final boolean dropName(){
-        if (null != this.name){
-            this.fieldStatistics.markDirty(Project.Field.Name);
-            this.name = null;
-            return true;
-        }
-        else
-            return false;
-    }
-    public final String getName(){
-        return this.getName(Notation.MayInherit);
-    }
-    public final String getName(boolean mayInherit){
-        if (mayInherit){
-            String name = this.name;
-            if (null == name && this.hasInheritFrom()){
-                Project inheritFrom = this.getInheritFrom();
-                return inheritFrom.getName(Notation.MayInherit);
-            }
-            return name;
-        }
-        else
-            return this.name;
-    }
-    public final boolean setName(String name, boolean withInheritance){
-        if (IsNotEqual(this.name,this.getName(withInheritance))){
-            this.fieldStatistics.markDirty(Project.Field.Name);
-            this.name = name;
-            return true;
-        }
-        else
-            return false;
-    }
-    public final boolean setName(String name){
-        if (IsNotEqual(this.name,name)){
-            this.fieldStatistics.markDirty(Project.Field.Name);
-            this.name = name;
-            return true;
-        }
-        else
-            return false;
-    }
-    public boolean setName(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setName((String)json.getValue(String.class));
-    }
     public final boolean hasGroup(boolean mayInherit){
         return (null != this.getGroup(mayInherit));
     }
@@ -861,7 +777,7 @@ public abstract class ProjectData
     }
     public final boolean dropGroup(){
         if (null != this.group){
-            this.fieldStatistics.markDirty(Project.Field.Group);
+            this.fieldStatistics.markDirty(Account.Field.Group);
             this.group = null;
             this.groupId = null;
             this.groupKey = null;
@@ -875,7 +791,7 @@ public abstract class ProjectData
     }
     public final boolean setGroupId(String groupId){
         if (IsNotEqual(this.groupId,groupId)){
-            this.fieldStatistics.markDirty(Project.Field.Group);
+            this.fieldStatistics.markDirty(Account.Field.Group);
             this.groupId = groupId;
             this.groupKey = null;
             this.group = null;
@@ -899,7 +815,7 @@ public abstract class ProjectData
         if (null != this.groupId)
             return this.groupId;
         else if (mayInherit && this.hasInheritFrom()){
-            Project inheritFrom = this.getInheritFrom();
+            Account inheritFrom = this.getInheritFrom();
             return inheritFrom.getGroupId(mayInherit);
         }
         else
@@ -910,7 +826,7 @@ public abstract class ProjectData
         if (null != groupKey)
             return groupKey;
         else if (mayInherit && this.hasInheritFrom()){
-            Project inheritFrom = this.getInheritFrom();
+            Account inheritFrom = this.getInheritFrom();
             return inheritFrom.getGroupKey(mayInherit);
         }
         else
@@ -934,7 +850,7 @@ public abstract class ProjectData
         }
 
         if (null == group && mayInherit && this.hasInheritFrom()){
-            Project inheritFrom = this.getInheritFrom();
+            Account inheritFrom = this.getInheritFrom();
             return inheritFrom.getGroup(Notation.MayInherit);
         }
         else
@@ -942,7 +858,7 @@ public abstract class ProjectData
     }
     public final boolean setGroup(Group group, boolean withInheritance){
         if (IsNotEqual(this.group,this.getGroup(withInheritance))){
-            this.fieldStatistics.markDirty(Project.Field.Group);
+            this.fieldStatistics.markDirty(Account.Field.Group);
             this.group = group;
             if (null != group){
                 this.groupId = group.getId();
@@ -959,7 +875,7 @@ public abstract class ProjectData
     }
     public final boolean setGroup(Group group){
         if (IsNotEqual(this.group,group)){
-            this.fieldStatistics.markDirty(Project.Field.Group);
+            this.fieldStatistics.markDirty(Account.Field.Group);
             this.group = group;
             if (null != group){
                 this.groupId = group.getId();
@@ -980,365 +896,384 @@ public abstract class ProjectData
         else
             return this.setGroup((Group)json.getValue(Group.class));
     }
-    public final boolean hasCreated(boolean mayInherit){
-        return (null != this.getCreated(mayInherit));
+    public final boolean hasProject(boolean mayInherit){
+        return (null != this.getProject(mayInherit));
     }
-    public final boolean hasNotCreated(boolean mayInherit){
-        return (null == this.getCreated(mayInherit));
+    public final boolean hasNotProject(boolean mayInherit){
+        return (null == this.getProject(mayInherit));
     }
-    public final boolean dropCreated(){
-        if (null != this.created){
-            this.fieldStatistics.markDirty(Project.Field.Created);
-            this.created = null;
+    public final boolean dropProject(){
+        if (null != this.project){
+            this.fieldStatistics.markDirty(Account.Field.Project);
+            this.project = null;
+            this.projectId = null;
+            this.projectKey = null;
             return true;
         }
         else
             return false;
     }
-    public final Date getCreated(){
-        return this.getCreated(Notation.MayInherit);
+    public final String getProjectId(){
+        return this.projectId;
     }
-    public final Date getCreated(boolean mayInherit){
-        if (mayInherit){
-            Date created = this.created;
-            if (null == created && this.hasInheritFrom()){
-                Project inheritFrom = this.getInheritFrom();
-                return inheritFrom.getCreated(Notation.MayInherit);
+    public final boolean setProjectId(String projectId){
+        if (IsNotEqual(this.projectId,projectId)){
+            this.fieldStatistics.markDirty(Account.Field.Project);
+            this.projectId = projectId;
+            this.projectKey = null;
+            this.project = null;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final Key getProjectKey(){
+        if (null == this.projectKey){
+            /*
+             * BigTable dereferencing
+             */
+            if (null != this.projectId){
+                this.projectKey = Project.KeyLongFor(this.projectId);
             }
-            return created;
+        }
+        return this.projectKey;
+    }
+    public final String getProjectId(boolean mayInherit){
+        if (null != this.projectId)
+            return this.projectId;
+        else if (mayInherit && this.hasInheritFrom()){
+            Account inheritFrom = this.getInheritFrom();
+            return inheritFrom.getProjectId(mayInherit);
         }
         else
-            return this.created;
+            return null;
     }
-    public final boolean setCreated(Date created, boolean withInheritance){
-        if (IsNotEqual(this.created,this.getCreated(withInheritance))){
-            this.fieldStatistics.markDirty(Project.Field.Created);
-            this.created = created;
+    public final Key getProjectKey(boolean mayInherit){
+        Key projectKey = this.getProjectKey();
+        if (null != projectKey)
+            return projectKey;
+        else if (mayInherit && this.hasInheritFrom()){
+            Account inheritFrom = this.getInheritFrom();
+            return inheritFrom.getProjectKey(mayInherit);
+        }
+        else
+            return null;
+    }
+    public final Project getProject(){
+        return this.getProject(Notation.MayInherit);
+    }
+    public final Project getProject(boolean mayInherit){
+        Project project = this.project;
+        if (null == project){
+            /*
+             * BigTable dereference
+             */
+            Key projectKey = this.getProjectKey(mayInherit);
+
+            if (null != projectKey){
+                project = Project.Get(projectKey);
+                this.project = project;
+            }
+        }
+
+        if (null == project && mayInherit && this.hasInheritFrom()){
+            Account inheritFrom = this.getInheritFrom();
+            return inheritFrom.getProject(Notation.MayInherit);
+        }
+        else
+            return project;
+    }
+    public final boolean setProject(Project project, boolean withInheritance){
+        if (IsNotEqual(this.project,this.getProject(withInheritance))){
+            this.fieldStatistics.markDirty(Account.Field.Project);
+            this.project = project;
+            if (null != project){
+                this.projectId = project.getId();
+                this.projectKey = project.getKey();
+            }
+            else {
+                this.projectId = null;
+                this.projectKey = null;
+            }
             return true;
         }
         else
             return false;
     }
-    public final boolean setCreated(Date created){
-        if (IsNotEqual(this.created,created)){
-            this.fieldStatistics.markDirty(Project.Field.Created);
-            this.created = created;
+    public final boolean setProject(Project project){
+        if (IsNotEqual(this.project,project)){
+            this.fieldStatistics.markDirty(Account.Field.Project);
+            this.project = project;
+            if (null != project){
+                this.projectId = project.getId();
+                this.projectKey = project.getKey();
+            }
+            else {
+                this.projectId = null;
+                this.projectKey = null;
+            }
             return true;
         }
         else
             return false;
     }
-    public boolean setCreated(json.Json json){
+    public boolean setProject(json.Json json){
         if (null == json)
             return false;
         else
-            return this.setCreated((Date)json.getValue(Date.class));
+            return this.setProject((Project)json.getValue(Project.class));
     }
-    public final boolean hasCleaned(boolean mayInherit){
-        return (null != this.getCleaned(mayInherit));
+    public final boolean hasPaid(boolean mayInherit){
+        return (null != this.getPaid(mayInherit));
     }
-    public final boolean hasNotCleaned(boolean mayInherit){
-        return (null == this.getCleaned(mayInherit));
+    public final boolean hasNotPaid(boolean mayInherit){
+        return (null == this.getPaid(mayInherit));
     }
-    public final boolean dropCleaned(){
-        if (null != this.cleaned){
-            this.fieldStatistics.markDirty(Project.Field.Cleaned);
-            this.cleaned = null;
+    public final boolean dropPaid(){
+        if (null != this.paid){
+            this.fieldStatistics.markDirty(Account.Field.Paid);
+            this.paid = null;
             return true;
         }
         else
             return false;
     }
-    public final Date getCleaned(){
-        return this.getCleaned(Notation.MayInherit);
+    public final Boolean getPaid(){
+        return this.getPaid(Notation.MayInherit);
     }
-    public final Date getCleaned(boolean mayInherit){
+    public final Boolean getPaid(boolean mayInherit){
         if (mayInherit){
-            Date cleaned = this.cleaned;
-            if (null == cleaned && this.hasInheritFrom()){
-                Project inheritFrom = this.getInheritFrom();
-                return inheritFrom.getCleaned(Notation.MayInherit);
+            Boolean paid = this.paid;
+            if (null == paid && this.hasInheritFrom()){
+                Account inheritFrom = this.getInheritFrom();
+                return inheritFrom.getPaid(Notation.MayInherit);
             }
-            return cleaned;
+            return paid;
         }
         else
-            return this.cleaned;
+            return this.paid;
     }
-    public final boolean setCleaned(Date cleaned, boolean withInheritance){
-        if (IsNotEqual(this.cleaned,this.getCleaned(withInheritance))){
-            this.fieldStatistics.markDirty(Project.Field.Cleaned);
-            this.cleaned = cleaned;
+    public final boolean setPaid(Boolean paid, boolean withInheritance){
+        if (IsNotEqual(this.paid,this.getPaid(withInheritance))){
+            this.fieldStatistics.markDirty(Account.Field.Paid);
+            this.paid = paid;
             return true;
         }
         else
             return false;
     }
-    public final boolean setCleaned(Date cleaned){
-        if (IsNotEqual(this.cleaned,cleaned)){
-            this.fieldStatistics.markDirty(Project.Field.Cleaned);
-            this.cleaned = cleaned;
+    public final boolean setPaid(Boolean paid){
+        if (IsNotEqual(this.paid,paid)){
+            this.fieldStatistics.markDirty(Account.Field.Paid);
+            this.paid = paid;
             return true;
         }
         else
             return false;
     }
-    public boolean setCleaned(json.Json json){
+    public boolean setPaid(json.Json json){
         if (null == json)
             return false;
         else
-            return this.setCleaned((Date)json.getValue(Date.class));
+            return this.setPaid((Boolean)json.getValue(Boolean.class));
     }
-    public final boolean hasCount(boolean mayInherit){
-        return (null != this.getCount(mayInherit));
+    public final boolean hasAmount(boolean mayInherit){
+        return (null != this.getAmount(mayInherit));
     }
-    public final boolean hasNotCount(boolean mayInherit){
-        return (null == this.getCount(mayInherit));
+    public final boolean hasNotAmount(boolean mayInherit){
+        return (null == this.getAmount(mayInherit));
     }
-    public final boolean dropCount(){
-        if (null != this.count){
-            this.fieldStatistics.markDirty(Project.Field.Count);
-            this.count = null;
+    public final boolean dropAmount(){
+        if (null != this.amount){
+            this.fieldStatistics.markDirty(Account.Field.Amount);
+            this.amount = null;
             return true;
         }
         else
             return false;
     }
-    public final Integer getCount(){
-        return this.getCount(Notation.MayInherit);
+    public final Float getAmount(){
+        return this.getAmount(Notation.MayInherit);
     }
-    public final Integer getCount(boolean mayInherit){
+    public final Float getAmount(boolean mayInherit){
         if (mayInherit){
-            Integer count = this.count;
-            if (null == count && this.hasInheritFrom()){
-                Project inheritFrom = this.getInheritFrom();
-                return inheritFrom.getCount(Notation.MayInherit);
+            Float amount = this.amount;
+            if (null == amount && this.hasInheritFrom()){
+                Account inheritFrom = this.getInheritFrom();
+                return inheritFrom.getAmount(Notation.MayInherit);
             }
-            return count;
+            return amount;
         }
         else
-            return this.count;
+            return this.amount;
     }
-    public final boolean setCount(Integer count, boolean withInheritance){
-        if (IsNotEqual(this.count,this.getCount(withInheritance))){
-            this.fieldStatistics.markDirty(Project.Field.Count);
-            this.count = count;
+    public final boolean setAmount(Float amount, boolean withInheritance){
+        if (IsNotEqual(this.amount,this.getAmount(withInheritance))){
+            this.fieldStatistics.markDirty(Account.Field.Amount);
+            this.amount = amount;
             return true;
         }
         else
             return false;
     }
-    public final boolean setCount(Integer count){
-        if (IsNotEqual(this.count,count)){
-            this.fieldStatistics.markDirty(Project.Field.Count);
-            this.count = count;
+    public final boolean setAmount(Float amount){
+        if (IsNotEqual(this.amount,amount)){
+            this.fieldStatistics.markDirty(Account.Field.Amount);
+            this.amount = amount;
             return true;
         }
         else
             return false;
     }
-    public boolean setCount(json.Json json){
+    public boolean setAmount(json.Json json){
         if (null == json)
             return false;
         else
-            return this.setCount((Integer)json.getValue(Integer.class));
+            return this.setAmount((Float)json.getValue(Float.class));
     }
-    public final boolean setCount(Number count){
-        if (IsNotEqual(this.count,count)){
-            this.fieldStatistics.markDirty(Project.Field.Count);
-            if (count instanceof Integer)
-                this.count = (Integer)count;
+    public final boolean setAmount(Number amount){
+        if (IsNotEqual(this.amount,amount)){
+            this.fieldStatistics.markDirty(Account.Field.Amount);
+            if (amount instanceof Float)
+                this.amount = (Float)amount;
             else
-                this.count = new Integer( count.intValue());
+                this.amount = new Float( amount.floatValue());
             return true;
         }
         else
             return false;
     }
-    public final boolean hasRedirect(boolean mayInherit){
-        return (null != this.getRedirect(mayInherit));
+    public final boolean hasCurrency(boolean mayInherit){
+        return (null != this.getCurrency(mayInherit));
     }
-    public final boolean hasNotRedirect(boolean mayInherit){
-        return (null == this.getRedirect(mayInherit));
+    public final boolean hasNotCurrency(boolean mayInherit){
+        return (null == this.getCurrency(mayInherit));
     }
-    public final boolean dropRedirect(){
-        if (null != this.redirect){
-            this.fieldStatistics.markDirty(Project.Field.Redirect);
-            this.redirect = null;
+    public final boolean dropCurrency(){
+        if (null != this.currency){
+            this.fieldStatistics.markDirty(Account.Field.Currency);
+            this.currency = null;
             return true;
         }
         else
             return false;
     }
-    public final Redirect getRedirect(){
-        return this.getRedirect(Notation.MayInherit);
+    public final String getCurrency(){
+        return this.getCurrency(Notation.MayInherit);
     }
-    public final Redirect getRedirect(boolean mayInherit){
+    public final String getCurrency(boolean mayInherit){
         if (mayInherit){
-            Redirect redirect = this.redirect;
-            if (null == redirect && this.hasInheritFrom()){
-                Project inheritFrom = this.getInheritFrom();
-                return inheritFrom.getRedirect(Notation.MayInherit);
+            String currency = this.currency;
+            if (null == currency && this.hasInheritFrom()){
+                Account inheritFrom = this.getInheritFrom();
+                return inheritFrom.getCurrency(Notation.MayInherit);
             }
-            return redirect;
+            return currency;
         }
         else
-            return this.redirect;
+            return this.currency;
     }
-    public final boolean setRedirect(Redirect redirect, boolean withInheritance){
-        if (IsNotEqual(this.redirect,this.getRedirect(withInheritance))){
-            this.fieldStatistics.markDirty(Project.Field.Redirect);
-            this.redirect = redirect;
+    public final boolean setCurrency(String currency, boolean withInheritance){
+        if (IsNotEqual(this.currency,this.getCurrency(withInheritance))){
+            this.fieldStatistics.markDirty(Account.Field.Currency);
+            this.currency = currency;
             return true;
         }
         else
             return false;
     }
-    public final boolean setRedirect(Redirect redirect){
-        if (IsNotEqual(this.redirect,redirect)){
-            this.fieldStatistics.markDirty(Project.Field.Redirect);
-            this.redirect = redirect;
+    public final boolean setCurrency(String currency){
+        if (IsNotEqual(this.currency,currency)){
+            this.fieldStatistics.markDirty(Account.Field.Currency);
+            this.currency = currency;
             return true;
         }
         else
             return false;
     }
-    public boolean setRedirect(json.Json json){
+    public boolean setCurrency(json.Json json){
         if (null == json)
             return false;
         else
-            return this.setRedirect((Redirect)json.getValue(Redirect.class));
+            return this.setCurrency((String)json.getValue(String.class));
     }
-    public final boolean hasMargins(boolean mayInherit){
-        return (null != this.getMargins(mayInherit));
+    public final boolean hasNotes(boolean mayInherit){
+        return (this.getNotes(mayInherit).isNotEmpty());
     }
-    public final boolean hasNotMargins(boolean mayInherit){
-        return (null == this.getMargins(mayInherit));
+    public final boolean hasNotNotes(boolean mayInherit){
+        return (this.getNotes(mayInherit).isEmpty());
     }
-    public final boolean dropMargins(){
-        if (null != this.margins){
-            this.fieldStatistics.markDirty(Project.Field.Margins);
-            this.margins = null;
+    public final boolean dropNotes(){
+        List.Short<Note> notes = this.notes;
+        if (null != notes){
+            this.notes = null;
+            notes.destroy();
             return true;
         }
         else
             return false;
     }
-    public final Margins getMargins(){
-        return this.getMargins(Notation.MayInherit);
+    public final List.Short<Note> getNotes(){
+        return this.getNotes(Notation.MayInherit);
     }
-    public final Margins getMargins(boolean mayInherit){
-        if (mayInherit){
-            Margins margins = this.margins;
-            if (null == margins && this.hasInheritFrom()){
-                Project inheritFrom = this.getInheritFrom();
-                return inheritFrom.getMargins(Notation.MayInherit);
-            }
-            return margins;
-        }
-        else
-            return this.margins;
-    }
-    public final boolean setMargins(Margins margins, boolean withInheritance){
-        if (IsNotEqual(this.margins,this.getMargins(withInheritance))){
-            this.fieldStatistics.markDirty(Project.Field.Margins);
-            this.margins = margins;
-            return true;
-        }
-        else
-            return false;
-    }
-    public final boolean setMargins(Margins margins){
-        if (IsNotEqual(this.margins,margins)){
-            this.fieldStatistics.markDirty(Project.Field.Margins);
-            this.margins = margins;
-            return true;
-        }
-        else
-            return false;
-    }
-    public boolean setMargins(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setMargins((Margins)json.getValue(Margins.class));
-    }
-    public final boolean hasMembers(boolean mayInherit){
-        return (this.getMembers(mayInherit).isNotEmpty());
-    }
-    public final boolean hasNotMembers(boolean mayInherit){
-        return (this.getMembers(mayInherit).isEmpty());
-    }
-    public final boolean dropMembers(){
-        List.Short<Member> members = this.members;
-        if (null != members){
-            this.members = null;
-            members.destroy();
-            return true;
-        }
-        else
-            return false;
-    }
-    public final List.Short<Member> getMembers(){
-        return this.getMembers(Notation.MayInherit);
-    }
-    public final List.Short<Member> getMembers(boolean mayInherit){
-        List.Short<Member> members = this.members;
-        if (null == members){
+    public final List.Short<Note> getNotes(boolean mayInherit){
+        List.Short<Note> notes = this.notes;
+        if (null == notes){
             if (mayInherit && this.hasInheritFrom()){
-                Project inheritFrom = this.getInheritFrom();
+                Account inheritFrom = this.getInheritFrom();
                 if (null != inheritFrom){
-                    members = inheritFrom.getMembers(Notation.MayInherit);
-                    if (null != members)
-                        return members;
+                    notes = inheritFrom.getNotes(Notation.MayInherit);
+                    if (null != notes)
+                        return notes;
                 }
             }
             /*
              * Collection type coersion
              */
             {
-                Object tmp = new ListProjectMember((Project)this);
-                members = (List.Short<Member>)tmp;
+                Object tmp = new ListAccountNote((Account)this);
+                notes = (List.Short<Note>)tmp;
             }
-            this.members = members;
-            members.init();
+            this.notes = notes;
+            notes.init();
         }
-        return members;
+        return notes;
     }
-    public final boolean setMembers(List.Short<Member> members){
-        if (IsNotEqual(this.members,members)){
+    public final boolean setNotes(List.Short<Note> notes){
+        if (IsNotEqual(this.notes,notes)){
 
-            this.members = members;
+            this.notes = notes;
             return true;
         }
         else
             return false;
     }
-    public final boolean isEmptyMembers(){
-        List.Short<Member> collection = this.members;
+    public final boolean isEmptyNotes(){
+        List.Short<Note> collection = this.notes;
         if (null != collection)
             return collection.isEmpty();
         else
             return true;
     }
-    public final boolean isNotEmptyMembers(){
-        List.Short<Member> collection = this.members;
+    public final boolean isNotEmptyNotes(){
+        List.Short<Note> collection = this.notes;
         if (null != collection)
             return (!collection.isEmpty());
         else
             return false;
     }
-    public final Member fetchMembers(Filter filter){
+    public final Note fetchNotes(Filter filter){
         if (null != filter && KIND == filter.kind){
-            List.Short<Member> collection = this.getMembers(Notation.MayInherit);
+            List.Short<Note> collection = this.getNotes(Notation.MayInherit);
             return collection.fetch(filter);
         }
         else
             throw new IllegalArgumentException();
     }
-    public final Member getMembers(gap.data.ListFilter<Member> filter){
+    public final Note getNotes(gap.data.ListFilter<Note> filter){
         if (null != filter){
-            List.Short<Member> list = this.getMembers(Notation.MayInherit);
-            for (Member item : list){
+            List.Short<Note> list = this.getNotes(Notation.MayInherit);
+            for (Note item : list){
                 if (filter.accept(item))
                     return item;
             }
@@ -1357,7 +1292,7 @@ public abstract class ProjectData
         return ClassName;
     }
     public final gap.data.List<gap.data.Field> getClassFields(){
-        gap.data.List re = new Project.Field.List(Field.values());
+        gap.data.List re = new Account.Field.List(Field.values());
         /*
          * Compiler has a type astigmatism (parameterized interface gap.data.Field)
          */
@@ -1370,203 +1305,141 @@ public abstract class ProjectData
         json.Json json = new json.ObjectJson();
         String identifier = this.getIdentifier();
         json.set("identifier",identifier);
-        String name = this.getName();
-        json.set("name",name);
         Group group = this.getGroup();
         json.set("group",group);
-        Date created = this.getCreated();
-        json.set("created",created);
-        Date cleaned = this.getCleaned();
-        json.set("cleaned",cleaned);
-        Integer count = this.getCount();
-        json.set("count",count);
-        Redirect redirect = this.getRedirect();
-        json.set("redirect",redirect);
-        Margins margins = this.getMargins();
-        json.set("margins",margins);
+        Project project = this.getProject();
+        json.set("project",project);
+        Boolean paid = this.getPaid();
+        json.set("paid",paid);
+        Float amount = this.getAmount();
+        json.set("amount",amount);
+        String currency = this.getCurrency();
+        json.set("currency",currency);
         return json;
     }
     public boolean fromJson(json.Json json){
         boolean modified = false;
-        modified = (this.setName(json.at("name")) || modified);
         modified = (this.setGroup(json.at("group")) || modified);
-        modified = (this.setCreated(json.at("created")) || modified);
-        modified = (this.setCleaned(json.at("cleaned")) || modified);
-        modified = (this.setCount(json.at("count")) || modified);
-        modified = (this.setRedirect(json.at("redirect")) || modified);
-        modified = (this.setMargins(json.at("margins")) || modified);
+        modified = (this.setProject(json.at("project")) || modified);
+        modified = (this.setPaid(json.at("paid")) || modified);
+        modified = (this.setAmount(json.at("amount")) || modified);
+        modified = (this.setCurrency(json.at("currency")) || modified);
         return modified;
     }
     public boolean updateFrom(Request req) throws ValidationError {
         boolean change = false;
-        String nameRequest = req.getParameter("name");
-        if (null != nameRequest && 0 < nameRequest.length()){
+        String paidRequest = req.getParameter("paid");
+        if (null != paidRequest && 0 < paidRequest.length()){
             try {
-                String name = nameRequest;
-                if (this.setName(name)){
+                Boolean paid = gap.Strings.BooleanFromString(paidRequest);
+                if (this.setPaid(paid)){
                     change = true;
                 }
             }
             catch (RuntimeException exc){
-                throw new ValidationError(ClassName,"name",nameRequest,exc);
+                throw new ValidationError(ClassName,"paid",paidRequest,exc);
             }
         }
-        String createdRequest = req.getParameter("created");
-        if (null != createdRequest && 0 < createdRequest.length()){
+        String amountRequest = req.getParameter("amount");
+        if (null != amountRequest && 0 < amountRequest.length()){
             try {
-                Date created = gap.Strings.DateFromString(createdRequest);
-                if (this.setCreated(created)){
+                Float amount = gap.Strings.FloatFromString(amountRequest);
+                if (this.setAmount(amount)){
                     change = true;
                 }
             }
             catch (RuntimeException exc){
-                throw new ValidationError(ClassName,"created",createdRequest,exc);
+                throw new ValidationError(ClassName,"amount",amountRequest,exc);
             }
         }
-        String cleanedRequest = req.getParameter("cleaned");
-        if (null != cleanedRequest && 0 < cleanedRequest.length()){
+        String currencyRequest = req.getParameter("currency");
+        if (null != currencyRequest && 0 < currencyRequest.length()){
             try {
-                Date cleaned = gap.Strings.DateFromString(cleanedRequest);
-                if (this.setCleaned(cleaned)){
+                String currency = currencyRequest;
+                if (this.setCurrency(currency)){
                     change = true;
                 }
             }
             catch (RuntimeException exc){
-                throw new ValidationError(ClassName,"cleaned",cleanedRequest,exc);
-            }
-        }
-        String countRequest = req.getParameter("count");
-        if (null != countRequest && 0 < countRequest.length()){
-            try {
-                Integer count = gap.Strings.IntegerFromString(countRequest);
-                if (this.setCount(count)){
-                    change = true;
-                }
-            }
-            catch (RuntimeException exc){
-                throw new ValidationError(ClassName,"count",countRequest,exc);
-            }
-        }
-        String redirectRequest = req.getParameter("redirect");
-        if (null != redirectRequest && 0 < redirectRequest.length()){
-            try {
-                Redirect redirect = (Redirect)gap.Strings.SerializableFromString(redirectRequest);
-                if (this.setRedirect(redirect)){
-                    change = true;
-                }
-            }
-            catch (RuntimeException exc){
-                throw new ValidationError(ClassName,"redirect",redirectRequest,exc);
-            }
-        }
-        String marginsRequest = req.getParameter("margins");
-        if (null != marginsRequest && 0 < marginsRequest.length()){
-            try {
-                Margins margins = (Margins)gap.Strings.SerializableFromString(marginsRequest);
-                if (this.setMargins(margins)){
-                    change = true;
-                }
-            }
-            catch (RuntimeException exc){
-                throw new ValidationError(ClassName,"margins",marginsRequest,exc);
+                throw new ValidationError(ClassName,"currency",currencyRequest,exc);
             }
         }
         return change;
     }
     public final boolean updateFrom(BigTable proto){
-        return this.updateFrom( (Project)proto);
+        return this.updateFrom( (Account)proto);
     }
-    public final boolean updateFrom(Project proto){
+    public final boolean updateFrom(Account proto){
         boolean mayInherit = (!this.hasInheritFromKey());
         boolean change = false;
-        String name = proto.getName(mayInherit);
-        if (null != name && this.setName(name)){
+        Boolean paid = proto.getPaid(mayInherit);
+        if (null != paid && this.setPaid(paid)){
             change = true;
         }
-        Date created = proto.getCreated(mayInherit);
-        if (null != created && this.setCreated(created)){
+        Float amount = proto.getAmount(mayInherit);
+        if (null != amount && this.setAmount(amount)){
             change = true;
         }
-        Date cleaned = proto.getCleaned(mayInherit);
-        if (null != cleaned && this.setCleaned(cleaned)){
-            change = true;
-        }
-        Integer count = proto.getCount(mayInherit);
-        if (null != count && this.setCount(count)){
-            change = true;
-        }
-        Redirect redirect = proto.getRedirect(mayInherit);
-        if (null != redirect && this.setRedirect(redirect)){
-            change = true;
-        }
-        Margins margins = proto.getMargins(mayInherit);
-        if (null != margins && this.setMargins(margins)){
+        String currency = proto.getCurrency(mayInherit);
+        if (null != currency && this.setCurrency(currency)){
             change = true;
         }
         return change;
     }
     public java.io.Serializable valueStorage(gap.data.Field field){
 
-        return Field.Storage( (Field)field, (Project)this);
+        return Field.Storage( (Field)field, (Account)this);
     }
     public void defineStorage(gap.data.Field field, java.io.Serializable value){
 
-        Field.Storage( (Field)field, (Project)this, value);
+        Field.Storage( (Field)field, (Account)this, value);
     }
-    public final Project markClean(){
+    public final Account markClean(){
 
         this.fieldStatistics.markClean();
-        return (Project)this;
+        return (Account)this;
     }
-    public final Project markDirty(){
+    public final Account markDirty(){
 
         this.fieldStatistics.markDirty();
-        return (Project)this;
+        return (Account)this;
     }
-    public final Project markDirty(gap.data.Field field){
+    public final Account markDirty(gap.data.Field field){
 
         this.fieldStatistics.markDirty(field);
-        return (Project)this;
+        return (Account)this;
     }
-    public final Project markDirty(java.io.Serializable instance){
+    public final Account markDirty(java.io.Serializable instance){
         if (instance == this.identifier){
-            gap.data.Field field = Project.Field.Identifier;
-            return this.markDirty(field);
-        }
-        else if (instance == this.name){
-            gap.data.Field field = Project.Field.Name;
+            gap.data.Field field = Account.Field.Identifier;
             return this.markDirty(field);
         }
         else if (instance == this.group){
-            gap.data.Field field = Project.Field.Group;
+            gap.data.Field field = Account.Field.Group;
             return this.markDirty(field);
         }
-        else if (instance == this.created){
-            gap.data.Field field = Project.Field.Created;
+        else if (instance == this.project){
+            gap.data.Field field = Account.Field.Project;
             return this.markDirty(field);
         }
-        else if (instance == this.cleaned){
-            gap.data.Field field = Project.Field.Cleaned;
+        else if (instance == this.paid){
+            gap.data.Field field = Account.Field.Paid;
             return this.markDirty(field);
         }
-        else if (instance == this.count){
-            gap.data.Field field = Project.Field.Count;
+        else if (instance == this.amount){
+            gap.data.Field field = Account.Field.Amount;
             return this.markDirty(field);
         }
-        else if (instance == this.redirect){
-            gap.data.Field field = Project.Field.Redirect;
+        else if (instance == this.currency){
+            gap.data.Field field = Account.Field.Currency;
             return this.markDirty(field);
         }
-        else if (instance == this.margins){
-            gap.data.Field field = Project.Field.Margins;
-            return this.markDirty(field);
-        }
-        else if (instance == this.members){
-            gap.data.Field field = Project.Field.Members;
+        else if (instance == this.notes){
+            gap.data.Field field = Account.Field.Notes;
             return this.markDirty(field);
         }
         else
-            return (Project)this;
+            return (Account)this;
     }
     public final Iterable<gap.data.Field> listClean(){
 
@@ -1585,13 +1458,13 @@ public abstract class ProjectData
         return this.fieldStatistics.isDirty();
     }
     public final gap.service.od.ClassDescriptor getClassDescriptorFor(){
-        return Project.ClassDescriptorFor();
+        return Account.ClassDescriptorFor();
     }
     /*
      * Template Data Dictionary
      */
     public boolean hasVariable(TemplateName name){
-        Field field = Project.Field.For(name.getTerm());
+        Field field = Account.Field.For(name.getTerm());
         if (null != field){
             switch (field){
             case Id:
@@ -1610,15 +1483,6 @@ public abstract class ProjectData
                      */
                     return this.hasIdentifier(true);
                 }
-            case Name:
-                if (name.has(1))
-                    throw new IllegalStateException(field.name());
-                else {
-                    /*
-                     * Synthesize section for Field (EXISTS)
-                     */
-                    return this.hasName(true);
-                }
             case Group:
                 if (name.has(1)){
                     Group group = this.getGroup(true);
@@ -1633,50 +1497,46 @@ public abstract class ProjectData
                      */
                     return this.hasGroup(true);
                 }
-            case Created:
-                if (name.has(1))
-                    throw new IllegalStateException(field.name());
-                else {
-                    /*
-                     * Synthesize section for Field (EXISTS)
-                     */
-                    return this.hasCreated(true);
+            case Project:
+                if (name.has(1)){
+                    Project project = this.getProject(true);
+                    if (null != project)
+                        return project.hasVariable(new TemplateName(name));
+                    else
+                        return false;
                 }
-            case Cleaned:
-                if (name.has(1))
-                    throw new IllegalStateException(field.name());
                 else {
                     /*
                      * Synthesize section for Field (EXISTS)
                      */
-                    return this.hasCleaned(true);
+                    return this.hasProject(true);
                 }
-            case Count:
+            case Paid:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
                 else {
                     /*
-                     * Synthesize section for Field (EXISTS)
+                     * Synthesize section for Boolean (EXISTS && TRUE)
                      */
-                    return this.hasCount(true);
+                    return (this.hasPaid(true) && this.getPaid(true));
                 }
-            case Redirect:
+            case Amount:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
                 else {
                     /*
                      * Synthesize section for Field (EXISTS)
                      */
-                    return this.hasRedirect(true);
+                    return this.hasAmount(true);
                 }
-            case Margins:
+            case Currency:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
                 else {
                     /*
                      * Synthesize section for Field (EXISTS)
                      */
-                    return this.hasMargins(true);
+                    return this.hasCurrency(true);
                 }
             default:
                 throw new IllegalStateException(field.name());
@@ -1687,7 +1547,7 @@ public abstract class ProjectData
         }
     }
     public String getVariable(TemplateName name){
-        Field field = Project.Field.For(name.getTerm());
+        Field field = Account.Field.For(name.getTerm());
         if (null != field){
             switch (field){
             case Id:
@@ -1700,11 +1560,6 @@ public abstract class ProjectData
                     throw new IllegalStateException(field.name());
                 else
                     return this.getIdentifier(true);
-            case Name:
-                if (name.has(1))
-                    throw new IllegalStateException(field.name());
-                else
-                    return this.getName(true);
             case Group:
                 if (name.has(1)){
                     Group group = this.getGroup(Notation.MayInherit);
@@ -1715,31 +1570,31 @@ public abstract class ProjectData
                 }
                 else
                     return this.getGroupId(Notation.MayInherit);
-            case Created:
+            case Project:
+                if (name.has(1)){
+                    Project project = this.getProject(Notation.MayInherit);
+                    if (null != project)
+                        return project.getVariable(new TemplateName(name));
+                    else
+                        return null;
+                }
+                else
+                    return this.getProjectId(Notation.MayInherit);
+            case Paid:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
                 else
-                    return gap.Strings.DateToString(this.getCreated(true));
-            case Cleaned:
+                    return gap.Strings.BooleanToString(this.getPaid(true));
+            case Amount:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
                 else
-                    return gap.Strings.DateToString(this.getCleaned(true));
-            case Count:
+                    return gap.Strings.FloatToString(this.getAmount(true));
+            case Currency:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
                 else
-                    return gap.Strings.IntegerToString(this.getCount(true));
-            case Redirect:
-                if (name.has(1))
-                    throw new IllegalStateException(field.name());
-                else
-                    return gap.Strings.SerializableToString(this.getRedirect(true));
-            case Margins:
-                if (name.has(1))
-                    throw new IllegalStateException(field.name());
-                else
-                    return gap.Strings.SerializableToString(this.getMargins(true));
+                    return this.getCurrency(true);
             default:
                 throw new IllegalStateException(field.name());
             }
@@ -1749,15 +1604,13 @@ public abstract class ProjectData
         }
     }
     public void setVariable(TemplateName name, String value){
-        Field field = Project.Field.For(name.getTerm());
+        Field field = Account.Field.For(name.getTerm());
         if (null != field){
             if (name.has(1)){
                 switch (field){
                 case Id:
                     throw new UnsupportedOperationException(field.name());
                 case Identifier:
-                    throw new IllegalStateException(field.name());
-                case Name:
                     throw new IllegalStateException(field.name());
                 case Group:
 
@@ -1766,34 +1619,35 @@ public abstract class ProjectData
                         group.setVariable(new TemplateName(name),value);
 
                     return ;
-                case Created:
+                case Project:
+
+                    Project project = this.getProject(true);
+                    if (null != project)
+                        project.setVariable(new TemplateName(name),value);
+
+                    return ;
+                case Paid:
                     throw new IllegalStateException(field.name());
-                case Cleaned:
+                case Amount:
                     throw new IllegalStateException(field.name());
-                case Count:
-                    throw new IllegalStateException(field.name());
-                case Redirect:
-                    throw new IllegalStateException(field.name());
-                case Margins:
+                case Currency:
                     throw new IllegalStateException(field.name());
                 default:
                     throw new IllegalStateException(field.name());
                 }
             }
             else
-                Field.Set(field,((Project)this),value);
+                Field.Set(field,((Account)this),value);
         }
         else {
             super.setVariable(name,value);
         }
     }
     public List.Short<TemplateDataDictionary> getSection(TemplateName name){
-        Field field = Project.Field.For(name.getTerm());
+        Field field = Account.Field.For(name.getTerm());
         if (null != field){
             switch (field){
             case Identifier:
-                return null;
-            case Name:
                 return null;
             case Group:
                 Group group = this.getGroup(true);
@@ -1801,15 +1655,17 @@ public abstract class ProjectData
                     return group.getSection(new TemplateName(name));
                 else
                     return null;
-            case Created:
+            case Project:
+                Project project = this.getProject(true);
+                if (null != project)
+                    return project.getSection(new TemplateName(name));
+                else
+                    return null;
+            case Paid:
                 return null;
-            case Cleaned:
+            case Amount:
                 return null;
-            case Count:
-                return null;
-            case Redirect:
-                return null;
-            case Margins:
+            case Currency:
                 return null;
             default:
                 throw new IllegalStateException(field.name());
@@ -1819,8 +1675,8 @@ public abstract class ProjectData
             return super.getSection(name);
         }
     }
-    public Project clone(){
-        return (Project)super.clone();
+    public Account clone(){
+        return (Account)super.clone();
     }
     public String pathto(){
         return PathTo(this.getId());

@@ -1,6 +1,7 @@
 
 package cpi.groups;
 
+import oso.data.Person;
 import cpi.Redirect;
 import cpi.Margins;
 
@@ -19,27 +20,18 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
-import com.google.appengine.api.oauth.OAuthRequestException;
-import com.google.appengine.api.oauth.OAuthService;
-import com.google.appengine.api.oauth.OAuthServiceFactory;
-import com.google.appengine.api.oauth.OAuthServiceFailureException;
-
 /**
  * Generated once.  This source file will not be overwritten
  * unless deleted, so it can be edited.
  *
- * @see Project
+ * @see Account
  */
-public final class ProjectServlet
+public final class AccountServlet
     extends gap.service.Servlet
 {
-    private final static TemplateName ProjectDiv = new TemplateName("div.project.html");
 
-
-
-    public ProjectServlet() {
+    public AccountServlet() {
         super();
     }
-
 
 }

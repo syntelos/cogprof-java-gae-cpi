@@ -40,7 +40,7 @@ import javax.annotation.Generated;
  *
  * @see Person
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-01-03T23:58:59.753Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2012-01-30T18:48:55.613Z")
 public abstract class PersonData
     extends gap.data.BigTable
     implements DataInheritance<Person>
@@ -242,7 +242,7 @@ public abstract class PersonData
     public final static void Delete(Key instanceKey){
         if (null != instanceKey){
 
-            gap.data.Store.DeleteKey(instanceKey);
+            gap.data.Store.Delete(instanceKey);
         }
     }
     /**
@@ -250,8 +250,8 @@ public abstract class PersonData
      */
     public final static void Clean(Person instance){
         if (null != instance){
-            Key key = instance.getKey();
-            gap.data.Store.CleanKey(key);
+
+            gap.data.Store.Clean(instance.getKey());
         }
     }
     /**
@@ -259,6 +259,7 @@ public abstract class PersonData
      */
     public final static void Save(Person instance){
         if (null != instance){
+
             gap.data.Store.PutClass(instance);
         }
     }
@@ -267,6 +268,7 @@ public abstract class PersonData
      */
     public final static void Store(Person instance){
         if (null != instance){
+
             gap.data.Store.PutClass(instance);
         }
     }
@@ -295,6 +297,10 @@ public abstract class PersonData
             return (Person)gap.data.Store.Query1Class(query);
         else
             throw new IllegalArgumentException();
+    }
+    public final static BigTableIterator<Person> ListPage(Page page){
+
+        return Person.QueryN(Person.CreateQueryFor(),page);
     }
     public final static BigTableIterator<Person> QueryN(Query query, Page page){
         if (null != query && null != page)
@@ -826,6 +832,12 @@ public abstract class PersonData
         else
             return false;
     }
+    public boolean setLogonId(json.Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setLogonId((String)json.getValue(String.class));
+    }
     public final boolean hasIdentifier(boolean mayInherit){
         return (null != this.getIdentifier(mayInherit));
     }
@@ -855,6 +867,12 @@ public abstract class PersonData
         }
         else
             return false;
+    }
+    public boolean setIdentifier(json.Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setIdentifier((String)json.getValue(String.class));
     }
     public final boolean hasNf(boolean mayInherit){
         return (null != this.getNf(mayInherit));
@@ -903,6 +921,12 @@ public abstract class PersonData
         }
         else
             return false;
+    }
+    public boolean setNf(json.Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setNf((Float)json.getValue(Float.class));
     }
     public final boolean setNf(Number nf){
         if (IsNotEqual(this.nf,nf)){
@@ -964,6 +988,12 @@ public abstract class PersonData
         else
             return false;
     }
+    public boolean setNt(json.Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setNt((Float)json.getValue(Float.class));
+    }
     public final boolean setNt(Number nt){
         if (IsNotEqual(this.nt,nt)){
             this.fieldStatistics.markDirty(Person.Field.Nt);
@@ -1023,6 +1053,12 @@ public abstract class PersonData
         }
         else
             return false;
+    }
+    public boolean setSt(json.Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setSt((Float)json.getValue(Float.class));
     }
     public final boolean setSt(Number st){
         if (IsNotEqual(this.st,st)){
@@ -1084,6 +1120,12 @@ public abstract class PersonData
         else
             return false;
     }
+    public boolean setSf(json.Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setSf((Float)json.getValue(Float.class));
+    }
     public final boolean setSf(Number sf){
         if (IsNotEqual(this.sf,sf)){
             this.fieldStatistics.markDirty(Person.Field.Sf);
@@ -1144,6 +1186,12 @@ public abstract class PersonData
         else
             return false;
     }
+    public boolean setCreated(json.Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setCreated((Date)json.getValue(Date.class));
+    }
     public final boolean hasCompleted(boolean mayInherit){
         return (null != this.getCompleted(mayInherit));
     }
@@ -1191,6 +1239,12 @@ public abstract class PersonData
         }
         else
             return false;
+    }
+    public boolean setCompleted(json.Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setCompleted((Date)json.getValue(Date.class));
     }
     public final boolean hasProject(boolean mayInherit){
         return (null != this.getProject(mayInherit));
@@ -1313,6 +1367,12 @@ public abstract class PersonData
         else
             return false;
     }
+    public boolean setProject(json.Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setProject((Project)json.getValue(Project.class));
+    }
     public final boolean hasInventory(boolean mayInherit){
         return (this.getInventory(mayInherit).isNotEmpty());
     }
@@ -1408,6 +1468,40 @@ public abstract class PersonData
     }
     public final gap.data.Field getClassFieldByName(String name){
         return Field.getField(name);
+    }
+    public json.Json toJson(){
+        json.Json json = new json.ObjectJson();
+        String logonId = this.getLogonId();
+        json.set("logonId",logonId);
+        String identifier = this.getIdentifier();
+        json.set("identifier",identifier);
+        Float nf = this.getNf();
+        json.set("nf",nf);
+        Float nt = this.getNt();
+        json.set("nt",nt);
+        Float st = this.getSt();
+        json.set("st",st);
+        Float sf = this.getSf();
+        json.set("sf",sf);
+        Date created = this.getCreated();
+        json.set("created",created);
+        Date completed = this.getCompleted();
+        json.set("completed",completed);
+        Project project = this.getProject();
+        json.set("project",project);
+        return json;
+    }
+    public boolean fromJson(json.Json json){
+        boolean modified = false;
+        modified = (this.setLogonId(json.at("logonId")) || modified);
+        modified = (this.setNf(json.at("nf")) || modified);
+        modified = (this.setNt(json.at("nt")) || modified);
+        modified = (this.setSt(json.at("st")) || modified);
+        modified = (this.setSf(json.at("sf")) || modified);
+        modified = (this.setCreated(json.at("created")) || modified);
+        modified = (this.setCompleted(json.at("completed")) || modified);
+        modified = (this.setProject(json.at("project")) || modified);
+        return modified;
     }
     public boolean updateFrom(Request req) throws ValidationError {
         boolean change = false;

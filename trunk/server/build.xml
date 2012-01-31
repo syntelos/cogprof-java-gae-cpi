@@ -16,6 +16,7 @@
   <property name="out.bin" value="${out.webinf}/classes"/>
   <property name="out.lib" value="${out.webinf}/lib"/>
   <property name="out.src" value="${out.webinf}/src"/>
+  <property name="out.svc" value="${out.webinf}/services"/>
   <property name="out.odl" value="${out}/odl"/>
   <property name="lib" value="lib"/>
   <property name="doc" value="doc"/>
@@ -84,22 +85,6 @@
     </copy>
 
   </target>
-
-  <!-- 
-     - Used in ant/build.in.java.xml "compile"
-     - in rewriting ver/src/ to src/
-    -->
-  <path id="applet.viewer.path">
-
-    <fileset dir="${web}">
-      <include name="**/cpi-viewer-*.jar" />
-    </fileset>
-  </path>
-  <basename property="applet.viewer.name" file="${toString:applet.viewer.path}"/>
-  <echo>         viewer applet: ${applet.viewer.name}
-  </echo>
-
-
 
   <target name="run" depends="write" description="Starts local debug http server on port 8888 with jpda on port 9999.">
     <dev_appserver war="${out}" port="8888" >
@@ -184,7 +169,9 @@
         <include name="**/*.psfu" />
       </fileset>
     </copy>
-
+    <echo file="${out.svc}/gap.service.Application">
+      cpi.Version
+    </echo>
     <copy todir="${out.odl}">
       <fileset dir="${odl}">
         <include name="**/*.odl" />

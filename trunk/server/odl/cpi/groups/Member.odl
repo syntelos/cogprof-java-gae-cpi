@@ -1,0 +1,14 @@
+//                       -*-Java-*-
+package cpi.groups;
+path /members;
+import oso.data.Person;
+
+/**
+ * Member of Project is Person
+ */
+child Member
+    version 1
+    parent Project
+{
+    *unique Person person;
+}

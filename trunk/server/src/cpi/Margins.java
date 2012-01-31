@@ -19,6 +19,10 @@
  */
 package cpi;
 
+import gap.Request;
+
+import json.Json;
+
 /**
  * 
  * @see http://code.google.com/p/cpi/wiki/API_Margins
@@ -31,81 +35,86 @@ public final class Margins
 {
     protected final static long serialVersionUID = 1;
 
-    /*
-     * JSON field "margins" fragment (indent column two)
-     */
-    public final String json;
+    public final static class Names {
+        public final static String Value = "margins_css";
+    }
+    public final static class TemplateNames {
+        public final static gap.hapax.TemplateName Value = new gap.hapax.TemplateName(Margins.Names.Value);
+    }
+    public final static class Defaults {
+        public final static String Value = "0";
+    }
+
 
     public final String value;
 
 
+    public Margins(Request req){
+        this(req.getParameter(Margins.Names.Value));
+    }
     public Margins(String value){
         super();
-        if (null != value){
+        if (null != value && 0 < value.length())
             this.value = value;
-
-            final StringBuilder json = new StringBuilder();
-            /*
-             * Fragment
-             */
-            json.append(" \"margins\": \"");
-            json.append(this.value);
-            json.append("\"");
-
-            this.json = json.toString();
-        }
         else
-            throw new IllegalArgumentException();
+            this.value = Margins.Defaults.Value;
+    }
+    public Margins(){
+        this(Margins.Defaults.Value);
     }
 
 
     public int length(){
-        if (null != this.json)
-            return this.json.length();
+        if (null != this.value)
+            return this.value.length();
         else
             return 0;
     }
     public char charAt(int idx){
-        if (null != this.json)
-            return this.json.charAt(idx);
+        if (null != this.value)
+            return this.value.charAt(idx);
         else
             throw new IndexOutOfBoundsException(String.valueOf(idx));
     }
     public CharSequence subSequence(int start, int end){
-        if (null != this.json)
-            return this.json.subSequence(start,end);
+        if (null != this.value)
+            return this.value.subSequence(start,end);
         else if (-1 != end && (start+1) == end)
             return "";
         else
             throw new IndexOutOfBoundsException(String.format("start %d, end %d",start,end));
     }
     public int hashCode(){
-        return this.json.hashCode();
+        return this.value.hashCode();
     }
     public boolean equals(Object that){
         if (this == that)
             return true;
         else if (that instanceof Redirect)
-            return this.json.equals(that.toString());
+            return this.toString().equals(that.toString());
         else
             return false;
     }
     public String toString(){
 
-        return this.json;
+        return this.value;
     }
     public int compareTo(Margins that){
-        if (this.json == that.json)
+        if (this.value == that.value)
             return 0;
-        else if (null == this.json){
-            if (null == that.json)
+        else if (null == this.value){
+            if (null == that.value)
                 return 0;
             else
                 return -1;
         }
-        else if (null == that.json)
+        else if (null == that.value)
             return +1;
         else
-            return this.json.compareTo(that.json);
+            return this.value.compareTo(that.value);
+    }
+    public final void dictionaryInto(gap.hapax.TemplateDataDictionary dict){
+
+        dict.setVariable(TemplateNames.Value,this.value);
     }
 }

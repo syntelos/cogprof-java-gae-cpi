@@ -1,3 +1,4 @@
+//                       -*-Java-*-
 package cpi.groups;
 path /projects;
 import oso.data.Person;
@@ -7,21 +8,28 @@ import cpi.Margins;
 /**
  * A {@link Group} has many {@link Project Projects}
  * 
- * Accept logon member of scope for name.
- * 
- * Access OAuth random identifier.
+ * @note Could add (Person admin) for delegation
  */
-class Project version 1 {
-    String name;
+parent Project
+    version 1
+    child Member
+{
     *unique String identifier;
+    /*
+     * Optional label
+     */
+    String name;
     /*
      * Parent group
      */
     Group group;
     /* 
-     * Could add (Person admin) for delegation
+     * Project created
      */
     Date created;
+    /* 
+     * Membership destroyed
+     */
     Date cleaned;
     /*
      * Quota on query Person.project = Project.identifier
@@ -35,4 +43,8 @@ class Project version 1 {
      * If not Project, use Group
      */
     Margins margins;
+    /*
+     * List of person identifiers
+     */
+    List.Short<Member> members;
 }
