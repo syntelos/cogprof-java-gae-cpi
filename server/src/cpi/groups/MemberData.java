@@ -39,7 +39,7 @@ import javax.annotation.Generated;
  *
  * @see Member
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-01-30T18:48:58.180Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-01T20:10:13.479Z")
 public abstract class MemberData
     extends gap.data.BigTable
     implements DataInheritance<Member>
@@ -935,12 +935,10 @@ public abstract class MemberData
                     return this.hasPerson(true);
                 }
             default:
-                throw new IllegalStateException(field.name());
+                break;
             }
         }
-        else {
-            return super.hasVariable(name);
-        }
+        return super.hasVariable(name);
     }
     public String getVariable(TemplateName name){
         Field field = Member.Field.For(name.getTerm());
@@ -962,12 +960,10 @@ public abstract class MemberData
                 else
                     return this.getPersonId();
             default:
-                throw new IllegalStateException(field.name());
+                break;
             }
         }
-        else {
-            return super.getVariable(name);
-        }
+        return super.getVariable(name);
     }
     public void setVariable(TemplateName name, String value){
         Field field = Member.Field.For(name.getTerm());
@@ -1000,8 +996,12 @@ public abstract class MemberData
             switch (field){
             case Person:
                 Person person = this.getPerson(true);
-                if (null != person)
-                    return person.getSection(new TemplateName(name));
+                if (null != person){
+                    if (name.has(1))
+                        return person.getSection(new TemplateName(name));
+                    else
+                        return new gap.util.ShortList( this, person);
+                }
                 else
                     return null;
             default:

@@ -111,6 +111,9 @@
                  <td class="editing rhs">
                    <input type="submit" name="op" value="Accounts" tabindex="13" />
                  </td>
+                 <td class="editing rhs">
+                   <input type="submit" name="op" value="Projects" tabindex="13" />
+                 </td>
                </tr>
              </table>
            </td>

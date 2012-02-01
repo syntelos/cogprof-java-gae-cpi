@@ -79,7 +79,7 @@ public final class Account
 
             Account account = new Account(Strings.RandomIdentifier());
             account.setGroup(group);
-            account.setPaid(Boolean.FALSE);
+            account.setClosed(Boolean.FALSE);
             account.setAmount(Account.Amount.PeriodicFee(group));
             account.save();
 
@@ -90,7 +90,7 @@ public final class Account
             Account account = new Account(Strings.RandomIdentifier());
             account.setGroup(group);
             account.setProject(project);
-            account.setPaid(Boolean.FALSE);
+            account.setClosed(Boolean.FALSE);
             account.setAmount(Account.Amount.PeriodicFee(project));
             account.save();
 
@@ -101,7 +101,7 @@ public final class Account
             Account account = new Account(Strings.RandomIdentifier());
             account.setGroup(group);
             account.setProject(project);
-            account.setPaid(Boolean.FALSE);
+            account.setClosed(Boolean.FALSE);
             account.setAmount(Account.Amount.PeriodicFee(project));
             account.save();
 
@@ -116,6 +116,11 @@ public final class Account
     public Account(String identifier) {
         super( identifier);
         this.setCurrency("USD");
+    }
+    public Account(Request req){
+        this(gap.Strings.RandomIdentifier());
+
+        this.updateFrom(req);
     }
 
 
@@ -188,5 +193,9 @@ public final class Account
             note.setText(Strings.TextFromString(text));
         }
         note.save();
+    }
+    public boolean hasAccountAccess(Person viewer){
+
+        return this.getGroup().hasGroupAccess(viewer);
     }
 }

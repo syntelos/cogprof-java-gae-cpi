@@ -40,7 +40,7 @@ import javax.annotation.Generated;
  *
  * @see Person
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-01-30T18:48:55.613Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-01T20:10:09.740Z")
 public abstract class PersonData
     extends gap.data.BigTable
     implements DataInheritance<Person>
@@ -1745,6 +1745,7 @@ public abstract class PersonData
                      */
                     return this.hasIdentifier(true);
                 }
+            case Inventory:
             case Nf:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
@@ -1814,12 +1815,10 @@ public abstract class PersonData
                     return this.hasProject(true);
                 }
             default:
-                throw new IllegalStateException(field.name());
+                break;
             }
         }
-        else {
-            return super.hasVariable(name);
-        }
+        return super.hasVariable(name);
     }
     public String getVariable(TemplateName name){
         Field field = Person.Field.For(name.getTerm());
@@ -1840,6 +1839,7 @@ public abstract class PersonData
                     throw new IllegalStateException(field.name());
                 else
                     return this.getIdentifier(true);
+            case Inventory:
             case Nf:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
@@ -1881,12 +1881,10 @@ public abstract class PersonData
                 else
                     return this.getProjectId(Notation.MayInherit);
             default:
-                throw new IllegalStateException(field.name());
+                break;
             }
         }
-        else {
-            return super.getVariable(name);
-        }
+        return super.getVariable(name);
     }
     public void setVariable(TemplateName name, String value){
         Field field = Person.Field.For(name.getTerm());
@@ -1899,6 +1897,7 @@ public abstract class PersonData
                     throw new IllegalStateException(field.name());
                 case Identifier:
                     throw new IllegalStateException(field.name());
+                case Inventory:
                 case Nf:
                     throw new IllegalStateException(field.name());
                 case Nt:
@@ -1937,6 +1936,8 @@ public abstract class PersonData
                 return null;
             case Identifier:
                 return null;
+            case Inventory:
+                return null;
             case Nf:
                 return null;
             case Nt:
@@ -1951,8 +1952,12 @@ public abstract class PersonData
                 return null;
             case Project:
                 Project project = this.getProject(true);
-                if (null != project)
-                    return project.getSection(new TemplateName(name));
+                if (null != project){
+                    if (name.has(1))
+                        return project.getSection(new TemplateName(name));
+                    else
+                        return new gap.util.ShortList( this, project);
+                }
                 else
                     return null;
             default:

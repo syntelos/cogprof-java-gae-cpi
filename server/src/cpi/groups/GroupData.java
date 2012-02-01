@@ -41,7 +41,7 @@ import javax.annotation.Generated;
  *
  * @see Group
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-01-30T18:48:57.211Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-01T20:10:11.805Z")
 public abstract class GroupData
     extends gap.data.BigTable
     implements DataInheritance<Group>
@@ -1720,12 +1720,10 @@ public abstract class GroupData
                     return this.hasMargins(true);
                 }
             default:
-                throw new IllegalStateException(field.name());
+                break;
             }
         }
-        else {
-            return super.hasVariable(name);
-        }
+        return super.hasVariable(name);
     }
     public String getVariable(TemplateName name){
         Field field = Group.Field.For(name.getTerm());
@@ -1792,12 +1790,10 @@ public abstract class GroupData
                 else
                     return gap.Strings.SerializableToString(this.getMargins(true));
             default:
-                throw new IllegalStateException(field.name());
+                break;
             }
         }
-        else {
-            return super.getVariable(name);
-        }
+        return super.getVariable(name);
     }
     public void setVariable(TemplateName name, String value){
         Field field = Group.Field.For(name.getTerm());
@@ -1855,14 +1851,22 @@ public abstract class GroupData
                 return null;
             case Owner:
                 Person owner = this.getOwner(true);
-                if (null != owner)
-                    return owner.getSection(new TemplateName(name));
+                if (null != owner){
+                    if (name.has(1))
+                        return owner.getSection(new TemplateName(name));
+                    else
+                        return new gap.util.ShortList( this, owner);
+                }
                 else
                     return null;
             case Admin:
                 Person admin = this.getAdmin(true);
-                if (null != admin)
-                    return admin.getSection(new TemplateName(name));
+                if (null != admin){
+                    if (name.has(1))
+                        return admin.getSection(new TemplateName(name));
+                    else
+                        return new gap.util.ShortList( this, admin);
+                }
                 else
                     return null;
             case Created:
