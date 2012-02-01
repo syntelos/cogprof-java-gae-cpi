@@ -41,7 +41,7 @@ import javax.annotation.Generated;
  *
  * @see Account
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-01-30T18:48:58.942Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-01T20:10:14.342Z")
 public abstract class AccountData
     extends gap.data.BigTable
     implements DataInheritance<Account>
@@ -340,7 +340,7 @@ public abstract class AccountData
         Identifier("identifier",Type.Primitive),
         Group("group",Type.BigTable),
         Project("project",Type.BigTable),
-        Paid("paid",Type.Primitive),
+        Closed("closed",Type.Primitive),
         Amount("amount",Type.Primitive),
         Currency("currency",Type.Primitive),
         Notes("notes",Type.Collection);
@@ -403,8 +403,8 @@ public abstract class AccountData
                 return instance.getGroupId();
             case Project:
                 return instance.getProjectId();
-            case Paid:
-                return instance.getPaid(mayInherit);
+            case Closed:
+                return instance.getClosed(mayInherit);
             case Amount:
                 return instance.getAmount(mayInherit);
             case Currency:
@@ -434,8 +434,8 @@ public abstract class AccountData
                 return instance.setGroupId(gap.Objects.StringFromObject(value));
             case Project:
                 return instance.setProjectId(gap.Objects.StringFromObject(value));
-            case Paid:
-                return instance.setPaid(gap.Objects.BooleanFromObject(value));
+            case Closed:
+                return instance.setClosed(gap.Objects.BooleanFromObject(value));
             case Amount:
                 return instance.setAmount(gap.Objects.FloatFromObject(value));
             case Currency:
@@ -465,8 +465,8 @@ public abstract class AccountData
                 return instance.getGroupId();
             case Project:
                 return instance.getProjectId();
-            case Paid:
-                return instance.getPaid(MayNotInherit);
+            case Closed:
+                return instance.getClosed(MayNotInherit);
             case Amount:{
                 return instance.getAmount(MayNotInherit);
             }
@@ -504,8 +504,8 @@ public abstract class AccountData
             case Project:
                 instance.setProjectId( (String)value);
                 return;
-            case Paid:
-                instance.setPaid( (Boolean)value);
+            case Closed:
+                instance.setClosed( (Boolean)value);
                 return;
             case Amount:{
 
@@ -634,7 +634,7 @@ public abstract class AccountData
     private String projectId;
     private transient Key projectKey;
     private transient Project project;
-    private Boolean paid;
+    private Boolean closed;
     private Float amount;
     private String currency;
     private transient List.Short<Note> notes;
@@ -661,7 +661,7 @@ public abstract class AccountData
         this.identifier = null;
         this.group = null;
         this.project = null;
-        this.paid = null;
+        this.closed = null;
         this.amount = null;
         this.currency = null;
         List.Short<Note> notes = this.notes;
@@ -1023,59 +1023,59 @@ public abstract class AccountData
         else
             return this.setProject((Project)json.getValue(Project.class));
     }
-    public final boolean hasPaid(boolean mayInherit){
-        return (null != this.getPaid(mayInherit));
+    public final boolean hasClosed(boolean mayInherit){
+        return (null != this.getClosed(mayInherit));
     }
-    public final boolean hasNotPaid(boolean mayInherit){
-        return (null == this.getPaid(mayInherit));
+    public final boolean hasNotClosed(boolean mayInherit){
+        return (null == this.getClosed(mayInherit));
     }
-    public final boolean dropPaid(){
-        if (null != this.paid){
-            this.fieldStatistics.markDirty(Account.Field.Paid);
-            this.paid = null;
+    public final boolean dropClosed(){
+        if (null != this.closed){
+            this.fieldStatistics.markDirty(Account.Field.Closed);
+            this.closed = null;
             return true;
         }
         else
             return false;
     }
-    public final Boolean getPaid(){
-        return this.getPaid(Notation.MayInherit);
+    public final Boolean getClosed(){
+        return this.getClosed(Notation.MayInherit);
     }
-    public final Boolean getPaid(boolean mayInherit){
+    public final Boolean getClosed(boolean mayInherit){
         if (mayInherit){
-            Boolean paid = this.paid;
-            if (null == paid && this.hasInheritFrom()){
+            Boolean closed = this.closed;
+            if (null == closed && this.hasInheritFrom()){
                 Account inheritFrom = this.getInheritFrom();
-                return inheritFrom.getPaid(Notation.MayInherit);
+                return inheritFrom.getClosed(Notation.MayInherit);
             }
-            return paid;
+            return closed;
         }
         else
-            return this.paid;
+            return this.closed;
     }
-    public final boolean setPaid(Boolean paid, boolean withInheritance){
-        if (IsNotEqual(this.paid,this.getPaid(withInheritance))){
-            this.fieldStatistics.markDirty(Account.Field.Paid);
-            this.paid = paid;
+    public final boolean setClosed(Boolean closed, boolean withInheritance){
+        if (IsNotEqual(this.closed,this.getClosed(withInheritance))){
+            this.fieldStatistics.markDirty(Account.Field.Closed);
+            this.closed = closed;
             return true;
         }
         else
             return false;
     }
-    public final boolean setPaid(Boolean paid){
-        if (IsNotEqual(this.paid,paid)){
-            this.fieldStatistics.markDirty(Account.Field.Paid);
-            this.paid = paid;
+    public final boolean setClosed(Boolean closed){
+        if (IsNotEqual(this.closed,closed)){
+            this.fieldStatistics.markDirty(Account.Field.Closed);
+            this.closed = closed;
             return true;
         }
         else
             return false;
     }
-    public boolean setPaid(json.Json json){
+    public boolean setClosed(json.Json json){
         if (null == json)
             return false;
         else
-            return this.setPaid((Boolean)json.getValue(Boolean.class));
+            return this.setClosed((Boolean)json.getValue(Boolean.class));
     }
     public final boolean hasAmount(boolean mayInherit){
         return (null != this.getAmount(mayInherit));
@@ -1309,8 +1309,8 @@ public abstract class AccountData
         json.set("group",group);
         Project project = this.getProject();
         json.set("project",project);
-        Boolean paid = this.getPaid();
-        json.set("paid",paid);
+        Boolean closed = this.getClosed();
+        json.set("closed",closed);
         Float amount = this.getAmount();
         json.set("amount",amount);
         String currency = this.getCurrency();
@@ -1321,23 +1321,23 @@ public abstract class AccountData
         boolean modified = false;
         modified = (this.setGroup(json.at("group")) || modified);
         modified = (this.setProject(json.at("project")) || modified);
-        modified = (this.setPaid(json.at("paid")) || modified);
+        modified = (this.setClosed(json.at("closed")) || modified);
         modified = (this.setAmount(json.at("amount")) || modified);
         modified = (this.setCurrency(json.at("currency")) || modified);
         return modified;
     }
     public boolean updateFrom(Request req) throws ValidationError {
         boolean change = false;
-        String paidRequest = req.getParameter("paid");
-        if (null != paidRequest && 0 < paidRequest.length()){
+        String closedRequest = req.getParameter("closed");
+        if (null != closedRequest && 0 < closedRequest.length()){
             try {
-                Boolean paid = gap.Strings.BooleanFromString(paidRequest);
-                if (this.setPaid(paid)){
+                Boolean closed = gap.Strings.BooleanFromString(closedRequest);
+                if (this.setClosed(closed)){
                     change = true;
                 }
             }
             catch (RuntimeException exc){
-                throw new ValidationError(ClassName,"paid",paidRequest,exc);
+                throw new ValidationError(ClassName,"closed",closedRequest,exc);
             }
         }
         String amountRequest = req.getParameter("amount");
@@ -1372,8 +1372,8 @@ public abstract class AccountData
     public final boolean updateFrom(Account proto){
         boolean mayInherit = (!this.hasInheritFromKey());
         boolean change = false;
-        Boolean paid = proto.getPaid(mayInherit);
-        if (null != paid && this.setPaid(paid)){
+        Boolean closed = proto.getClosed(mayInherit);
+        if (null != closed && this.setClosed(closed)){
             change = true;
         }
         Float amount = proto.getAmount(mayInherit);
@@ -1422,8 +1422,8 @@ public abstract class AccountData
             gap.data.Field field = Account.Field.Project;
             return this.markDirty(field);
         }
-        else if (instance == this.paid){
-            gap.data.Field field = Account.Field.Paid;
+        else if (instance == this.closed){
+            gap.data.Field field = Account.Field.Closed;
             return this.markDirty(field);
         }
         else if (instance == this.amount){
@@ -1511,14 +1511,14 @@ public abstract class AccountData
                      */
                     return this.hasProject(true);
                 }
-            case Paid:
+            case Closed:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
                 else {
                     /*
                      * Synthesize section for Boolean (EXISTS && TRUE)
                      */
-                    return (this.hasPaid(true) && this.getPaid(true));
+                    return (this.hasClosed(true) && this.getClosed(true));
                 }
             case Amount:
                 if (name.has(1))
@@ -1538,13 +1538,12 @@ public abstract class AccountData
                      */
                     return this.hasCurrency(true);
                 }
+            case Notes:
             default:
-                throw new IllegalStateException(field.name());
+                break;
             }
         }
-        else {
-            return super.hasVariable(name);
-        }
+        return super.hasVariable(name);
     }
     public String getVariable(TemplateName name){
         Field field = Account.Field.For(name.getTerm());
@@ -1580,11 +1579,11 @@ public abstract class AccountData
                 }
                 else
                     return this.getProjectId(Notation.MayInherit);
-            case Paid:
+            case Closed:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
                 else
-                    return gap.Strings.BooleanToString(this.getPaid(true));
+                    return gap.Strings.BooleanToString(this.getClosed(true));
             case Amount:
                 if (name.has(1))
                     throw new IllegalStateException(field.name());
@@ -1595,13 +1594,12 @@ public abstract class AccountData
                     throw new IllegalStateException(field.name());
                 else
                     return this.getCurrency(true);
+            case Notes:
             default:
-                throw new IllegalStateException(field.name());
+                break;
             }
         }
-        else {
-            return super.getVariable(name);
-        }
+        return super.getVariable(name);
     }
     public void setVariable(TemplateName name, String value){
         Field field = Account.Field.For(name.getTerm());
@@ -1626,12 +1624,13 @@ public abstract class AccountData
                         project.setVariable(new TemplateName(name),value);
 
                     return ;
-                case Paid:
+                case Closed:
                     throw new IllegalStateException(field.name());
                 case Amount:
                     throw new IllegalStateException(field.name());
                 case Currency:
                     throw new IllegalStateException(field.name());
+                case Notes:
                 default:
                     throw new IllegalStateException(field.name());
                 }
@@ -1651,22 +1650,36 @@ public abstract class AccountData
                 return null;
             case Group:
                 Group group = this.getGroup(true);
-                if (null != group)
-                    return group.getSection(new TemplateName(name));
+                if (null != group){
+                    if (name.has(1))
+                        return group.getSection(new TemplateName(name));
+                    else
+                        return new gap.util.ShortList( this, group);
+                }
                 else
                     return null;
             case Project:
                 Project project = this.getProject(true);
-                if (null != project)
-                    return project.getSection(new TemplateName(name));
+                if (null != project){
+                    if (name.has(1))
+                        return project.getSection(new TemplateName(name));
+                    else
+                        return new gap.util.ShortList( this, project);
+                }
                 else
                     return null;
-            case Paid:
+            case Closed:
                 return null;
             case Amount:
                 return null;
             case Currency:
                 return null;
+            case Notes:
+                /*
+                 * compiler type coersion
+                 */
+                Object notes = this.getNotes(true);
+                return (List.Short<TemplateDataDictionary>)notes;
             default:
                 throw new IllegalStateException(field.name());
             }

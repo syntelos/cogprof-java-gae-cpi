@@ -41,7 +41,7 @@ import javax.annotation.Generated;
  *
  * @see Project
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-01-30T18:48:58.408Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-01T20:10:13.786Z")
 public abstract class ProjectData
     extends gap.data.BigTable
     implements DataInheritance<Project>
@@ -1678,13 +1678,12 @@ public abstract class ProjectData
                      */
                     return this.hasMargins(true);
                 }
+            case Members:
             default:
-                throw new IllegalStateException(field.name());
+                break;
             }
         }
-        else {
-            return super.hasVariable(name);
-        }
+        return super.hasVariable(name);
     }
     public String getVariable(TemplateName name){
         Field field = Project.Field.For(name.getTerm());
@@ -1740,13 +1739,12 @@ public abstract class ProjectData
                     throw new IllegalStateException(field.name());
                 else
                     return gap.Strings.SerializableToString(this.getMargins(true));
+            case Members:
             default:
-                throw new IllegalStateException(field.name());
+                break;
             }
         }
-        else {
-            return super.getVariable(name);
-        }
+        return super.getVariable(name);
     }
     public void setVariable(TemplateName name, String value){
         Field field = Project.Field.For(name.getTerm());
@@ -1776,6 +1774,7 @@ public abstract class ProjectData
                     throw new IllegalStateException(field.name());
                 case Margins:
                     throw new IllegalStateException(field.name());
+                case Members:
                 default:
                     throw new IllegalStateException(field.name());
                 }
@@ -1797,8 +1796,12 @@ public abstract class ProjectData
                 return null;
             case Group:
                 Group group = this.getGroup(true);
-                if (null != group)
-                    return group.getSection(new TemplateName(name));
+                if (null != group){
+                    if (name.has(1))
+                        return group.getSection(new TemplateName(name));
+                    else
+                        return new gap.util.ShortList( this, group);
+                }
                 else
                     return null;
             case Created:
@@ -1811,6 +1814,12 @@ public abstract class ProjectData
                 return null;
             case Margins:
                 return null;
+            case Members:
+                /*
+                 * compiler type coersion
+                 */
+                Object members = this.getMembers(true);
+                return (List.Short<TemplateDataDictionary>)members;
             default:
                 throw new IllegalStateException(field.name());
             }

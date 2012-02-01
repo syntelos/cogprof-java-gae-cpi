@@ -39,13 +39,13 @@ import com.google.appengine.api.oauth.OAuthServiceFailureException;
 public final class GroupServlet
     extends gap.service.Servlet
 {
-    private final static TemplateName GroupDiv = new TemplateName("div.group.html");
-    private final static TemplateName ListGroup = new TemplateName("group");
-    private final static TemplateName EditGroup = new TemplateName("group");
-    private final static TemplateName PageParameters = new TemplateName("page");
+    final static TemplateName GroupDiv = new TemplateName("div.group.html");
+    final static TemplateName ListGroup = new TemplateName("group");
+    final static TemplateName EditGroup = new TemplateName("group");
+    final static TemplateName PageParameters = new TemplateName("page");
 
     public enum Op {
-        Save, Create, List, Delete, Accounts;
+        Save, Create, List, Delete, Accounts, Projects;
 
         public static Op For(Request q){
             String string = q.getParameter("op");
@@ -316,19 +316,28 @@ public final class GroupServlet
                             return;
                         }
                     }
+                    case Projects:{
+                        String identifier = Identifier(req);
+                        if (null != identifier){
+                            /*
+                             * Admin Projects
+                             */
+                            rep.sendRedirect("/projects/index.html?group="+identifier);
+                            return;
+                        }
+                        else {
+                            this.error(req,rep,400,"Missing identifier");
+                            return;
+                        }
+                    }
                     default:
-                        throw new IllegalStateException(op.name());
+                        this.error(req,rep,500,String.format("Unknown op '%s'",op.name()));
+                        return;
                     }
                 }
                 else {
-                    /*
-                     * Admin List
-                     */
-                    req.setVariable(GroupDiv,"div.group.admin-list.html");
-                    for (Group group : Group.ListPage(req.parameters.page)){
-
-                        req.addSection(ListGroup,group);
-                    }
+                    this.error(req,rep,400,"Missing op");
+                    return;
                 }
 
                 rep.setContentTypeHtml();

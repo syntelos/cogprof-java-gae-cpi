@@ -1,0 +1,29 @@
+   <div id="first">
+     <h1>{{=page_title}}</h1>
+     <table class="listing">{{#account}}
+       <tr class="listing">
+         <td class="listing" colspan="3"><a href="/accounts/{{=identifier}}/index.html">{{=amount}}</a>
+         </td>
+         <td class="listing" colspan="3">{{=open_label}}
+         </td>
+       </tr>{{/account}}{{#page}}
+       <tr class="listing">
+         <td class="listing">
+           <form method="POST">
+             <input type="hidden" name="startIndex" value="{{=startIndexPrev}}" />
+             <input type="hidden" name="count" value="{{=count}}" />
+             <input type="submit" value="&lt;" />
+           </form>
+         </td>
+         <td class="listing">&nbsp;
+         </td>
+         <td class="listing">
+           <form method="POST">
+             <input type="hidden" name="startIndex" value="{{=startIndexNext}}" />
+             <input type="hidden" name="count" value="{{=count}}" />
+             <input type="submit" value="&gt;" />
+           </form>
+         </td>
+       </tr>{{/page}}
+     </table>
+   </div>

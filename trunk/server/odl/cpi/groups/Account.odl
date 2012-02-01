@@ -28,9 +28,11 @@ parent Account
      */
     Project project;
     /* 
-     * Debit is receivable while not paid
+     * Debit is receivable while open.
+     * Credit is balanced when closed.
+     * Null and false are open.
      */
-    Boolean paid;
+    Boolean closed;
     /*
      * Transaction amount: +credit, -debit.
      */

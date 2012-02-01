@@ -41,7 +41,7 @@ import javax.annotation.Generated;
  *
  * @see Note
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-01-30T18:48:59.172Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-01T20:10:14.671Z")
 public abstract class NoteData
     extends gap.data.BigTable
     implements DataInheritance<Note>
@@ -1339,12 +1339,10 @@ public abstract class NoteData
                     return this.hasText(true);
                 }
             default:
-                throw new IllegalStateException(field.name());
+                break;
             }
         }
-        else {
-            return super.hasVariable(name);
-        }
+        return super.hasVariable(name);
     }
     public String getVariable(TemplateName name){
         Field field = Note.Field.For(name.getTerm());
@@ -1386,12 +1384,10 @@ public abstract class NoteData
                 else
                     return gap.Strings.TextToString(this.getText(true));
             default:
-                throw new IllegalStateException(field.name());
+                break;
             }
         }
-        else {
-            return super.getVariable(name);
-        }
+        return super.getVariable(name);
     }
     public void setVariable(TemplateName name, String value){
         Field field = Note.Field.For(name.getTerm());
@@ -1434,8 +1430,12 @@ public abstract class NoteData
                 return null;
             case Writer:
                 Person writer = this.getWriter(true);
-                if (null != writer)
-                    return writer.getSection(new TemplateName(name));
+                if (null != writer){
+                    if (name.has(1))
+                        return writer.getSection(new TemplateName(name));
+                    else
+                        return new gap.util.ShortList( this, writer);
+                }
                 else
                     return null;
             case Created:
