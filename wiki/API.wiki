@@ -9,7 +9,7 @@
 
 = Overview =
 
- This [https://docs.google.com/presentation/d/15kK0sOkXVtMUXhv_DLNJDOEAJz8OcU0sJlvsqFL154Q/edit presentation] is a brief introduction 
+ This [https://docs.google.com/presentation/d/15kK0sOkXVtMUXhv_DLNJDOEAJz8OcU0sJlvsqFL154Q/edit presentation] is a brief introduction to extended services for Groups.
 
 = Operation =
 
