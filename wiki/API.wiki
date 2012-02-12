@@ -5,8 +5,7 @@
 
 = Status =
 
- * [API_Inventory Inventory] is *available*
- * [API_Result Result] is *available*
+ * API services are available in *alpha* status for testing and development
 
 = Overview =
 
@@ -16,11 +15,8 @@
 
  The CPI Online is running at [http://cpi.cognitiveprofile.com/ cpi.cognitiveprofile.com]
 
-= Work in progress =
+= Principal Services =
 
   * [API_Group Group]
   * [API_Inventory Inventory]
   * [API_Project Project]
-  * [API_Result Result]
-  * [API_Redirect Redirect]
-  * [API_Margins Margins]
