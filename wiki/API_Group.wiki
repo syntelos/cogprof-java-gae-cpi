@@ -18,55 +18,98 @@
 
 == Create ==
 
- Groups are created by the [mailto:cpi@cognitiveprofile.com?Subject=CPI+Groups service administrator]
+ Groups are created by the [mailto:cpi@cognitiveprofile.com?Subject=CPI+Groups service administrator].  Required information includes the Group Name, and Google Accounts (logon) email addresses for the Group Billing Administrator and Group OAuth Access Administrator.  The Group Billing Administrator requires a Google Wallet with which to pay Google Checkout invoices.
+
+=== Quadrant Labels ===
+
+ Profile result image Quadrant Labels may be modified by the [mailto:cpi@cognitiveprofile.com?Subject=CPI+Groups service administrator] with the written approval of Dr Krause.  These strings should have one to eight characters.  Test images may be produced on request.
+
+=== Test Status ===
+
+ New groups are created in TEST status for development purposes. 
+{{{
+ {
+  "test": true
+ }
+}}}
+
+ The service administrator must be notified when the development process has completed and real projects need to be created.  At that time the Group test status will change to LIVE.  Any existing projects will be deleted on the change from TEST to LIVE.
+{{{
+ {
+  "test": false
+ }
+}}}
 
 == Query/Identify ==
+
+ Get the Group for the OAuth user, typically the `admin` person in the Group.
 
 {{{
  GET /groups/data.json
 }}}
  for response Mime-Type `application/json`
 {{{
- [
-   {
-     "identifier": "03efdbc",
-     "name": "Example"
-   }
- ]
+ {
+  "identifier": "0jPXiVQOXlWKsJSJ",
+  "name": "Test",
+  "billed": null,
+  "paid": null,
+  "test": true,
+  "created": "Wed, 08 Feb 2012 22:07:44 GMT",
+  "admin": {
+   "project": null,
+   "nt": null,
+   "created": null,
+   "nf": null,
+   "sf": null,
+   "st": null,
+   "identifier": "4BCPdSbKC4b5BsgQ",
+   "logonId": "admin@example.com",
+   "completed": null
+  },
+  "owner": {
+   "project": null,
+   "nt": null,
+   "created": null,
+   "nf": null,
+   "sf": null,
+   "st": null,
+   "identifier": "JWB4Q5Xions1Mzkz",
+   "logonId": "test@example.com",
+   "completed": null
+  },
+  "redirect": {
+   "sequence": "timeout",
+   "target": null,
+   "href": "/profile",
+   "timeout": 0
+  },
+  "margins": "10px"
+ }
 }}}
 
 == Read/Copy/Test ==
 
+ Alternatively, the Group identifier may be employed directly.  As described above, the OAuth user identity must be one of `admin` or `owner`.
+
 {{{
  GET /groups/03efdbc/data.json
 }}}
- for response Mime-Type `application/json`
-{{{
- [
-   {
-     "identifier": "03efdbc",
-     "name": "Example",
-     "redirect": ?,
-     "margins": ?
-   }
- ]
-}}}
+ for response Mime-Type `application/json`.
 
 == Update/Modify/Write ==
+
+ To update or modify the Group parameters, the identifier is required in the URL (HTTP request line) as in the following example.  The HTTP content type header should be set for JSON, and the HTTP request entity body is a JSON object as shown in these examples -- and as returned on GET request.  The update request JSON object contains fields and values to be modified.  Readonly fields (e.g. `identifier`) will be safely ignored.  The product of the update is returned in the HTTP response entity body.
 
 {{{
  POST /groups/03efdbc/data.json
 }}}
- for request and response Mime-Type `application/json`
-{{{
- [
-   {
-     "identifier": "03efdbc",
-     "name": "Example",
-     "redirect": ?,
-     "margins": ?
-   }
- ]
-}}}
+ for request and response Mime-Type `application/json`.
 
- Read-only fields are optional
+ Any field except `identifier` is optional.  Most fields are read-only, according to the needs of the group user administrator.  The following fields may be changed by the group user administator (via OAuth /JSON API).
+
+|| `name` || Group name ||
+|| `owner` || Billing administrator ||
+|| `admin` || User administrator ||
+|| `redirect` || Redirect function parameters ||
+|| `margins` || Visual display margins for inventory and profile HTML pages ||

@@ -13,32 +13,34 @@
 
  This application redefines [http://code.google.com/p/cpi/source/browse/trunk/server/odl/oso/data/Person.odl Person] from [http://code.google.com/p/gap-data/source/browse/trunk/gae/odl/oso/data/Person.odl gap-data].
 {{{
-package oso.data;
-path /people;
-import cpi.Inventory;
-import cpi.groups.Project;
+ package oso.data;
+ path /people;
+ import cpi.Inventory;
+ import cpi.groups.Project;
 
-/**
- * Accept Accounts or OAuth Logon Id for viewer identity
- * 
- * Application access by random identifier
- * 
- * Logon Id is optional with Project and identifier
- * 
- * @review(Identifier,Random)
- */
-class Person version 8 {
-    String logonId;
-    *unique String identifier;
-    List.Primitive<Inventory> inventory;
-    Float nf;
-    Float nt;
-    Float st;
-    Float sf;
-    Date created;
-    Date completed;
-    Project project;
-}
+ /**
+  * Accept Accounts or OAuth Logon Id for viewer identity
+  * 
+  * Application access by random identifier
+  * 
+  * Logon Id is optional with Project
+  * 
+  * Identifier is required
+  */
+ class Person
+     version 8
+ {
+     String logonId;
+     *unique String identifier;
+     List.Primitive<Inventory> inventory;
+     Float nf;
+     Float nt;
+     Float st;
+     Float sf;
+     Date created;
+     Date completed;
+     Project project;
+ }
 }}}
 
  Person is used by Gap Data for any logged- in user
@@ -55,23 +57,58 @@ package cpi.groups;
 path /groups;
 import oso.data.Person;
 
+import cpi.Margins;
+import cpi.Redirect;
+import cpi.ProfileLabels;
+
 /**
- * 
- * Accept logon member of scope for name.
- * 
- * Access OAuth random identifier
+ * A {@link Group} has many {@link Project Projects}
  */
-class Group version 1 {
-    String name;
+class Group
+    version 1
+{
     *unique String identifier;
+    /*
+     * Required label
+     */
+    String name;
+    /*
+     * Billing admin
+     */
     Person owner;
+    /*
+     * Project admin
+     */
     Person admin;
+    /*
+     * Group created
+     */
     Date created;
-    Date cleaned;
+    /*
+     * Usage billed
+     */
+    Date billed;
+    /*
+     * Bill paid
+     */
+    Date paid;
     /*
      * If not Project, use Group
      */
     Redirect redirect;
+    /*
+     * If not Project, use Group
+     */
+    Margins margins;
+    /*
+     * While group is in test, accounts and notes are not created.
+     * Null value is equivalent to false value, not in test.
+     */
+    Boolean test;
+    /*
+     * Specialized labels for profile image quadrants
+     */
+    ProfileLabels labels;
 }
 }}}
 
@@ -85,24 +122,34 @@ class Group version 1 {
 package cpi.groups;
 path /projects;
 import oso.data.Person;
+import cpi.Redirect;
+import cpi.Margins;
 
 /**
+ * A {@link Group} has many {@link Project Projects}
  * 
- * Accept logon member of scope for name.
- * 
- * Access OAuth random identifier.
+ * @note Could add (Person admin) for delegation
  */
-class Project version 1 {
-    String name;
+parent Project
+    version 1
+    child Member
+{
     *unique String identifier;
+    /*
+     * Optional label
+     */
+    String name;
     /*
      * Parent group
      */
     Group group;
     /* 
-     * Could add (Person admin) for delegation
+     * Project created
      */
     Date created;
+    /* 
+     * Membership destroyed
+     */
     Date cleaned;
     /*
      * Quota on query Person.project = Project.identifier
@@ -112,6 +159,14 @@ class Project version 1 {
      * If not Project, use Group
      */
     Redirect redirect;
+    /*
+     * If not Project, use Group
+     */
+    Margins margins;
+    /*
+     * List of person identifiers
+     */
+    List.Short<Member> members;
 }
 }}}
 

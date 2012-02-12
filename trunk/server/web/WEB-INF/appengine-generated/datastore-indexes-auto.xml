@@ -1,25 +1,37 @@
-<!-- Indices written at Sat, 18 Sep 2010 10:37:58 UTC -->
-
 <datastore-indexes>
+  <datastore-index kind="Note" ancestor="true" source="manual">
+    <property name="identifier" direction="asc"/>
+  </datastore-index>
 
-    <datastore-index kind="Group" ancestor="true" source="auto">
-        <property name="identifier" direction="asc"/>
-    </datastore-index>
+  <datastore-index kind="Account" ancestor="false" source="manual">
+    <property name="group" direction="asc"/>
+    <property name="identifier" direction="asc"/>
+  </datastore-index>
 
-    <datastore-index kind="Person" ancestor="true" source="auto">
-        <property name="logonId" direction="asc"/>
-    </datastore-index>
+  <datastore-index kind="Person" ancestor="true" source="manual">
+    <property name="identifier" direction="asc"/>
+  </datastore-index>
 
-    <datastore-index kind="Person" ancestor="true" source="auto">
-        <property name="identifier" direction="asc"/>
-    </datastore-index>
+  <datastore-index kind="Template" ancestor="true" source="auto">
+    <property name="name" direction="asc"/>
+  </datastore-index>
 
-    <datastore-index kind="Template" ancestor="true" source="auto">
-        <property name="name" direction="asc"/>
-    </datastore-index>
+  <datastore-index kind="TemplateNode" ancestor="true" source="auto">
+    <property name="offset" direction="asc"/>
+  </datastore-index>
 
-    <datastore-index kind="TemplateNode" ancestor="true" source="auto">
-        <property name="offset" direction="asc"/>
-    </datastore-index>
+  <datastore-index kind="Group" ancestor="false" source="auto">
+    <property name="admin" direction="asc"/>
+    <property name="identifier" direction="asc"/>
+  </datastore-index>
+
+  <datastore-index kind="Group" ancestor="false" source="auto">
+    <property name="owner" direction="asc"/>
+    <property name="identifier" direction="asc"/>
+  </datastore-index>
+
+  <datastore-index kind="Member" ancestor="true" source="auto">
+    <property name="person" direction="asc"/>
+  </datastore-index>
 
 </datastore-indexes>

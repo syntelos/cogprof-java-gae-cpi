@@ -1,0 +1,2 @@
+web/WEB-INF/appengine-generated/datastore-indexes-auto.xml
+web/WEB-INF/datastore-indexes.xml
