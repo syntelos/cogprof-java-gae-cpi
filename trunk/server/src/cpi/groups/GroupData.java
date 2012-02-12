@@ -20,14 +20,17 @@
 package cpi.groups;
 
 import oso.data.Person;
-import cpi.Redirect;
 import cpi.Margins;
+import cpi.Redirect;
+import cpi.ProfileLabels;
 
 import gap.*;
 import gap.data.*;
 import gap.hapax.TemplateDataDictionary;
 import gap.hapax.TemplateName;
 import gap.util.*;
+
+import json.Json;
 
 import com.google.appengine.api.datastore.*;
 import com.google.appengine.api.blobstore.BlobKey;
@@ -41,7 +44,7 @@ import javax.annotation.Generated;
  *
  * @see Group
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-01T20:10:11.805Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-11T18:01:32.901Z")
 public abstract class GroupData
     extends gap.data.BigTable
     implements DataInheritance<Group>
@@ -345,7 +348,9 @@ public abstract class GroupData
         Billed("billed",Type.Primitive),
         Paid("paid",Type.Primitive),
         Redirect("redirect",Type.Primitive),
-        Margins("margins",Type.Primitive);
+        Margins("margins",Type.Primitive),
+        Test("test",Type.Primitive),
+        Labels("labels",Type.Primitive);
 
         private final static lxl.Map<String,Field> FieldName = new lxl.Map<String,Field>();
         public static final String[] AllNames;
@@ -417,6 +422,10 @@ public abstract class GroupData
                 return instance.getRedirect(mayInherit);
             case Margins:
                 return instance.getMargins(mayInherit);
+            case Test:
+                return instance.getTest(mayInherit);
+            case Labels:
+                return instance.getLabels(mayInherit);
             default:
                 throw new IllegalArgumentException(field.toString()+" in Group");
             }
@@ -452,6 +461,10 @@ public abstract class GroupData
                 return instance.setRedirect((Redirect)gap.Objects.SerializableFromObject(value));
             case Margins:
                 return instance.setMargins((Margins)gap.Objects.SerializableFromObject(value));
+            case Test:
+                return instance.setTest(gap.Objects.BooleanFromObject(value));
+            case Labels:
+                return instance.setLabels((ProfileLabels)gap.Objects.SerializableFromObject(value));
             default:
                 throw new IllegalArgumentException(field.toString()+" in Group");
             }
@@ -490,6 +503,12 @@ public abstract class GroupData
             case Margins:{
                 Margins _margins = instance.getMargins(MayNotInherit);
                 return Serialize.To(field,_margins);
+            }
+            case Test:
+                return instance.getTest(MayNotInherit);
+            case Labels:{
+                ProfileLabels _labels = instance.getLabels(MayNotInherit);
+                return Serialize.To(field,_labels);
             }
             default:
                 throw new IllegalArgumentException(field.toString()+" in Group");
@@ -540,6 +559,14 @@ public abstract class GroupData
             case Margins:{
                 Margins _margins = (Margins)Serialize.From(field,value);
                 instance.setMargins( _margins);
+                return;
+            }
+            case Test:
+                instance.setTest( (Boolean)value);
+                return;
+            case Labels:{
+                ProfileLabels _labels = (ProfileLabels)Serialize.From(field,value);
+                instance.setLabels( _labels);
                 return;
             }
             default:
@@ -646,7 +673,7 @@ public abstract class GroupData
         }
     }
 
-    private transient final Group.Field.Statistics fieldStatistics = new Group.Field.Statistics();
+    private transient Group.Field.Statistics fieldStatistics = new Group.Field.Statistics();
 
     private transient Group inheritFrom;
 
@@ -664,6 +691,8 @@ public abstract class GroupData
     private Date paid;
     private Redirect redirect;
     private Margins margins;
+    private Boolean test;
+    private ProfileLabels labels;
 
 
 
@@ -682,6 +711,14 @@ public abstract class GroupData
     }
 
 
+    private Group.Field.Statistics fieldStatistics(){
+        Group.Field.Statistics fieldStatistics = this.fieldStatistics;
+        if (null == fieldStatistics){
+            fieldStatistics = new Group.Field.Statistics();
+            this.fieldStatistics = fieldStatistics;
+        }
+        return fieldStatistics;
+    }
     public void destroy(){
         this.inheritFrom = null;
         this.identifier = null;
@@ -693,6 +730,8 @@ public abstract class GroupData
         this.paid = null;
         this.redirect = null;
         this.margins = null;
+        this.test = null;
+        this.labels = null;
     }
     public final String getId(){
 
@@ -765,7 +804,7 @@ public abstract class GroupData
     }
     public final boolean dropIdentifier(){
         if (null != this.identifier){
-            this.fieldStatistics.markDirty(Group.Field.Identifier);
+            this.fieldStatistics().markDirty(Group.Field.Identifier);
             this.identifier = null;
             return true;
         }
@@ -780,18 +819,12 @@ public abstract class GroupData
     }
     public final boolean setIdentifier(String identifier){
         if (IsNotEqual(this.identifier,identifier)){
-            this.fieldStatistics.markDirty(Group.Field.Identifier);
+            this.fieldStatistics().markDirty(Group.Field.Identifier);
             this.identifier = identifier;
             return true;
         }
         else
             return false;
-    }
-    public boolean setIdentifier(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setIdentifier((String)json.getValue(String.class));
     }
     public final boolean hasName(boolean mayInherit){
         return (null != this.getName(mayInherit));
@@ -801,7 +834,7 @@ public abstract class GroupData
     }
     public final boolean dropName(){
         if (null != this.name){
-            this.fieldStatistics.markDirty(Group.Field.Name);
+            this.fieldStatistics().markDirty(Group.Field.Name);
             this.name = null;
             return true;
         }
@@ -825,7 +858,7 @@ public abstract class GroupData
     }
     public final boolean setName(String name, boolean withInheritance){
         if (IsNotEqual(this.name,this.getName(withInheritance))){
-            this.fieldStatistics.markDirty(Group.Field.Name);
+            this.fieldStatistics().markDirty(Group.Field.Name);
             this.name = name;
             return true;
         }
@@ -834,18 +867,12 @@ public abstract class GroupData
     }
     public final boolean setName(String name){
         if (IsNotEqual(this.name,name)){
-            this.fieldStatistics.markDirty(Group.Field.Name);
+            this.fieldStatistics().markDirty(Group.Field.Name);
             this.name = name;
             return true;
         }
         else
             return false;
-    }
-    public boolean setName(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setName((String)json.getValue(String.class));
     }
     public final boolean hasOwner(boolean mayInherit){
         return (null != this.getOwner(mayInherit));
@@ -855,7 +882,7 @@ public abstract class GroupData
     }
     public final boolean dropOwner(){
         if (null != this.owner){
-            this.fieldStatistics.markDirty(Group.Field.Owner);
+            this.fieldStatistics().markDirty(Group.Field.Owner);
             this.owner = null;
             this.ownerId = null;
             this.ownerKey = null;
@@ -869,7 +896,7 @@ public abstract class GroupData
     }
     public final boolean setOwnerId(String ownerId){
         if (IsNotEqual(this.ownerId,ownerId)){
-            this.fieldStatistics.markDirty(Group.Field.Owner);
+            this.fieldStatistics().markDirty(Group.Field.Owner);
             this.ownerId = ownerId;
             this.ownerKey = null;
             this.owner = null;
@@ -936,7 +963,7 @@ public abstract class GroupData
     }
     public final boolean setOwner(Person owner, boolean withInheritance){
         if (IsNotEqual(this.owner,this.getOwner(withInheritance))){
-            this.fieldStatistics.markDirty(Group.Field.Owner);
+            this.fieldStatistics().markDirty(Group.Field.Owner);
             this.owner = owner;
             if (null != owner){
                 this.ownerId = owner.getId();
@@ -953,7 +980,7 @@ public abstract class GroupData
     }
     public final boolean setOwner(Person owner){
         if (IsNotEqual(this.owner,owner)){
-            this.fieldStatistics.markDirty(Group.Field.Owner);
+            this.fieldStatistics().markDirty(Group.Field.Owner);
             this.owner = owner;
             if (null != owner){
                 this.ownerId = owner.getId();
@@ -968,12 +995,6 @@ public abstract class GroupData
         else
             return false;
     }
-    public boolean setOwner(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setOwner((Person)json.getValue(Person.class));
-    }
     public final boolean hasAdmin(boolean mayInherit){
         return (null != this.getAdmin(mayInherit));
     }
@@ -982,7 +1003,7 @@ public abstract class GroupData
     }
     public final boolean dropAdmin(){
         if (null != this.admin){
-            this.fieldStatistics.markDirty(Group.Field.Admin);
+            this.fieldStatistics().markDirty(Group.Field.Admin);
             this.admin = null;
             this.adminId = null;
             this.adminKey = null;
@@ -996,7 +1017,7 @@ public abstract class GroupData
     }
     public final boolean setAdminId(String adminId){
         if (IsNotEqual(this.adminId,adminId)){
-            this.fieldStatistics.markDirty(Group.Field.Admin);
+            this.fieldStatistics().markDirty(Group.Field.Admin);
             this.adminId = adminId;
             this.adminKey = null;
             this.admin = null;
@@ -1063,7 +1084,7 @@ public abstract class GroupData
     }
     public final boolean setAdmin(Person admin, boolean withInheritance){
         if (IsNotEqual(this.admin,this.getAdmin(withInheritance))){
-            this.fieldStatistics.markDirty(Group.Field.Admin);
+            this.fieldStatistics().markDirty(Group.Field.Admin);
             this.admin = admin;
             if (null != admin){
                 this.adminId = admin.getId();
@@ -1080,7 +1101,7 @@ public abstract class GroupData
     }
     public final boolean setAdmin(Person admin){
         if (IsNotEqual(this.admin,admin)){
-            this.fieldStatistics.markDirty(Group.Field.Admin);
+            this.fieldStatistics().markDirty(Group.Field.Admin);
             this.admin = admin;
             if (null != admin){
                 this.adminId = admin.getId();
@@ -1095,12 +1116,6 @@ public abstract class GroupData
         else
             return false;
     }
-    public boolean setAdmin(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setAdmin((Person)json.getValue(Person.class));
-    }
     public final boolean hasCreated(boolean mayInherit){
         return (null != this.getCreated(mayInherit));
     }
@@ -1109,7 +1124,7 @@ public abstract class GroupData
     }
     public final boolean dropCreated(){
         if (null != this.created){
-            this.fieldStatistics.markDirty(Group.Field.Created);
+            this.fieldStatistics().markDirty(Group.Field.Created);
             this.created = null;
             return true;
         }
@@ -1133,7 +1148,7 @@ public abstract class GroupData
     }
     public final boolean setCreated(Date created, boolean withInheritance){
         if (IsNotEqual(this.created,this.getCreated(withInheritance))){
-            this.fieldStatistics.markDirty(Group.Field.Created);
+            this.fieldStatistics().markDirty(Group.Field.Created);
             this.created = created;
             return true;
         }
@@ -1142,18 +1157,12 @@ public abstract class GroupData
     }
     public final boolean setCreated(Date created){
         if (IsNotEqual(this.created,created)){
-            this.fieldStatistics.markDirty(Group.Field.Created);
+            this.fieldStatistics().markDirty(Group.Field.Created);
             this.created = created;
             return true;
         }
         else
             return false;
-    }
-    public boolean setCreated(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setCreated((Date)json.getValue(Date.class));
     }
     public final boolean hasBilled(boolean mayInherit){
         return (null != this.getBilled(mayInherit));
@@ -1163,7 +1172,7 @@ public abstract class GroupData
     }
     public final boolean dropBilled(){
         if (null != this.billed){
-            this.fieldStatistics.markDirty(Group.Field.Billed);
+            this.fieldStatistics().markDirty(Group.Field.Billed);
             this.billed = null;
             return true;
         }
@@ -1187,7 +1196,7 @@ public abstract class GroupData
     }
     public final boolean setBilled(Date billed, boolean withInheritance){
         if (IsNotEqual(this.billed,this.getBilled(withInheritance))){
-            this.fieldStatistics.markDirty(Group.Field.Billed);
+            this.fieldStatistics().markDirty(Group.Field.Billed);
             this.billed = billed;
             return true;
         }
@@ -1196,18 +1205,12 @@ public abstract class GroupData
     }
     public final boolean setBilled(Date billed){
         if (IsNotEqual(this.billed,billed)){
-            this.fieldStatistics.markDirty(Group.Field.Billed);
+            this.fieldStatistics().markDirty(Group.Field.Billed);
             this.billed = billed;
             return true;
         }
         else
             return false;
-    }
-    public boolean setBilled(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setBilled((Date)json.getValue(Date.class));
     }
     public final boolean hasPaid(boolean mayInherit){
         return (null != this.getPaid(mayInherit));
@@ -1217,7 +1220,7 @@ public abstract class GroupData
     }
     public final boolean dropPaid(){
         if (null != this.paid){
-            this.fieldStatistics.markDirty(Group.Field.Paid);
+            this.fieldStatistics().markDirty(Group.Field.Paid);
             this.paid = null;
             return true;
         }
@@ -1241,7 +1244,7 @@ public abstract class GroupData
     }
     public final boolean setPaid(Date paid, boolean withInheritance){
         if (IsNotEqual(this.paid,this.getPaid(withInheritance))){
-            this.fieldStatistics.markDirty(Group.Field.Paid);
+            this.fieldStatistics().markDirty(Group.Field.Paid);
             this.paid = paid;
             return true;
         }
@@ -1250,18 +1253,12 @@ public abstract class GroupData
     }
     public final boolean setPaid(Date paid){
         if (IsNotEqual(this.paid,paid)){
-            this.fieldStatistics.markDirty(Group.Field.Paid);
+            this.fieldStatistics().markDirty(Group.Field.Paid);
             this.paid = paid;
             return true;
         }
         else
             return false;
-    }
-    public boolean setPaid(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setPaid((Date)json.getValue(Date.class));
     }
     public final boolean hasRedirect(boolean mayInherit){
         return (null != this.getRedirect(mayInherit));
@@ -1271,7 +1268,7 @@ public abstract class GroupData
     }
     public final boolean dropRedirect(){
         if (null != this.redirect){
-            this.fieldStatistics.markDirty(Group.Field.Redirect);
+            this.fieldStatistics().markDirty(Group.Field.Redirect);
             this.redirect = null;
             return true;
         }
@@ -1295,7 +1292,7 @@ public abstract class GroupData
     }
     public final boolean setRedirect(Redirect redirect, boolean withInheritance){
         if (IsNotEqual(this.redirect,this.getRedirect(withInheritance))){
-            this.fieldStatistics.markDirty(Group.Field.Redirect);
+            this.fieldStatistics().markDirty(Group.Field.Redirect);
             this.redirect = redirect;
             return true;
         }
@@ -1304,18 +1301,12 @@ public abstract class GroupData
     }
     public final boolean setRedirect(Redirect redirect){
         if (IsNotEqual(this.redirect,redirect)){
-            this.fieldStatistics.markDirty(Group.Field.Redirect);
+            this.fieldStatistics().markDirty(Group.Field.Redirect);
             this.redirect = redirect;
             return true;
         }
         else
             return false;
-    }
-    public boolean setRedirect(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setRedirect((Redirect)json.getValue(Redirect.class));
     }
     public final boolean hasMargins(boolean mayInherit){
         return (null != this.getMargins(mayInherit));
@@ -1325,7 +1316,7 @@ public abstract class GroupData
     }
     public final boolean dropMargins(){
         if (null != this.margins){
-            this.fieldStatistics.markDirty(Group.Field.Margins);
+            this.fieldStatistics().markDirty(Group.Field.Margins);
             this.margins = null;
             return true;
         }
@@ -1349,7 +1340,7 @@ public abstract class GroupData
     }
     public final boolean setMargins(Margins margins, boolean withInheritance){
         if (IsNotEqual(this.margins,this.getMargins(withInheritance))){
-            this.fieldStatistics.markDirty(Group.Field.Margins);
+            this.fieldStatistics().markDirty(Group.Field.Margins);
             this.margins = margins;
             return true;
         }
@@ -1358,18 +1349,218 @@ public abstract class GroupData
     }
     public final boolean setMargins(Margins margins){
         if (IsNotEqual(this.margins,margins)){
-            this.fieldStatistics.markDirty(Group.Field.Margins);
+            this.fieldStatistics().markDirty(Group.Field.Margins);
             this.margins = margins;
             return true;
         }
         else
             return false;
     }
-    public boolean setMargins(json.Json json){
+    public final boolean hasTest(boolean mayInherit){
+        return (null != this.getTest(mayInherit));
+    }
+    public final boolean hasNotTest(boolean mayInherit){
+        return (null == this.getTest(mayInherit));
+    }
+    public final boolean dropTest(){
+        if (null != this.test){
+            this.fieldStatistics().markDirty(Group.Field.Test);
+            this.test = null;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final Boolean getTest(){
+        return this.getTest(Notation.MayInherit);
+    }
+    public final Boolean getTest(boolean mayInherit){
+        if (mayInherit){
+            Boolean test = this.test;
+            if (null == test && this.hasInheritFrom()){
+                Group inheritFrom = this.getInheritFrom();
+                return inheritFrom.getTest(Notation.MayInherit);
+            }
+            return test;
+        }
+        else
+            return this.test;
+    }
+    public final boolean setTest(Boolean test, boolean withInheritance){
+        if (IsNotEqual(this.test,this.getTest(withInheritance))){
+            this.fieldStatistics().markDirty(Group.Field.Test);
+            this.test = test;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean setTest(Boolean test){
+        if (IsNotEqual(this.test,test)){
+            this.fieldStatistics().markDirty(Group.Field.Test);
+            this.test = test;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean hasLabels(boolean mayInherit){
+        return (null != this.getLabels(mayInherit));
+    }
+    public final boolean hasNotLabels(boolean mayInherit){
+        return (null == this.getLabels(mayInherit));
+    }
+    public final boolean dropLabels(){
+        if (null != this.labels){
+            this.fieldStatistics().markDirty(Group.Field.Labels);
+            this.labels = null;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final ProfileLabels getLabels(){
+        return this.getLabels(Notation.MayInherit);
+    }
+    public final ProfileLabels getLabels(boolean mayInherit){
+        if (mayInherit){
+            ProfileLabels labels = this.labels;
+            if (null == labels && this.hasInheritFrom()){
+                Group inheritFrom = this.getInheritFrom();
+                return inheritFrom.getLabels(Notation.MayInherit);
+            }
+            return labels;
+        }
+        else
+            return this.labels;
+    }
+    public final boolean setLabels(ProfileLabels labels, boolean withInheritance){
+        if (IsNotEqual(this.labels,this.getLabels(withInheritance))){
+            this.fieldStatistics().markDirty(Group.Field.Labels);
+            this.labels = labels;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean setLabels(ProfileLabels labels){
+        if (IsNotEqual(this.labels,labels)){
+            this.fieldStatistics().markDirty(Group.Field.Labels);
+            this.labels = labels;
+            return true;
+        }
+        else
+            return false;
+    }
+    public Json toJsonIdentifier(){
+        String identifier = this.getIdentifier();
+        return Json.Wrap( identifier);
+    }
+    public boolean fromJsonIdentifier(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setIdentifier((String)json.getValue(String.class));
+    }
+    public Json toJsonName(){
+        String name = this.getName();
+        return Json.Wrap( name);
+    }
+    public boolean fromJsonName(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setName((String)json.getValue(String.class));
+    }
+    public Json toJsonOwner(){
+        Person owner = this.getOwner();
+        return Json.Wrap( owner);
+    }
+    public boolean fromJsonOwner(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setOwner((Person)json.getValue(Person.class));
+    }
+    public Json toJsonAdmin(){
+        Person admin = this.getAdmin();
+        return Json.Wrap( admin);
+    }
+    public boolean fromJsonAdmin(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setAdmin((Person)json.getValue(Person.class));
+    }
+    public Json toJsonCreated(){
+        Date created = this.getCreated();
+        return Json.Wrap( created);
+    }
+    public boolean fromJsonCreated(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setCreated((Date)json.getValue(Date.class));
+    }
+    public Json toJsonBilled(){
+        Date billed = this.getBilled();
+        return Json.Wrap( billed);
+    }
+    public boolean fromJsonBilled(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setBilled((Date)json.getValue(Date.class));
+    }
+    public Json toJsonPaid(){
+        Date paid = this.getPaid();
+        return Json.Wrap( paid);
+    }
+    public boolean fromJsonPaid(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setPaid((Date)json.getValue(Date.class));
+    }
+    public Json toJsonRedirect(){
+        Redirect redirect = this.getRedirect();
+        return Json.Wrap( redirect);
+    }
+    public boolean fromJsonRedirect(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setRedirect((Redirect)json.getValue(Redirect.class));
+    }
+    public Json toJsonMargins(){
+        Margins margins = this.getMargins();
+        return Json.Wrap( margins);
+    }
+    public boolean fromJsonMargins(Json json){
         if (null == json)
             return false;
         else
             return this.setMargins((Margins)json.getValue(Margins.class));
+    }
+    public Json toJsonTest(){
+        Boolean test = this.getTest();
+        return Json.Wrap( test);
+    }
+    public boolean fromJsonTest(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setTest((Boolean)json.getValue(Boolean.class));
+    }
+    public Json toJsonLabels(){
+        ProfileLabels labels = this.getLabels();
+        return Json.Wrap( labels);
+    }
+    public boolean fromJsonLabels(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setLabels((ProfileLabels)json.getValue(ProfileLabels.class));
     }
     /*
      * Data binding supports
@@ -1390,38 +1581,55 @@ public abstract class GroupData
     public final gap.data.Field getClassFieldByName(String name){
         return Field.getField(name);
     }
-    public json.Json toJson(){
-        json.Json json = new json.ObjectJson();
-        String identifier = this.getIdentifier();
-        json.set("identifier",identifier);
-        String name = this.getName();
-        json.set("name",name);
-        Person owner = this.getOwner();
-        json.set("owner",owner);
-        Person admin = this.getAdmin();
-        json.set("admin",admin);
-        Date created = this.getCreated();
-        json.set("created",created);
-        Date billed = this.getBilled();
-        json.set("billed",billed);
-        Date paid = this.getPaid();
-        json.set("paid",paid);
-        Redirect redirect = this.getRedirect();
-        json.set("redirect",redirect);
-        Margins margins = this.getMargins();
-        json.set("margins",margins);
+    public Json toJson(){
+        Json json = new json.ObjectJson();
+        Json identifier = this.toJsonIdentifier();
+        if (null != identifier)
+            json.set("identifier",identifier);
+        Json name = this.toJsonName();
+        if (null != name)
+            json.set("name",name);
+        Json owner = this.toJsonOwner();
+        if (null != owner)
+            json.set("owner",owner);
+        Json admin = this.toJsonAdmin();
+        if (null != admin)
+            json.set("admin",admin);
+        Json created = this.toJsonCreated();
+        if (null != created)
+            json.set("created",created);
+        Json billed = this.toJsonBilled();
+        if (null != billed)
+            json.set("billed",billed);
+        Json paid = this.toJsonPaid();
+        if (null != paid)
+            json.set("paid",paid);
+        Json redirect = this.toJsonRedirect();
+        if (null != redirect)
+            json.set("redirect",redirect);
+        Json margins = this.toJsonMargins();
+        if (null != margins)
+            json.set("margins",margins);
+        Json test = this.toJsonTest();
+        if (null != test)
+            json.set("test",test);
+        Json labels = this.toJsonLabels();
+        if (null != labels)
+            json.set("labels",labels);
         return json;
     }
-    public boolean fromJson(json.Json json){
+    public boolean fromJson(Json json){
         boolean modified = false;
-        modified = (this.setName(json.at("name")) || modified);
-        modified = (this.setOwner(json.at("owner")) || modified);
-        modified = (this.setAdmin(json.at("admin")) || modified);
-        modified = (this.setCreated(json.at("created")) || modified);
-        modified = (this.setBilled(json.at("billed")) || modified);
-        modified = (this.setPaid(json.at("paid")) || modified);
-        modified = (this.setRedirect(json.at("redirect")) || modified);
-        modified = (this.setMargins(json.at("margins")) || modified);
+        modified = (this.fromJsonName(json.at("name")) || modified);
+        modified = (this.fromJsonOwner(json.at("owner")) || modified);
+        modified = (this.fromJsonAdmin(json.at("admin")) || modified);
+        modified = (this.fromJsonCreated(json.at("created")) || modified);
+        modified = (this.fromJsonBilled(json.at("billed")) || modified);
+        modified = (this.fromJsonPaid(json.at("paid")) || modified);
+        modified = (this.fromJsonRedirect(json.at("redirect")) || modified);
+        modified = (this.fromJsonMargins(json.at("margins")) || modified);
+        modified = (this.fromJsonTest(json.at("test")) || modified);
+        modified = (this.fromJsonLabels(json.at("labels")) || modified);
         return modified;
     }
     public boolean updateFrom(Request req) throws ValidationError {
@@ -1498,6 +1706,30 @@ public abstract class GroupData
                 throw new ValidationError(ClassName,"margins",marginsRequest,exc);
             }
         }
+        String testRequest = req.getParameter("test");
+        if (null != testRequest && 0 < testRequest.length()){
+            try {
+                Boolean test = gap.Strings.BooleanFromString(testRequest);
+                if (this.setTest(test)){
+                    change = true;
+                }
+            }
+            catch (RuntimeException exc){
+                throw new ValidationError(ClassName,"test",testRequest,exc);
+            }
+        }
+        String labelsRequest = req.getParameter("labels");
+        if (null != labelsRequest && 0 < labelsRequest.length()){
+            try {
+                ProfileLabels labels = (ProfileLabels)gap.Strings.SerializableFromString(labelsRequest);
+                if (this.setLabels(labels)){
+                    change = true;
+                }
+            }
+            catch (RuntimeException exc){
+                throw new ValidationError(ClassName,"labels",labelsRequest,exc);
+            }
+        }
         return change;
     }
     public final boolean updateFrom(BigTable proto){
@@ -1530,6 +1762,14 @@ public abstract class GroupData
         if (null != margins && this.setMargins(margins)){
             change = true;
         }
+        Boolean test = proto.getTest(mayInherit);
+        if (null != test && this.setTest(test)){
+            change = true;
+        }
+        ProfileLabels labels = proto.getLabels(mayInherit);
+        if (null != labels && this.setLabels(labels)){
+            change = true;
+        }
         return change;
     }
     public java.io.Serializable valueStorage(gap.data.Field field){
@@ -1542,17 +1782,17 @@ public abstract class GroupData
     }
     public final Group markClean(){
 
-        this.fieldStatistics.markClean();
+        this.fieldStatistics().markClean();
         return (Group)this;
     }
     public final Group markDirty(){
 
-        this.fieldStatistics.markDirty();
+        this.fieldStatistics().markDirty();
         return (Group)this;
     }
     public final Group markDirty(gap.data.Field field){
 
-        this.fieldStatistics.markDirty(field);
+        this.fieldStatistics().markDirty(field);
         return (Group)this;
     }
     public final Group markDirty(java.io.Serializable instance){
@@ -1592,24 +1832,34 @@ public abstract class GroupData
             gap.data.Field field = Group.Field.Margins;
             return this.markDirty(field);
         }
+        else if (instance == this.test){
+            gap.data.Field field = Group.Field.Test;
+            return this.markDirty(field);
+        }
+        else if (instance == this.labels){
+            gap.data.Field field = Group.Field.Labels;
+            return this.markDirty(field);
+        }
+        else if (null != instance)
+            throw new IllegalArgumentException(instance.getClass().getName());
         else
-            return (Group)this;
+            throw new IllegalArgumentException();
     }
     public final Iterable<gap.data.Field> listClean(){
 
-        return this.fieldStatistics.listClean();
+        return this.fieldStatistics().listClean();
     }
     public final Iterable<gap.data.Field> listDirty(){
 
-        return this.fieldStatistics.listDirty();
+        return this.fieldStatistics().listDirty();
     }
     public final boolean isClean(){
 
-        return this.fieldStatistics.isClean();
+        return this.fieldStatistics().isClean();
     }
     public final boolean isDirty(){
 
-        return this.fieldStatistics.isDirty();
+        return this.fieldStatistics().isDirty();
     }
     public final gap.service.od.ClassDescriptor getClassDescriptorFor(){
         return Group.ClassDescriptorFor();
@@ -1719,6 +1969,24 @@ public abstract class GroupData
                      */
                     return this.hasMargins(true);
                 }
+            case Test:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else {
+                    /*
+                     * Synthesize section for Boolean (EXISTS && TRUE)
+                     */
+                    return (this.hasTest(true) && this.getTest(true));
+                }
+            case Labels:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else {
+                    /*
+                     * Synthesize section for Field (EXISTS)
+                     */
+                    return this.hasLabels(true);
+                }
             default:
                 break;
             }
@@ -1789,6 +2057,16 @@ public abstract class GroupData
                     throw new IllegalStateException(field.name());
                 else
                     return gap.Strings.SerializableToString(this.getMargins(true));
+            case Test:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else
+                    return gap.Strings.BooleanToString(this.getTest(true));
+            case Labels:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else
+                    return gap.Strings.SerializableToString(this.getLabels(true));
             default:
                 break;
             }
@@ -1829,6 +2107,10 @@ public abstract class GroupData
                 case Redirect:
                     throw new IllegalStateException(field.name());
                 case Margins:
+                    throw new IllegalStateException(field.name());
+                case Test:
+                    throw new IllegalStateException(field.name());
+                case Labels:
                     throw new IllegalStateException(field.name());
                 default:
                     throw new IllegalStateException(field.name());
@@ -1878,6 +2160,10 @@ public abstract class GroupData
             case Redirect:
                 return null;
             case Margins:
+                return null;
+            case Test:
+                return null;
+            case Labels:
                 return null;
             default:
                 throw new IllegalStateException(field.name());

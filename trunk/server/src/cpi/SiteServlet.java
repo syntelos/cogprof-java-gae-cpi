@@ -76,7 +76,7 @@ public class SiteServlet
             {
                 InventoryServlet.Pair pair = InventoryServlet.Examples.get(0);
 
-                InventoryServlet.DefineInventory(req,0,pair);
+                InventoryServlet.DefineInventory(req,0,pair,null);
             }
             this.render(req,rep,"example.html");
         }
@@ -90,10 +90,10 @@ public class SiteServlet
 
                 Code.Encode enc = Inventory.Encode(viewer);
 
-                rep.sendRedirect("/profile/"+enc.code);
+                rep.sendRedirect("/profile/"+enc.code+"/index.html");
             }
             else {
-                rep.sendRedirect("/inventory");
+                rep.sendRedirect("/inventory/index.html");
             }
         }
         else 

@@ -1,4 +1,4 @@
-   <div id="first">
+   <div id="admin">
      <h1>Group</h1>
      <table class="editing">{{#group}}
        <form method="POST">
@@ -33,6 +33,16 @@
            </td>
          </tr>
          <tr class="editing">
+           <td class="editing lhs"><label for="test">Test</label>
+           </td>
+           <td class="editing rhs">
+             <select id="test" name="test" class="editing" tabindex="4">
+               <option {{=test_select_true}} name="true">TEST</option>
+               <option {{=test_select_false}} name="false">LIVE</option>
+             </select>
+           </td>
+         </tr>
+         <tr class="editing">
            <td class="editing lhs"><label for="billed">Billed</label>
            </td>
            <td class="editing rhs"><input readonly type="text" id="billed" name="billed" value="{{=billed}}" />
@@ -48,24 +58,24 @@
            <td class="editing lhs"><label for="redirect">Redirect</label>
            </td>
            <td class="editing in">
-             <table class="editing in rhs">
+             <table class="editing in rhs" id="redirect">
                <tr class="editing">
                  <td class="editing lhs"><label for="href">Href</label>
                  </td>
-                 <td class="editing rhs"><input type="text" id="href" name="redirect_href" value="{{=redirect_href}}" tabindex="4" />
+                 <td class="editing rhs"><input type="text" id="href" name="redirect_href" value="{{=redirect_href}}" tabindex="5" />
                  </td>
                </tr>
                <tr class="editing">
                  <td class="editing lhs"><label for="target">Target</label>
                  </td>
-                 <td class="editing rhs"><input type="text" id="target" name="redirect_target" value="{{=redirect_target}}" tabindex="5" />
+                 <td class="editing rhs"><input type="text" id="target" name="redirect_target" value="{{=redirect_target}}" tabindex="6" />
                  </td>
                </tr>
                <tr class="editing">
                  <td class="editing lhs"><label for="sequence">Sequence</label>
                  </td>
                  <td class="editing rhs">
-                   <select id="sequence" name="redirect_sequence" class="editing" tabindex="5">
+                   <select id="sequence" name="redirect_sequence" class="editing" tabindex="7">
                      <option {{=redirect_sequence_select_inject}} name="inject">Inject</option>
                      <option {{=redirect_sequence_select_timeout}} name="timeout">Timeout</option>
                    </select>
@@ -74,7 +84,7 @@
                <tr class="editing">
                  <td class="editing lhs"><label for="timeout">Timeout</label>
                  </td>
-                 <td class="editing rhs"><input type="text" id="timeout" name="redirect_timeout" value="{{=redirect_timeout}}" tabindex="6" />
+                 <td class="editing rhs"><input type="text" id="timeout" name="redirect_timeout" value="{{=redirect_timeout}}" tabindex="8" />
                  </td>
                </tr>
              </table>
@@ -83,13 +93,45 @@
          <tr class="editing">
            <td class="editing lhs"><label for="margins">Margins</label>
            </td>
-           <td class="editing rhs"><input type="text" id="margins" name="margins_css" value="{{=margins_css}}" tabindex="7" />
+           <td class="editing rhs"><input type="text" id="margins" name="margins_css" value="{{=margins_css}}" tabindex="9" />
            </td>
          </tr>
          <tr class="editing">
-           <td class="editing lhs"><label for="note">Note</label>
+           <td class="editing lhs"><label for="labels">Labels</label>
            </td>
-           <td class="editing rhs"><input type="text" size="40" id="note" name="note_text" value="{{=note_text}}" tabindex="8" />
+           <td class="editing in">
+             <table class="editing in rhs" id="labels">
+               <tr class="editing">
+                 <td class="editing lhs"><label for="labels_st">ST</label>
+                 </td>
+                 <td class="editing rhs"><input type="text" id="labels_st" name="labels_st" value="{{=labels_st}}" tabindex="10" />
+                 </td>
+               </tr>
+               <tr class="editing">
+                 <td class="editing lhs"><label for="labels_sf">SF</label>
+                 </td>
+                 <td class="editing rhs"><input type="text" id="labels_sf" name="labels_sf" value="{{=labels_sf}}" tabindex="11" />
+                 </td>
+               </tr>
+               <tr class="editing">
+                 <td class="editing lhs"><label for="labels_nt">NT</label>
+                 </td>
+                 <td class="editing rhs"><input type="text" id="labels_nt" name="labels_nt" value="{{=labels_nt}}" tabindex="12" />
+                 </td>
+               </tr>
+               <tr class="editing">
+                 <td class="editing lhs"><label for="labels_nf">NF</label>
+                 </td>
+                 <td class="editing rhs"><input type="text" id="labels_nf" name="labels_nf" value="{{=labels_nf}}" tabindex="13" />
+                 </td>
+               </tr>
+             </table>
+           </td>
+         </tr>
+         <tr class="editing">
+           <td class="editing lhs"><label for="note">Update</label>
+           </td>
+           <td class="editing rhs"><textarea rows="5" cols="40" id="note_text" name="note_text" tabindex="14">{{=note_text}}</textarea>
            </td>
          </tr>{{/group}}
          <tr class="editing">
@@ -97,22 +139,22 @@
              <table class="editing in">
                <tr class="editing">
                  <td class="editing lhs">
-                   <input type="submit" name="op" value="List" tabindex="9" />
+                   <input type="submit" name="op" value="List" tabindex="15" />
                  </td>
                  <td class="editing mid">
-                   <input type="submit" name="op" value="Delete" tabindex="10" />
+                   <input type="submit" name="op" value="Delete" tabindex="16" />
                  </td>
                  <td class="editing mid">
-                   <input type="submit" name="op" value="Create" tabindex="11" />
+                   <input type="submit" name="op" value="Create" tabindex="17" />
+                 </td>
+                 <td class="editing mid">
+                   <input type="submit" name="op" value="Update" tabindex="18" />
+                 </td>
+                 <td class="editing mid">
+                   <input type="submit" name="op" value="Accounts" tabindex="19" />
                  </td>
                  <td class="editing rhs">
-                   <input type="submit" name="op" value="Save" tabindex="12" />
-                 </td>
-                 <td class="editing rhs">
-                   <input type="submit" name="op" value="Accounts" tabindex="13" />
-                 </td>
-                 <td class="editing rhs">
-                   <input type="submit" name="op" value="Projects" tabindex="13" />
+                   <input type="submit" name="op" value="Projects" tabindex="20" />
                  </td>
                </tr>
              </table>

@@ -1,3 +1,4 @@
+//                      -*-Java-*-
 package oso.data;
 path /people;
 import cpi.Inventory;
@@ -8,11 +9,13 @@ import cpi.groups.Project;
  * 
  * Application access by random identifier
  * 
- * Logon Id is optional with Project and identifier
+ * Logon Id is optional with Project
  * 
- * @review(Identifier,Random)
+ * Identifier is required
  */
-class Person version 8 {
+class Person
+    version 8
+{
     String logonId;
     *unique String identifier;
     List.Primitive<Inventory> inventory;

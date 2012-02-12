@@ -57,17 +57,21 @@ public class ProfileImage
     private final static int IMG_WH = 300;
     private final static int IMG_WH1 = (IMG_WH-PAD);
     private final static int IMG_WH2 = (IMG_WH>>1);
+
     private final static float IMG_WH2F = IMG_WH2;
+
     private final static int IMG_WH10 = (IMG_WH/10);
-    private final static int IMG_WH3 = (IMG_WH-IMG_WH10);
 
 
 
 
     public ProfileImage(Code.Decode code){
-        this(code.st, code.sf, code.nt, code.nf);
+        this(code.st, code.sf, code.nt, code.nf, ProfileLabels.Default);
     }
-    public ProfileImage(float n_st, float n_sf, float n_nt, float n_nf){
+    public ProfileImage(Code.Encode code, ProfileLabels labels){
+        this(code.st, code.sf, code.nt, code.nf, labels);
+    }
+    public ProfileImage(float n_st, float n_sf, float n_nt, float n_nf, ProfileLabels labels){
         super(IMG_WH,IMG_WH);
         if (Err(n_st))
             throw new IllegalArgumentException();
@@ -76,6 +80,8 @@ public class ProfileImage
         else if (Err(n_nt))
             throw new IllegalArgumentException();
         else if (Err(n_nf))
+            throw new IllegalArgumentException();
+        else if (null == labels)
             throw new IllegalArgumentException();
         else {
             Graphics g = this.createGraphics();
@@ -116,23 +122,69 @@ public class ProfileImage
                 g.setClip(0, 0, IMG_WH, IMG_WH);
 
                 g.setColor(COLOR_BORDER);
-                g.drawRect(       0,        0,  IMG_WH1,  IMG_WH1);
-                g.drawLine( IMG_WH2,        0,  IMG_WH2,   IMG_WH);
-                g.drawLine(       0,  IMG_WH2,   IMG_WH,  IMG_WH2);
-                g.drawLine(IMG_WH10,      PAD, IMG_WH10, IMG_WH10);
-                g.drawLine(     PAD, IMG_WH10, IMG_WH10, IMG_WH10);
-                g.drawLine(     PAD,  IMG_WH3, IMG_WH10,  IMG_WH3);
-                g.drawLine(IMG_WH10,  IMG_WH3, IMG_WH10,  IMG_WH1);
-                g.drawLine( IMG_WH3,      PAD,  IMG_WH3, IMG_WH10);
-                g.drawLine( IMG_WH3, IMG_WH10,  IMG_WH1, IMG_WH10);
-                g.drawLine( IMG_WH3,  IMG_WH3,  IMG_WH1,  IMG_WH3);
-                g.drawLine( IMG_WH3,  IMG_WH3,  IMG_WH3,  IMG_WH1);
+
+                g.drawRect(       0,        0,  IMG_WH1,  IMG_WH1); // outline border 
+                g.drawLine( IMG_WH2,        0,  IMG_WH2,   IMG_WH); // vert middle separator
+                g.drawLine(       0,  IMG_WH2,   IMG_WH,  IMG_WH2); // horz middle separator
 
                 g.setFont(FONT);
-                g.blit("SF", 274, 6);
-                g.blit("ST", 4, 6);
-                g.blit("NT", 4, 274);
-                g.blit("NF", 274, 274);
+                /*
+                 * Label Borders
+                 */
+                final int wSt = labels.wSt(IMG_WH10);
+                final int wSf = labels.wSf(IMG_WH10);
+                final int wNt = labels.wNt(IMG_WH10);
+                final int wNf = labels.wNf(IMG_WH10);
+
+                int x1, y1, x2, y2;
+
+                /* ST -- TL vert
+                 */
+                x1 = wSt;           y1 = PAD;                x2 = wSt;            y2 = IMG_WH10;
+                g.drawLine( x1, y1, x2, y2); 
+
+                /* ST -- TL horz
+                 */
+                x1 = PAD;           y1 = IMG_WH10;           x2 = wSt;            y2 = IMG_WH10;
+                g.drawLine( x1, y1, x2, y2); 
+
+                g.blit(labels.getSt(), (x1+3), 6);
+
+                /* NT -- BL vert
+                 */
+                x1 = wNt;           y1 = (IMG_WH-IMG_WH10);  x2 = wNt;            y2 = IMG_WH1;
+                g.drawLine( x1, y1, x2, y2); 
+
+                /* NT -- BL horz
+                 */
+                x1 = PAD;           y1 = (IMG_WH-IMG_WH10);  x2 = wNt;            y2 = (IMG_WH-IMG_WH10);
+                g.drawLine( x1, y1, x2, y2); 
+
+                g.blit(labels.getNt(), (x1+3), 274);
+
+                /* SF -- TR vert
+                 */
+                x1 = (IMG_WH-wSf);  y1 = PAD;                x2 = (IMG_WH-wSf);   y2 = IMG_WH10;
+                g.drawLine( x1, y1, x2, y2); 
+
+                /* SF -- TR horz
+                 */
+                x1 = (IMG_WH-wSf);  y1 = IMG_WH10;           x2 = IMG_WH1;        y2 = IMG_WH10;
+                g.drawLine( x1, y1, x2, y2); 
+
+                g.blit(labels.getSf(), (x1+4), 6);
+
+                /* NF -- BR vert
+                 */
+                x1 = (IMG_WH-wNf);  y1 = (IMG_WH-IMG_WH10);  x2 = (IMG_WH-wNf);   y2 = IMG_WH1;
+                g.drawLine( x1, y1, x2, y2); 
+
+                /* NF -- BR horz
+                 */
+                x1 = (IMG_WH-wNf);  y1 = (IMG_WH-IMG_WH10);  x2 = IMG_WH1;        y2 = (IMG_WH-IMG_WH10);
+                g.drawLine( x1, y1, x2, y2); 
+
+                g.blit(labels.getNf(), (x1+4), 274);
             }
             finally {
                 g.dispose();
@@ -146,7 +198,7 @@ public class ProfileImage
     }
     public static void main(String[] argv){
 
-        if (5 == argv.length){
+        if (5 <= argv.length){
             try {
                 float st = Float.parseFloat(argv[0]);
                 float sf = Float.parseFloat(argv[1]);
@@ -154,7 +206,14 @@ public class ProfileImage
                 float nf = Float.parseFloat(argv[3]);
                 java.io.File out = new java.io.File(argv[4]);
 
-                ProfileImage pi = new ProfileImage(st,sf,nt,nf);
+                ProfileImage pi;
+                if (6 == argv.length)
+                    pi = new ProfileImage(st,sf,nt,nf,new ProfileLabels(argv[5]));
+                else if (9 == argv.length)
+                    pi = new ProfileImage(st,sf,nt,nf,new ProfileLabels(argv[5],argv[6],argv[7],argv[8]));
+                else
+                    pi = new ProfileImage(st,sf,nt,nf,ProfileLabels.Default);
+
                 byte[] png = pi.toPNG();
                 java.io.OutputStream os = new java.io.FileOutputStream(out);
                 try {
@@ -172,7 +231,7 @@ public class ProfileImage
             }
         }
         else {
-            System.err.println("Usage: ProfileImage st sf nt nf out-file.png");
+            System.err.println("Usage: ProfileImage st sf nt nf out-file.png [labels]");
             System.exit(1);
         }
     }

@@ -1,6 +1,7 @@
 
 package oso.data;
 
+import cpi.Code;
 
 import gap.*;
 import gap.data.*;
@@ -22,6 +23,7 @@ import java.util.Date;
  */
 public final class Person
     extends PersonData
+    implements cpi.Code.Data
 {
     public final static Person ForLongLogonId(String logonId){
 
@@ -41,6 +43,7 @@ public final class Person
 
             logon = new Person(Strings.RandomIdentifier());
             logon.setLogonId(logonId);
+            logon.setCreated(new Date());
             logon.save();
         }
         else {
@@ -123,5 +126,83 @@ public final class Person
             this.save();
         }
         return identifier;
+    }
+    public boolean fromJsonLogonId(Json json){
+
+        return false;
+    }
+    public boolean fromJsonIdentifier(Json json){
+
+        return false;
+    }
+    public boolean fromJsonNf(Json json){
+
+        return false;
+    }
+    public boolean fromJsonNt(Json json){
+
+        return false;
+    }
+    public boolean fromJsonSt(Json json){
+
+        return false;
+    }
+    public boolean fromJsonSf(Json json){
+
+        return false;
+    }
+    public boolean fromJsonCreated(Json json){
+
+        return false;
+    }
+    public boolean fromJsonCompleted(Json json){
+
+        return false;
+    }
+    public boolean fromJsonProject(Json json){
+
+        return false;
+    }
+    public Json toJsonProject(){
+
+        return null;
+    }
+    public Code.Encode getCodeEncode(){
+
+        return new Code.Encode(this);
+    }
+    public boolean hasCodeData(){
+        return (null != this.getSf());
+    }
+    public boolean hasNotCodeData(){
+        return (null == this.getSf());
+    }
+    public String toStringSf(){
+        Float sf = this.getSf();
+        if (null == sf)
+            return null;
+        else
+            return Code.Format(sf);
+    }
+    public String toStringSt(){
+        Float st = this.getSt();
+        if (null == st)
+            return null;
+        else
+            return Code.Format(st);
+    }
+    public String toStringNf(){
+        Float nf = this.getNf();
+        if (null == nf)
+            return null;
+        else
+            return Code.Format(nf);
+    }
+    public String toStringNt(){
+        Float nt = this.getNt();
+        if (null == nt)
+            return null;
+        else
+            return Code.Format(nt);
     }
 }

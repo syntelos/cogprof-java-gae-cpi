@@ -35,6 +35,11 @@
     <load-on-startup>-1</load-on-startup>
   </servlet>
   <servlet>
+    <servlet-name>Member</servlet-name>
+    <servlet-class>cpi.groups.MemberServlet</servlet-class>
+    <load-on-startup>-1</load-on-startup>
+  </servlet>
+  <servlet>
     <servlet-name>Project</servlet-name>
     <servlet-class>cpi.groups.ProjectServlet</servlet-class>
     <load-on-startup>-1</load-on-startup>
@@ -42,6 +47,11 @@
   <servlet>
     <servlet-name>Account</servlet-name>
     <servlet-class>cpi.groups.AccountServlet</servlet-class>
+    <load-on-startup>-1</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>Note</servlet-name>
+    <servlet-class>cpi.groups.NoteServlet</servlet-class>
     <load-on-startup>-1</load-on-startup>
   </servlet>
 
@@ -71,12 +81,20 @@
     <url-pattern>/groups/*</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
+    <servlet-name>Member</servlet-name>
+    <url-pattern>/members/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
     <servlet-name>Project</servlet-name>
     <url-pattern>/projects/*</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Account</servlet-name>
     <url-pattern>/accounts/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Note</servlet-name>
+    <url-pattern>/notes/*</url-pattern>
   </servlet-mapping>
 
   <error-page>

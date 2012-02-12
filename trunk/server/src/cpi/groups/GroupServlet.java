@@ -1,8 +1,9 @@
 
 package cpi.groups;
 
-import cpi.Redirect;
 import cpi.Margins;
+import cpi.ProfileLabels;
+import cpi.Redirect;
 import cpi.Tail;
 
 import gap.Request;
@@ -39,13 +40,21 @@ import com.google.appengine.api.oauth.OAuthServiceFailureException;
 public final class GroupServlet
     extends gap.service.Servlet
 {
-    final static TemplateName GroupDiv = new TemplateName("div.group.html");
-    final static TemplateName ListGroup = new TemplateName("group");
-    final static TemplateName EditGroup = new TemplateName("group");
-    final static TemplateName PageParameters = new TemplateName("page");
+    public final static TemplateName GroupDiv = new TemplateName("div.group.html");
+    public final static TemplateName ListGroup = new TemplateName("group");
+    public final static TemplateName EditGroup = new TemplateName("group");
+    public final static TemplateName PageParameters = new TemplateName("page");
+
+    public final static TemplateName TestLabel = new TemplateName("test_label");
+    public final static TemplateName TestSelectTrue = new TemplateName("test_select_true");
+    public final static TemplateName TestSelectFalse = new TemplateName("test_select_false");
+
+    final static String IsTest = "TEST";
+    final static String IsNotTest = "LIVE";
+    final static String TestSelect = "selected";
 
     public enum Op {
-        Save, Create, List, Delete, Accounts, Projects;
+        Update, Create, List, Delete, Accounts, Projects;
 
         public static Op For(Request q){
             String string = q.getParameter("op");
@@ -70,13 +79,15 @@ public final class GroupServlet
             if (req.isAdmin){
 
                 final String identifier = Identifier(req);
-                if (null != identifier){
-                    /*
-                     * Admin Read
-                     */
-                    req.setVariable(GroupDiv,"div.group.admin.html");
+                /*
+                 * Admin Read
+                 */
+                req.setVariable(GroupDiv,"div.group.admin.html");
 
-                    Group group = Group.ForLongIdentifier(identifier);
+                Group group;
+
+                if (null != identifier){
+                    group = Group.ForLongIdentifier(identifier);
 
                     if (null != group){
                         req.addSection(EditGroup,group);
@@ -87,6 +98,16 @@ public final class GroupServlet
                         Margins margins = group.getCreateMargins();
                         margins.dictionaryInto(group);
 
+                        ProfileLabels profileLabels = group.getCreateProfileLabels();
+                        profileLabels.dictionaryInto(group);
+
+                        if (group.isTest()){
+                            group.setVariable(TestSelectTrue,TestSelect);
+                        }
+                        else {
+                            group.setVariable(TestSelectFalse,TestSelect);
+                        }
+
                         if (group.isDirty())
                             group.save();
                     }
@@ -94,30 +115,16 @@ public final class GroupServlet
                         TemplateDataDictionary show = req.showSection(EditGroup).get(0);
                         new Redirect().dictionaryInto(show);
                         new Margins().dictionaryInto(show);
+                        new ProfileLabels().dictionaryInto(show);
                     }
                 }
                 else {
-                    /*
-                     * Admin List
-                     */
-                    req.setVariable(GroupDiv,"div.group.admin-list.html");
-                    for (Group group : Group.ListPage(req.parameters.page)){
-
-                        req.addSection(ListGroup,group);
-                        Redirect redirect = group.getCreateRedirect();
-                        redirect.dictionaryInto(group);
-
-                        Margins margins = group.getCreateMargins();
-                        margins.dictionaryInto(group);
-
-                        if (group.isDirty())
-                            group.save();
-                    }
-                    TemplateDataDictionary page = req.addSection(PageParameters);
-                    req.parameters.page.dictionaryInto(page);
+                    TemplateDataDictionary show = req.showSection(EditGroup).get(0);
+                    new Redirect().dictionaryInto(show);
+                    new Margins().dictionaryInto(show);
+                    new ProfileLabels().dictionaryInto(show);
                 }
-                /*
-                 */
+
                 rep.setContentTypeHtml();
 
                 this.render(req,rep,"group.html");
@@ -133,8 +140,6 @@ public final class GroupServlet
                 final OAuthService OAuth = OAuthServiceFactory.getOAuthService();
 
                 final String consumer = OAuth.getOAuthConsumerKey();
-
-                req.setVariable(GroupDiv,"div.group.user.html");
 
                 final String identifier = Identifier(req);
                 if (null != identifier){
@@ -160,8 +165,6 @@ public final class GroupServlet
                          * JSON
                          */
                         if (null != group && group.hasGroupAccess(viewer)){
-
-                            req.addSection(EditGroup,group);
 
                             rep.setContentTypeJson();
 
@@ -202,7 +205,7 @@ public final class GroupServlet
                 final Op op = Op.For(req);
                 if (null != op){
                     switch(op){
-                    case Save:{
+                    case Update:{
                         String identifier = Identifier(req);
                         if (null != identifier){
                             /*
@@ -210,26 +213,30 @@ public final class GroupServlet
                              */
                             Group group = Group.ForLongIdentifier(identifier);
                             if (null != group){
+
+                                Boolean intest = group.getTest();
+
                                 group.updateFrom(req);
 
-                                req.addSection(EditGroup,group);
+                                Boolean cktest = group.getTest();
 
-                                Redirect redirect = group.getCreateRedirect();
-                                redirect.dictionaryInto(group);
-
-                                Margins margins = group.getCreateMargins();
-                                margins.dictionaryInto(group);
+                                if (IsNotEqual(intest,cktest) && IsNotTrue(cktest))
+                                    group.dropProjects();
 
                                 if (group.isDirty())
                                     group.save();
+
+                                rep.sendRedirect("/groups/"+group.getIdentifier()+"/index.html");
                             }
-                            req.setVariable(GroupDiv,"div.group.admin.html");
+                            else
+                                this.error(req,rep,404,"Not found");
+
+                            return;
                         }
                         else {
                             this.error(req,rep,400,"Missing identifier");
                             return;
                         }
-                        break;
                     }
                     case Create:{
                         /*
@@ -239,19 +246,10 @@ public final class GroupServlet
 
                         group.save();
 
-                        req.addSection(EditGroup,group);
-
-                        Redirect redirect = group.getCreateRedirect();
-                        redirect.dictionaryInto(group);
-
-                        Margins margins = group.getCreateMargins();
-                        margins.dictionaryInto(group);
-
-                        req.setVariable(GroupDiv,"div.group.admin.html");
-
                         Account.Billing.NewGroup(group,req);
 
-                        break;
+                        rep.sendRedirect("/groups/"+group.getIdentifier()+"/index.html");
+                        return;
                     }
                     case List:{
                         /*
@@ -267,13 +265,26 @@ public final class GroupServlet
                             Margins margins = group.getCreateMargins();
                             margins.dictionaryInto(group);
 
+                            ProfileLabels profileLabels = group.getCreateProfileLabels();
+                            profileLabels.dictionaryInto(group);
+
+                            if (group.isTest()){
+                                group.setVariable(TestLabel,IsTest);
+                            }
+                            else {
+                                group.setVariable(TestLabel,IsNotTest);
+                            }
+
                             if (group.isDirty())
                                 group.save();
                         }
                         TemplateDataDictionary page = req.addSection(PageParameters);
                         req.parameters.page.dictionaryInto(page);
 
-                        break;
+                        rep.setContentTypeHtml();
+
+                        this.render(req,rep,"group.html");
+                        return;
                     }
                     case Delete:{
 
@@ -339,11 +350,6 @@ public final class GroupServlet
                     this.error(req,rep,400,"Missing op");
                     return;
                 }
-
-                rep.setContentTypeHtml();
-
-                this.render(req,rep,"group.html");
-                return;
             }
             else {
                 this.error(req,rep,401,"Access denied");
@@ -409,9 +415,11 @@ public final class GroupServlet
 
     public final static String Identifier(Request req){
         String identifier = req.getParameter("identifier");
-        if (null == identifier)
-            return req.getSource();
-        else
+        if (null != identifier)
             return identifier;
+        else if (req.isSourceTail())
+            return null;
+        else
+            return req.getSource();
     }
 }

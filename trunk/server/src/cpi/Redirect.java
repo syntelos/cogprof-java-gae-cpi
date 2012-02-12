@@ -43,6 +43,8 @@ public final class Redirect
     public final static class Names {
         public final static String Href = "redirect_href";
         public final static String Target = "redirect_target";
+        public final static String WithTarget = "redirect_with_target";
+        public final static String WithoutTarget = "redirect_without_target";
         public final static String Sequence = "redirect_sequence";
         public final static String Timeout = "redirect_timeout";
         public final static String SequenceSelectInject = "redirect_sequence_select_inject";
@@ -51,6 +53,8 @@ public final class Redirect
     public final static class TemplateNames {
         public final static gap.hapax.TemplateName Href = new gap.hapax.TemplateName(Redirect.Names.Href);
         public final static gap.hapax.TemplateName Target = new gap.hapax.TemplateName(Redirect.Names.Target);
+        public final static gap.hapax.TemplateName WithTarget = new gap.hapax.TemplateName(Redirect.Names.WithTarget);
+        public final static gap.hapax.TemplateName WithoutTarget = new gap.hapax.TemplateName(Redirect.Names.WithoutTarget);
         public final static gap.hapax.TemplateName Sequence = new gap.hapax.TemplateName(Redirect.Names.Sequence);
         public final static gap.hapax.TemplateName Timeout = new gap.hapax.TemplateName(Redirect.Names.Timeout);
 
@@ -206,6 +210,12 @@ public final class Redirect
     }
 
 
+    public boolean isSequenceInject(){
+        return (Sequence.inject == this.sequence);
+    }
+    public boolean isSequenceTimeout(){
+        return (Sequence.timeout == this.sequence);
+    }
     /**
      * Render HREF template
      */
@@ -282,6 +292,13 @@ public final class Redirect
         dict.setVariable(TemplateNames.Target,this.target);
         dict.setVariable(TemplateNames.Sequence,this.sequence.toString());
         dict.setVariable(TemplateNames.Timeout,String.valueOf(this.timeout));
+
+        if (null != this.target && 0 != this.target.length()){
+            dict.showSection(TemplateNames.WithTarget);
+        }
+        else {
+            dict.showSection(TemplateNames.WithoutTarget);
+        }
 
         switch (this.sequence){
         case inject:

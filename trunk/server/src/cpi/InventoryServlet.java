@@ -20,6 +20,8 @@
 package cpi;
 
 import cpi.Code;
+import cpi.groups.GroupServlet;
+import cpi.groups.Project;
 
 import gap.Request;
 import gap.Response;
@@ -43,9 +45,13 @@ public class InventoryServlet
     private final static String TemplateFilename = "inventory.html";
 
     private final static TemplateName DivInventory = new TemplateName("div.inventory.html");
+    private final static TemplateName DivLogon = new TemplateName("div.logon.html");
+    private final static TemplateName DivCopyright = new TemplateName("div.copyright.html");
     private final static TemplateName InventoryCurrent = new TemplateName("inventory_current");
     private final static TemplateName InventoryLhs = new TemplateName("inventory_lhs");
     private final static TemplateName InventoryRhs = new TemplateName("inventory_rhs");
+
+    private final static TemplateName WithoutRedirect = new TemplateName("without_redirect");
 
     final static class Pair {
 
@@ -118,94 +124,92 @@ public class InventoryServlet
     protected void doGet(Request req, Response rep)
         throws ServletException, IOException
     {
-        if (req.hasViewer()){
+        if (req.isSourceTail()){
 
-            Person viewer = req.getViewer();
-
-            if (Inventory.IsComplete(viewer)){
-
-                Inventory.Complete(viewer);
-
-                Code.Encode enc = Inventory.Encode(viewer);
-
-                rep.sendRedirect("/profile/"+enc.code);
-            }
-            else {
-                String id_s = req.getParameter("id");
-                String ir_s = req.getParameter("ir");
-
-                if (null != id_s && null != ir_s){
-                    try {
-                        int id = Integer.parseInt(id_s);
-                        Inventory ir = Inventory.valueOf(ir_s);
-                        {
-                            List.Primitive<Inventory> inventory = viewer.getInventory();
-                            if (id < inventory.size())
-                                inventory.set(id,ir);
-                            else if (id == inventory.size())
-                                inventory.add(ir);
-                            else {
-                                this.error(req,rep,500,"Input error (bad ID "+id+" != "+inventory.size()+")");
-                                return;
-                            }
-                            viewer.store();
-                        }
-                        int next = (id+1);
-                    
-                        if (next >= Inventory.Size)
-                            rep.sendRedirect("/profile");
-                        else {
-                            Pair pair = EN_US.get(next);
-                            if (null != pair){
-
-                                DefineInventory(req,next,pair);
-
-                                super.render(req,rep);
-                            }
-                            else if (-1 < id && id < Inventory.Size)
-                                this.error(req,rep,500,"Configuration error in inventory set");
-                            else
-                                this.error(req,rep,500,"Input error (bad ID "+id+')');
-                        }
-                    }
-                    catch (Exception any){
-                        this.error(req,rep,500,"Input error",any);
-                    }
-                }
-                else if (viewer.isNotEmptyInventory()){
-
-                    int next = viewer.getInventory().size();
-
-                    if (next >= Inventory.Size)
-                        rep.sendRedirect("/profile");
-                    else {
-                        Pair pair = EN_US.get(next);
-                        if (null != pair){
-
-                            DefineInventory(req,next,pair);
-
-                            super.render(req,rep);
-                        }
-                        else
-                            this.error(req,rep,500,"Server error (ID[n] "+next+')');
-                    }
+            final String source = req.getSource();
+            switch (Tail.For(source)){
+            case Tail.IndexHtml:
+                if (req.hasViewer()){
+                    /*
+                     * Request to /inventory/index.html with login
+                     */
+                    this.doGet(req,rep,req.getViewer());
                 }
                 else {
-                
-                    Pair pair = EN_US.get(0);
-                    if (null != pair){
-
-                        DefineInventory(req,0,pair);
-
-                        super.render(req,rep);
-                    }
-                    else
-                        this.error(req,rep,500,"Configuration error in inventory set");
+                    /*
+                     * Request to /inventory/index.html without login
+                     */
+                    rep.sendRedirect(req.getLogonUrl());
                 }
+                return;
+            case Tail.None:{
+
+                Person person = Person.ForLongIdentifier(source);
+                if (null != person){
+                    /*
+                     * Person identifier in /inventory/identifier
+                     * Redirect to /inventory/identifier/index.html
+                     */
+                    rep.sendRedirect("/inventory/"+person.getIdentifier()+"/groups.html");
+                }
+                else
+                    rep.sendRedirect("/inventory/index.html");
+
+                return;
+            }
+            default:
+                rep.sendRedirect("/inventory/index.html");
+                return;
             }
         }
-        else
-            rep.sendRedirect(req.getLogonUrl());
+        else if (req.isGroupTail()){
+
+            final String source = req.getSource();
+
+            switch(Tail.For(req.getGroup())){
+
+            case Tail.GroupsHtml:{
+
+                Person person = Person.ForLongIdentifier(source);
+                if (null != person){
+                    /*
+                     * Person identifier in /inventory/identifier/index.html
+                     */
+                    this.doGet(req,rep,person);
+                }
+                else
+                    this.error(req,rep,404,"Not found");
+
+                return;
+            }
+            case Tail.IndexHtml:
+                /*
+                 * Login at /inventory/index.html
+                 */
+                if (req.hasViewer()){
+
+                    Person viewer = req.getViewer();
+
+                    this.doGet(req,rep,viewer);
+                }
+                else {
+                    rep.sendRedirect(req.getLogonUrl());
+                }
+                return;
+            default:{
+                Person person = Person.ForLongIdentifier(source);
+                if (null != person){
+                    rep.sendRedirect("/inventory/"+person.getIdentifier()+"/groups.html");
+                }
+                else {
+                    rep.sendRedirect("/inventory/index.html");
+                }
+                return;
+            }
+            }
+        }
+        else 
+            rep.sendRedirect("/inventory/index.html");
     }
     protected TemplateRenderer getTemplate(Request req)
         throws TemplateException 
@@ -215,13 +219,190 @@ public class InventoryServlet
         return Templates.GetTemplate(TemplateFilename);
     }
 
-    protected static TemplateDataDictionary DefineInventory(Request req, int id, Pair pair){
+    protected void doGet(Request req, Response rep, Person viewer)
+        throws ServletException, IOException
+    {
+
+        if (Inventory.IsComplete(viewer)){
+
+            Inventory.Complete(viewer);
+
+            if (viewer.hasProject(true)){
+
+                final Project project = viewer.getProject(true);
+
+                final Redirect redirect = project.getCreateRedirect();
+
+                if (redirect.isSequenceInject()){
+                    try {
+                        rep.sendRedirect(redirect.toString(viewer));
+                    }
+                    catch (hapax.TemplateException exc){
+
+                        this.error(req,rep,500,String.format("Redirect template '%s'",redirect.href),exc);
+                    }
+                }
+                else {
+
+                    rep.sendRedirect("/profile/"+viewer.getIdentifier()+"/groups.html");
+                }
+            }
+            else {
+
+                final Code.Encode enc = Inventory.Encode(viewer);
+
+                rep.sendRedirect("/profile/"+enc.code+"/index.html");
+            }
+        }
+        else {
+            String id_s = req.getParameter("id");
+            String ir_s = req.getParameter("ir");
+
+            if (null != id_s && null != ir_s){
+                try {
+                    int id = Integer.parseInt(id_s);
+                    Inventory ir = Inventory.valueOf(ir_s);
+                    {
+                        List.Primitive<Inventory> inventory = viewer.getInventory();
+                        if (id < inventory.size())
+                            inventory.set(id,ir);
+                        else if (id == inventory.size())
+                            inventory.add(ir);
+                        else {
+                            this.error(req,rep,500,"Input error (bad ID "+id+" != "+inventory.size()+")");
+                            return;
+                        }
+                    }
+                    int next = (id+1);
+                    
+                    if (next >= Inventory.Size){
+
+                        Inventory.Complete(viewer);
+
+                        if (viewer.hasProject(true)){
+
+                            rep.sendRedirect("/profile/"+viewer.getIdentifier()+"/groups.html");
+                        }
+                        else {
+                            Code.Encode enc = Inventory.Encode(viewer);
+
+                            rep.sendRedirect("/profile/"+enc.code+"/index.html");
+                        }
+                    }
+                    else {
+                        viewer.store();
+
+                        Pair pair = EN_US.get(next);
+                        if (null != pair){
+
+                            DefineInventory(req,next,pair,viewer);
+
+                            super.render(req,rep);
+                        }
+                        else if (-1 < id && id < Inventory.Size)
+                            this.error(req,rep,500,"Configuration error in inventory set");
+                        else
+                            this.error(req,rep,500,"Input error (bad ID "+id+')');
+                    }
+                }
+                catch (Exception any){
+                    this.error(req,rep,500,"Input error",any);
+                }
+            }
+            else if (null != id_s){
+                try {
+                    int id = Integer.parseInt(id_s);
+                    
+                    Pair pair = EN_US.get(id);
+                    if (null != pair){
+
+                        DefineInventory(req,id,pair,viewer);
+
+                        super.render(req,rep);
+                    }
+                    else if (-1 < id && id < Inventory.Size)
+                        this.error(req,rep,500,"Configuration error in inventory set");
+                    else
+                        this.error(req,rep,500,"Input error (bad ID "+id+')');
+                }
+                catch (Exception any){
+                    this.error(req,rep,500,"Input error",any);
+                }
+            }
+            else if (viewer.isNotEmptyInventory()){
+
+                int next = viewer.getInventory().size();
+
+                if (next >= Inventory.Size){
+                    Inventory.Complete(viewer);
+
+                    if (viewer.hasProject(true)){
+
+                        rep.sendRedirect("/profile/"+viewer.getIdentifier()+"/groups.html");
+                    }
+                    else {
+                        Code.Encode enc = Inventory.Encode(viewer);
+
+                        rep.sendRedirect("/profile/"+enc.code+"/index.html");
+                    }
+                }
+                else {
+                    Pair pair = EN_US.get(next);
+                    if (null != pair){
+
+                        DefineInventory(req,next,pair,viewer);
+
+                        super.render(req,rep);
+                    }
+                    else
+                        this.error(req,rep,500,"Server error (ID[n] "+next+')');
+                }
+            }
+            else {
+                
+                Pair pair = EN_US.get(0);
+                if (null != pair){
+
+                    DefineInventory(req,0,pair,viewer);
+
+                    super.render(req,rep);
+                }
+                else
+                    this.error(req,rep,500,"Configuration error in inventory set");
+            }
+        }
+    }
+
+    protected static TemplateDataDictionary DefineInventory(Request req, int id, Pair pair, Person viewer){
 
         TemplateDataDictionary div = req.addSection(DivInventory);
         {
             div.setVariable(InventoryCurrent,String.valueOf(id));
             div.setVariable(InventoryLhs,pair.lhs);
             div.setVariable(InventoryRhs,pair.rhs);
+        }
+        /*
+         * viewer is null from (SiteServlet) "example.html"
+         */
+        if (null != viewer && viewer.hasProject(true)){
+
+            req.setVariable(DivLogon,"div.logon.group.html"); /* collapse div.logon */
+            req.setVariable(DivCopyright,"div.copyright.group.html"); /* collapse div.copyright */
+
+            Project project = viewer.getProject(true);
+
+            Margins margins = project.getCreateMargins();
+            /*
+             * {{#group}}
+             *  css/body/margin :  {{=margins_css}}
+             * {{/group}}
+             */
+            margins.dictionaryInto(req.addSection(GroupServlet.EditGroup));
+            /*
+             * {{#without_redirect}}
+             * {{/without_redirect}}
+             */
+            req.showSection(InventoryServlet.WithoutRedirect);
         }
         return div;
     }

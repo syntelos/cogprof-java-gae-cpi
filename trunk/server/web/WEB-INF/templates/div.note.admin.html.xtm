@@ -1,0 +1,62 @@
+   <div id="admin">
+     <h1>{{=page_title}}</h1>
+     <table class="editing">{{#note}}
+       <form method="POST">
+         <tr class="editing">
+           <td class="editing lhs"><label for="identifier">Identifier</label>
+           </td>
+           <td class="editing rhs"><input readonly type="text" id="identifier" name="identifier" value="{{=identifier}}" />
+           </td>
+         </tr>
+         <tr class="editing">
+           <td class="editing lhs"><label for="writer">Writer</label>
+           </td>
+           <td class="editing rhs"><input readonly type="text" id="writer" name="writer_logonId" value="{{=writer/logonId}}" />
+           </td>
+         </tr>
+         <tr class="editing">
+           <td class="editing lhs"><label for="created">Created</label>
+           </td>
+           <td class="editing rhs"><input readonly type="text" id="created" name="created" value="{{=created}}" />
+           </td>
+         </tr>
+         <tr class="editing">
+           <td class="editing lhs"><label for="updated">Updated</label>
+           </td>
+           <td class="editing rhs"><input readonly type="text" id="updated" name="updated" value="{{=updated}}" />
+           </td>
+         </tr>
+         <tr class="editing">
+           <td class="editing lhs"><label for="text">Text</label>
+           </td>
+           <td class="editing rhs"><textarea rows="5" cols="40" id="text" name="text" tabindex="1">{{=note_text}}</textarea>
+           </td>
+         </tr>{{/note}}
+         <tr class="editing">
+           <td class="editing in" colspan="3">
+             <table class="editing in">
+               <tr class="editing">
+                 <td class="editing lhs">
+                   <input type="submit" name="op" value="List" tabindex="2" />
+                 </td>
+                 <td class="editing mid">
+                   <input type="submit" name="op" value="Save" tabindex="3" />
+                 </td>
+                 <td class="editing rhs">
+                   <input type="submit" name="op" value="Account" tabindex="4" />
+                 </td>
+               </tr>
+             </table>
+           </td>
+         </tr>
+       </form>
+     </table>
+   </div>
+   <script type="text/javascript"><!-- //
+
+    var tabone = document.getElementById('name');
+    if (tabone){
+      tabone.focus();
+    }
+
+   // --></script>

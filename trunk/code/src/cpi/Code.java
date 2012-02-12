@@ -35,6 +35,14 @@ import java.util.StringTokenizer;
  */
 public abstract class Code {
 
+    public interface Data {
+        public boolean hasCodeData();
+        public Float getSf();
+        public Float getSt();
+        public Float getNf();
+        public Float getNt();
+    }
+
     /**
      * Fixed point bits.  A floating point value is multiplied by this
      * value to convert into a 16 bit fixed point integer
@@ -180,6 +188,19 @@ public abstract class Code {
         public final float nt, nf, st, sf;
         public final String code;
 
+        public Encode(Code.Data data){
+            super();
+            if (null != data && data.hasCodeData()){
+                this.nt = data.getNt();
+                this.nf = data.getNf();
+                this.st = data.getSt();
+                this.sf = data.getSf();
+
+                this.code = Encode(this.nt,this.nf,this.st,this.sf);
+            }
+            else
+                throw new IllegalArgumentException();
+        }
         public Encode(float nt, float nf, float st, float sf){
             super();
             this.nt = nt;
@@ -190,6 +211,22 @@ public abstract class Code {
             this.code = Encode(nt,nf,st,sf);
         }
 
+
+        public String getCode(){
+            return this.code;
+        }
+        public String toStringNt(){
+            return Format(this.nt);
+        }
+        public String toStringNf(){
+            return Format(this.nf);
+        }
+        public String toStringSt(){
+            return Format(this.st);
+        }
+        public String toStringSf(){
+            return Format(this.sf);
+        }
         public String toString(){
             return String.format("%9g %9g %9g %9g",this.nt,this.nf,this.st,this.sf);
         }
@@ -268,6 +305,10 @@ public abstract class Code {
             this.sf = sf;
         }
 
+
+        public String getCode(){
+            return this.code;
+        }
         public String toStringNt(){
             return Format(this.nt);
         }
@@ -284,6 +325,24 @@ public abstract class Code {
             return String.format("%9g %9g %9g %9g",this.nt,this.nf,this.st,this.sf);
         }
     }
+
+
+    public Code(){
+        super();
+    }
+
+
+    public abstract String getCode();
+
+    public abstract String toStringNt();
+
+    public abstract String toStringNf();
+
+    public abstract String toStringSt();
+
+    public abstract String toStringSf();
+
+    public abstract String toString();
 
 
     /**

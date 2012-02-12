@@ -5,6 +5,8 @@ import oso.data.Person;
 import cpi.Redirect;
 import cpi.Margins;
 
+import json.Json;
+
 import gap.*;
 import gap.data.*;
 import gap.util.*;
@@ -87,25 +89,29 @@ public final class Account
         }
         public static void NewProject(Group group, Project project, Request request){
 
-            Account account = new Account(Strings.RandomIdentifier());
-            account.setGroup(group);
-            account.setProject(project);
-            account.setClosed(Boolean.FALSE);
-            account.setAmount(Account.Amount.PeriodicFee(project));
-            account.save();
+            if (group.isNotTest()){
+                Account account = new Account(Strings.RandomIdentifier());
+                account.setGroup(group);
+                account.setProject(project);
+                account.setClosed(Boolean.FALSE);
+                account.setAmount(Account.Amount.PeriodicFee(project));
+                account.save();
 
-            account.noteNewProject(group,project,request,"Created Project");
+                account.noteNewProject(group,project,request,"Created Project");
+            }
         }
         public static void MaintainProject(Group group, Project project, Request request){
 
-            Account account = new Account(Strings.RandomIdentifier());
-            account.setGroup(group);
-            account.setProject(project);
-            account.setClosed(Boolean.FALSE);
-            account.setAmount(Account.Amount.PeriodicFee(project));
-            account.save();
+            if (group.isNotTest()){
+                Account account = new Account(Strings.RandomIdentifier());
+                account.setGroup(group);
+                account.setProject(project);
+                account.setClosed(Boolean.FALSE);
+                account.setAmount(Account.Amount.PeriodicFee(project));
+                account.save();
 
-            account.note(request,"Project Maintenance");
+                account.note(request,"Project Maintenance");
+            }
         }
     }
 
@@ -124,6 +130,19 @@ public final class Account
     }
 
 
+    public boolean updateFrom(Request req) throws ValidationError {
+        boolean change = false;
+
+        return change;
+    }
+    public boolean isClosed(){
+        final Boolean closed = this.getClosed();
+        return (null != closed && closed);
+    }
+    public boolean isNotClosed(){
+        final Boolean closed = this.getClosed();
+        return (null == closed || (!closed));
+    }
     public void onread(){
     }
     public void onwrite(){
@@ -160,7 +179,11 @@ public final class Account
             if (null == text || 1 > text.length()){
                 text = defaultText;
             }
-            note.setText(Strings.TextFromString(text));
+            if (null == text)
+                return;
+            else {
+                note.setText(Strings.TextFromString(text));
+            }
         }
         note.save();
     }
@@ -197,5 +220,26 @@ public final class Account
     public boolean hasAccountAccess(Person viewer){
 
         return this.getGroup().hasGroupAccess(viewer);
+    }
+    public boolean fromJsonIdentifier(Json json){
+        return false;
+    }
+    public boolean fromJsonGroup(Json json){
+        return false;
+    }
+    public boolean fromJsonProject(Json json){
+        return false;
+    }
+    public boolean fromJsonClosed(Json json){
+        return false;
+    }
+    public boolean fromJsonAmount(Json json){
+        return false;
+    }
+    public boolean fromJsonCurrency(Json json){
+        return false;
+    }
+    public boolean fromJsonNotes(Json json){
+        return false;
     }
 }

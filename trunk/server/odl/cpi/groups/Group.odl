@@ -2,8 +2,10 @@
 package cpi.groups;
 path /groups;
 import oso.data.Person;
-import cpi.Redirect;
+
 import cpi.Margins;
+import cpi.Redirect;
+import cpi.ProfileLabels;
 
 /**
  * A {@link Group} has many {@link Project Projects}
@@ -44,4 +46,13 @@ class Group
      * If not Project, use Group
      */
     Margins margins;
+    /*
+     * While group is in test, accounts and notes are not created.
+     * Null value is equivalent to false value, not in test.
+     */
+    Boolean test;
+    /*
+     * Specialized labels for profile image quadrants
+     */
+    ProfileLabels labels;
 }

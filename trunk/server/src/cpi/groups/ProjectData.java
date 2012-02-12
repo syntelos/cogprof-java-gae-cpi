@@ -29,6 +29,8 @@ import gap.hapax.TemplateDataDictionary;
 import gap.hapax.TemplateName;
 import gap.util.*;
 
+import json.Json;
+
 import com.google.appengine.api.datastore.*;
 import com.google.appengine.api.blobstore.BlobKey;
 
@@ -41,7 +43,7 @@ import javax.annotation.Generated;
  *
  * @see Project
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-01T20:10:13.786Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-11T18:01:33.792Z")
 public abstract class ProjectData
     extends gap.data.BigTable
     implements DataInheritance<Project>
@@ -650,7 +652,7 @@ public abstract class ProjectData
         }
     }
 
-    private transient final Project.Field.Statistics fieldStatistics = new Project.Field.Statistics();
+    private transient Project.Field.Statistics fieldStatistics = new Project.Field.Statistics();
 
     private transient Project inheritFrom;
 
@@ -684,6 +686,14 @@ public abstract class ProjectData
     }
 
 
+    private Project.Field.Statistics fieldStatistics(){
+        Project.Field.Statistics fieldStatistics = this.fieldStatistics;
+        if (null == fieldStatistics){
+            fieldStatistics = new Project.Field.Statistics();
+            this.fieldStatistics = fieldStatistics;
+        }
+        return fieldStatistics;
+    }
     public void destroy(){
         this.inheritFrom = null;
         this.identifier = null;
@@ -771,7 +781,7 @@ public abstract class ProjectData
     }
     public final boolean dropIdentifier(){
         if (null != this.identifier){
-            this.fieldStatistics.markDirty(Project.Field.Identifier);
+            this.fieldStatistics().markDirty(Project.Field.Identifier);
             this.identifier = null;
             return true;
         }
@@ -786,18 +796,12 @@ public abstract class ProjectData
     }
     public final boolean setIdentifier(String identifier){
         if (IsNotEqual(this.identifier,identifier)){
-            this.fieldStatistics.markDirty(Project.Field.Identifier);
+            this.fieldStatistics().markDirty(Project.Field.Identifier);
             this.identifier = identifier;
             return true;
         }
         else
             return false;
-    }
-    public boolean setIdentifier(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setIdentifier((String)json.getValue(String.class));
     }
     public final boolean hasName(boolean mayInherit){
         return (null != this.getName(mayInherit));
@@ -807,7 +811,7 @@ public abstract class ProjectData
     }
     public final boolean dropName(){
         if (null != this.name){
-            this.fieldStatistics.markDirty(Project.Field.Name);
+            this.fieldStatistics().markDirty(Project.Field.Name);
             this.name = null;
             return true;
         }
@@ -831,7 +835,7 @@ public abstract class ProjectData
     }
     public final boolean setName(String name, boolean withInheritance){
         if (IsNotEqual(this.name,this.getName(withInheritance))){
-            this.fieldStatistics.markDirty(Project.Field.Name);
+            this.fieldStatistics().markDirty(Project.Field.Name);
             this.name = name;
             return true;
         }
@@ -840,18 +844,12 @@ public abstract class ProjectData
     }
     public final boolean setName(String name){
         if (IsNotEqual(this.name,name)){
-            this.fieldStatistics.markDirty(Project.Field.Name);
+            this.fieldStatistics().markDirty(Project.Field.Name);
             this.name = name;
             return true;
         }
         else
             return false;
-    }
-    public boolean setName(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setName((String)json.getValue(String.class));
     }
     public final boolean hasGroup(boolean mayInherit){
         return (null != this.getGroup(mayInherit));
@@ -861,7 +859,7 @@ public abstract class ProjectData
     }
     public final boolean dropGroup(){
         if (null != this.group){
-            this.fieldStatistics.markDirty(Project.Field.Group);
+            this.fieldStatistics().markDirty(Project.Field.Group);
             this.group = null;
             this.groupId = null;
             this.groupKey = null;
@@ -875,7 +873,7 @@ public abstract class ProjectData
     }
     public final boolean setGroupId(String groupId){
         if (IsNotEqual(this.groupId,groupId)){
-            this.fieldStatistics.markDirty(Project.Field.Group);
+            this.fieldStatistics().markDirty(Project.Field.Group);
             this.groupId = groupId;
             this.groupKey = null;
             this.group = null;
@@ -942,7 +940,7 @@ public abstract class ProjectData
     }
     public final boolean setGroup(Group group, boolean withInheritance){
         if (IsNotEqual(this.group,this.getGroup(withInheritance))){
-            this.fieldStatistics.markDirty(Project.Field.Group);
+            this.fieldStatistics().markDirty(Project.Field.Group);
             this.group = group;
             if (null != group){
                 this.groupId = group.getId();
@@ -959,7 +957,7 @@ public abstract class ProjectData
     }
     public final boolean setGroup(Group group){
         if (IsNotEqual(this.group,group)){
-            this.fieldStatistics.markDirty(Project.Field.Group);
+            this.fieldStatistics().markDirty(Project.Field.Group);
             this.group = group;
             if (null != group){
                 this.groupId = group.getId();
@@ -974,12 +972,6 @@ public abstract class ProjectData
         else
             return false;
     }
-    public boolean setGroup(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setGroup((Group)json.getValue(Group.class));
-    }
     public final boolean hasCreated(boolean mayInherit){
         return (null != this.getCreated(mayInherit));
     }
@@ -988,7 +980,7 @@ public abstract class ProjectData
     }
     public final boolean dropCreated(){
         if (null != this.created){
-            this.fieldStatistics.markDirty(Project.Field.Created);
+            this.fieldStatistics().markDirty(Project.Field.Created);
             this.created = null;
             return true;
         }
@@ -1012,7 +1004,7 @@ public abstract class ProjectData
     }
     public final boolean setCreated(Date created, boolean withInheritance){
         if (IsNotEqual(this.created,this.getCreated(withInheritance))){
-            this.fieldStatistics.markDirty(Project.Field.Created);
+            this.fieldStatistics().markDirty(Project.Field.Created);
             this.created = created;
             return true;
         }
@@ -1021,18 +1013,12 @@ public abstract class ProjectData
     }
     public final boolean setCreated(Date created){
         if (IsNotEqual(this.created,created)){
-            this.fieldStatistics.markDirty(Project.Field.Created);
+            this.fieldStatistics().markDirty(Project.Field.Created);
             this.created = created;
             return true;
         }
         else
             return false;
-    }
-    public boolean setCreated(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setCreated((Date)json.getValue(Date.class));
     }
     public final boolean hasCleaned(boolean mayInherit){
         return (null != this.getCleaned(mayInherit));
@@ -1042,7 +1028,7 @@ public abstract class ProjectData
     }
     public final boolean dropCleaned(){
         if (null != this.cleaned){
-            this.fieldStatistics.markDirty(Project.Field.Cleaned);
+            this.fieldStatistics().markDirty(Project.Field.Cleaned);
             this.cleaned = null;
             return true;
         }
@@ -1066,7 +1052,7 @@ public abstract class ProjectData
     }
     public final boolean setCleaned(Date cleaned, boolean withInheritance){
         if (IsNotEqual(this.cleaned,this.getCleaned(withInheritance))){
-            this.fieldStatistics.markDirty(Project.Field.Cleaned);
+            this.fieldStatistics().markDirty(Project.Field.Cleaned);
             this.cleaned = cleaned;
             return true;
         }
@@ -1075,18 +1061,12 @@ public abstract class ProjectData
     }
     public final boolean setCleaned(Date cleaned){
         if (IsNotEqual(this.cleaned,cleaned)){
-            this.fieldStatistics.markDirty(Project.Field.Cleaned);
+            this.fieldStatistics().markDirty(Project.Field.Cleaned);
             this.cleaned = cleaned;
             return true;
         }
         else
             return false;
-    }
-    public boolean setCleaned(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setCleaned((Date)json.getValue(Date.class));
     }
     public final boolean hasCount(boolean mayInherit){
         return (null != this.getCount(mayInherit));
@@ -1096,7 +1076,7 @@ public abstract class ProjectData
     }
     public final boolean dropCount(){
         if (null != this.count){
-            this.fieldStatistics.markDirty(Project.Field.Count);
+            this.fieldStatistics().markDirty(Project.Field.Count);
             this.count = null;
             return true;
         }
@@ -1120,7 +1100,7 @@ public abstract class ProjectData
     }
     public final boolean setCount(Integer count, boolean withInheritance){
         if (IsNotEqual(this.count,this.getCount(withInheritance))){
-            this.fieldStatistics.markDirty(Project.Field.Count);
+            this.fieldStatistics().markDirty(Project.Field.Count);
             this.count = count;
             return true;
         }
@@ -1129,26 +1109,8 @@ public abstract class ProjectData
     }
     public final boolean setCount(Integer count){
         if (IsNotEqual(this.count,count)){
-            this.fieldStatistics.markDirty(Project.Field.Count);
+            this.fieldStatistics().markDirty(Project.Field.Count);
             this.count = count;
-            return true;
-        }
-        else
-            return false;
-    }
-    public boolean setCount(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setCount((Integer)json.getValue(Integer.class));
-    }
-    public final boolean setCount(Number count){
-        if (IsNotEqual(this.count,count)){
-            this.fieldStatistics.markDirty(Project.Field.Count);
-            if (count instanceof Integer)
-                this.count = (Integer)count;
-            else
-                this.count = new Integer( count.intValue());
             return true;
         }
         else
@@ -1162,7 +1124,7 @@ public abstract class ProjectData
     }
     public final boolean dropRedirect(){
         if (null != this.redirect){
-            this.fieldStatistics.markDirty(Project.Field.Redirect);
+            this.fieldStatistics().markDirty(Project.Field.Redirect);
             this.redirect = null;
             return true;
         }
@@ -1186,7 +1148,7 @@ public abstract class ProjectData
     }
     public final boolean setRedirect(Redirect redirect, boolean withInheritance){
         if (IsNotEqual(this.redirect,this.getRedirect(withInheritance))){
-            this.fieldStatistics.markDirty(Project.Field.Redirect);
+            this.fieldStatistics().markDirty(Project.Field.Redirect);
             this.redirect = redirect;
             return true;
         }
@@ -1195,18 +1157,12 @@ public abstract class ProjectData
     }
     public final boolean setRedirect(Redirect redirect){
         if (IsNotEqual(this.redirect,redirect)){
-            this.fieldStatistics.markDirty(Project.Field.Redirect);
+            this.fieldStatistics().markDirty(Project.Field.Redirect);
             this.redirect = redirect;
             return true;
         }
         else
             return false;
-    }
-    public boolean setRedirect(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setRedirect((Redirect)json.getValue(Redirect.class));
     }
     public final boolean hasMargins(boolean mayInherit){
         return (null != this.getMargins(mayInherit));
@@ -1216,7 +1172,7 @@ public abstract class ProjectData
     }
     public final boolean dropMargins(){
         if (null != this.margins){
-            this.fieldStatistics.markDirty(Project.Field.Margins);
+            this.fieldStatistics().markDirty(Project.Field.Margins);
             this.margins = null;
             return true;
         }
@@ -1240,7 +1196,7 @@ public abstract class ProjectData
     }
     public final boolean setMargins(Margins margins, boolean withInheritance){
         if (IsNotEqual(this.margins,this.getMargins(withInheritance))){
-            this.fieldStatistics.markDirty(Project.Field.Margins);
+            this.fieldStatistics().markDirty(Project.Field.Margins);
             this.margins = margins;
             return true;
         }
@@ -1249,18 +1205,12 @@ public abstract class ProjectData
     }
     public final boolean setMargins(Margins margins){
         if (IsNotEqual(this.margins,margins)){
-            this.fieldStatistics.markDirty(Project.Field.Margins);
+            this.fieldStatistics().markDirty(Project.Field.Margins);
             this.margins = margins;
             return true;
         }
         else
             return false;
-    }
-    public boolean setMargins(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setMargins((Margins)json.getValue(Margins.class));
     }
     public final boolean hasMembers(boolean mayInherit){
         return (this.getMembers(mayInherit).isNotEmpty());
@@ -1293,7 +1243,7 @@ public abstract class ProjectData
                 }
             }
             /*
-             * Collection type coersion
+             * compiler type coercion
              */
             {
                 Object tmp = new ListProjectMember((Project)this);
@@ -1302,6 +1252,7 @@ public abstract class ProjectData
             this.members = members;
             members.init();
         }
+
         return members;
     }
     public final boolean setMembers(List.Short<Member> members){
@@ -1347,6 +1298,108 @@ public abstract class ProjectData
         else
             throw new IllegalArgumentException();
     }
+    public Json toJsonIdentifier(){
+        String identifier = this.getIdentifier();
+        return Json.Wrap( identifier);
+    }
+    public boolean fromJsonIdentifier(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setIdentifier((String)json.getValue(String.class));
+    }
+    public Json toJsonName(){
+        String name = this.getName();
+        return Json.Wrap( name);
+    }
+    public boolean fromJsonName(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setName((String)json.getValue(String.class));
+    }
+    public Json toJsonGroup(){
+        Group group = this.getGroup();
+        return Json.Wrap( group);
+    }
+    public boolean fromJsonGroup(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setGroup((Group)json.getValue(Group.class));
+    }
+    public Json toJsonCreated(){
+        Date created = this.getCreated();
+        return Json.Wrap( created);
+    }
+    public boolean fromJsonCreated(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setCreated((Date)json.getValue(Date.class));
+    }
+    public Json toJsonCleaned(){
+        Date cleaned = this.getCleaned();
+        return Json.Wrap( cleaned);
+    }
+    public boolean fromJsonCleaned(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setCleaned((Date)json.getValue(Date.class));
+    }
+    public Json toJsonCount(){
+        Integer count = this.getCount();
+        return Json.Wrap( count);
+    }
+    public boolean fromJsonCount(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setCount((Integer)json.getValue(Integer.class));
+    }
+    public final boolean setCount(Number count){
+        if (IsNotEqual(this.count,count)){
+            this.fieldStatistics().markDirty(Project.Field.Count);
+            if (count instanceof Integer)
+                this.count = (Integer)count;
+            else
+                this.count = new Integer( count.intValue());
+            return true;
+        }
+        else
+            return false;
+    }
+    public Json toJsonRedirect(){
+        Redirect redirect = this.getRedirect();
+        return Json.Wrap( redirect);
+    }
+    public boolean fromJsonRedirect(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setRedirect((Redirect)json.getValue(Redirect.class));
+    }
+    public Json toJsonMargins(){
+        Margins margins = this.getMargins();
+        return Json.Wrap( margins);
+    }
+    public boolean fromJsonMargins(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setMargins((Margins)json.getValue(Margins.class));
+    }
+    public Json toJsonMembers(){
+        List.Short<Member> members = this.getMembers();
+        return Json.Wrap( members);
+    }
+    public boolean fromJsonMembers(Json json){
+        /*
+         * [TODO] json.getValue(colClas,comClas) not expressed by (e.g.) "List.Short<Component>.class"
+         */
+        return false;
+    }
     /*
      * Data binding supports
      */
@@ -1366,35 +1419,47 @@ public abstract class ProjectData
     public final gap.data.Field getClassFieldByName(String name){
         return Field.getField(name);
     }
-    public json.Json toJson(){
-        json.Json json = new json.ObjectJson();
-        String identifier = this.getIdentifier();
-        json.set("identifier",identifier);
-        String name = this.getName();
-        json.set("name",name);
-        Group group = this.getGroup();
-        json.set("group",group);
-        Date created = this.getCreated();
-        json.set("created",created);
-        Date cleaned = this.getCleaned();
-        json.set("cleaned",cleaned);
-        Integer count = this.getCount();
-        json.set("count",count);
-        Redirect redirect = this.getRedirect();
-        json.set("redirect",redirect);
-        Margins margins = this.getMargins();
-        json.set("margins",margins);
+    public Json toJson(){
+        Json json = new json.ObjectJson();
+        Json identifier = this.toJsonIdentifier();
+        if (null != identifier)
+            json.set("identifier",identifier);
+        Json name = this.toJsonName();
+        if (null != name)
+            json.set("name",name);
+        Json group = this.toJsonGroup();
+        if (null != group)
+            json.set("group",group);
+        Json created = this.toJsonCreated();
+        if (null != created)
+            json.set("created",created);
+        Json cleaned = this.toJsonCleaned();
+        if (null != cleaned)
+            json.set("cleaned",cleaned);
+        Json count = this.toJsonCount();
+        if (null != count)
+            json.set("count",count);
+        Json redirect = this.toJsonRedirect();
+        if (null != redirect)
+            json.set("redirect",redirect);
+        Json margins = this.toJsonMargins();
+        if (null != margins)
+            json.set("margins",margins);
+        Json members = this.toJsonMembers();
+        if (null != members)
+            json.set("members",members);
         return json;
     }
-    public boolean fromJson(json.Json json){
+    public boolean fromJson(Json json){
         boolean modified = false;
-        modified = (this.setName(json.at("name")) || modified);
-        modified = (this.setGroup(json.at("group")) || modified);
-        modified = (this.setCreated(json.at("created")) || modified);
-        modified = (this.setCleaned(json.at("cleaned")) || modified);
-        modified = (this.setCount(json.at("count")) || modified);
-        modified = (this.setRedirect(json.at("redirect")) || modified);
-        modified = (this.setMargins(json.at("margins")) || modified);
+        modified = (this.fromJsonName(json.at("name")) || modified);
+        modified = (this.fromJsonGroup(json.at("group")) || modified);
+        modified = (this.fromJsonCreated(json.at("created")) || modified);
+        modified = (this.fromJsonCleaned(json.at("cleaned")) || modified);
+        modified = (this.fromJsonCount(json.at("count")) || modified);
+        modified = (this.fromJsonRedirect(json.at("redirect")) || modified);
+        modified = (this.fromJsonMargins(json.at("margins")) || modified);
+        modified = (this.fromJsonMembers(json.at("members")) || modified);
         return modified;
     }
     public boolean updateFrom(Request req) throws ValidationError {
@@ -1515,17 +1580,17 @@ public abstract class ProjectData
     }
     public final Project markClean(){
 
-        this.fieldStatistics.markClean();
+        this.fieldStatistics().markClean();
         return (Project)this;
     }
     public final Project markDirty(){
 
-        this.fieldStatistics.markDirty();
+        this.fieldStatistics().markDirty();
         return (Project)this;
     }
     public final Project markDirty(gap.data.Field field){
 
-        this.fieldStatistics.markDirty(field);
+        this.fieldStatistics().markDirty(field);
         return (Project)this;
     }
     public final Project markDirty(java.io.Serializable instance){
@@ -1565,24 +1630,26 @@ public abstract class ProjectData
             gap.data.Field field = Project.Field.Members;
             return this.markDirty(field);
         }
+        else if (null != instance)
+            throw new IllegalArgumentException(instance.getClass().getName());
         else
-            return (Project)this;
+            throw new IllegalArgumentException();
     }
     public final Iterable<gap.data.Field> listClean(){
 
-        return this.fieldStatistics.listClean();
+        return this.fieldStatistics().listClean();
     }
     public final Iterable<gap.data.Field> listDirty(){
 
-        return this.fieldStatistics.listDirty();
+        return this.fieldStatistics().listDirty();
     }
     public final boolean isClean(){
 
-        return this.fieldStatistics.isClean();
+        return this.fieldStatistics().isClean();
     }
     public final boolean isDirty(){
 
-        return this.fieldStatistics.isDirty();
+        return this.fieldStatistics().isDirty();
     }
     public final gap.service.od.ClassDescriptor getClassDescriptorFor(){
         return Project.ClassDescriptorFor();
@@ -1679,6 +1746,16 @@ public abstract class ProjectData
                     return this.hasMargins(true);
                 }
             case Members:
+                /*
+                 * compiler type coercion
+                 */
+                List<TemplateDataDictionary> members;
+                {
+                    Object _members = this.getMembers(true);
+                    members = (List<TemplateDataDictionary>)_members;
+                }
+                return (null != name.dereference(members));
+                
             default:
                 break;
             }
@@ -1740,6 +1817,16 @@ public abstract class ProjectData
                 else
                     return gap.Strings.SerializableToString(this.getMargins(true));
             case Members:
+                /*
+                 * compiler type coercion
+                 */
+                List<TemplateDataDictionary> members;
+                {
+                    Object _members = this.getMembers(true);
+                    members = (List<TemplateDataDictionary>)_members;
+                }
+                return name.dereference(members);
+                
             default:
                 break;
             }
@@ -1775,6 +1862,7 @@ public abstract class ProjectData
                 case Margins:
                     throw new IllegalStateException(field.name());
                 case Members:
+                    throw new IllegalStateException(field.name());
                 default:
                     throw new IllegalStateException(field.name());
                 }
@@ -1816,7 +1904,7 @@ public abstract class ProjectData
                 return null;
             case Members:
                 /*
-                 * compiler type coersion
+                 * compiler type coercion
                  */
                 Object members = this.getMembers(true);
                 return (List.Short<TemplateDataDictionary>)members;

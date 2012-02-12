@@ -1,22 +1,24 @@
-   <div id="first">
+   <div id="admin">
      <h1>Groups</h1>
      <table class="listing">{{#group}}
-       <tr class="listing">
+       <tr class="listing row" onclick="javascript:document.location = '/groups/{{=identifier}}/index.html';">
          <td class="listing" colspan="3"><a href="/groups/{{=identifier}}/index.html">{{=name}}</a>
+         </td>
+         <td class="listing" colspan="3">{{=test_label}}
          </td>
        </tr>{{/group}}{{#page}}
        <tr class="listing">
-         <td class="listing">
+         <td class="listing lhs">
            <form method="POST">
+             <input type="hidden" name="op" value="List" />
              <input type="hidden" name="startIndex" value="{{=startIndexPrev}}" />
              <input type="hidden" name="count" value="{{=count}}" />
              <input type="submit" value="&lt;" />
            </form>
          </td>
-         <td class="listing">&nbsp;
-         </td>
-         <td class="listing">
+         <td class="listing rhs">
            <form method="POST">
+             <input type="hidden" name="op" value="List" />
              <input type="hidden" name="startIndex" value="{{=startIndexNext}}" />
              <input type="hidden" name="count" value="{{=count}}" />
              <input type="submit" value="&gt;" />
