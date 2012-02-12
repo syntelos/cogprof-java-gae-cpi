@@ -70,3 +70,7 @@
  GET /profile/mid/groups.png
 }}}
  in PNG format.
+
+=== Data ===
+
+ Result data is available through the [API_Project Project API].
