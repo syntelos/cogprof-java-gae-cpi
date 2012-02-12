@@ -63,3 +63,10 @@
 
  For groups, the [API_Redirect Redirect] controls whether the profile result page is shown, or shown momentarily with a timeout, or shown with zero timeout.
 
+=== Image ===
+
+ The image is available through a similar pattern
+{{{
+ GET /profile/mid/groups.png
+}}}
+ in PNG format.
