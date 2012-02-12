@@ -21,6 +21,7 @@ package cpi;
 
 import cpi.Code;
 import oso.data.Person;
+import java.util.Date;
 
 public enum Inventory
 {
@@ -50,23 +51,37 @@ public enum Inventory
     }
 
     public final static boolean IsComplete(Person viewer){
-        if (null != viewer && viewer.isNotEmptyInventory())
-            return (Size == viewer.getInventory().size());
-        else
-            return false;
+        if (null != viewer){
+
+            if (viewer.hasCompleted(false) || viewer.hasCodeData())
+                return true;
+
+            else if (viewer.isNotEmptyInventory())
+                return (Size == viewer.getInventory().size());
+        }
+        return false;
     }
     public final static void Complete(Person viewer){
-
-        if (null == viewer.getNf() ||
-            null == viewer.getSf() ||
-            null == viewer.getNt() ||
-            null == viewer.getSt())
-        {
+        if (null == viewer)
+            return;
+        else if (viewer.hasInventory(false) && viewer.hasNotCodeData()){
             Inventory.Product product = new Inventory.Product(viewer.getInventory());
             viewer.setNf( product.normalized_nf);
             viewer.setSf( product.normalized_sf);
             viewer.setNt( product.normalized_nt);
             viewer.setSt( product.normalized_st);
+            viewer.setCompleted(new Date());
+            viewer.setInventory(null);
+            viewer.store();
+        }
+        else if (viewer.hasCodeData() && viewer.hasNotCompleted(false)){
+            /*
+             * adapt old data w/o "completed"
+             */
+            viewer.setCompleted(new Date());
+
+            viewer.setInventory(null);
+
             viewer.store();
         }
     }

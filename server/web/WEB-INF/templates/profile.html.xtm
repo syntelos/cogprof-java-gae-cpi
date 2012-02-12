@@ -2,21 +2,28 @@
   <head>
     <title>Cognitive Profile Inventory</title>
     <link rel="stylesheet" type="text/css" href="{{=pageUrlRoot}}/top.css" />
-    <link rel="icon" href="{{=pageUrlRoot}}/favicon.ico" />
+    <link rel="icon" href="{{=pageUrlRoot}}/favicon.ico" />{{#group}}
+    <style type="text/css">
+     div#profile {
+       margin: {{=margins_css}};
+     }
+    </style>{{/group}}
   </head>
   <body>
 {{>div.logon.html}}
-    <div id="first">
-      <center>
-        <img src="{{=pageUrlRoot}}/profile/{{=inventory_code}}/image.png" width="300" height="300" />
-        <table border="0">
-          <tr><td>SF</td><td>{{=inventory_sf}}</td></tr>
-          <tr><td>ST</td><td>{{=inventory_st}}</td></tr>
-          <tr><td>NF</td><td>{{=inventory_nf}}</td></tr>
-          <tr><td>NT</td><td>{{=inventory_nt}}</td></tr>
-        </table>
-      </center>
-    </div>
+   <center>
+     <div id="profile">
+       <center>
+         <img src="{{=pageUrlRoot}}/profile/{{=inventory_code}}/{{=inventory_png}}" width="300" height="300" />
+         <table border="0">
+           <tr><td>SF</td><td>{{=inventory_sf}}</td></tr>
+           <tr><td>ST</td><td>{{=inventory_st}}</td></tr>
+           <tr><td>NF</td><td>{{=inventory_nf}}</td></tr>
+           <tr><td>NT</td><td>{{=inventory_nt}}</td></tr>
+         </table>
+       </center>
+     </div>
+   </center>
 {{>div.copyright.html}}
   </body>
 </html>

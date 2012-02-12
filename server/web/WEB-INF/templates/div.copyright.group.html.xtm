@@ -1,0 +1,13 @@
+    <!-- Copyright &copy; 2012 Lois Breur Krause -->{{#with_redirect}}
+    <script type="text/javascript">
+
+     function CpiProfileRedirect(){{{#redirect_with_target}}
+         window.open('{{=redirect_href}}','{{=redirect_target}}');{{/redirect_with_target}}{{#redirect_without_target}}
+         document.location = '{{=redirect_href}}';{{/redirect_without_target}}
+     }
+     var timeout = {{=redirect_timeout}};
+     if (0 < timeout){
+       window.setTimeout(CpiProfileRedirect,timeout);
+     }
+    </script>
+{{/with_redirect}}

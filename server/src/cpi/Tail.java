@@ -1,7 +1,7 @@
 package cpi;
 
 /**
- * 
+ * Fast lookup for strings "index.html", "image.png", and "data.json".
  */
 public abstract class Tail 
     extends Object
@@ -10,6 +10,9 @@ public abstract class Tail
     public final static int ImagePng = 1;
     public final static int DataJson = 2;
     public final static int IndexHtml = 3;
+    public final static int GroupsHtml = 4;
+    public final static int ResultHtml = 5;
+    public final static int GroupsPng = 6;
 
 
     public final static int For(String tail){
@@ -35,6 +38,30 @@ public abstract class Tail
             case 'd':
                 if (tail.equals("data.json"))
                     return Tail.DataJson;
+                else
+                    return Tail.None;
+            case 'g':
+                if (7 < tail.length()){
+                    switch(tail.charAt(7)){
+                    case 'h':
+                        if (tail.equals("groups.html"))
+                            return Tail.GroupsHtml;
+                        else
+                            return Tail.None;
+                    case 'p':
+                        if (tail.equals("groups.png"))
+                            return Tail.GroupsPng;
+                        else
+                            return Tail.None;
+                    default:
+                        return Tail.None;
+                    }
+                }
+                else
+                    return Tail.None;
+            case 'r':
+                if (tail.equals("result.html"))
+                    return Tail.ResultHtml;
                 else
                     return Tail.None;
             default:

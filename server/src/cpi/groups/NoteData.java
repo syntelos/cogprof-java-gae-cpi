@@ -29,6 +29,8 @@ import gap.hapax.TemplateDataDictionary;
 import gap.hapax.TemplateName;
 import gap.util.*;
 
+import json.Json;
+
 import com.google.appengine.api.datastore.*;
 import com.google.appengine.api.blobstore.BlobKey;
 
@@ -41,7 +43,7 @@ import javax.annotation.Generated;
  *
  * @see Note
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-01T20:10:14.671Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-11T18:01:34.262Z")
 public abstract class NoteData
     extends gap.data.BigTable
     implements DataInheritance<Note>
@@ -318,9 +320,9 @@ public abstract class NoteData
         else
             throw new IllegalArgumentException();
     }
-    public final static BigTableIterator<Note> ListPage(Page page){
+    public final static BigTableIterator<Note> ListPage(Key ancestor, Page page){
 
-        return Note.QueryN(Note.CreateQueryFor(),page);
+        return Note.QueryN(Note.CreateQueryFor(ancestor),page);
     }
     public final static BigTableIterator<Note> QueryN(Query query, Page page){
         if (null != query && null != page)
@@ -627,7 +629,7 @@ public abstract class NoteData
         }
     }
 
-    private transient final Note.Field.Statistics fieldStatistics = new Note.Field.Statistics();
+    private transient Note.Field.Statistics fieldStatistics = new Note.Field.Statistics();
 
     private transient Note inheritFrom;
 
@@ -660,6 +662,14 @@ public abstract class NoteData
     }
 
 
+    private Note.Field.Statistics fieldStatistics(){
+        Note.Field.Statistics fieldStatistics = this.fieldStatistics;
+        if (null == fieldStatistics){
+            fieldStatistics = new Note.Field.Statistics();
+            this.fieldStatistics = fieldStatistics;
+        }
+        return fieldStatistics;
+    }
     public void destroy(){
         this.inheritFrom = null;
         this.identifier = null;
@@ -787,7 +797,7 @@ public abstract class NoteData
     }
     public final boolean dropIdentifier(){
         if (null != this.identifier){
-            this.fieldStatistics.markDirty(Note.Field.Identifier);
+            this.fieldStatistics().markDirty(Note.Field.Identifier);
             this.identifier = null;
             return true;
         }
@@ -802,18 +812,12 @@ public abstract class NoteData
     }
     public final boolean setIdentifier(String identifier){
         if (IsNotEqual(this.identifier,identifier)){
-            this.fieldStatistics.markDirty(Note.Field.Identifier);
+            this.fieldStatistics().markDirty(Note.Field.Identifier);
             this.identifier = identifier;
             return true;
         }
         else
             return false;
-    }
-    public boolean setIdentifier(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setIdentifier((String)json.getValue(String.class));
     }
     public final boolean hasWriter(boolean mayInherit){
         return (null != this.getWriter(mayInherit));
@@ -823,7 +827,7 @@ public abstract class NoteData
     }
     public final boolean dropWriter(){
         if (null != this.writer){
-            this.fieldStatistics.markDirty(Note.Field.Writer);
+            this.fieldStatistics().markDirty(Note.Field.Writer);
             this.writer = null;
             this.writerId = null;
             this.writerKey = null;
@@ -837,7 +841,7 @@ public abstract class NoteData
     }
     public final boolean setWriterId(String writerId){
         if (IsNotEqual(this.writerId,writerId)){
-            this.fieldStatistics.markDirty(Note.Field.Writer);
+            this.fieldStatistics().markDirty(Note.Field.Writer);
             this.writerId = writerId;
             this.writerKey = null;
             this.writer = null;
@@ -904,7 +908,7 @@ public abstract class NoteData
     }
     public final boolean setWriter(Person writer, boolean withInheritance){
         if (IsNotEqual(this.writer,this.getWriter(withInheritance))){
-            this.fieldStatistics.markDirty(Note.Field.Writer);
+            this.fieldStatistics().markDirty(Note.Field.Writer);
             this.writer = writer;
             if (null != writer){
                 this.writerId = writer.getId();
@@ -921,7 +925,7 @@ public abstract class NoteData
     }
     public final boolean setWriter(Person writer){
         if (IsNotEqual(this.writer,writer)){
-            this.fieldStatistics.markDirty(Note.Field.Writer);
+            this.fieldStatistics().markDirty(Note.Field.Writer);
             this.writer = writer;
             if (null != writer){
                 this.writerId = writer.getId();
@@ -936,12 +940,6 @@ public abstract class NoteData
         else
             return false;
     }
-    public boolean setWriter(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setWriter((Person)json.getValue(Person.class));
-    }
     public final boolean hasCreated(boolean mayInherit){
         return (null != this.getCreated(mayInherit));
     }
@@ -950,7 +948,7 @@ public abstract class NoteData
     }
     public final boolean dropCreated(){
         if (null != this.created){
-            this.fieldStatistics.markDirty(Note.Field.Created);
+            this.fieldStatistics().markDirty(Note.Field.Created);
             this.created = null;
             return true;
         }
@@ -974,7 +972,7 @@ public abstract class NoteData
     }
     public final boolean setCreated(Date created, boolean withInheritance){
         if (IsNotEqual(this.created,this.getCreated(withInheritance))){
-            this.fieldStatistics.markDirty(Note.Field.Created);
+            this.fieldStatistics().markDirty(Note.Field.Created);
             this.created = created;
             return true;
         }
@@ -983,18 +981,12 @@ public abstract class NoteData
     }
     public final boolean setCreated(Date created){
         if (IsNotEqual(this.created,created)){
-            this.fieldStatistics.markDirty(Note.Field.Created);
+            this.fieldStatistics().markDirty(Note.Field.Created);
             this.created = created;
             return true;
         }
         else
             return false;
-    }
-    public boolean setCreated(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setCreated((Date)json.getValue(Date.class));
     }
     public final boolean hasUpdated(boolean mayInherit){
         return (null != this.getUpdated(mayInherit));
@@ -1004,7 +996,7 @@ public abstract class NoteData
     }
     public final boolean dropUpdated(){
         if (null != this.updated){
-            this.fieldStatistics.markDirty(Note.Field.Updated);
+            this.fieldStatistics().markDirty(Note.Field.Updated);
             this.updated = null;
             return true;
         }
@@ -1028,7 +1020,7 @@ public abstract class NoteData
     }
     public final boolean setUpdated(Date updated, boolean withInheritance){
         if (IsNotEqual(this.updated,this.getUpdated(withInheritance))){
-            this.fieldStatistics.markDirty(Note.Field.Updated);
+            this.fieldStatistics().markDirty(Note.Field.Updated);
             this.updated = updated;
             return true;
         }
@@ -1037,18 +1029,12 @@ public abstract class NoteData
     }
     public final boolean setUpdated(Date updated){
         if (IsNotEqual(this.updated,updated)){
-            this.fieldStatistics.markDirty(Note.Field.Updated);
+            this.fieldStatistics().markDirty(Note.Field.Updated);
             this.updated = updated;
             return true;
         }
         else
             return false;
-    }
-    public boolean setUpdated(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setUpdated((Date)json.getValue(Date.class));
     }
     public final boolean hasText(boolean mayInherit){
         return (null != this.getText(mayInherit));
@@ -1058,7 +1044,7 @@ public abstract class NoteData
     }
     public final boolean dropText(){
         if (null != this.text){
-            this.fieldStatistics.markDirty(Note.Field.Text);
+            this.fieldStatistics().markDirty(Note.Field.Text);
             this.text = null;
             return true;
         }
@@ -1082,7 +1068,7 @@ public abstract class NoteData
     }
     public final boolean setText(Text text, boolean withInheritance){
         if (IsNotEqual(this.text,this.getText(withInheritance))){
-            this.fieldStatistics.markDirty(Note.Field.Text);
+            this.fieldStatistics().markDirty(Note.Field.Text);
             this.text = text;
             return true;
         }
@@ -1091,14 +1077,58 @@ public abstract class NoteData
     }
     public final boolean setText(Text text){
         if (IsNotEqual(this.text,text)){
-            this.fieldStatistics.markDirty(Note.Field.Text);
+            this.fieldStatistics().markDirty(Note.Field.Text);
             this.text = text;
             return true;
         }
         else
             return false;
     }
-    public boolean setText(json.Json json){
+    public Json toJsonIdentifier(){
+        String identifier = this.getIdentifier();
+        return Json.Wrap( identifier);
+    }
+    public boolean fromJsonIdentifier(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setIdentifier((String)json.getValue(String.class));
+    }
+    public Json toJsonWriter(){
+        Person writer = this.getWriter();
+        return Json.Wrap( writer);
+    }
+    public boolean fromJsonWriter(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setWriter((Person)json.getValue(Person.class));
+    }
+    public Json toJsonCreated(){
+        Date created = this.getCreated();
+        return Json.Wrap( created);
+    }
+    public boolean fromJsonCreated(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setCreated((Date)json.getValue(Date.class));
+    }
+    public Json toJsonUpdated(){
+        Date updated = this.getUpdated();
+        return Json.Wrap( updated);
+    }
+    public boolean fromJsonUpdated(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setUpdated((Date)json.getValue(Date.class));
+    }
+    public Json toJsonText(){
+        Text text = this.getText();
+        return Json.Wrap( text);
+    }
+    public boolean fromJsonText(Json json){
         if (null == json)
             return false;
         else
@@ -1123,26 +1153,31 @@ public abstract class NoteData
     public final gap.data.Field getClassFieldByName(String name){
         return Field.getField(name);
     }
-    public json.Json toJson(){
-        json.Json json = new json.ObjectJson();
-        String identifier = this.getIdentifier();
-        json.set("identifier",identifier);
-        Person writer = this.getWriter();
-        json.set("writer",writer);
-        Date created = this.getCreated();
-        json.set("created",created);
-        Date updated = this.getUpdated();
-        json.set("updated",updated);
-        Text text = this.getText();
-        json.set("text",text);
+    public Json toJson(){
+        Json json = new json.ObjectJson();
+        Json identifier = this.toJsonIdentifier();
+        if (null != identifier)
+            json.set("identifier",identifier);
+        Json writer = this.toJsonWriter();
+        if (null != writer)
+            json.set("writer",writer);
+        Json created = this.toJsonCreated();
+        if (null != created)
+            json.set("created",created);
+        Json updated = this.toJsonUpdated();
+        if (null != updated)
+            json.set("updated",updated);
+        Json text = this.toJsonText();
+        if (null != text)
+            json.set("text",text);
         return json;
     }
-    public boolean fromJson(json.Json json){
+    public boolean fromJson(Json json){
         boolean modified = false;
-        modified = (this.setWriter(json.at("writer")) || modified);
-        modified = (this.setCreated(json.at("created")) || modified);
-        modified = (this.setUpdated(json.at("updated")) || modified);
-        modified = (this.setText(json.at("text")) || modified);
+        modified = (this.fromJsonWriter(json.at("writer")) || modified);
+        modified = (this.fromJsonCreated(json.at("created")) || modified);
+        modified = (this.fromJsonUpdated(json.at("updated")) || modified);
+        modified = (this.fromJsonText(json.at("text")) || modified);
         return modified;
     }
     public boolean updateFrom(Request req) throws ValidationError {
@@ -1215,17 +1250,17 @@ public abstract class NoteData
     }
     public final Note markClean(){
 
-        this.fieldStatistics.markClean();
+        this.fieldStatistics().markClean();
         return (Note)this;
     }
     public final Note markDirty(){
 
-        this.fieldStatistics.markDirty();
+        this.fieldStatistics().markDirty();
         return (Note)this;
     }
     public final Note markDirty(gap.data.Field field){
 
-        this.fieldStatistics.markDirty(field);
+        this.fieldStatistics().markDirty(field);
         return (Note)this;
     }
     public final Note markDirty(java.io.Serializable instance){
@@ -1249,24 +1284,26 @@ public abstract class NoteData
             gap.data.Field field = Note.Field.Text;
             return this.markDirty(field);
         }
+        else if (null != instance)
+            throw new IllegalArgumentException(instance.getClass().getName());
         else
-            return (Note)this;
+            throw new IllegalArgumentException();
     }
     public final Iterable<gap.data.Field> listClean(){
 
-        return this.fieldStatistics.listClean();
+        return this.fieldStatistics().listClean();
     }
     public final Iterable<gap.data.Field> listDirty(){
 
-        return this.fieldStatistics.listDirty();
+        return this.fieldStatistics().listDirty();
     }
     public final boolean isClean(){
 
-        return this.fieldStatistics.isClean();
+        return this.fieldStatistics().isClean();
     }
     public final boolean isDirty(){
 
-        return this.fieldStatistics.isDirty();
+        return this.fieldStatistics().isDirty();
     }
     public final gap.service.od.ClassDescriptor getClassDescriptorFor(){
         return Note.ClassDescriptorFor();

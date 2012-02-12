@@ -42,7 +42,7 @@ public final class Margins
         public final static gap.hapax.TemplateName Value = new gap.hapax.TemplateName(Margins.Names.Value);
     }
     public final static class Defaults {
-        public final static String Value = "0";
+        public final static String Value = "20px";
     }
 
 

@@ -24,6 +24,10 @@ import java.util.Date;
 public final class Note
     extends NoteData
 {
+    public final static BigTableIterator<Note> ListPage(Account account, Page page){
+        return Note.ListPage(account.getKey(),page);
+    }
+
 
     public Note() {
         super();
@@ -36,6 +40,47 @@ public final class Note
     }
 
 
+    public String getTextShort(){
+        Text text = this.getText();
+        if (null != text){
+
+            String textString = Strings.TextToString(text);
+            if (null != textString){
+
+                textString = textString.replace('\n',' ');
+
+                if (25 < textString.length())
+                    return textString.substring(0,20)+"...";
+            }
+        }
+        return "";
+    }
+    public boolean mayUpdate(Request req) {
+
+        return this.mayUpdate(req.getViewer());
+    }
+    public boolean mayUpdate(Person viewer) {
+
+        Key writer = this.getWriterKey();
+        if (null != writer)
+            return Equals(writer,viewer.getKey());
+        else
+            return false;
+    }
+    public boolean updateFrom(Request req) throws ValidationError {
+        boolean change = false;
+
+        String textRequest = req.getParameter("text");
+        if (null != textRequest && 0 < textRequest.length()){
+            try {
+                change = this.setText(gap.Strings.TextFromString(textRequest));
+            }
+            catch (RuntimeException exc){
+                throw new ValidationError(ClassName,"text",textRequest,exc);
+            }
+        }
+        return change;
+    }
     public void onread(){
     }
     public void onwrite(){

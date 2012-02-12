@@ -3,6 +3,7 @@ package cpi.groups;
 
 import cpi.Redirect;
 import cpi.Margins;
+import cpi.ProfileLabels;
 
 import oso.data.Person;
 
@@ -62,17 +63,28 @@ public final class Group
         this.updateFrom(req);
 
         this.setCreated(new Date());
-        this.dropBilled();
-        this.dropPaid();
     }
 
 
+    public boolean isTest(){
+        Boolean test = this.getTest();
+        return (null != test && test);
+    }
+    public boolean isNotTest(){
+        Boolean test = this.getTest();
+        return (null == test || (!test));
+    }
     @Override
     public boolean updateFrom(Request req) throws ValidationError {
-        boolean modified = super.updateFrom(req);
+        boolean modified = false;
 
+        final String name = req.getParameter("name");
+        if (null != name && 0 < name.length()){
+            modified = this.setName(name);
+        }
         modified = (this.setRedirect(new Redirect(req)) || modified);
         modified = (this.setMargins(new Margins(req)) || modified);
+        modified = (this.setLabels(new ProfileLabels(req)) || modified);
 
         final String owner_logonId = req.getParameter("owner_logonId");
         if (null != owner_logonId){
@@ -83,6 +95,9 @@ public final class Group
         if (null != admin_logonId){
             modified = (this.setAdmin(Person.GetCreateLongLogonId(admin_logonId)) || modified);
         }
+
+        modified = this.setTest(Test(req.getParameter("test"),this.getTest())) || modified;
+
         return modified;
     }
     public void onread(){
@@ -133,34 +148,146 @@ public final class Group
         }
         return margins;
     }
-    public boolean setIdentifier(json.Json json){
+    public ProfileLabels getCreateProfileLabels(){
+        ProfileLabels profileLabels = this.getLabels();
+        if (null == profileLabels){
+            profileLabels = new ProfileLabels();
+            this.setLabels(profileLabels);
+        }
+        return profileLabels;
+    }
+    public boolean fromJsonIdentifier(json.Json json){
         return false;
     }
-    // public boolean setName(json.Json json){
+    // public boolean fromJsonName(json.Json json){
     // }
-    public boolean setOwner(json.Json json){
+    public boolean fromJsonOwner(json.Json json){
+        try {
+            String logonId = (String)json.getValue("logonId");
+            if (null != logonId){
+
+                Person person = Person.ForLongLogonId(logonId);
+                if (null != person){
+                    return this.setOwner(person);
+                }
+                else {
+                    person = this.getOwner(MayNotInherit);
+                    if (null != person){
+
+                        if (person.setLogonId(logonId))
+                            person.save();
+                    }
+                    else {
+
+                        person = new Person(gap.Strings.RandomIdentifier());
+                        person.setLogonId(logonId);
+                        person.save();
+
+                        return this.setOwner(person);
+                    }
+                }
+            }
+        }
+        catch (RuntimeException exc){
+        }
         return false;
     }
-    public boolean setAdmin(json.Json json){
+    public boolean fromJsonAdmin(json.Json json){
+        try {
+            String logonId = (String)json.getValue("logonId");
+            if (null != logonId){
+
+                Person person = Person.ForLongLogonId(logonId);
+                if (null != person){
+                    return this.setAdmin(person);
+                }
+                else {
+                    person = this.getAdmin(MayNotInherit);
+                    if (null != person){
+
+                        if (person.setLogonId(logonId))
+                            person.save();
+                    }
+                    else {
+
+                        person = new Person(gap.Strings.RandomIdentifier());
+                        person.setLogonId(logonId);
+                        person.save();
+
+                        return this.setAdmin(person);
+                    }
+                }
+            }
+        }
+        catch (RuntimeException exc){
+        }
         return false;
     }
-    public boolean setCreated(json.Json json){
+    public boolean fromJsonCreated(json.Json json){
         return false;
     }
-    public boolean setBilled(json.Json json){
+    public boolean fromJsonBilled(json.Json json){
         return false;
     }
-    public boolean setPaid(json.Json json){
+    public boolean fromJsonPaid(json.Json json){
         return false;
     }
-    // public boolean setRedirect(json.Json json){
+    // public boolean fromJsonRedirect(json.Json json){
     // }
-    // public boolean setMargins(json.Json json){
+    // public boolean fromJsonMargins(json.Json json){
     // }
+    // public boolean fromJsonProfileLabels(json.Json json){
+    // }
+    public boolean fromJsonTest(json.Json json){
+        return false;
+    }
+    public boolean fromJsonLabels(json.Json json){
+        return false;
+    }
     public List.Primitive<Key> listProjects(){
         return Project.List(this);
     }
     public List.Primitive<Key> listAccounts(){
         return Account.List(this);
+    }
+    public void dropProjects(){
+        List.Primitive<Key> keys = this.listProjects();
+        if (null != keys && keys.isNotEmpty()){
+
+            List<Project> classes = Store.GetClass(keys);
+            for (Project project: classes){
+
+                project.drop();
+            }
+        }
+    }
+    private final static lxl.Map<String,Boolean> TestLook = new lxl.Map();
+    static {
+        TestLook.put("true",Boolean.TRUE);
+        TestLook.put("TEST",Boolean.TRUE);
+
+        TestLook.put("false",Boolean.FALSE);
+        TestLook.put("LIVE",Boolean.FALSE);
+    }
+    private final static Boolean Test(String value, Boolean current){
+        if (null == value || 1 > value.length()){
+
+            if (null == current)
+                return Boolean.TRUE;
+            else
+                return current;
+        }
+        else {
+            Boolean newValue = TestLook.get(value);
+            if (null != newValue)
+                return newValue;
+            else {
+
+                if (null == current)
+                    return Boolean.TRUE;
+                else
+                    return current;
+            }
+        }
     }
 }

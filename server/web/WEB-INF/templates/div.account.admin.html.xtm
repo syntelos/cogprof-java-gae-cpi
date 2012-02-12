@@ -1,4 +1,4 @@
-   <div id="first">
+   <div id="admin">
      <h1>{{=page_title}}</h1>
      <table class="editing">{{#account}}
        <form method="POST">
@@ -7,23 +7,27 @@
            </td>
            <td class="editing rhs"><input readonly type="text" id="identifier" name="identifier" value="{{=identifier}}" />
            </td>
-         </tr>
+         </tr>{{#group}}
          <tr class="editing">
            <td class="editing lhs"><label for="group">Group</label>
            </td>
-           <td class="editing rhs"><input readonly type="text" id="group" name="group_identifier" value="{{=group/identifier}}" tabindex="1" />
+           <td class="editing rhs"><input readonly type="text" id="group" name="group_name" value="{{=name}}" />
            </td>
-         </tr>
+           <td class="editing rhs"><input readonly type="text" id="group" name="group_identifier" value="{{=identifier}}" size="20" />
+           </td>
+         </tr>{{/group}}{{#project}}
          <tr class="editing">
            <td class="editing lhs"><label for="project">Project</label>
            </td>
-           <td class="editing rhs"><input readonly type="text" id="project" name="project_identifier" value="{{=project/identifier}}" tabindex="2" />
+           <td class="editing rhs"><input readonly type="text" id="project" name="project_name" value="{{=name}}" />
            </td>
-         </tr>
+           <td class="editing rhs"><input readonly type="text" id="project" name="project_identifier" value="{{=identifier}}" size="20" />
+           </td>
+         </tr>{{/project}}
          <tr class="editing">
-           <td class="editing lhs"><label for="paid">Paid</label>
+           <td class="editing lhs"><label for="closed">Closed</label>
            </td>
-           <td class="editing rhs"><input type="text" id="paid" name="paid" value="{{=paid}}" tabindex="3" />
+           <td class="editing rhs"><input readonly type="text" id="closed" name="closed" value="{{=closed}}" />
            </td>
          </tr>
          <tr class="editing">
@@ -41,26 +45,34 @@
          <tr class="editing">
            <td class="editing lhs"><label for="notes">Notes</label>
            </td>
-           <td class="editing in">
-             <table class="editing in rhs">{{#notes}}
+           <td class="editing in">{{#notes}}
+             <table class="editing in rhs" style="background-color: #efefef;">
                <tr class="editing">
                  <td class="editing lhs"><label for="text">Text</label>
                  </td>
-                 <td class="editing rhs"><input readonly type="text" id="text" name="note_text" value="{{=text}}" tabindex="4" />
+                 <td class="editing rhs"><textarea readonly id="text" name="note_text_{{=notes_it_Index}}">{{=text}}</textarea>
                  </td>
                </tr>
                <tr class="editing">
                  <td class="editing lhs"><label for="writer">Writer</label>
                  </td>
-                 <td class="editing rhs"><input readonly type="writer" id="writer" name="note_writer" value="{{=writer/logonId}}" tabindex="4" />
+                 <td class="editing rhs"><input readonly type="writer" id="writer" name="note_writer_{{=notes_it_Index}}" value="{{=writer/logonId}}" />
                  </td>
                </tr>
                <tr class="editing">
-                 <td class="editing lhs"><label for="created">Created</label>
+                 <td class="editing lhs"><label for="created">Date</label>
                  </td>
-                 <td class="editing rhs"><input readonly type="created" id="created" name="note_created" value="{{=created}}" tabindex="4" />
+                 <td class="editing rhs"><input readonly type="created" id="created" name="note_created_{{=notes_it_Index}}" value="{{=created}}" />
                  </td>
-               </tr>{{/notes}}
+               </tr>
+             </table>{{/notes}}
+             <table class="editing in rhs">
+               <tr class="editing">
+                 <td class="editing lhs"><label for="text">Update</label>
+                 </td>
+                 <td class="editing rhs"><textarea rows="5" cols="40" id="note_text" name="note_text" tabindex="1"></textarea>
+                 </td>
+               </tr>
              </table>
            </td>
          </tr>{{/account}}
@@ -69,16 +81,22 @@
              <table class="editing in">
                <tr class="editing">
                  <td class="editing lhs">
-                   <input type="submit" name="op" value="List" tabindex="9" />
+                   <input type="submit" name="op" value="List" tabindex="2" />
+                 </td>
+                 <td class="editing mid">
+                   <input type="submit" name="op" value="Update" tabindex="3" />
+                 </td>
+                 <td class="editing mid">
+                   <input type="submit" name="op" value="Group" tabindex="4" />
+                 </td>
+                 <td class="editing mid">
+                   <input type="submit" name="op" value="Project" tabindex="5" />
+                 </td>
+                 <td class="editing mid">
+                   <input type="submit" name="op" value="Notes" tabindex="6" />
                  </td>
                  <td class="editing rhs">
-                   <input type="submit" name="op" value="Save" tabindex="12" />
-                 </td>
-                 <td class="editing rhs">
-                   <input type="submit" name="op" value="Group" tabindex="13" />
-                 </td>
-                 <td class="editing rhs">
-                   <input type="submit" name="op" value="Project" tabindex="13" />
+                   <input type="submit" name="op" value="Close" tabindex="6" />
                  </td>
                </tr>
              </table>

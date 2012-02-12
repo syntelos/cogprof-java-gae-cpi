@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>CPI Account</title>
+    <title>CPI Group Account</title>
     <link rel="stylesheet" type="text/css" href="{{=pageUrlRoot}}/top.css" />
     <link rel="icon" href="{{=pageUrlRoot}}/favicon.ico" />
   </head>

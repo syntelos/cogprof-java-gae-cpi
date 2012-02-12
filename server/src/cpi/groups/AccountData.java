@@ -29,6 +29,8 @@ import gap.hapax.TemplateDataDictionary;
 import gap.hapax.TemplateName;
 import gap.util.*;
 
+import json.Json;
+
 import com.google.appengine.api.datastore.*;
 import com.google.appengine.api.blobstore.BlobKey;
 
@@ -41,7 +43,7 @@ import javax.annotation.Generated;
  *
  * @see Account
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-01T20:10:14.342Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-11T18:01:34.089Z")
 public abstract class AccountData
     extends gap.data.BigTable
     implements DataInheritance<Account>
@@ -622,7 +624,7 @@ public abstract class AccountData
         }
     }
 
-    private transient final Account.Field.Statistics fieldStatistics = new Account.Field.Statistics();
+    private transient Account.Field.Statistics fieldStatistics = new Account.Field.Statistics();
 
     private transient Account inheritFrom;
 
@@ -656,6 +658,14 @@ public abstract class AccountData
     }
 
 
+    private Account.Field.Statistics fieldStatistics(){
+        Account.Field.Statistics fieldStatistics = this.fieldStatistics;
+        if (null == fieldStatistics){
+            fieldStatistics = new Account.Field.Statistics();
+            this.fieldStatistics = fieldStatistics;
+        }
+        return fieldStatistics;
+    }
     public void destroy(){
         this.inheritFrom = null;
         this.identifier = null;
@@ -741,7 +751,7 @@ public abstract class AccountData
     }
     public final boolean dropIdentifier(){
         if (null != this.identifier){
-            this.fieldStatistics.markDirty(Account.Field.Identifier);
+            this.fieldStatistics().markDirty(Account.Field.Identifier);
             this.identifier = null;
             return true;
         }
@@ -756,18 +766,12 @@ public abstract class AccountData
     }
     public final boolean setIdentifier(String identifier){
         if (IsNotEqual(this.identifier,identifier)){
-            this.fieldStatistics.markDirty(Account.Field.Identifier);
+            this.fieldStatistics().markDirty(Account.Field.Identifier);
             this.identifier = identifier;
             return true;
         }
         else
             return false;
-    }
-    public boolean setIdentifier(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setIdentifier((String)json.getValue(String.class));
     }
     public final boolean hasGroup(boolean mayInherit){
         return (null != this.getGroup(mayInherit));
@@ -777,7 +781,7 @@ public abstract class AccountData
     }
     public final boolean dropGroup(){
         if (null != this.group){
-            this.fieldStatistics.markDirty(Account.Field.Group);
+            this.fieldStatistics().markDirty(Account.Field.Group);
             this.group = null;
             this.groupId = null;
             this.groupKey = null;
@@ -791,7 +795,7 @@ public abstract class AccountData
     }
     public final boolean setGroupId(String groupId){
         if (IsNotEqual(this.groupId,groupId)){
-            this.fieldStatistics.markDirty(Account.Field.Group);
+            this.fieldStatistics().markDirty(Account.Field.Group);
             this.groupId = groupId;
             this.groupKey = null;
             this.group = null;
@@ -858,7 +862,7 @@ public abstract class AccountData
     }
     public final boolean setGroup(Group group, boolean withInheritance){
         if (IsNotEqual(this.group,this.getGroup(withInheritance))){
-            this.fieldStatistics.markDirty(Account.Field.Group);
+            this.fieldStatistics().markDirty(Account.Field.Group);
             this.group = group;
             if (null != group){
                 this.groupId = group.getId();
@@ -875,7 +879,7 @@ public abstract class AccountData
     }
     public final boolean setGroup(Group group){
         if (IsNotEqual(this.group,group)){
-            this.fieldStatistics.markDirty(Account.Field.Group);
+            this.fieldStatistics().markDirty(Account.Field.Group);
             this.group = group;
             if (null != group){
                 this.groupId = group.getId();
@@ -890,12 +894,6 @@ public abstract class AccountData
         else
             return false;
     }
-    public boolean setGroup(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setGroup((Group)json.getValue(Group.class));
-    }
     public final boolean hasProject(boolean mayInherit){
         return (null != this.getProject(mayInherit));
     }
@@ -904,7 +902,7 @@ public abstract class AccountData
     }
     public final boolean dropProject(){
         if (null != this.project){
-            this.fieldStatistics.markDirty(Account.Field.Project);
+            this.fieldStatistics().markDirty(Account.Field.Project);
             this.project = null;
             this.projectId = null;
             this.projectKey = null;
@@ -918,7 +916,7 @@ public abstract class AccountData
     }
     public final boolean setProjectId(String projectId){
         if (IsNotEqual(this.projectId,projectId)){
-            this.fieldStatistics.markDirty(Account.Field.Project);
+            this.fieldStatistics().markDirty(Account.Field.Project);
             this.projectId = projectId;
             this.projectKey = null;
             this.project = null;
@@ -985,7 +983,7 @@ public abstract class AccountData
     }
     public final boolean setProject(Project project, boolean withInheritance){
         if (IsNotEqual(this.project,this.getProject(withInheritance))){
-            this.fieldStatistics.markDirty(Account.Field.Project);
+            this.fieldStatistics().markDirty(Account.Field.Project);
             this.project = project;
             if (null != project){
                 this.projectId = project.getId();
@@ -1002,7 +1000,7 @@ public abstract class AccountData
     }
     public final boolean setProject(Project project){
         if (IsNotEqual(this.project,project)){
-            this.fieldStatistics.markDirty(Account.Field.Project);
+            this.fieldStatistics().markDirty(Account.Field.Project);
             this.project = project;
             if (null != project){
                 this.projectId = project.getId();
@@ -1017,12 +1015,6 @@ public abstract class AccountData
         else
             return false;
     }
-    public boolean setProject(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setProject((Project)json.getValue(Project.class));
-    }
     public final boolean hasClosed(boolean mayInherit){
         return (null != this.getClosed(mayInherit));
     }
@@ -1031,7 +1023,7 @@ public abstract class AccountData
     }
     public final boolean dropClosed(){
         if (null != this.closed){
-            this.fieldStatistics.markDirty(Account.Field.Closed);
+            this.fieldStatistics().markDirty(Account.Field.Closed);
             this.closed = null;
             return true;
         }
@@ -1055,7 +1047,7 @@ public abstract class AccountData
     }
     public final boolean setClosed(Boolean closed, boolean withInheritance){
         if (IsNotEqual(this.closed,this.getClosed(withInheritance))){
-            this.fieldStatistics.markDirty(Account.Field.Closed);
+            this.fieldStatistics().markDirty(Account.Field.Closed);
             this.closed = closed;
             return true;
         }
@@ -1064,18 +1056,12 @@ public abstract class AccountData
     }
     public final boolean setClosed(Boolean closed){
         if (IsNotEqual(this.closed,closed)){
-            this.fieldStatistics.markDirty(Account.Field.Closed);
+            this.fieldStatistics().markDirty(Account.Field.Closed);
             this.closed = closed;
             return true;
         }
         else
             return false;
-    }
-    public boolean setClosed(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setClosed((Boolean)json.getValue(Boolean.class));
     }
     public final boolean hasAmount(boolean mayInherit){
         return (null != this.getAmount(mayInherit));
@@ -1085,7 +1071,7 @@ public abstract class AccountData
     }
     public final boolean dropAmount(){
         if (null != this.amount){
-            this.fieldStatistics.markDirty(Account.Field.Amount);
+            this.fieldStatistics().markDirty(Account.Field.Amount);
             this.amount = null;
             return true;
         }
@@ -1109,7 +1095,7 @@ public abstract class AccountData
     }
     public final boolean setAmount(Float amount, boolean withInheritance){
         if (IsNotEqual(this.amount,this.getAmount(withInheritance))){
-            this.fieldStatistics.markDirty(Account.Field.Amount);
+            this.fieldStatistics().markDirty(Account.Field.Amount);
             this.amount = amount;
             return true;
         }
@@ -1118,26 +1104,8 @@ public abstract class AccountData
     }
     public final boolean setAmount(Float amount){
         if (IsNotEqual(this.amount,amount)){
-            this.fieldStatistics.markDirty(Account.Field.Amount);
+            this.fieldStatistics().markDirty(Account.Field.Amount);
             this.amount = amount;
-            return true;
-        }
-        else
-            return false;
-    }
-    public boolean setAmount(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setAmount((Float)json.getValue(Float.class));
-    }
-    public final boolean setAmount(Number amount){
-        if (IsNotEqual(this.amount,amount)){
-            this.fieldStatistics.markDirty(Account.Field.Amount);
-            if (amount instanceof Float)
-                this.amount = (Float)amount;
-            else
-                this.amount = new Float( amount.floatValue());
             return true;
         }
         else
@@ -1151,7 +1119,7 @@ public abstract class AccountData
     }
     public final boolean dropCurrency(){
         if (null != this.currency){
-            this.fieldStatistics.markDirty(Account.Field.Currency);
+            this.fieldStatistics().markDirty(Account.Field.Currency);
             this.currency = null;
             return true;
         }
@@ -1175,7 +1143,7 @@ public abstract class AccountData
     }
     public final boolean setCurrency(String currency, boolean withInheritance){
         if (IsNotEqual(this.currency,this.getCurrency(withInheritance))){
-            this.fieldStatistics.markDirty(Account.Field.Currency);
+            this.fieldStatistics().markDirty(Account.Field.Currency);
             this.currency = currency;
             return true;
         }
@@ -1184,18 +1152,12 @@ public abstract class AccountData
     }
     public final boolean setCurrency(String currency){
         if (IsNotEqual(this.currency,currency)){
-            this.fieldStatistics.markDirty(Account.Field.Currency);
+            this.fieldStatistics().markDirty(Account.Field.Currency);
             this.currency = currency;
             return true;
         }
         else
             return false;
-    }
-    public boolean setCurrency(json.Json json){
-        if (null == json)
-            return false;
-        else
-            return this.setCurrency((String)json.getValue(String.class));
     }
     public final boolean hasNotes(boolean mayInherit){
         return (this.getNotes(mayInherit).isNotEmpty());
@@ -1228,7 +1190,7 @@ public abstract class AccountData
                 }
             }
             /*
-             * Collection type coersion
+             * compiler type coercion
              */
             {
                 Object tmp = new ListAccountNote((Account)this);
@@ -1237,6 +1199,7 @@ public abstract class AccountData
             this.notes = notes;
             notes.init();
         }
+
         return notes;
     }
     public final boolean setNotes(List.Short<Note> notes){
@@ -1282,6 +1245,88 @@ public abstract class AccountData
         else
             throw new IllegalArgumentException();
     }
+    public Json toJsonIdentifier(){
+        String identifier = this.getIdentifier();
+        return Json.Wrap( identifier);
+    }
+    public boolean fromJsonIdentifier(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setIdentifier((String)json.getValue(String.class));
+    }
+    public Json toJsonGroup(){
+        Group group = this.getGroup();
+        return Json.Wrap( group);
+    }
+    public boolean fromJsonGroup(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setGroup((Group)json.getValue(Group.class));
+    }
+    public Json toJsonProject(){
+        Project project = this.getProject();
+        return Json.Wrap( project);
+    }
+    public boolean fromJsonProject(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setProject((Project)json.getValue(Project.class));
+    }
+    public Json toJsonClosed(){
+        Boolean closed = this.getClosed();
+        return Json.Wrap( closed);
+    }
+    public boolean fromJsonClosed(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setClosed((Boolean)json.getValue(Boolean.class));
+    }
+    public Json toJsonAmount(){
+        Float amount = this.getAmount();
+        return Json.Wrap( amount);
+    }
+    public boolean fromJsonAmount(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setAmount((Float)json.getValue(Float.class));
+    }
+    public final boolean setAmount(Number amount){
+        if (IsNotEqual(this.amount,amount)){
+            this.fieldStatistics().markDirty(Account.Field.Amount);
+            if (amount instanceof Float)
+                this.amount = (Float)amount;
+            else
+                this.amount = new Float( amount.floatValue());
+            return true;
+        }
+        else
+            return false;
+    }
+    public Json toJsonCurrency(){
+        String currency = this.getCurrency();
+        return Json.Wrap( currency);
+    }
+    public boolean fromJsonCurrency(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setCurrency((String)json.getValue(String.class));
+    }
+    public Json toJsonNotes(){
+        List.Short<Note> notes = this.getNotes();
+        return Json.Wrap( notes);
+    }
+    public boolean fromJsonNotes(Json json){
+        /*
+         * [TODO] json.getValue(colClas,comClas) not expressed by (e.g.) "List.Short<Component>.class"
+         */
+        return false;
+    }
     /*
      * Data binding supports
      */
@@ -1301,29 +1346,39 @@ public abstract class AccountData
     public final gap.data.Field getClassFieldByName(String name){
         return Field.getField(name);
     }
-    public json.Json toJson(){
-        json.Json json = new json.ObjectJson();
-        String identifier = this.getIdentifier();
-        json.set("identifier",identifier);
-        Group group = this.getGroup();
-        json.set("group",group);
-        Project project = this.getProject();
-        json.set("project",project);
-        Boolean closed = this.getClosed();
-        json.set("closed",closed);
-        Float amount = this.getAmount();
-        json.set("amount",amount);
-        String currency = this.getCurrency();
-        json.set("currency",currency);
+    public Json toJson(){
+        Json json = new json.ObjectJson();
+        Json identifier = this.toJsonIdentifier();
+        if (null != identifier)
+            json.set("identifier",identifier);
+        Json group = this.toJsonGroup();
+        if (null != group)
+            json.set("group",group);
+        Json project = this.toJsonProject();
+        if (null != project)
+            json.set("project",project);
+        Json closed = this.toJsonClosed();
+        if (null != closed)
+            json.set("closed",closed);
+        Json amount = this.toJsonAmount();
+        if (null != amount)
+            json.set("amount",amount);
+        Json currency = this.toJsonCurrency();
+        if (null != currency)
+            json.set("currency",currency);
+        Json notes = this.toJsonNotes();
+        if (null != notes)
+            json.set("notes",notes);
         return json;
     }
-    public boolean fromJson(json.Json json){
+    public boolean fromJson(Json json){
         boolean modified = false;
-        modified = (this.setGroup(json.at("group")) || modified);
-        modified = (this.setProject(json.at("project")) || modified);
-        modified = (this.setClosed(json.at("closed")) || modified);
-        modified = (this.setAmount(json.at("amount")) || modified);
-        modified = (this.setCurrency(json.at("currency")) || modified);
+        modified = (this.fromJsonGroup(json.at("group")) || modified);
+        modified = (this.fromJsonProject(json.at("project")) || modified);
+        modified = (this.fromJsonClosed(json.at("closed")) || modified);
+        modified = (this.fromJsonAmount(json.at("amount")) || modified);
+        modified = (this.fromJsonCurrency(json.at("currency")) || modified);
+        modified = (this.fromJsonNotes(json.at("notes")) || modified);
         return modified;
     }
     public boolean updateFrom(Request req) throws ValidationError {
@@ -1396,17 +1451,17 @@ public abstract class AccountData
     }
     public final Account markClean(){
 
-        this.fieldStatistics.markClean();
+        this.fieldStatistics().markClean();
         return (Account)this;
     }
     public final Account markDirty(){
 
-        this.fieldStatistics.markDirty();
+        this.fieldStatistics().markDirty();
         return (Account)this;
     }
     public final Account markDirty(gap.data.Field field){
 
-        this.fieldStatistics.markDirty(field);
+        this.fieldStatistics().markDirty(field);
         return (Account)this;
     }
     public final Account markDirty(java.io.Serializable instance){
@@ -1438,24 +1493,26 @@ public abstract class AccountData
             gap.data.Field field = Account.Field.Notes;
             return this.markDirty(field);
         }
+        else if (null != instance)
+            throw new IllegalArgumentException(instance.getClass().getName());
         else
-            return (Account)this;
+            throw new IllegalArgumentException();
     }
     public final Iterable<gap.data.Field> listClean(){
 
-        return this.fieldStatistics.listClean();
+        return this.fieldStatistics().listClean();
     }
     public final Iterable<gap.data.Field> listDirty(){
 
-        return this.fieldStatistics.listDirty();
+        return this.fieldStatistics().listDirty();
     }
     public final boolean isClean(){
 
-        return this.fieldStatistics.isClean();
+        return this.fieldStatistics().isClean();
     }
     public final boolean isDirty(){
 
-        return this.fieldStatistics.isDirty();
+        return this.fieldStatistics().isDirty();
     }
     public final gap.service.od.ClassDescriptor getClassDescriptorFor(){
         return Account.ClassDescriptorFor();
@@ -1539,6 +1596,16 @@ public abstract class AccountData
                     return this.hasCurrency(true);
                 }
             case Notes:
+                /*
+                 * compiler type coercion
+                 */
+                List<TemplateDataDictionary> notes;
+                {
+                    Object _notes = this.getNotes(true);
+                    notes = (List<TemplateDataDictionary>)_notes;
+                }
+                return (null != name.dereference(notes));
+                
             default:
                 break;
             }
@@ -1595,6 +1662,16 @@ public abstract class AccountData
                 else
                     return this.getCurrency(true);
             case Notes:
+                /*
+                 * compiler type coercion
+                 */
+                List<TemplateDataDictionary> notes;
+                {
+                    Object _notes = this.getNotes(true);
+                    notes = (List<TemplateDataDictionary>)_notes;
+                }
+                return name.dereference(notes);
+                
             default:
                 break;
             }
@@ -1631,6 +1708,7 @@ public abstract class AccountData
                 case Currency:
                     throw new IllegalStateException(field.name());
                 case Notes:
+                    throw new IllegalStateException(field.name());
                 default:
                     throw new IllegalStateException(field.name());
                 }
@@ -1676,7 +1754,7 @@ public abstract class AccountData
                 return null;
             case Notes:
                 /*
-                 * compiler type coersion
+                 * compiler type coercion
                  */
                 Object notes = this.getNotes(true);
                 return (List.Short<TemplateDataDictionary>)notes;

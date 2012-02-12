@@ -19,10 +19,6 @@ import json.Json;
 
 import oso.data.Person;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-
 import com.google.appengine.api.datastore.Key;
 
 import com.google.appengine.api.oauth.OAuthRequestException;
@@ -30,9 +26,13 @@ import com.google.appengine.api.oauth.OAuthService;
 import com.google.appengine.api.oauth.OAuthServiceFactory;
 import com.google.appengine.api.oauth.OAuthServiceFailureException;
 
+import javax.servlet.ServletException;
+
+import java.io.IOException;
+import java.util.Date;
+
 /**
- * Generated once.  This source file will not be overwritten
- * unless deleted, so it can be edited.
+ * Bound to "/accounts"
  *
  * @see Account
  */
@@ -46,8 +46,14 @@ public final class AccountServlet
     final static TemplateName PageTitle = new TemplateName("page_title");
     final static TemplateName OpenLabel = new TemplateName("open_label");
 
+    final static TemplateName ClosedSelectTrue = new TemplateName("closed_select_true");
+    final static TemplateName ClosedSelectFalse = new TemplateName("closed_select_false");
+
+    final static String Selected = "selected";
+
+
     public enum Op {
-        Save, List, Group, Project;
+        Update, List, Group, Project, Notes, Closed;
 
         public static Op For(Request q){
             String string = q.getParameter("op");
@@ -91,6 +97,10 @@ public final class AccountServlet
                         else
                             pageTitle = String.format("Group '%s' Account",group.getName());
 
+                        if (account.isClosed())
+                            req.setVariable(ClosedSelectTrue,Selected);
+                        else
+                            req.setVariable(ClosedSelectFalse,Selected);
 
                         req.addSection(EditAccount,account);
                     }
@@ -180,8 +190,6 @@ public final class AccountServlet
 
                 final String consumer = OAuth.getOAuthConsumerKey();
 
-                req.setVariable(AccountDiv,"div.account.user.html");
-
                 final String identifier = AccountIdentifier(req);
                 if (null != identifier){
 
@@ -236,7 +244,7 @@ public final class AccountServlet
                 final Op op = Op.For(req);
                 if (null != op){
                     switch(op){
-                    case Save:{
+                    case Update:{
                         String identifier = AccountIdentifier(req);
                         if (null != identifier){
                             /*
@@ -244,20 +252,22 @@ public final class AccountServlet
                              */
                             Account account = Account.ForLongIdentifier(identifier);
                             if (null != account){
-                                account.updateFrom(req);
 
-                                req.addSection(EditAccount,account);
+                                account.note(req,"Update");
 
-                                if (account.isDirty())
-                                    account.save();
+                                account.save();
+
+                                rep.sendRedirect("/accounts/"+account.getIdentifier()+"/index.html");
                             }
-                            req.setVariable(AccountDiv,"div.account.admin.html");
+                            else
+                                this.error(req,rep,404,"Not found");
+
+                            return;
                         }
                         else {
                             this.error(req,rep,400,"Missing identifier");
                             return;
                         }
-                        break;
                     }
                     case List:{
                         /*
@@ -272,7 +282,10 @@ public final class AccountServlet
                         TemplateDataDictionary page = req.addSection(PageParameters);
                         req.parameters.page.dictionaryInto(page);
 
-                        break;
+                        rep.setContentTypeHtml();
+
+                        this.render(req,rep,"account.html");
+                        return;
                     }
                     case Group:{
                         String groupIdentifier = GroupIdentifier(req);
@@ -302,6 +315,58 @@ public final class AccountServlet
                             return;
                         }
                     }
+                    case Notes:{
+
+                        String identifier = AccountIdentifier(req);
+                        if (null != identifier){
+                            /*
+                             * Admin Create Note
+                             */
+                            Account account = Account.ForLongIdentifier(identifier);
+                            if (null != account){
+
+                                rep.sendRedirect("/notes/index.html?account="+identifier);
+                                return;
+                            }
+                            else {
+                                this.error(req,rep,404,"Not found");
+                                return;
+                            }
+                        }
+                        else {
+                            this.error(req,rep,400,"Missing identifier");
+                            return;
+                        }
+                    }
+                    case Closed:{
+
+                        String identifier = AccountIdentifier(req);
+                        if (null != identifier){
+                            /*
+                             * Admin Mark Closed
+                             */
+                            Account account = Account.ForLongIdentifier(identifier);
+                            if (null != account){
+
+                                account.setClosed(Boolean.TRUE);
+
+                                account.note(req,"Closed");
+
+                                account.save();
+
+                                rep.sendRedirect("/accounts/"+account.getIdentifier()+"/index.html");
+                                return;
+                            }
+                            else {
+                                this.error(req,rep,404,"Not found");
+                                return;
+                            }
+                        }
+                        else {
+                            this.error(req,rep,400,"Missing identifier");
+                            return;
+                        }
+                    }
                     default:
                         this.error(req,rep,500,String.format("Unknown op '%s'",op.name()));
                         return;
@@ -311,68 +376,12 @@ public final class AccountServlet
                     this.error(req,rep,400,"Missing op");
                     return;
                 }
-
-                rep.setContentTypeHtml();
-
-                this.render(req,rep,"account.html");
-                return;
             }
             else {
                 this.error(req,rep,401,"Access denied");
                 return;
             }
-            
-        case Tail.DataJson:
-            try {
-                final OAuthService OAuth = OAuthServiceFactory.getOAuthService();
 
-                final String consumer = OAuth.getOAuthConsumerKey();
-
-                if (req.isContentTypeJson()){
-
-                    final Json json = req.getBodyJson();
-                    /*
-                     * User Update
-                     */
-                    if (json.isNull()){
-
-                        this.error(req,rep,400,"Missing request entity body");
-                    }
-                    else {
-                        String identifier = (String)json.getValue("identifier");
-                        if (null == identifier || 1 > identifier.length())
-                            this.error(req,rep,400,"Missing request entity property named identifier");
-                        else {
-                            Account account = Account.ForLongIdentifier(identifier);
-                            if (null != account){
-                                if (account.fromJson(json)){
-
-                                    account.save();
-                                }
-
-                                rep.setContentTypeJson();
-
-                                rep.println(account.toJson().toString());
-
-                                this.ok(req,rep);
-                            }
-                            else
-                                this.error(req,rep,404,"Not found");
-                        }
-                    }
-                }
-                else 
-                    this.error(req,rep,400,"Unrecognized request entity content type");
-            }
-            catch (OAuthRequestException request){
-
-                this.error(req,rep,401,"Access denied");
-            }
-            catch (OAuthServiceFailureException service){
-
-                this.error(req,rep,500,"Access error");
-            }
-            return;
         default:
             this.error(req,rep,404,"Not found");
             return;
@@ -381,10 +390,12 @@ public final class AccountServlet
 
     public final static String AccountIdentifier(Request req){
         String identifier = req.getParameter("identifier");
-        if (null == identifier)
-            return req.getSource();
-        else
+        if (null != identifier)
             return identifier;
+        else if (req.isSourceTail())
+            return null;
+        else
+            return req.getSource();
     }
     public final static String GroupIdentifier(Request req){
         String identifier = req.getParameter("group_identifier");

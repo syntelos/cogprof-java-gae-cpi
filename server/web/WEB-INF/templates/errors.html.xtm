@@ -6,7 +6,7 @@
   </head>
   <body>
 {{>div.logon.html}}
-    <div id="first">
+    <div id="error">
       {{#error}}
       <div class="block inside">
         <h1 class="errors"> {{=error_status}}</h1>

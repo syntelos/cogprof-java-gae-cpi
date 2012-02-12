@@ -6,7 +6,7 @@
   </head>
   <body>
 {{>div.logon.html}}
-    <div id="first">
+    <div id="about">
 
       <h3><i> Please login to use this service </i></h3>
 
@@ -24,7 +24,7 @@
       </div>
 
     </div>
-    <div id="second">
+    <div id="indexpic">
       <img src="{{=pageUrlRoot}}/images/cognitive-profile-240x240.gif" width="240" height="240" />
     </div>
 {{>div.copyright.html}}

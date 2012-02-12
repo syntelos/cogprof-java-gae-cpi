@@ -13,15 +13,26 @@ div#footer {
  width: 90%;
  color: #555;
 }
-div#first {
- position: absolute;
- top: 48px;
- left: 10%;
+div#about {
+ margin-top: 48px;
+ margin-left: 10%;
  padding: 8px;
  width: 40%;
- float: left;
 }
-div#second {
+div#error {
+ margin-top: 48px;
+ margin-left: 10%;
+ margin-right: 10%;
+ padding: 8px;
+ width: 80%;
+}
+div#admin {
+ margin-top: 48px;
+ margin-left: 10%;
+ padding: 8px;
+ width: 80%;
+}
+div#indexpic {
  position: absolute;
  top: 48px;
  right: 10%;
@@ -29,25 +40,45 @@ div#second {
  width: 240px;
  float: right;
 }
-div#inventory {
- position: fixed;
- top: 68px;
- left: 10%;
- padding: 10px;
- width: 650px;
- height: 50%;
+div#profile {
+ margin-top: 48px;
+ padding: 8px;
+ width: 80%;
 }
-input, select {
+div#inventory {
+ margin-top: 68px;
+ padding: 8px;
+ width: 90%;
+}
+input, select, textarea {
  border: 1px solid #000;
  background-color: #FFF;
 }
-input[readonly] {
+[readonly] {
  background-color: #EEE;
 }
 table.listing {
  width: 90%;
  margin: 12px;
  border: 0;
+}
+tr.listing {
+ margin: 4px;
+}
+tr.listing.row {
+ background-color: #ffefff;
+}
+tr.listing a {
+ text-decoration: none;
+}
+td.listing.lhs {
+ text-align: left;
+}
+td.listing.mid {
+ text-align: center;
+}
+td.listing.rhs {
+ text-align: right;
 }
 table.editing {
  width: 90%;
@@ -75,17 +106,16 @@ td.editing.in {
  padding: 0;
 }
 td.editing.lhs {
- text-align: right;
+ text-align: left;
 }
 td.editing.mid {
  text-align: center;
 }
 td.editing.rhs {
- text-align: left;
+ text-align: right;
 }
 div.invq {
  width: 300px;
- height: 50%;
  border: 1px solid #101010;
  padding-top: 20px;
 }
@@ -131,6 +161,15 @@ div.logon {
  text-align: right;
  padding: 4px;
  padding-right: 16px;
+}
+div.logon.group {
+ position: absolute;
+ right: 0px;
+ top: 0px;
+ width: 0px;
+ height: 0px;
+ margin: 0px;
+ padding: 0px;
 }
 span.logon {
  margin: 0px;

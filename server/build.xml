@@ -12,6 +12,7 @@
   <property name="ver.web" value="ver/web"/>
   <property name="web" value="web"/>
   <property name="out" value="war"/>
+  <property name="src.metainf" value="${src}/META-INF"/>
   <property name="out.webinf" value="${out}/WEB-INF"/>
   <property name="out.bin" value="${out.webinf}/classes"/>
   <property name="out.lib" value="${out.webinf}/lib"/>
@@ -177,6 +178,11 @@
         <include name="**/*.odl" />
       </fileset>
     </copy>
+    <copy todir="${out.webinf}/services">
+      <fileset dir="${src.metainf}/services">
+        <include name="**/*" />
+      </fileset>
+    </copy>
   </target>
 
   <target name="compile" depends="version" description="Compile code from 'src' to bin.">
@@ -261,6 +267,7 @@
       <formatter type="plain" usefile="false"/>
 
       <test name="Inventory" />
+      <test name="ProfileImage" />
 
     </junit>
 

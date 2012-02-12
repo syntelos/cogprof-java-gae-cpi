@@ -1,14 +1,14 @@
    <div id="admin">
      <h1>{{=page_title}}</h1>
-     <table class="listing">{{#account}}
-       <tr class="listing row" onclick="javascript:document.location = '/accounts/{{=identifier}}/index.html';">
-         <td class="listing""><a href="/accounts/{{=identifier}}/index.html">{{=currency}}</a>
+     <table class="listing">{{#note}}
+       <tr class="listing row" onclick="javascript:document.location = '/notes/{{=identifier}}/index.html?account={{=account/identifier}}';">
+         <td class="listing""><a href="/notes/{{=identifier}}/index.html?account={{=account/identifier}}">{{=created}}</a>
          </td>
-         <td class="listing""><a href="/accounts/{{=identifier}}/index.html">{{=amount}}</a>
+         <td class="listing""><a href="/notes/{{=identifier}}/index.html?account={{=account/identifier}}">{{=writer/logonId}}</a>
          </td>
-         <td class="listing""><a href="/accounts/{{=identifier}}/index.html">{{=open_label}}</a>
+         <td class="listing""><a href="/notes/{{=identifier}}/index.html?account={{=account/identifier}}">{{=text_short}}</a>
          </td>
-       </tr>{{/account}}{{#page}}
+       </tr>{{/note}}{{#page}}
        <tr class="listing">
          <td class="listing lhs">
            <form method="POST">
