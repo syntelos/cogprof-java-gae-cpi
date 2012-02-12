@@ -11,17 +11,17 @@
          <tr class="editing">
            <td class="editing lhs"><label for="group">Group</label>
            </td>
-           <td class="editing rhs"><input readonly type="text" id="group" name="group_name" value="{{=name}}" />
+           <td class="editing rhs"><input readonly type="text" id="group" name="group_name" value="{{=name}}"  onclick="javascript:document.location = '/groups/{{=identifier}}/index.html';" />
            </td>
-           <td class="editing rhs"><input readonly type="text" id="group" name="group_identifier" value="{{=identifier}}" size="20" />
+           <td class="editing rhs"><input readonly type="text" id="group" name="group_identifier" value="{{=identifier}}" size="20"  onclick="javascript:document.location = '/groups/{{=identifier}}/index.html';" />
            </td>
          </tr>{{/group}}{{#project}}
          <tr class="editing">
            <td class="editing lhs"><label for="project">Project</label>
            </td>
-           <td class="editing rhs"><input readonly type="text" id="project" name="project_name" value="{{=name}}" />
+           <td class="editing rhs"><input readonly type="text" id="project" name="project_name" value="{{=name}}"  onclick="javascript:document.location = '/projects/{{=identifier}}/index.html';" />
            </td>
-           <td class="editing rhs"><input readonly type="text" id="project" name="project_identifier" value="{{=identifier}}" size="20" />
+           <td class="editing rhs"><input readonly type="text" id="project" name="project_identifier" value="{{=identifier}}" size="20"  onclick="javascript:document.location = '/projects/{{=identifier}}/index.html';" />
            </td>
          </tr>{{/project}}
          <tr class="editing">
