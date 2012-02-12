@@ -308,7 +308,7 @@ public final class ProjectServlet
                         String groupIdentifier = GroupIdentifier(req);
                         if (null != groupIdentifier){
                             Group group = Group.ForLongIdentifier(groupIdentifier);
-                            if (group.hasGroupAccess(viewer)){
+                            if (null != group && group.hasGroupAccess(viewer)){
 
                                 String pageTitle = String.format("Group '%s' Projects",group.getName());
 
