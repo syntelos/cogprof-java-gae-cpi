@@ -1,4 +1,7 @@
 <datastore-indexes>
+  <datastore-index kind="Group" ancestor="true" source="manual">
+    <property name="identifier" direction="asc"/>
+  </datastore-index>
   <datastore-index kind="Project" ancestor="true" source="manual">
     <property name="identifier" direction="asc"/>
   </datastore-index>
