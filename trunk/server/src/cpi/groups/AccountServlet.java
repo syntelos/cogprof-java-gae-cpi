@@ -21,11 +21,6 @@ import oso.data.Person;
 
 import com.google.appengine.api.datastore.Key;
 
-import com.google.appengine.api.oauth.OAuthRequestException;
-import com.google.appengine.api.oauth.OAuthService;
-import com.google.appengine.api.oauth.OAuthServiceFactory;
-import com.google.appengine.api.oauth.OAuthServiceFailureException;
-
 import javax.servlet.ServletException;
 
 import java.io.IOException;
@@ -185,10 +180,7 @@ public final class AccountServlet
             }
 
         case Tail.DataJson:
-            try {
-                final OAuthService OAuth = OAuthServiceFactory.getOAuthService();
-
-                final String consumer = OAuth.getOAuthConsumerKey();
+            if (req.isOAuth || req.isAdmin){
 
                 final String identifier = AccountIdentifier(req);
                 if (null != identifier){
@@ -218,13 +210,9 @@ public final class AccountServlet
                 else
                     this.error(req,rep,400,"Missing identifier");
             }
-            catch (OAuthRequestException request){
+            else {
 
                 this.error(req,rep,401,"Access denied");
-            }
-            catch (OAuthServiceFailureException service){
-
-                this.error(req,rep,500,"Access error");
             }
             return;
         case Tail.None:

@@ -25,11 +25,6 @@ import javax.servlet.ServletException;
 
 import com.google.appengine.api.datastore.Key;
 
-import com.google.appengine.api.oauth.OAuthRequestException;
-import com.google.appengine.api.oauth.OAuthService;
-import com.google.appengine.api.oauth.OAuthServiceFactory;
-import com.google.appengine.api.oauth.OAuthServiceFailureException;
-
 /**
  * Generated once.  This source file will not be overwritten
  * unless deleted, so it can be edited.
@@ -143,10 +138,7 @@ public final class ProjectServlet
             }
 
         case Tail.DataJson:
-            try {
-                final OAuthService OAuth = OAuthServiceFactory.getOAuthService();
-
-                final String consumer = OAuth.getOAuthConsumerKey();
+            if (req.isOAuth || req.isAdmin){
 
                 final String projectIdentifier = ProjectIdentifier(req);
                 if (null != projectIdentifier){
@@ -212,13 +204,9 @@ public final class ProjectServlet
                         this.error(req,rep,401,"Viewer not group admin");
                 }
             }
-            catch (OAuthRequestException request){
+            else {
 
                 this.error(req,rep,401,"Access denied");
-            }
-            catch (OAuthServiceFailureException service){
-
-                this.error(req,rep,500,"Access error");
             }
             return;
         case Tail.None:
@@ -401,10 +389,7 @@ public final class ProjectServlet
             }
             
         case Tail.DataJson:
-            try {
-                final OAuthService OAuth = OAuthServiceFactory.getOAuthService();
-
-                final String consumer = OAuth.getOAuthConsumerKey();
+            if (req.isOAuth || req.isAdmin){
 
                 String projectIdentifier = ProjectIdentifier(req);
                 if (null != projectIdentifier && null != req.getParameter("delete")){
@@ -471,13 +456,9 @@ public final class ProjectServlet
                 else 
                     this.error(req,rep,400,"Unrecognized request entity content type");
             }
-            catch (OAuthRequestException request){
+            else {
 
                 this.error(req,rep,401,"Access denied");
-            }
-            catch (OAuthServiceFailureException service){
-
-                this.error(req,rep,500,"Access error");
             }
             return;
         default:

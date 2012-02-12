@@ -26,11 +26,6 @@ import javax.servlet.ServletException;
 
 import com.google.appengine.api.datastore.Key;
 
-import com.google.appengine.api.oauth.OAuthRequestException;
-import com.google.appengine.api.oauth.OAuthService;
-import com.google.appengine.api.oauth.OAuthServiceFactory;
-import com.google.appengine.api.oauth.OAuthServiceFailureException;
-
 /**
  * Generated once.  This source file will not be overwritten
  * unless deleted, so it can be edited.
@@ -136,10 +131,7 @@ public final class GroupServlet
             }
 
         case Tail.DataJson:
-            try {
-                final OAuthService OAuth = OAuthServiceFactory.getOAuthService();
-
-                final String consumer = OAuth.getOAuthConsumerKey();
+            if (req.isOAuth || req.isAdmin){
 
                 final String identifier = Identifier(req);
                 if (null != identifier){
@@ -179,13 +171,9 @@ public final class GroupServlet
                 else
                     this.error(req,rep,400,"Missing identifier");
             }
-            catch (OAuthRequestException request){
+            else {
 
                 this.error(req,rep,401,"Access denied");
-            }
-            catch (OAuthServiceFailureException service){
-
-                this.error(req,rep,500,"Access error");
             }
             return;
         case Tail.None:
@@ -357,10 +345,7 @@ public final class GroupServlet
             }
             
         case Tail.DataJson:
-            try {
-                final OAuthService OAuth = OAuthServiceFactory.getOAuthService();
-
-                final String consumer = OAuth.getOAuthConsumerKey();
+            if (req.isOAuth || req.isAdmin){
 
                 if (req.isContentTypeJson()){
 
@@ -398,13 +383,9 @@ public final class GroupServlet
                 else 
                     this.error(req,rep,400,"Unrecognized request entity content type");
             }
-            catch (OAuthRequestException request){
+            else {
 
                 this.error(req,rep,401,"Access denied");
-            }
-            catch (OAuthServiceFailureException service){
-
-                this.error(req,rep,500,"Access error");
             }
             return;
         default:
