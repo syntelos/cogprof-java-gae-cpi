@@ -7,7 +7,7 @@ public class ProfileImage
 {
 
     private final static cpi.ProfileLabels ProfileLabels1 = new cpi.ProfileLabels();
-    private final static cpi.ProfileLabels ProfileLabels2 = new cpi.ProfileLabels("Friendly Angry Smart Funny");
+    private final static cpi.ProfileLabels ProfileLabels2 = new cpi.ProfileLabels("Friendly Sporty Smart Funny");
 
 
     public ProfileImage(){
