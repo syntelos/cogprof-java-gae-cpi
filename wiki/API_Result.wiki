@@ -53,7 +53,7 @@
 }}}
  In this pattern - example, `mid` refers to the member identifier available from the [API_Project Project API].
 
- The inventory begins with a URL in the following pattern.
+ The [API_Inventory inventory] begins with a URL in the following pattern.
 {{{
  http://cpi.cognitiveprofile.com/inventory/mid/groups.html
 }}}
