@@ -24,6 +24,10 @@
 
  Profile result image Quadrant Labels may be modified by the [mailto:cpi@cognitiveprofile.com?Subject=CPI+Groups service administrator] with the written approval of Dr Krause.  These strings should have one to eight characters.  Test images may be produced on request.
 
+ The following is a silly example...
+
+  http://cpi.cognitiveprofile.com/profile/R7Fk7gxptlqIAXHx/groups.png
+
 === Test Status ===
 
  New groups are created in TEST status for development purposes. 
