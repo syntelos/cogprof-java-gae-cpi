@@ -1,0 +1,26 @@
+<html>
+  <body bgcolor="#ffffff">
+
+    <h3>{{=messageTitle}}</h3>
+
+    <p> Please accept <a href="{{=checkoutUrl}}">this transaction</a> for CPI Online Groups
+    Services, or reply to this message with questions. </p>
+
+    <p><i>Thank you!</i></p>
+
+    <hr />
+
+    <table border="0">
+      <tr>
+        <td><pre>{{=checkoutSerialNumber}}</pre></td>
+        <td><pre>{{=messageCurrency}} {{=messageAmount}}</pre></td>
+      </tr>
+      <tr>
+        <td colspan="2"><pre>{{=messageDescription}}</pre></td>
+      </tr>
+      <tr>
+        <td colspan="2"><pre>{{=checkoutSerialNumber}}</pre></td>
+      </tr>
+    </table>
+  </body>
+</html>

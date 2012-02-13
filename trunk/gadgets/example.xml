@@ -7,6 +7,6 @@
     <Require feature="setprefs"/>
   </ModulePrefs>
   <UserPref name="exampleTarget" display_name="Example selection identifier (L1,..., L4, R1,..., R4)" default_value="L1"/>
-  <Content preferred_height="320" preferred_width="670" />
+  <Content preferred_height="320" preferred_width="700" />
   <Content type="url" href="http://cpi.cognitiveprofile.com/example.html?target=__UP_exampleTarget__" />
 </Module>

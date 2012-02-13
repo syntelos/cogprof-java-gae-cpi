@@ -1,43 +1,44 @@
+<?xml version="1.0"?>
 <datastore-indexes>
-  <datastore-index kind="Group" ancestor="true" source="manual">
-    <property name="identifier" direction="asc"/>
+  <datastore-index ancestor="true" kind="Group" source="manual">
+    <property direction="asc" name="identifier"/>
   </datastore-index>
-  <datastore-index kind="Project" ancestor="true" source="manual">
-    <property name="identifier" direction="asc"/>
+  <datastore-index ancestor="true" kind="Project" source="manual">
+    <property direction="asc" name="identifier"/>
   </datastore-index>
-  <datastore-index kind="Note" ancestor="true" source="manual">
-    <property name="identifier" direction="asc"/>
-  </datastore-index>
-
-  <datastore-index kind="Account" ancestor="false" source="manual">
-    <property name="group" direction="asc"/>
-    <property name="identifier" direction="asc"/>
+  <datastore-index ancestor="true" kind="Note" source="manual">
+    <property direction="asc" name="identifier"/>
   </datastore-index>
 
-  <datastore-index kind="Person" ancestor="true" source="manual">
-    <property name="identifier" direction="asc"/>
+  <datastore-index ancestor="false" kind="Account" source="manual">
+    <property direction="asc" name="group"/>
+    <property direction="asc" name="identifier"/>
   </datastore-index>
 
-  <datastore-index kind="Template" ancestor="true" source="auto">
-    <property name="name" direction="asc"/>
+  <datastore-index ancestor="true" kind="Person" source="manual">
+    <property direction="asc" name="identifier"/>
   </datastore-index>
 
-  <datastore-index kind="TemplateNode" ancestor="true" source="auto">
-    <property name="offset" direction="asc"/>
+  <datastore-index ancestor="true" kind="Template" source="auto">
+    <property direction="asc" name="name"/>
   </datastore-index>
 
-  <datastore-index kind="Group" ancestor="false" source="auto">
-    <property name="admin" direction="asc"/>
-    <property name="identifier" direction="asc"/>
+  <datastore-index ancestor="true" kind="TemplateNode" source="auto">
+    <property direction="asc" name="offset"/>
   </datastore-index>
 
-  <datastore-index kind="Group" ancestor="false" source="auto">
-    <property name="owner" direction="asc"/>
-    <property name="identifier" direction="asc"/>
+  <datastore-index ancestor="false" kind="Group" source="auto">
+    <property direction="asc" name="admin"/>
+    <property direction="asc" name="identifier"/>
   </datastore-index>
 
-  <datastore-index kind="Member" ancestor="true" source="auto">
-    <property name="person" direction="asc"/>
+  <datastore-index ancestor="false" kind="Group" source="auto">
+    <property direction="asc" name="owner"/>
+    <property direction="asc" name="identifier"/>
+  </datastore-index>
+
+  <datastore-index ancestor="true" kind="Member" source="auto">
+    <property direction="asc" name="person"/>
   </datastore-index>
 
 </datastore-indexes>

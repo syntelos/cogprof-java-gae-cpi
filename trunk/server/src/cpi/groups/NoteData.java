@@ -43,7 +43,7 @@ import javax.annotation.Generated;
  *
  * @see Note
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-11T18:01:34.262Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-13T07:56:56.614Z")
 public abstract class NoteData
     extends gap.data.BigTable
     implements DataInheritance<Note>
@@ -55,7 +55,7 @@ public abstract class NoteData
 
     public final static String ClassName = "Note";
 
-    public final static String DefaultSortBy = "identifier";
+    public final static String DefaultSortBy = "created";
 
 
     public final static gap.service.od.ClassDescriptor ClassDescriptorFor(){

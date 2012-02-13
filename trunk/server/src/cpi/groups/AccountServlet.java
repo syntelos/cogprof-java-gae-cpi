@@ -19,6 +19,8 @@ import json.Json;
 
 import oso.data.Person;
 
+import com.google.checkout.sdk.commands.CheckoutException;
+
 import com.google.appengine.api.datastore.Key;
 
 import javax.servlet.ServletException;
@@ -48,7 +50,7 @@ public final class AccountServlet
 
 
     public enum Op {
-        Update, List, Group, Project, Notes, Closed;
+        Update, Post, List, Group, Project, Notes, Closed;
 
         public static Op For(Request q){
             String string = q.getParameter("op");
@@ -246,6 +248,30 @@ public final class AccountServlet
                                 account.save();
 
                                 rep.sendRedirect("/accounts/"+account.getIdentifier()+"/index.html");
+                            }
+                            else
+                                this.error(req,rep,404,"Not found");
+
+                            return;
+                        }
+                        else {
+                            this.error(req,rep,400,"Missing identifier");
+                            return;
+                        }
+                    }
+                    case Post:{
+                        String identifier = AccountIdentifier(req);
+                        if (null != identifier){
+                            /*
+                             * Admin Update
+                             */
+                            Account account = Account.ForLongIdentifier(identifier);
+                            if (null != account){
+
+                                if (account.post(req,rep))
+                                    rep.sendRedirect("/accounts/"+account.getIdentifier()+"/index.html?post=true");
+                                else
+                                    rep.sendRedirect("/accounts/"+account.getIdentifier()+"/index.html?post=false");
                             }
                             else
                                 this.error(req,rep,404,"Not found");
