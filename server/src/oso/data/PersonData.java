@@ -42,13 +42,13 @@ import javax.annotation.Generated;
  *
  * @see Person
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-11T18:01:30.891Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-13T07:56:53.079Z")
 public abstract class PersonData
     extends gap.data.BigTable
     implements DataInheritance<Person>
 {
 
-    private final static long serialVersionUID = 9;
+    private final static long serialVersionUID = 8;
 
     public final static Kind KIND = Kind.Create("Person","oso.data","Person","/people");
 

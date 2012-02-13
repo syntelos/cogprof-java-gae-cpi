@@ -5,6 +5,6 @@
              author="John Pritchard" author_email="cpi@cognitiveprofile.com" 
               width="670" height="320">
   </ModulePrefs>
-  <Content preferred_height="320" preferred_width="670" />
+  <Content preferred_height="320" preferred_width="700" />
   <Content type="url" href="http://cpi.cognitiveprofile.com/example.html?target=R4" />
 </Module>

@@ -43,7 +43,7 @@ import javax.annotation.Generated;
  *
  * @see Account
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-11T18:01:34.089Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-13T07:56:56.361Z")
 public abstract class AccountData
     extends gap.data.BigTable
     implements DataInheritance<Account>
@@ -345,7 +345,9 @@ public abstract class AccountData
         Closed("closed",Type.Primitive),
         Amount("amount",Type.Primitive),
         Currency("currency",Type.Primitive),
-        Notes("notes",Type.Collection);
+        Notes("notes",Type.Collection),
+        CheckoutSerialNumber("checkoutSerialNumber",Type.Primitive),
+        CheckoutUrl("checkoutUrl",Type.Primitive);
 
         private final static lxl.Map<String,Field> FieldName = new lxl.Map<String,Field>();
         public static final String[] AllNames;
@@ -413,6 +415,10 @@ public abstract class AccountData
                 return instance.getCurrency(mayInherit);
             case Notes:
                 return instance.getNotes(mayInherit);
+            case CheckoutSerialNumber:
+                return instance.getCheckoutSerialNumber(mayInherit);
+            case CheckoutUrl:
+                return instance.getCheckoutUrl(mayInherit);
             default:
                 throw new IllegalArgumentException(field.toString()+" in Account");
             }
@@ -444,6 +450,10 @@ public abstract class AccountData
                 return instance.setCurrency(gap.Objects.StringFromObject(value));
             case Notes:
                 return instance.setNotes((List.Short<Note>)value);
+            case CheckoutSerialNumber:
+                return instance.setCheckoutSerialNumber(gap.Objects.StringFromObject(value));
+            case CheckoutUrl:
+                return instance.setCheckoutUrl(gap.Objects.StringFromObject(value));
             default:
                 throw new IllegalArgumentException(field.toString()+" in Account");
             }
@@ -477,6 +487,10 @@ public abstract class AccountData
             case Notes:{
                 return null;
             }
+            case CheckoutSerialNumber:
+                return instance.getCheckoutSerialNumber(MayNotInherit);
+            case CheckoutUrl:
+                return instance.getCheckoutUrl(MayNotInherit);
             default:
                 throw new IllegalArgumentException(field.toString()+" in Account");
             }
@@ -520,6 +534,12 @@ public abstract class AccountData
             case Notes:{
                 return;
             }
+            case CheckoutSerialNumber:
+                instance.setCheckoutSerialNumber( (String)value);
+                return;
+            case CheckoutUrl:
+                instance.setCheckoutUrl( (String)value);
+                return;
             default:
                 throw new IllegalArgumentException(field.toString()+" in Account");
             }
@@ -639,6 +659,8 @@ public abstract class AccountData
     private Boolean closed;
     private Float amount;
     private String currency;
+    private String checkoutSerialNumber;
+    private String checkoutUrl;
     private transient List.Short<Note> notes;
 
 
@@ -674,6 +696,8 @@ public abstract class AccountData
         this.closed = null;
         this.amount = null;
         this.currency = null;
+        this.checkoutSerialNumber = null;
+        this.checkoutUrl = null;
         List.Short<Note> notes = this.notes;
         if (null != notes){
             this.notes = null;
@@ -1159,6 +1183,102 @@ public abstract class AccountData
         else
             return false;
     }
+    public final boolean hasCheckoutSerialNumber(boolean mayInherit){
+        return (null != this.getCheckoutSerialNumber(mayInherit));
+    }
+    public final boolean hasNotCheckoutSerialNumber(boolean mayInherit){
+        return (null == this.getCheckoutSerialNumber(mayInherit));
+    }
+    public final boolean dropCheckoutSerialNumber(){
+        if (null != this.checkoutSerialNumber){
+            this.fieldStatistics().markDirty(Account.Field.CheckoutSerialNumber);
+            this.checkoutSerialNumber = null;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final String getCheckoutSerialNumber(){
+        return this.getCheckoutSerialNumber(Notation.MayInherit);
+    }
+    public final String getCheckoutSerialNumber(boolean mayInherit){
+        if (mayInherit){
+            String checkoutSerialNumber = this.checkoutSerialNumber;
+            if (null == checkoutSerialNumber && this.hasInheritFrom()){
+                Account inheritFrom = this.getInheritFrom();
+                return inheritFrom.getCheckoutSerialNumber(Notation.MayInherit);
+            }
+            return checkoutSerialNumber;
+        }
+        else
+            return this.checkoutSerialNumber;
+    }
+    public final boolean setCheckoutSerialNumber(String checkoutSerialNumber, boolean withInheritance){
+        if (IsNotEqual(this.checkoutSerialNumber,this.getCheckoutSerialNumber(withInheritance))){
+            this.fieldStatistics().markDirty(Account.Field.CheckoutSerialNumber);
+            this.checkoutSerialNumber = checkoutSerialNumber;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean setCheckoutSerialNumber(String checkoutSerialNumber){
+        if (IsNotEqual(this.checkoutSerialNumber,checkoutSerialNumber)){
+            this.fieldStatistics().markDirty(Account.Field.CheckoutSerialNumber);
+            this.checkoutSerialNumber = checkoutSerialNumber;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean hasCheckoutUrl(boolean mayInherit){
+        return (null != this.getCheckoutUrl(mayInherit));
+    }
+    public final boolean hasNotCheckoutUrl(boolean mayInherit){
+        return (null == this.getCheckoutUrl(mayInherit));
+    }
+    public final boolean dropCheckoutUrl(){
+        if (null != this.checkoutUrl){
+            this.fieldStatistics().markDirty(Account.Field.CheckoutUrl);
+            this.checkoutUrl = null;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final String getCheckoutUrl(){
+        return this.getCheckoutUrl(Notation.MayInherit);
+    }
+    public final String getCheckoutUrl(boolean mayInherit){
+        if (mayInherit){
+            String checkoutUrl = this.checkoutUrl;
+            if (null == checkoutUrl && this.hasInheritFrom()){
+                Account inheritFrom = this.getInheritFrom();
+                return inheritFrom.getCheckoutUrl(Notation.MayInherit);
+            }
+            return checkoutUrl;
+        }
+        else
+            return this.checkoutUrl;
+    }
+    public final boolean setCheckoutUrl(String checkoutUrl, boolean withInheritance){
+        if (IsNotEqual(this.checkoutUrl,this.getCheckoutUrl(withInheritance))){
+            this.fieldStatistics().markDirty(Account.Field.CheckoutUrl);
+            this.checkoutUrl = checkoutUrl;
+            return true;
+        }
+        else
+            return false;
+    }
+    public final boolean setCheckoutUrl(String checkoutUrl){
+        if (IsNotEqual(this.checkoutUrl,checkoutUrl)){
+            this.fieldStatistics().markDirty(Account.Field.CheckoutUrl);
+            this.checkoutUrl = checkoutUrl;
+            return true;
+        }
+        else
+            return false;
+    }
     public final boolean hasNotes(boolean mayInherit){
         return (this.getNotes(mayInherit).isNotEmpty());
     }
@@ -1327,6 +1447,26 @@ public abstract class AccountData
          */
         return false;
     }
+    public Json toJsonCheckoutSerialNumber(){
+        String checkoutSerialNumber = this.getCheckoutSerialNumber();
+        return Json.Wrap( checkoutSerialNumber);
+    }
+    public boolean fromJsonCheckoutSerialNumber(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setCheckoutSerialNumber((String)json.getValue(String.class));
+    }
+    public Json toJsonCheckoutUrl(){
+        String checkoutUrl = this.getCheckoutUrl();
+        return Json.Wrap( checkoutUrl);
+    }
+    public boolean fromJsonCheckoutUrl(Json json){
+        if (null == json)
+            return false;
+        else
+            return this.setCheckoutUrl((String)json.getValue(String.class));
+    }
     /*
      * Data binding supports
      */
@@ -1369,6 +1509,12 @@ public abstract class AccountData
         Json notes = this.toJsonNotes();
         if (null != notes)
             json.set("notes",notes);
+        Json checkoutSerialNumber = this.toJsonCheckoutSerialNumber();
+        if (null != checkoutSerialNumber)
+            json.set("checkoutSerialNumber",checkoutSerialNumber);
+        Json checkoutUrl = this.toJsonCheckoutUrl();
+        if (null != checkoutUrl)
+            json.set("checkoutUrl",checkoutUrl);
         return json;
     }
     public boolean fromJson(Json json){
@@ -1379,6 +1525,8 @@ public abstract class AccountData
         modified = (this.fromJsonAmount(json.at("amount")) || modified);
         modified = (this.fromJsonCurrency(json.at("currency")) || modified);
         modified = (this.fromJsonNotes(json.at("notes")) || modified);
+        modified = (this.fromJsonCheckoutSerialNumber(json.at("checkoutSerialNumber")) || modified);
+        modified = (this.fromJsonCheckoutUrl(json.at("checkoutUrl")) || modified);
         return modified;
     }
     public boolean updateFrom(Request req) throws ValidationError {
@@ -1419,6 +1567,30 @@ public abstract class AccountData
                 throw new ValidationError(ClassName,"currency",currencyRequest,exc);
             }
         }
+        String checkoutSerialNumberRequest = req.getParameter("checkoutSerialNumber");
+        if (null != checkoutSerialNumberRequest && 0 < checkoutSerialNumberRequest.length()){
+            try {
+                String checkoutSerialNumber = checkoutSerialNumberRequest;
+                if (this.setCheckoutSerialNumber(checkoutSerialNumber)){
+                    change = true;
+                }
+            }
+            catch (RuntimeException exc){
+                throw new ValidationError(ClassName,"checkoutSerialNumber",checkoutSerialNumberRequest,exc);
+            }
+        }
+        String checkoutUrlRequest = req.getParameter("checkoutUrl");
+        if (null != checkoutUrlRequest && 0 < checkoutUrlRequest.length()){
+            try {
+                String checkoutUrl = checkoutUrlRequest;
+                if (this.setCheckoutUrl(checkoutUrl)){
+                    change = true;
+                }
+            }
+            catch (RuntimeException exc){
+                throw new ValidationError(ClassName,"checkoutUrl",checkoutUrlRequest,exc);
+            }
+        }
         return change;
     }
     public final boolean updateFrom(BigTable proto){
@@ -1437,6 +1609,14 @@ public abstract class AccountData
         }
         String currency = proto.getCurrency(mayInherit);
         if (null != currency && this.setCurrency(currency)){
+            change = true;
+        }
+        String checkoutSerialNumber = proto.getCheckoutSerialNumber(mayInherit);
+        if (null != checkoutSerialNumber && this.setCheckoutSerialNumber(checkoutSerialNumber)){
+            change = true;
+        }
+        String checkoutUrl = proto.getCheckoutUrl(mayInherit);
+        if (null != checkoutUrl && this.setCheckoutUrl(checkoutUrl)){
             change = true;
         }
         return change;
@@ -1491,6 +1671,14 @@ public abstract class AccountData
         }
         else if (instance == this.notes){
             gap.data.Field field = Account.Field.Notes;
+            return this.markDirty(field);
+        }
+        else if (instance == this.checkoutSerialNumber){
+            gap.data.Field field = Account.Field.CheckoutSerialNumber;
+            return this.markDirty(field);
+        }
+        else if (instance == this.checkoutUrl){
+            gap.data.Field field = Account.Field.CheckoutUrl;
             return this.markDirty(field);
         }
         else if (null != instance)
@@ -1606,6 +1794,24 @@ public abstract class AccountData
                 }
                 return (null != name.dereference(notes));
                 
+            case CheckoutSerialNumber:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else {
+                    /*
+                     * Synthesize section for Field (EXISTS)
+                     */
+                    return this.hasCheckoutSerialNumber(true);
+                }
+            case CheckoutUrl:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else {
+                    /*
+                     * Synthesize section for Field (EXISTS)
+                     */
+                    return this.hasCheckoutUrl(true);
+                }
             default:
                 break;
             }
@@ -1672,6 +1878,16 @@ public abstract class AccountData
                 }
                 return name.dereference(notes);
                 
+            case CheckoutSerialNumber:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else
+                    return this.getCheckoutSerialNumber(true);
+            case CheckoutUrl:
+                if (name.has(1))
+                    throw new IllegalStateException(field.name());
+                else
+                    return this.getCheckoutUrl(true);
             default:
                 break;
             }
@@ -1708,6 +1924,10 @@ public abstract class AccountData
                 case Currency:
                     throw new IllegalStateException(field.name());
                 case Notes:
+                    throw new IllegalStateException(field.name());
+                case CheckoutSerialNumber:
+                    throw new IllegalStateException(field.name());
+                case CheckoutUrl:
                     throw new IllegalStateException(field.name());
                 default:
                     throw new IllegalStateException(field.name());
@@ -1758,6 +1978,10 @@ public abstract class AccountData
                  */
                 Object notes = this.getNotes(true);
                 return (List.Short<TemplateDataDictionary>)notes;
+            case CheckoutSerialNumber:
+                return null;
+            case CheckoutUrl:
+                return null;
             default:
                 throw new IllegalStateException(field.name());
             }

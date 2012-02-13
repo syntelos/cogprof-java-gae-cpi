@@ -1,6 +1,7 @@
 
 package cpi.groups;
 
+import oso.data.Merchant;
 import oso.data.Person;
 import cpi.Redirect;
 import cpi.Margins;
@@ -9,11 +10,24 @@ import json.Json;
 
 import gap.*;
 import gap.data.*;
+import gap.hapax.TemplateException;
+import gap.hapax.TemplateName;
+import gap.hapax.TemplateRenderer;
+import gap.service.Templates;
 import gap.util.*;
 
-import com.google.appengine.api.datastore.*;
-import com.google.appengine.api.blobstore.*;
+import com.google.checkout.sdk.commands.CartPoster;
+import com.google.checkout.sdk.commands.CartPoster.CheckoutShoppingCartBuilder;
+import com.google.checkout.sdk.commands.CheckoutException;
+import com.google.checkout.sdk.domain.CheckoutRedirect;
+import com.google.checkout.sdk.domain.DigitalContent;
+import com.google.checkout.sdk.domain.Item;
 
+import com.google.appengine.api.blobstore.*;
+import com.google.appengine.api.datastore.*;
+import com.google.appengine.api.mail.*;
+
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -49,9 +63,35 @@ public final class Account
         }
         return Account.QueryN(query,page);
     }
+    /**
+     * @return The merchant singleton (for checkout or notification processing)
+     */
+    public static Merchant GetMerchant(){
+
+        Merchant merchant = Merchant.Instance();
+        if (merchant.isTest())
+            merchant.setEnvironment(com.google.checkout.sdk.commands.Environment.SANDBOX);
+        else
+            merchant.setEnvironment(com.google.checkout.sdk.commands.Environment.PRODUCTION);
+
+        return merchant;
+    }
+
+    private final static String MessageTitle = "CPI Online for Groups";
+    private final static String MessageSender = "John Pritchard <jdp@syntelos.com>";
+
+    final static class Names {
+        final static TemplateName MessageTitle = new TemplateName("messageTitle");
+        final static TemplateName MessageDescription = new TemplateName("messageDescription");
+        final static TemplateName MessageAmount = new TemplateName("messageAmount");
+        final static TemplateName MessageCurrency = new TemplateName("messageCurrency");
+    }
+
 
     public static class Amount {
-
+        /*
+         * Account debits
+         */
         public final static float PerGroup = -3.0f;
         public final static float PerProject = -1.0f;
         public final static float PerMember = -1.0f;
@@ -114,6 +154,8 @@ public final class Account
             }
         }
     }
+
+
 
 
     public Account() {
@@ -187,6 +229,19 @@ public final class Account
         }
         note.save();
     }
+    public void noteAs(Request request, String text){
+
+        final Note note = new Note(this,Strings.RandomIdentifier());
+
+        note.setWriter(request.getViewer());
+
+        final Date date = new Date();
+        note.setCreated(date);
+        note.setUpdated(date);
+        note.setText(Strings.TextFromString(text));
+
+        note.save();
+    }
     public void noteNewGroup(Group group, Request request, String defaultText){
 
         Note note = new Note(this,Strings.RandomIdentifier());
@@ -241,5 +296,117 @@ public final class Account
     }
     public boolean fromJsonNotes(Json json){
         return false;
+    }
+    public boolean fromJsonCheckoutSerialNumber(Json json){
+        return false;
+    }
+    public boolean fromJsonCheckoutUrl(Json json){
+        return false;
+    }
+    /**
+     * Generate and post the checkout shopping cart if not previously
+     * performed, and generate and send the SMTP account mail message.
+     * 
+     * @return Successful SMTP service send
+     */
+    public boolean post(Request q, Response p) 
+        throws CheckoutException, TemplateException, IOException
+    {
+        final String description = this.getPostDescription();
+        final float amount = this.getPostAmount();
+        final String mailto = this.getGroup().getSmtpRecipient();
+
+        final Merchant merchant = Account.GetMerchant();
+
+        if (this.hasNotCheckoutUrl(false)){
+
+            final CartPoster poster = merchant.cartPoster();
+            final CheckoutShoppingCartBuilder cart = poster.makeCart();
+
+
+            final Item item = new Item();
+            {
+                item.setItemName(Account.MessageTitle);
+                item.setItemDescription(description);
+                item.setUnitPrice(merchant.makeMoney(amount));
+                item.setQuantity(1);
+            }
+            final DigitalContent content = new DigitalContent();
+            {
+                content.setEmailDelivery(true);
+                content.setDisplayDisposition("OPTIMISTIC");
+
+                item.setDigitalContent(content);
+            }
+            cart.addItem(item);
+
+            final CheckoutRedirect checkout = cart.buildAndPost();
+
+            this.setCheckoutSerialNumber(checkout.getSerialNumber());
+            this.setCheckoutUrl(checkout.getRedirectUrl());
+            this.save();
+
+            this.noteAs(q,"Posted");
+        }
+
+        final MailService smtp = q.getMailService();
+        if (null != smtp){
+            final TemplateRenderer template = Templates.GetTemplate("mail.account.html");
+            this.setVariable(Account.Names.MessageTitle,Account.MessageTitle);
+            this.setVariable(Account.Names.MessageDescription,description);
+            this.setVariable(Account.Names.MessageAmount,gap.Strings.FloatToString(amount));
+            this.setVariable(Account.Names.MessageCurrency,merchant.getCurrencyCode());
+            final String html = template.renderToString(this);
+
+            MailService.Message mail = new MailService.Message();
+            mail.setSender(Account.MessageSender);
+            mail.setReplyTo(Account.MessageSender);
+            mail.setTo(mailto);
+            mail.setSubject(Account.MessageTitle+" transaction available");
+            mail.setHtmlBody(html);
+
+            smtp.send(mail);
+            return true;
+        }
+        else
+            return false;
+    }
+
+    private String getPostDescription(){
+        final Group group = this.getGroup();
+        final Project project = this.getProject();
+
+        StringBuilder description = new StringBuilder();
+
+        if (null != project)
+            description.append(String.format("Group '%s', Project '%s' Services",group.getName(),project.getName()));
+        else
+            description.append(String.format("Group '%s' Services",group.getName()));
+
+        boolean leader = true;
+
+        for (Note note: this.getNotes()){
+
+            String text = gap.Strings.TextToString(note.getText());
+            if (null != text){
+
+                if (leader){
+                    leader = false;
+                    description.append(": ");
+
+                    description.append(text);
+                }
+                break;
+            }
+        }
+
+        return description.toString();
+    }
+    private float getPostAmount(){
+        Float amount = this.getAmount();
+        if (null == amount)
+            throw new IllegalStateException("Missing amount");
+        else
+            return -(amount.floatValue());
     }
 }

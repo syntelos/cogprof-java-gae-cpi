@@ -43,6 +43,18 @@
            </td>
          </tr>
          <tr class="editing">
+           <td class="editing lhs"><label for="checkoutSerialNumber">Checkout Serial Number</label>
+           </td>
+           <td class="editing rhs" colspan="2"><input readonly type="text" id="checkoutSerialNumber" name="checkoutSerialNumber" value="{{=checkoutSerialNumber}}" size="40" />
+           </td>
+         </tr>
+         <tr class="editing">
+           <td class="editing lhs"><label for="checkoutUrl">Checkout URL</label>
+           </td>
+           <td class="editing rhs" colspan="2"><input readonly type="text" id="checkoutUrl" name="checkoutUrl" value="{{=checkoutUrl}}" size="40" />
+           </td>
+         </tr>
+         <tr class="editing">
            <td class="editing lhs"><label for="notes">Notes</label>
            </td>
            <td class="editing in">{{#notes}}
@@ -87,16 +99,19 @@
                    <input type="submit" name="op" value="Update" tabindex="3" />
                  </td>
                  <td class="editing mid">
-                   <input type="submit" name="op" value="Group" tabindex="4" />
+                   <input type="submit" name="op" value="Post" tabindex="4" />
                  </td>
                  <td class="editing mid">
-                   <input type="submit" name="op" value="Project" tabindex="5" />
+                   <input type="submit" name="op" value="Group" tabindex="5" />
                  </td>
                  <td class="editing mid">
-                   <input type="submit" name="op" value="Notes" tabindex="6" />
+                   <input type="submit" name="op" value="Project" tabindex="6" />
+                 </td>
+                 <td class="editing mid">
+                   <input type="submit" name="op" value="Notes" tabindex="7" />
                  </td>
                  <td class="editing rhs">
-                   <input type="submit" name="op" value="Close" tabindex="6" />
+                   <input type="submit" name="op" value="Close" tabindex="8" />
                  </td>
                </tr>
              </table>

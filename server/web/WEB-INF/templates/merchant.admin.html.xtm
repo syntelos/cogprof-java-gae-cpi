@@ -1,0 +1,64 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>CPI Online for Groups</title>
+    <link rel="stylesheet" type="text/css" href="{{=pageUrlRoot}}/top.css" />
+    <link rel="icon" href="{{=pageUrlRoot}}/favicon.ico" />
+  </head>
+  <body>
+{{>div.logon.html}}
+   <div id="admin">
+     <h1>CPI Online for Groups</h1>
+     <table class="editing">{{#merchant}}
+       <form method="POST">
+         <tr class="editing">
+           <td class="editing lhs"><label for="identifier">Identifier</label>
+           </td>
+           <td class="editing rhs"><input readonly type="text" id="identifier" name="identifier" value="{{=identifier}}" />
+           </td>
+         </tr>
+         <tr class="editing">
+           <td class="editing lhs"><label for="merchantId">Merchant Id</label>
+           </td>
+           <td class="editing rhs"><input type="text" id="merchantId" name="merchantId" value="{{=merchantId}}" tabindex="1" />
+           </td>
+         </tr>
+         <tr class="editing">
+           <td class="editing lhs"><label for="merchantKey">Merchant Key</label>
+           </td>
+           <td class="editing rhs"><input type="text" id="merchantKey" name="merchantKey" value="{{=merchantKey}}" tabindex="1" />
+           </td>
+         </tr>
+         <tr class="editing">
+           <td class="editing lhs"><label for="currencyCode">Currency Code</label>
+           </td>
+           <td class="editing rhs"><input type="text" id="currencyCode" name="currencyCode" value="{{=currencyCode}}" tabindex="1" />
+           </td>
+         </tr>
+         <tr class="editing">
+           <td class="editing lhs"><label for="test">Test</label>
+           </td>
+           <td class="editing rhs">
+             <select id="test" name="test" class="editing" tabindex="4">
+               <option {{=test_select_test}} name="true">TEST</option>
+               <option {{=test_select_live}} name="false">LIVE</option>
+               <option {{=test_select_diag}} name="false">DIAG</option>
+             </select>
+           </td>
+         </tr>{{/merchant}}
+         <tr class="editing">
+           <td class="editing in" colspan="3">
+             <table class="editing in">
+               <tr class="editing">
+                 <td class="editing mid">
+                   <input type="submit" name="op" value="Update" tabindex="18" />
+                 </td>
+               </tr>
+             </table>
+           </td>
+         </tr>
+       </form>
+     </table>
+   </div>
+{{>div.copyright.html}}
+  </body>
+</html>

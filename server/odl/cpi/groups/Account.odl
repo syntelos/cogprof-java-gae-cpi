@@ -46,4 +46,12 @@ parent Account
      * Required for creation and each modification
      */
     List.Short<Note> notes;
+    /*
+     * Checkout redirect serial number
+     */
+    String checkoutSerialNumber;
+    /*
+     * Checkout redirect URL
+     */
+    String checkoutUrl;
 }

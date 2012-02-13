@@ -42,11 +42,15 @@ div#indexpic {
 }
 div#profile {
  margin-top: 48px;
+ margin-left: 120px;
+ margin-right: 120px;
  padding: 8px;
  width: 80%;
 }
 div#inventory {
  margin-top: 68px;
+ margin-left: 120px;
+ margin-right: 120px;
  padding: 8px;
  width: 90%;
 }

@@ -1,0 +1,33 @@
+//                       -*-Java-*-
+package oso.data;
+path /merchants;
+
+/**
+ * The essential merchant data structure separates credentials from code.
+ */
+class Merchant
+    version 1
+{
+    /*
+     * Random string defined on first instance creation
+     */
+    *unique String identifier;
+    /*
+     * Google merchant identifier
+     * @see https://checkout.google.com/sell/settings?section=Integration
+     */
+    String merchantId;
+    /*
+     * Google merchant private key
+     * @see https://checkout.google.com/sell/settings?section=Integration
+     */
+    String merchantKey;
+    /*
+     * @see java.util.Currency
+     */
+    String currencyCode;
+    /*
+     * Environment types include Test, Live and Diagnose
+     */
+    Test test;
+}

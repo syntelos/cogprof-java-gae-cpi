@@ -20,7 +20,7 @@ child Note
     /* 
      * Note created
      */
-    Date created;
+    *sortby Date created;
     /* 
      * Note updated
      */

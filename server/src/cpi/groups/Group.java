@@ -261,6 +261,19 @@ public final class Group
             }
         }
     }
+    public String getSmtpRecipient(){
+        Person owner = this.getOwner();
+        if (null != owner && owner.hasLogonId(false))
+            return owner.getLogonId();
+        else {
+            Person admin = this.getAdmin();
+            if (null != admin && admin.hasLogonId(false))
+                return admin.getLogonId();
+            else
+                throw new IllegalStateException();
+        }
+    }
+
     private final static lxl.Map<String,Boolean> TestLook = new lxl.Map();
     static {
         TestLook.put("true",Boolean.TRUE);

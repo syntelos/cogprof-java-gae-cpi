@@ -25,6 +25,12 @@
   </servlet>
 
   <servlet>
+    <servlet-name>Merchant</servlet-name>
+    <servlet-class>oso.data.MerchantServlet</servlet-class>
+    <load-on-startup>-1</load-on-startup>
+  </servlet>
+
+  <servlet>
     <servlet-name>Person</servlet-name>
     <servlet-class>oso.data.PersonServlet</servlet-class>
     <load-on-startup>-1</load-on-startup>
@@ -70,6 +76,11 @@
   <servlet-mapping>
     <servlet-name>Template</servlet-name>
     <url-pattern>/templates/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Merchant</servlet-name>
+    <url-pattern>/merchants/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
