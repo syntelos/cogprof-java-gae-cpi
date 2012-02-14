@@ -28,3 +28,5 @@
  http://cpi.cognitiveprofile.com/_ah/OAuthAuthorizeToken
  http://cpi.cognitiveprofile.com/_ah/OAuthGetAccessToken
 }}}
+
+ See also [http://code.google.com/p/cpi/wiki/API "Using OAuth with the Google Data APIs"] and [http://oauth.net/ OAuth.net].
