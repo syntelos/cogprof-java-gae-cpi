@@ -41,15 +41,15 @@ public class ProfileImage
     private final static Color COLOR_NT = new Color(176);
     private final static Color COLOR_BORDER = new Color(9474192);
 
-    private final static String FONT_NAME = "sun12x22.psfu";
+    private final static String DefaultFontName = "sun12x22.psfu";
 
-    private final static Font FONT ;
+    private final static Font DefaultFont ;
     static {
         try {
-            FONT = new Font(FONT_NAME);
+            DefaultFont = new Font(DefaultFontName);
         }
         catch(java.io.IOException exc){
-            throw new Error(FONT_NAME,exc);
+            throw new Error(DefaultFontName,exc);
         }
     }
 
@@ -64,7 +64,6 @@ public class ProfileImage
 
 
 
-
     public ProfileImage(Code.Decode code){
         this(code.st, code.sf, code.nt, code.nf, ProfileLabels.Default);
     }
@@ -72,6 +71,14 @@ public class ProfileImage
         this(code.st, code.sf, code.nt, code.nf, labels);
     }
     public ProfileImage(float n_st, float n_sf, float n_nt, float n_nf, ProfileLabels labels){
+        this(n_st,n_sf,n_nt,n_nf,labels,DefaultFont);
+    }
+    public ProfileImage(float n_st, float n_sf, float n_nt, float n_nf, ProfileLabels labels, String font)
+        throws java.io.IOException
+    {
+        this(n_st,n_sf,n_nt,n_nf,labels,new Font(font));
+    }
+    public ProfileImage(float n_st, float n_sf, float n_nt, float n_nf, ProfileLabels labels, Font font){
         super(IMG_WH,IMG_WH);
         if (Err(n_st))
             throw new IllegalArgumentException();
@@ -83,7 +90,10 @@ public class ProfileImage
             throw new IllegalArgumentException();
         else if (null == labels)
             throw new IllegalArgumentException();
+        else if (null == font)
+            throw new IllegalArgumentException();
         else {
+
             Graphics g = this.createGraphics();
             try {
                 g.setAntialiasing(true);
@@ -127,7 +137,7 @@ public class ProfileImage
                 g.drawLine( IMG_WH2,        0,  IMG_WH2,   IMG_WH); // vert middle separator
                 g.drawLine(       0,  IMG_WH2,   IMG_WH,  IMG_WH2); // horz middle separator
 
-                g.setFont(FONT);
+                g.setFont(font);
                 /*
                  * Label Borders
                  */
