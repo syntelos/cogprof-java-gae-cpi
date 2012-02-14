@@ -65,6 +65,8 @@ public final class ProfileLabels
 
     private String st, sf, nt, nf, string;
 
+    private Boolean large;
+
 
     public ProfileLabels(Request req){
         this(req.getParameter(ProfileLabels.Names.St),req.getParameter(ProfileLabels.Names.Sf),
@@ -78,23 +80,59 @@ public final class ProfileLabels
     }
     public ProfileLabels(String st, String sf, String nt, String nf){
         super();
-        if (null != st && 0 < st.length())
-            this.st = st;
+        if (null != st){
+            final int len = st.length();
+            if (0 < len){
+                this.st = st;
+                if (6 < len){
+                    this.large = Boolean.TRUE;
+                }
+            }
+            else
+                this.st = ProfileLabels.Defaults.St;
+        }
         else
             this.st = ProfileLabels.Defaults.St;
 
-        if (null != sf && 0 < sf.length())
-            this.sf = sf;
+        if (null != sf){
+            final int len = sf.length();
+            if (0 < len){
+                this.sf = sf;
+                if (6 < len){
+                    this.large = Boolean.TRUE;
+                }
+            }
+            else
+                this.sf = ProfileLabels.Defaults.Sf;
+        }
         else
             this.sf = ProfileLabels.Defaults.Sf;
 
-        if (null != nt && 0 < nt.length())
-            this.nt = nt;
+        if (null != nt){
+            final int len = nt.length();
+            if (0 < len){
+                this.nt = nt;
+                if (6 < len){
+                    this.large = Boolean.TRUE;
+                }
+            }
+            else
+                this.nt = ProfileLabels.Defaults.Nt;
+        }
         else
             this.nt = ProfileLabels.Defaults.Nt;
 
-        if (null != nf && 0 < nf.length())
-            this.nf = nf;
+        if (null != nf){
+            final int len = nf.length();
+            if (0 < len){
+                this.nf = nf;
+                if (6 < len){
+                    this.large = Boolean.TRUE;
+                }
+            }
+            else
+                this.nf = ProfileLabels.Defaults.Nf;
+        }
         else
             this.nf = ProfileLabels.Defaults.Nf;
 
@@ -117,29 +155,35 @@ public final class ProfileLabels
     public String getNf(){
         return this.nf;
     }
-    public int wSt(int two){
-        return this.w(two,this.st.length());
+    public int wSt(ProfileImage.Font font, double two){
+        return this.w(font,two,this.st.length());
     }
-    public int wSf(int two){
-        return this.w(two,this.sf.length());
+    public int wSf(ProfileImage.Font font, double two){
+        return this.w(font,two,this.sf.length());
     }
-    public int wNt(int two){
-        return this.w(two,this.nt.length());
+    public int wNt(ProfileImage.Font font, double two){
+        return this.w(font,two,this.nt.length());
     }
-    public int wNf(int two){
-        return this.w(two,this.nf.length());
+    public int wNf(ProfileImage.Font font, double two){
+        return this.w(font,two,this.nf.length());
     }
-    private int w(int two, int strlen){
+    private int w(ProfileImage.Font font, double two, int strlen){
         if (2 == strlen)
-            return two;
-        else if (6 >= strlen){
-            float p = ((float)strlen)/2.1f;
-            return (int)Math.ceil( ((float)two) * p);
-        }
+            return (int)(two*font.scale);
         else {
-            float p = ((float)strlen)/2.2f;
-            return (int)Math.ceil( ((float)two) * p);
+            double s = strlen;
+            double p = 2.0+(s/60.0);
+            double t = (strlen/p)*font.scale;
+            return (int)Math.ceil( two * t);
         }
+    }
+    public ProfileImage.Font getFont(){
+        if (null == this.large)
+            return ProfileImage.Font.LargeSun;
+        else if (this.large)
+            return ProfileImage.Font.SmallTerminus;
+        else
+            return ProfileImage.Font.LargeSun;
     }
     public int length(){
         if (null != this.string)

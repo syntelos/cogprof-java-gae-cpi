@@ -23,7 +23,6 @@ import cpi.Code;
 
 import pisces.Color;
 import pisces.Graphics;
-import pisces.Font;
 import pisces.Polygon;
 
 /**
@@ -41,26 +40,57 @@ public class ProfileImage
     private final static Color COLOR_NT = new Color(176);
     private final static Color COLOR_BORDER = new Color(9474192);
 
-    private final static String DefaultFontName = "sun12x22.psfu";
+    /**
+     * Dynamic font binding with lazy loading
+     */
+    public enum Font {
 
-    private final static Font DefaultFont ;
-    static {
-        try {
-            DefaultFont = new Font(DefaultFontName);
+        SmallTerminus(0.7,"Lat15-Terminus12x6.psfu"), LargeSun(1.0,"sun12x22.psfu");
+
+
+        public final double scale, iscale;
+        public final String file;
+
+        private volatile pisces.Font font;
+
+
+        Font(double scale, String file){
+            this.scale = scale;
+            this.iscale = 1.0/scale;
+            this.file = file;
         }
-        catch(java.io.IOException exc){
-            throw new Error(DefaultFontName,exc);
+
+
+        public pisces.Font pisces(){
+            pisces.Font font = this.font;
+            if (null == font){
+                try {
+                    font = new pisces.Font(this.file);
+                    this.font = font;
+                }
+                catch (java.io.IOException exc){
+
+                    throw new IllegalStateException(this.file,exc);
+                }
+            }
+            return font;
+        }
+        public int scale(double v){
+            return (int)Math.ceil(v * this.scale);
+        }
+        public int iscale(double v){
+            return (int)Math.ceil(v * this.iscale);
         }
     }
 
     private final static int PAD = 1;
     private final static int IMG_WH = 300;
-    private final static int IMG_WH1 = (IMG_WH-PAD);
+    private final static int IMG_WH_MP = (IMG_WH-PAD);
     private final static int IMG_WH2 = (IMG_WH>>1);
 
     private final static float IMG_WH2F = IMG_WH2;
 
-    private final static int IMG_WH10 = (IMG_WH/10);
+    private final static int IMG_WH_D10 = (IMG_WH/10);
 
 
 
@@ -71,12 +101,10 @@ public class ProfileImage
         this(code.st, code.sf, code.nt, code.nf, labels);
     }
     public ProfileImage(float n_st, float n_sf, float n_nt, float n_nf, ProfileLabels labels){
-        this(n_st,n_sf,n_nt,n_nf,labels,DefaultFont);
+        this(n_st,n_sf,n_nt,n_nf,labels,labels.getFont());
     }
-    public ProfileImage(float n_st, float n_sf, float n_nt, float n_nf, ProfileLabels labels, String font)
-        throws java.io.IOException
-    {
-        this(n_st,n_sf,n_nt,n_nf,labels,new Font(font));
+    public ProfileImage(float n_st, float n_sf, float n_nt, float n_nf, ProfileLabels labels, String font){
+        this(n_st,n_sf,n_nt,n_nf,labels,Font.valueOf(font));
     }
     public ProfileImage(float n_st, float n_sf, float n_nt, float n_nf, ProfileLabels labels, Font font){
         super(IMG_WH,IMG_WH);
@@ -133,68 +161,78 @@ public class ProfileImage
 
                 g.setColor(COLOR_BORDER);
 
-                g.drawRect(       0,        0,  IMG_WH1,  IMG_WH1); // outline border 
+                g.drawRect(       0,        0,  IMG_WH_MP,  IMG_WH_MP); // outline border 
                 g.drawLine( IMG_WH2,        0,  IMG_WH2,   IMG_WH); // vert middle separator
                 g.drawLine(       0,  IMG_WH2,   IMG_WH,  IMG_WH2); // horz middle separator
 
-                g.setFont(font);
+                g.setFont(font.pisces());
                 /*
                  * Label Borders
                  */
-                final int wSt = labels.wSt(IMG_WH10);
-                final int wSf = labels.wSf(IMG_WH10);
-                final int wNt = labels.wNt(IMG_WH10);
-                final int wNf = labels.wNf(IMG_WH10);
+                final int ws = font.scale(IMG_WH_D10);
+
+                final int wSt = labels.wSt(font,ws);
+                final int wSf = labels.wSf(font,ws);
+                final int wNt = labels.wNt(font,ws);
+                final int wNf = labels.wNf(font,ws);
+
+                final int pH = font.scale(3);
+                final int pV = font.scale(4);
+
+                final int yR = (IMG_WH-ws);
+
+                final int yS = font.scale(6);
+                final int yN = (yR+pV);
 
                 int x1, y1, x2, y2;
 
                 /* ST -- TL vert
                  */
-                x1 = wSt;           y1 = PAD;                x2 = wSt;            y2 = IMG_WH10;
+                x1 = wSt;           y1 = PAD;     x2 = wSt;            y2 = ws;
                 g.drawLine( x1, y1, x2, y2); 
 
                 /* ST -- TL horz
                  */
-                x1 = PAD;           y1 = IMG_WH10;           x2 = wSt;            y2 = IMG_WH10;
+                x1 = PAD;           y1 = ws;
                 g.drawLine( x1, y1, x2, y2); 
 
-                g.blit(labels.getSt(), (x1+3), 6);
+                g.blit(labels.getSt(), pH, yS);
 
                 /* NT -- BL vert
                  */
-                x1 = wNt;           y1 = (IMG_WH-IMG_WH10);  x2 = wNt;            y2 = IMG_WH1;
+                x1 = wNt;           y1 = yR;      x2 = wNt;            y2 = IMG_WH_MP;
                 g.drawLine( x1, y1, x2, y2); 
 
                 /* NT -- BL horz
                  */
-                x1 = PAD;           y1 = (IMG_WH-IMG_WH10);  x2 = wNt;            y2 = (IMG_WH-IMG_WH10);
+                x1 = PAD;                                              y2 = yR;
                 g.drawLine( x1, y1, x2, y2); 
 
-                g.blit(labels.getNt(), (x1+3), 274);
+                g.blit(labels.getNt(), pH, yN);
 
                 /* SF -- TR vert
                  */
-                x1 = (IMG_WH-wSf);  y1 = PAD;                x2 = (IMG_WH-wSf);   y2 = IMG_WH10;
+                x1 = (IMG_WH-wSf);  y1 = PAD;     x2 = (IMG_WH-wSf);   y2 = ws;
                 g.drawLine( x1, y1, x2, y2); 
 
                 /* SF -- TR horz
                  */
-                x1 = (IMG_WH-wSf);  y1 = IMG_WH10;           x2 = IMG_WH1;        y2 = IMG_WH10;
+                                    y1 = ws;      x2 = IMG_WH_MP;
                 g.drawLine( x1, y1, x2, y2); 
 
-                g.blit(labels.getSf(), (x1+4), 6);
+                g.blit(labels.getSf(), (IMG_WH-wSf+pH), yS);
 
                 /* NF -- BR vert
                  */
-                x1 = (IMG_WH-wNf);  y1 = (IMG_WH-IMG_WH10);  x2 = (IMG_WH-wNf);   y2 = IMG_WH1;
+                x1 = (IMG_WH-wNf);  y1 = yR;      x2 = (IMG_WH-wNf);   y2 = IMG_WH_MP;
                 g.drawLine( x1, y1, x2, y2); 
 
                 /* NF -- BR horz
                  */
-                x1 = (IMG_WH-wNf);  y1 = (IMG_WH-IMG_WH10);  x2 = IMG_WH1;        y2 = (IMG_WH-IMG_WH10);
+                                                  x2 = IMG_WH_MP;      y2 = yR;
                 g.drawLine( x1, y1, x2, y2); 
 
-                g.blit(labels.getNf(), (x1+4), 274);
+                g.blit(labels.getNf(), (IMG_WH-wNf+pH), yN);
             }
             finally {
                 g.dispose();

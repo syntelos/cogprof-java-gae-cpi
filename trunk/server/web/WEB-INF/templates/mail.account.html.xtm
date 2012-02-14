@@ -3,23 +3,22 @@
 
     <h3>{{=messageTitle}}</h3>
 
-    <p> Please accept <a href="{{=checkoutUrl}}">this transaction</a> for CPI Online Groups
-    Services, or reply to this message with questions. </p>
+    <p> Please <a href="{{=checkoutUrl}}">accept this transaction</a>
+    for CPI Online Group Services. </p>
 
-    <p><i>Thank you!</i></p>
+    <p><i>Thank you!  Please reply to this message with questions or
+    comments.</i> </p>
 
     <hr />
 
     <table border="0">
       <tr>
-        <td><pre>{{=checkoutSerialNumber}}</pre></td>
+        <td><pre>{{=messageDate}}</pre></td>
         <td><pre>{{=messageCurrency}} {{=messageAmount}}</pre></td>
+        <td><pre>{{=messageDescription}}</pre></td>
       </tr>
       <tr>
-        <td colspan="2"><pre>{{=messageDescription}}</pre></td>
-      </tr>
-      <tr>
-        <td colspan="2"><pre>{{=checkoutSerialNumber}}</pre></td>
+        <td colspan="3"><pre><a href="{{=checkoutUrl}}">{{=checkoutUrl}}</a></pre></td>
       </tr>
     </table>
   </body>
