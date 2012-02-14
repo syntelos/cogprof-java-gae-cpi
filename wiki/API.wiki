@@ -20,3 +20,11 @@
   * [API_Group Group]
   * [API_Inventory Inventory]
   * [API_Project Project]
+
+= OAuth Services =
+
+{{{
+ http://cpi.cognitiveprofile.com/_ah/OAuthGetRequestToken
+ http://cpi.cognitiveprofile.com/_ah/OAuthAuthorizeToken
+ http://cpi.cognitiveprofile.com/_ah/OAuthGetAccessToken
+}}}
