@@ -255,6 +255,12 @@
     </path>
 
     <mkdir dir="test/bin" />
+    <copy todir="test/bin" flatten="true">
+      <fileset dir="test">
+        <include name="**/*.psfu" />
+      </fileset>
+    </copy>
+
     <javac srcdir="test/src" destdir="test/bin" includeAntRuntime="false" debug="true">
       <classpath refid="test.lib.path"/>
     </javac>
