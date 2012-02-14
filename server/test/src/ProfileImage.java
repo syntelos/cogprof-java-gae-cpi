@@ -10,8 +10,6 @@ public class ProfileImage
     private final static cpi.ProfileLabels ProfileLabels2 = new cpi.ProfileLabels("Friendly Sporty Smart Funny");
     private final static cpi.ProfileLabels ProfileLabels3 = new cpi.ProfileLabels("The+Storyteller The+Organizer The+Creative The+Problem+Solver");
 
-    private final static String ProfileFontLat15 = "Lat15-Terminus12x6.psfu";
-
 
     public ProfileImage(){
         super();
@@ -53,9 +51,9 @@ public class ProfileImage
     }
     public void testProfileImage3(){
         try {
-            cpi.ProfileImage image = new cpi.ProfileImage(1.0f,0.5f,0.3f,0.5f,ProfileLabels3,ProfileFontLat15);
+            cpi.ProfileImage image = new cpi.ProfileImage(1.0f,0.5f,0.3f,0.5f,ProfileLabels3);
 
-            java.io.File out = new java.io.File("testProfileImage.png");
+            java.io.File out = new java.io.File("testProfileImage3.png");
 
             ProfileImage.Write(image,out);
 

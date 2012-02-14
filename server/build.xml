@@ -274,7 +274,30 @@
 
       <test name="Inventory" />
       <test name="ProfileImage" />
+      <test name="Serialization" />
 
+    </junit>
+
+  </target>
+
+  <target name="image" depends="test.compile" description="Run unit test 'ProfileImage'">
+
+    <junit haltonerror="true" includeAntRuntime="true" fork="true" dir="test">
+      <classpath refid="test.lib.path"/>
+      <formatter type="plain" usefile="false"/>
+
+      <test name="ProfileImage" />
+    </junit>
+
+  </target>
+
+  <target name="ser" depends="test.compile" description="Run unit test 'Serialization'">
+
+    <junit haltonerror="true" includeAntRuntime="true" fork="true" dir="test">
+      <classpath refid="test.lib.path"/>
+      <formatter type="plain" usefile="false"/>
+
+      <test name="Serialization" />
     </junit>
 
   </target>

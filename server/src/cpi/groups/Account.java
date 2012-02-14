@@ -85,6 +85,7 @@ public final class Account
         final static TemplateName MessageDescription = new TemplateName("messageDescription");
         final static TemplateName MessageAmount = new TemplateName("messageAmount");
         final static TemplateName MessageCurrency = new TemplateName("messageCurrency");
+        final static TemplateName MessageDate = new TemplateName("messageDate");
     }
 
 
@@ -153,6 +154,21 @@ public final class Account
                 account.note(request,"Project Maintenance");
             }
         }
+    }
+
+    public class PostDescription {
+
+        public final String description;
+
+        public final String date;
+
+
+        public PostDescription(StringBuilder d, Note n){
+            super();
+            this.description = d.toString();
+            this.date = gap.Date.FormatSimpleDate(n.getCreated());
+        }
+
     }
 
 
@@ -312,7 +328,7 @@ public final class Account
     public boolean post(Request q, Response p) 
         throws CheckoutException, TemplateException, IOException
     {
-        final String description = this.getPostDescription();
+        final PostDescription description = this.getPostDescription();
         final float amount = this.getPostAmount();
         final String mailto = this.getGroup().getSmtpRecipient();
 
@@ -327,7 +343,7 @@ public final class Account
             final Item item = new Item();
             {
                 item.setItemName(Account.MessageTitle);
-                item.setItemDescription(description);
+                item.setItemDescription(description.description);
                 item.setUnitPrice(merchant.makeMoney(amount));
                 item.setQuantity(1);
             }
@@ -353,7 +369,8 @@ public final class Account
         if (null != smtp){
             final TemplateRenderer template = Templates.GetTemplate("mail.account.html");
             this.setVariable(Account.Names.MessageTitle,Account.MessageTitle);
-            this.setVariable(Account.Names.MessageDescription,description);
+            this.setVariable(Account.Names.MessageDescription,description.description);
+            this.setVariable(Account.Names.MessageDate,description.date);
             this.setVariable(Account.Names.MessageAmount,gap.Strings.FloatToString(amount));
             this.setVariable(Account.Names.MessageCurrency,merchant.getCurrencyCode());
             final String html = template.renderToString(this);
@@ -372,7 +389,7 @@ public final class Account
             return false;
     }
 
-    private String getPostDescription(){
+    private PostDescription getPostDescription(){
         final Group group = this.getGroup();
         final Project project = this.getProject();
 
@@ -383,24 +400,24 @@ public final class Account
         else
             description.append(String.format("Group '%s' Services",group.getName()));
 
-        boolean leader = true;
+        Note leader = null;
 
         for (Note note: this.getNotes()){
 
             String text = gap.Strings.TextToString(note.getText());
             if (null != text){
 
-                if (leader){
-                    leader = false;
-                    description.append(": ");
+                leader = note;
 
-                    description.append(text);
-                }
+                description.append(": ");
+
+                description.append(text);
+
                 break;
             }
         }
 
-        return description.toString();
+        return new PostDescription( description, leader);
     }
     private float getPostAmount(){
         Float amount = this.getAmount();
