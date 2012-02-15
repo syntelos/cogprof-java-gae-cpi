@@ -23,6 +23,12 @@ public class Verifier
     this.value = value;
   }
 
+  public Verifier(char[] value)
+  {
+    Preconditions.checkNotNull(value, "Must provide a valid string as verifier");
+    this.value = new String(value);
+  }
+
   public String getValue()
   {
     return value;

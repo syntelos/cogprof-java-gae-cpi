@@ -41,6 +41,19 @@ public class Preconditions
   }
 
   /**
+   * Checks that a string is not null or empty
+   * 
+   * @param string any string
+   * @param errorMsg error message
+   * 
+   * @throws IllegalArgumentException if the string is null or empty
+   */
+  public static void checkEmptyString(char[] string, String errorMsg)
+  {
+    check(string != null && 0 < string.length, errorMsg);
+  }
+
+  /**
    * Checks that a URL is valid
    * 
    * @param url any string
