@@ -47,8 +47,6 @@ public class SiteServlet
     extends gap.service.Servlet
 {
 
-    private final static TemplateName ExampleTarget = new TemplateName("example_target");
-
 
 
     public SiteServlet(){
@@ -61,16 +59,16 @@ public class SiteServlet
     {
         String path = req.getPath(0);
 
-        if (null != path && "example.html".equals(path)){
+        if (req.isSourceTail() && Tail.ExampleHtml == Tail.For(req.getSource())){
 
             String target = req.getParameter("target");
             if (null != target){
-                req.setVariable(ExampleTarget,target);
+                req.setVariable(InventoryServlet.ExampleTarget,target);
             }
             else {
                 target = req.getParameter("ir");
                 if (null != target){
-                    req.setVariable(ExampleTarget,target);
+                    req.setVariable(InventoryServlet.ExampleTarget,target);
                 }
             }
             {

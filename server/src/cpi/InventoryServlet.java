@@ -37,7 +37,9 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 
 /**
- * Service for /inventory/*
+ * Service for <code>/inventory/*</code>
+ * 
+ * Includes <code>/inventory/example.html</code>
  */
 public class InventoryServlet
     extends gap.service.Servlet
@@ -52,6 +54,9 @@ public class InventoryServlet
     private final static TemplateName InventoryRhs = new TemplateName("inventory_rhs");
 
     private final static TemplateName WithoutRedirect = new TemplateName("without_redirect");
+
+
+    public final static TemplateName ExampleTarget = new TemplateName("example_target");
 
     final static class Pair {
 
@@ -142,6 +147,27 @@ public class InventoryServlet
                     rep.sendRedirect(req.getLogonUrl());
                 }
                 return;
+            case Tail.ExampleHtml:{
+
+                String target = req.getParameter("target");
+                if (null != target){
+                    req.setVariable(InventoryServlet.ExampleTarget,target);
+                }
+                else {
+                    target = req.getParameter("ir");
+                    if (null != target){
+                        req.setVariable(InventoryServlet.ExampleTarget,target);
+                    }
+                }
+                {
+                    InventoryServlet.Pair pair = InventoryServlet.Examples.get(0);
+
+                    InventoryServlet.DefineInventory(req,0,pair,null);
+                }
+                this.render(req,rep,"example.html");
+
+                return;
+            }
             case Tail.None:{
 
                 Person person = Person.ForLongIdentifier(source);
