@@ -29,12 +29,6 @@
  http://cpi.cognitiveprofile.com/_ah/OAuthGetAccessToken
 }}}
 
- [https://accounts.google.com/ManageDomains Register your application] for an OAuth Consumer Key and Secret
-
- See also [http://code.google.com/p/cpi/wiki/API "Using OAuth with the Google Data APIs"] and [http://oauth.net/ OAuth.net].  
-
- The article [http://code.google.com/apis/gdata/articles/java_client_lib.html "Getting Started with the Google Data Java Client Library"] is a nice gentle introduction to GData services in Java.  While the CPI is not an AtomPub or GData style API, some of the basics are common.
-
 = Groups integration =
 
  * Create [API_Group Group] by email with jdp@syntelos.com
