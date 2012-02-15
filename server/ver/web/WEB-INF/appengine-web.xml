@@ -3,4 +3,5 @@
   <application>@ProjectTarget@</application>
   <version>@VersionMajor@-@VersionMinor@-@VersionBuild@</version>
   <sessions-enabled>true</sessions-enabled>
+  <warmup-requests-enabled>true</warmup-requests-enabled>
 </appengine-web-app>
