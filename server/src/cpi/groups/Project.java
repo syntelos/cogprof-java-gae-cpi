@@ -125,6 +125,9 @@ public final class Project
         else
             return false;
     }
+    public Json toJsonGroup(){
+        return null;
+    }
     public boolean fromJsonGroup(json.Json json){
         return false;
     }
