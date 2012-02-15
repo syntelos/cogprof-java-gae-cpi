@@ -1,5 +1,5 @@
     <div class="logon">
-      <span class="logon"><b><a href="{{=logonUrl}}">{{=logonText}}</a></b></span><span class="logon"><b><a href="http://www.cognitiveprofile.com/cpionline">Home</a></b></span>{{>logonEtc}}<span class="logon"><a href="http://www.google.com/accounts">Account</a></span><span class="logon"><a href="http://www.google.com/profiles/me">Profile</a></span>
+      <span class="logon"><b><a href="{{=logonUrl}}">{{=logonText}}</a></b></span><span class="logon"><b><a href="http://www.cognitiveprofile.com/cpionline">Home</a></b></span>{{>logonEtc}}<span class="logon"><a href="http://www.google.com/accounts">Account</a></span><span class="logon"><a href="http://www.google.com/profiles/me">Profile</a></span><span class="logon"><a href="https://plus.google.com/102387010215882396411?prsrc=3" style="text-decoration:none;"><img src="https://ssl.gstatic.com/images/icons/gplus-16.png" alt="Google Plus" style="border:0;width:16px;height:16px;"/></a></span>
     </div>{{#logonEtc}}
     <!-- Google +1 Button Renderer  -->
     <script type="text/javascript">
