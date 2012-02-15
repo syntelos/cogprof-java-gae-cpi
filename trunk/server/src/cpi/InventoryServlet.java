@@ -134,7 +134,7 @@ public class InventoryServlet
             final String source = req.getSource();
             switch (Tail.For(source)){
             case Tail.IndexHtml:
-                if (req.hasViewer()){
+                if (req.isMember){
                     /*
                      * Request to /inventory/index.html with login
                      */
@@ -212,7 +212,7 @@ public class InventoryServlet
                 /*
                  * Login at /inventory/index.html
                  */
-                if (req.hasViewer()){
+                if (req.isMember){
 
                     Person viewer = req.getViewer();
 
@@ -296,7 +296,6 @@ public class InventoryServlet
                             inventory.add(ir);
                         else {
                             this.error(req,rep,500,"Input error (bad ID "+id+" != "+inventory.size()+")");
-                            return;
                         }
                     }
                     int next = (id+1);

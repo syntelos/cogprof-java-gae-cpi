@@ -53,11 +53,10 @@ public final class Project
 
 
     public boolean hasProjectAccess(Person viewer){
-
-        if (this.equals(viewer.getProject()))
-            return true;
-        else
+        if (null != viewer)
             return this.getGroup().hasGroupAccess(viewer);
+        else
+            return false;
     }
     public boolean isTest(){
         return this.getGroup().isTest();

@@ -181,42 +181,6 @@ public final class AccountServlet
                 return;
             }
 
-        case Tail.DataJson:
-            if (req.isOAuth || req.isAdmin){
-
-                final String identifier = AccountIdentifier(req);
-                if (null != identifier){
-
-                    Person viewer = req.getViewer();
-
-                    if (null != viewer){
-                        /*
-                         * User Read
-                         */
-                        Account account = Account.ForLongIdentifier(identifier);
-
-                        if (null != account && account.hasAccountAccess(viewer)){
-
-                            req.addSection(EditAccount,account);
-
-                            rep.setContentTypeJson();
-
-                            rep.println(account.toJson().toString());
-                        }
-                        else
-                            this.error(req,rep,404,"Not found");
-                    }
-                    else
-                        this.error(req,rep,500,"Missing viewer");
-                }
-                else
-                    this.error(req,rep,400,"Missing identifier");
-            }
-            else {
-
-                this.error(req,rep,401,"Access denied");
-            }
-            return;
         case Tail.None:
             rep.sendRedirect("/accounts/index.html");
             return;

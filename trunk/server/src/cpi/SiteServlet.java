@@ -78,7 +78,7 @@ public class SiteServlet
             }
             this.render(req,rep,"example.html");
         }
-        else if (req.hasViewer()){
+        else if (req.isMember){
 
             Person viewer = req.getViewer();
 
