@@ -30,3 +30,11 @@
 }}}
 
  See also [http://code.google.com/p/cpi/wiki/API "Using OAuth with the Google Data APIs"] and [http://oauth.net/ OAuth.net].
+
+= Groups integration =
+
+ * Create [API_Group Group] by email
+ * Create [API_Project Project] by HTTP/OAuth API
+ * For each member in project, deliver an [API_Inventory Inventory] URL
+ * When members have completed, or at any time, fetch a copy of the [API_Project Project] via HTTP/OAuth 
+ * Optionally delete the [API_Project Project]
