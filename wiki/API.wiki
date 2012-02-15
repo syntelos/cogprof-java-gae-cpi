@@ -29,7 +29,7 @@
  http://cpi.cognitiveprofile.com/_ah/OAuthGetAccessToken
 }}}
 
- [https://accounts.google.com/ManageDomains Register your application]
+ [https://accounts.google.com/ManageDomains Register your application] for an OAuth Consumer Key and Secret
 
  See also [http://code.google.com/p/cpi/wiki/API "Using OAuth with the Google Data APIs"] and [http://oauth.net/ OAuth.net].
 
