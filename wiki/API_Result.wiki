@@ -55,7 +55,7 @@
 
  The [API_Inventory inventory] begins with a URL in the following pattern.
 {{{
- http://cpi.cognitiveprofile.com/inventory/mid/groups.html
+ http://cognitiveprofile.appspot.com/inventory/mid/groups.html
 }}}
  This reference is the source of an HTML IFRAME when the CPI is embedded into your external application.
 
