@@ -397,15 +397,25 @@ public final class ProjectServlet
             String projectIdentifier = ProjectIdentifier(req);
             if (null != projectIdentifier && null != req.getParameter("delete")){
 
-                Project project = Project.ForLongIdentifier(projectIdentifier);
+                String groupIdentifier = GroupIdentifier(req);
 
-                if (null != project){
-                    project.drop();
+                if (null != groupIdentifier){
+                    Project project = Project.ForLongIdentifier(projectIdentifier);
 
-                    rep.setContentTypeJson();
+                    if (null != project){
 
-                    this.ok(req,rep);
-                    return;
+                        Group group = Group.ForLongIdentifier(groupIdentifier);
+
+                        if (null != group && group.equals(project.getGroup())){
+
+                            project.drop();
+
+                            rep.setContentTypeJson();
+
+                            this.ok(req,rep);
+                            return;
+                        }
+                    }
                 }
                 /*
                  */
@@ -433,11 +443,7 @@ public final class ProjectServlet
 
                             if (null != req.getParameter("delete") || json.has("delete")){
 
-                                project.drop();
-
-                                rep.setContentTypeJson();
-
-                                this.ok(req,rep);
+                                this.error(req,rep,400,"Bad request");
                                 return;
                             }
                             else if (project.fromJson(json)){

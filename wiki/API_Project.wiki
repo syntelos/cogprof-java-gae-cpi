@@ -57,45 +57,6 @@
   "name": "Test Project",
   "cleaned": null,
   "redirect": null,
-  "group": {
-   "billed": null,
-   "paid": null,
-   "test": true,
-   "created": "Sat, 11 Feb 2012 10:47:33 GMT",
-   "admin": {
-    "nt": null,
-    "created": "Sat, 11 Feb 2012 10:47:33 GMT",
-    "inventory": [
-    ],
-    "nf": null,
-    "sf": null,
-    "st": null,
-    "identifier": "bm9nwFv0Ce4yjKjo",
-    "logonId": "admin@example.com",
-    "completed": null
-   },
-   "name": "Test",
-   "owner": {
-    "nt": null,
-    "created": "Sat, 11 Feb 2012 10:47:18 GMT",
-    "inventory": [
-    ],
-    "nf": null,
-    "sf": null,
-    "st": null,
-    "identifier": "dKoSY8LZ7BXB3GNB",
-    "logonId": "test@example.com",
-    "completed": null
-   },
-   "redirect": {
-    "sequence": "timeout",
-    "target": null,
-    "href": "/profile",
-    "timeout": 0
-   },
-   "identifier": "ucJoCn3OXOBO3BoJ",
-   "margins": "0"
-  },
   "identifier": "rxFKBGfIBfBjH3iP",
   "members": [
    {
@@ -155,22 +116,12 @@
 
  Deleting a project deletes the project and members, and all member data.
 
+ Requires a parameter named `delete` and the `group` identifier.
+
  In testing, please delete all projects created.  In production, delete projects as desired.  
 
 {{{
- POST /projects/rxFKBGfIBfBjH3iP/data.json?delete=please
+ POST /projects/rxFKBGfIBfBjH3iP/data.json?delete=please?group=0jPXiVQOXlWKsJSJ
 }}}
  for empty request and response entity bodies (HTTP message body) responses with HTTP response code 200 for success and 404 for not found.  The delete parameter value is any valid URL encoded value.
 
- Also via JSON
-
-{{{
- POST /projects/data.json
- --
-  {
-    "identifier": "rxFKBGfIBfBjH3iP",
-    "delete": "please"
-  }
-}}}
- for empty response entity body with HTTP code 200 for success and 404 for not found.
- 
