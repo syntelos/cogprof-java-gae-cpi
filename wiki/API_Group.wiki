@@ -4,9 +4,7 @@
 = Group =
 
 || Protocol || HTTP ||
-|| Control || OAuth ||
 || Data || JSON ||
-|| Access || Group Admin ||
 
 == Properties ==
 
@@ -18,7 +16,7 @@
 
 == Create ==
 
- Groups are created by the [mailto:cpi@cognitiveprofile.com?Subject=CPI+Groups service administrator].  Required information includes the Group Name, and Google Accounts (logon) email addresses for the Group Billing Administrator and Group OAuth Access Administrator.  The Group Billing Administrator requires a Google Wallet with which to pay Google Checkout invoices.
+ Groups are created by the [mailto:cpi@cognitiveprofile.com?Subject=CPI+Groups service administrator].  Required information includes the Group Name, and email address for the Group Billing Administrator.  Billing occurs by email with Google Checkout invoices.
 
 === Quadrant Labels ===
 
@@ -44,12 +42,12 @@
  }
 }}}
 
-== Query/Identify ==
+== Read ==
 
- Get the Group for the OAuth user, typically the `admin` person in the Group.
+ The Group identifier is required to read or write the Group data structure.
 
 {{{
- GET /groups/data.json
+ GET /groups/0jPXiVQOXlWKsJSJ/data.json
 }}}
  for response Mime-Type `application/json`
 {{{
@@ -92,21 +90,12 @@
  }
 }}}
 
-== Read/Copy/Test ==
+== Write ==
 
- Alternatively, the Group identifier may be employed directly.  As described above, the OAuth user identity must be one of `admin` or `owner`.
-
-{{{
- GET /groups/03efdbc/data.json
-}}}
- for response Mime-Type `application/json`.
-
-== Update/Modify/Write ==
-
- To update or modify the Group parameters, the identifier is required in the URL (HTTP request line) as in the following example.  The HTTP content type header should be set for JSON, and the HTTP request entity body is a JSON object as shown in these examples -- and as returned on GET request.  The update request JSON object contains fields and values to be modified.  Readonly fields (e.g. `identifier`) will be safely ignored.  The product of the update is returned in the HTTP response entity body.
+ To update the Group parameters, the HTTP POST method is employed with the HTTP content type header set for JSON.   The HTTP request entity body is a JSON object as shown in these examples -- as returned on GET request.  The update request JSON object contains fields and values to be modified.  Readonly fields (e.g. `identifier`) will be safely ignored.  The data known after the update is returned in the HTTP response body.
 
 {{{
- POST /groups/03efdbc/data.json
+ POST /groups/0jPXiVQOXlWKsJSJ/data.json
 }}}
  for request and response Mime-Type `application/json`.
 

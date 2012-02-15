@@ -5,7 +5,7 @@
 
 = Status =
 
- * API services are available in *alpha* status for testing and development
+ * API services are available in *beta* status for testing and development
 
 = Overview =
 
@@ -21,20 +21,10 @@
   * [API_Inventory Inventory]
   * [API_Project Project]
 
-= OAuth Services =
-
- The OAuth Token URLs are the following. 
-
-{{{
- https://cpi.cognitiveprofile.com/_ah/OAuthGetRequestToken
- https://cpi.cognitiveprofile.com/_ah/OAuthAuthorizeToken
- https://cpi.cognitiveprofile.com/_ah/OAuthGetAccessToken
-}}}
-
 = Groups integration =
 
  * Create [API_Group Group] by email with jdp@syntelos.com
- * Create [API_Project Project] by HTTP/OAuth API
+ * Create [API_Project Project] by HTTP programming
  * For each member in project, deliver an [API_Inventory Inventory] URL
- * When members have completed, or at any time, fetch a copy of the [API_Project Project] via HTTP/OAuth 
+ * When members have completed, or at any time, fetch a copy of the [API_Project Project] via HTTP
  * Optionally delete the [API_Project Project]

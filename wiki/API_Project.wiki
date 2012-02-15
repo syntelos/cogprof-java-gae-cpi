@@ -4,9 +4,7 @@
 = Project =
 
 || Protocol || HTTP ||
-|| Control || OAuth ||
 || Data || JSON ||
-|| Access || Group Admin ||
 
 == Properties ==
 
@@ -20,13 +18,13 @@
 
 == Create ==
 
- Create a Project with
+ Create a new Project with
 {{{
- GET /projects/data.json?name=Example&count=10
+ GET /projects/data.json?name=Example&count=10&group=0jPXiVQOXlWKsJSJ
 }}}
  or
 {{{
- POST /projects/data.json
+ POST /projects/data.json?group=0jPXiVQOXlWKsJSJ
 }}}
  for request and response Mime-Type `application/json`.
 {{{
@@ -40,43 +38,8 @@
 
  Fields `margins` or `redirect` are included only as overrides for the values in your [API_Group Group].
 
-== Update/Modify/Write ==
+ The request line query parameter `group` is required.
 
-{{{
- POST /projects/data.json
-}}}
- for request and response Mime-Type `application/json`.
-
- Any field except `identifier` is optional.  The following fields may be modified.
-
-|| `name` || Project name ||
-|| `redirect` || Group override ||
-|| `margins` || Group override ||
-
-
-== Delete ==
-
- Deleting a project deletes the project and members, and all member data.
-
- In testing, please delete all projects created.  In production, delete projects as desired.  
-
-{{{
- POST /projects/S1HJf6AQtsFd7MpV/data.json?delete=please
-}}}
- for empty request and response entity bodies (HTTP message body) responses with HTTP response code 200 for success and 404 for not found.  The delete parameter value is any valid URL encoded value.
-
- Also via JSON
-
-{{{
- POST /projects/data.json
- --
-  {
-    "identifier": "S1HJf6AQtsFd7MpV",
-    "delete": "please"
-  }
-}}}
- for empty response entity body with HTTP code 200 for success and 404 for not found.
- 
 
 == Read ==
 
@@ -173,3 +136,41 @@
 }}}
 
  This example shows two members in a projects created with count "2".  The first member has identifier `ajyqexIIn8jvMdSl` and shows an incomplete inventory session.  The second member has identifier `c252LllNBVpp8cp3` and shows a completed inventory session.
+
+== Write ==
+
+{{{
+ POST /projects/rxFKBGfIBfBjH3iP/data.json
+}}}
+ for request and response Mime-Type `application/json`.
+
+ Any field except `identifier` is optional.  The following fields may be modified.
+
+|| `name` || Project name ||
+|| `redirect` || Group override ||
+|| `margins` || Group override ||
+
+
+== Delete ==
+
+ Deleting a project deletes the project and members, and all member data.
+
+ In testing, please delete all projects created.  In production, delete projects as desired.  
+
+{{{
+ POST /projects/rxFKBGfIBfBjH3iP/data.json?delete=please
+}}}
+ for empty request and response entity bodies (HTTP message body) responses with HTTP response code 200 for success and 404 for not found.  The delete parameter value is any valid URL encoded value.
+
+ Also via JSON
+
+{{{
+ POST /projects/data.json
+ --
+  {
+    "identifier": "rxFKBGfIBfBjH3iP",
+    "delete": "please"
+  }
+}}}
+ for empty response entity body with HTTP code 200 for success and 404 for not found.
+ 

@@ -4,7 +4,6 @@
 = Result =
 
 || Protocol || HTTP ||
-|| Control || Identifier ||
 || Data || JSON, PNG ||
 || Access || Public ||
 

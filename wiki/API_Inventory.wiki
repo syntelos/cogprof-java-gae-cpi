@@ -4,7 +4,6 @@
 = Inventory =
 
 || Protocol || HTTP ||
-|| Control || Identifier ||
 || Data || HTML ||
 || Access || Public ||
 

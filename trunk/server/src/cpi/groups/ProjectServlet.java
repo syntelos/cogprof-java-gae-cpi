@@ -142,29 +142,33 @@ public final class ProjectServlet
             final String projectIdentifier = ProjectIdentifier(req);
             if (null != projectIdentifier){
 
-                if (null != viewer){
-                    /*
-                     * User Read
-                     */
-                    Project project = Project.ForLongIdentifier(projectIdentifier);
+                /*
+                 * Read
+                 */
+                Project project = Project.ForLongIdentifier(projectIdentifier);
 
-                    if (null != project && project.hasProjectAccess(viewer)){
+                if (null != project){
 
-                        rep.setContentTypeJson();
+                    rep.setContentTypeJson();
 
-                        rep.println(project.toJson().toString());
+                    rep.println(project.toJson().toString());
 
-                        this.ok(req,rep);
+                    this.ok(req,rep);
 
-                        return;
-                    }
-                    /*
-                     * 404
-                     */
+                    return;
                 }
-                else if (req.isOAuth){
+                else {
 
-                    final Group group = Group.For(viewer);
+                    this.error(req,rep,404,"Not found");
+                    return;
+                }
+            }
+            else {
+
+                final String groupIdentifier = GroupIdentifier(req);
+                if (null != groupIdentifier){
+                    final Group group = Group.ForLongIdentifier(groupIdentifier);
+
                     if (null != group){
                         /*
                          * User create
@@ -193,15 +197,18 @@ public final class ProjectServlet
                                 rep.println(project.toJson().toString());
 
                                 this.ok(req,rep);
+                                return;
                             }
-                            else 
+                            else {
                                 this.error(req,rep,400,"Bad parameter named count");
+                                return;
+                            }
                         }
-                        else 
+                        else {
                             this.error(req,rep,400,"Missing parameter named count");
+                            return;
+                        }
                     }
-                    else 
-                        this.error(req,rep,401,"Viewer not group admin");
                 }
             }
             this.error(req,rep,404,"Not found");
@@ -385,82 +392,80 @@ public final class ProjectServlet
                 return;
             }
             
-        case Tail.DataJson:
-            if (req.isOAuth){
+        case Tail.DataJson:{
 
-                String projectIdentifier = ProjectIdentifier(req);
-                if (null != projectIdentifier && null != req.getParameter("delete")){
+            String projectIdentifier = ProjectIdentifier(req);
+            if (null != projectIdentifier && null != req.getParameter("delete")){
 
-                    Project project = Project.ForLongIdentifier(projectIdentifier);
+                Project project = Project.ForLongIdentifier(projectIdentifier);
 
-                    if (null != project && project.hasProjectAccess(viewer)){
-                        project.drop();
+                if (null != project){
+                    project.drop();
 
-                        rep.setContentTypeJson();
+                    rep.setContentTypeJson();
 
-                        this.ok(req,rep);
-                    }
-                    else
-                        this.error(req,rep,404,"Not found");
+                    this.ok(req,rep);
+                    return;
                 }
-                else if (req.isContentTypeJson()){
+                /*
+                 */
+            }
+            else if (req.isContentTypeJson()){
 
-                    final Json json = req.getBodyJson();
-                    /*
-                     * User Update
-                     */
-                    if (json.isNull()){
+                final Json json = req.getBodyJson();
+                /*
+                 * User Update
+                 */
+                if (json.isNull()){
 
-                        this.error(req,rep,400,"Missing request entity body");
+                    this.error(req,rep,400,"Missing request entity body");
+                }
+                else {
+                    projectIdentifier = (String)json.getValue("identifier");
+                    if (null == projectIdentifier){
+                        this.error(req,rep,400,"Missing request entity property named identifier");
+                        return;
                     }
                     else {
-                        projectIdentifier = (String)json.getValue("identifier");
-                        if (null == projectIdentifier || 1 > projectIdentifier.length())
-                            this.error(req,rep,400,"Missing request entity property named identifier");
-                        else {
-                            Project project = Project.ForLongIdentifier(projectIdentifier);
+                        Project project = Project.ForLongIdentifier(projectIdentifier);
 
-                            if (null != project && project.hasProjectAccess(viewer)){
+                        if (null != project){
 
-                                if (null != req.getParameter("delete") || json.has("delete")){
+                            if (null != req.getParameter("delete") || json.has("delete")){
 
-                                    project.drop();
+                                project.drop();
 
-                                    rep.setContentTypeJson();
+                                rep.setContentTypeJson();
 
-                                    this.ok(req,rep);
-                                }
-                                else if (project.fromJson(json)){
-
-                                    project.save();
-
-                                    rep.setContentTypeJson();
-
-                                    rep.println(project.toJson().toString());
-
-                                    this.ok(req,rep);
-                                }
-                                else {
-                                    rep.setContentTypeJson();
-
-                                    rep.println(project.toJson().toString());
-
-                                    this.ok(req,rep);
-                                }
+                                this.ok(req,rep);
+                                return;
                             }
-                            else
-                                this.error(req,rep,404,"Not found");
+                            else if (project.fromJson(json)){
+
+                                project.save();
+
+                                rep.setContentTypeJson();
+
+                                rep.println(project.toJson().toString());
+
+                                this.ok(req,rep);
+                                return;
+                            }
+                            else {
+                                rep.setContentTypeJson();
+
+                                rep.println(project.toJson().toString());
+
+                                this.ok(req,rep);
+                                return;
+                            }
                         }
                     }
                 }
-                else 
-                    this.error(req,rep,400,"Unrecognized request entity content type");
             }
-            else {
-
-                this.error(req,rep,401,"Access denied");
-            }
+            this.error(req,rep,404,"Not found");
             return;
+        }
         default:
             this.error(req,rep,404,"Not found");
             return;
