@@ -24,9 +24,9 @@
 = OAuth Services =
 
 {{{
- https://cpi.cognitiveprofile.com/_ah/OAuthGetRequestToken
- https://cpi.cognitiveprofile.com/_ah/OAuthAuthorizeToken
- https://cpi.cognitiveprofile.com/_ah/OAuthGetAccessToken
+ https://cognitiveprofile.appspot.com/_ah/OAuthGetRequestToken
+ https://cognitiveprofile.appspot.com/_ah/OAuthAuthorizeToken
+ https://cognitiveprofile.appspot.com/_ah/OAuthGetAccessToken
 }}}
 
 = Groups integration =
