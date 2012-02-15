@@ -16,7 +16,7 @@ This JSON fragment is a field in Project or Group.
   "margins": "20px"
 }}}
 
-This is value is the [http://www.w3.org/TR/CSS2/box.html#margin-properties CSS property "margin"] for the embedded HTML page.
+This value is the [http://www.w3.org/TR/CSS2/box.html#margin-properties CSS property "margin"] for the embedded HTML page.
 
 When not found in Project, the field in Group will be used.
 
