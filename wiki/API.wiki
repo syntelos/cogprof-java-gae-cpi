@@ -24,9 +24,9 @@
 = OAuth Services =
 
 {{{
- http://cpi.cognitiveprofile.com/_ah/OAuthGetRequestToken
- http://cpi.cognitiveprofile.com/_ah/OAuthAuthorizeToken
- http://cpi.cognitiveprofile.com/_ah/OAuthGetAccessToken
+ https://cpi.cognitiveprofile.com/_ah/OAuthGetRequestToken
+ https://cpi.cognitiveprofile.com/_ah/OAuthAuthorizeToken
+ https://cpi.cognitiveprofile.com/_ah/OAuthGetAccessToken
 }}}
 
 = Groups integration =
