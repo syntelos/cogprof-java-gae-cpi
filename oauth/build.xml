@@ -25,6 +25,25 @@
     </fileset>
   </path>
 
+  <path id="lib.path.commons.codec">
+    <fileset dir="${lib}">
+      <include name="**/commons-codec-*.jar" />
+    </fileset>
+  </path>
+
+  <path id="lib.path.scribe">
+    <fileset dir="${lib}">
+      <include name="**/scribe-*.jar" />
+    </fileset>
+  </path>
+
+  <property name="commons.codec.jar" value="${toString:lib.path.commons.codec}"/>
+  <basename property="commons.codec.version" file="${commons.codec.jar}" suffix=".jar"/>
+
+  <property name="scribe.jar" value="${toString:lib.path.scribe}"/>
+  <basename property="scribe.version" file="${scribe.jar}" suffix=".jar"/>
+
+
   <target name="clean" description="Delete all products: 'out', 'jar', etc..">
 
     <clean bin="${out}" this="."/>
@@ -44,7 +63,9 @@
 
   <target name="jar" depends="compile" description="Produce 'name-V*.jar' and 'name-V*.jar.md5'.  See 'version'.">
     <archive.cleanly/>
-
+    <echo file="${src}/Manifest.mf">Main-Class: cpi.oauth.Main
+Class-Path: lib/${scribe.version}.jar lib/${commons.codec.version}.jar
+</echo>
     <archive target="${target.jar}" bin="${bin}" manifest="${src}/Manifest.mf">
       <pack/>
     </archive>

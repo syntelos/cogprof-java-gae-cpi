@@ -101,6 +101,17 @@ public class ServiceBuilder
     this.apiKey = apiKey;
     return this;
   }
+  /**
+   * Configures the api key
+   * 
+   * @param apiKey The api key for your application
+   * @return the {@link ServiceBuilder} instance for method chaining
+   */
+  public ServiceBuilder apiKey(char[] apiKey)
+  {
+    Preconditions.checkEmptyString(apiKey, "Invalid Api key");
+    return this.apiKey(new String(apiKey));
+  }
   
   /**
    * Configures the api secret
@@ -113,6 +124,18 @@ public class ServiceBuilder
     Preconditions.checkEmptyString(apiSecret, "Invalid Api secret");
     this.apiSecret = apiSecret;
     return this;
+  }
+  
+  /**
+   * Configures the api secret
+   * 
+   * @param apiSecret The api secret for your application
+   * @return the {@link ServiceBuilder} instance for method chaining
+   */
+  public ServiceBuilder apiSecret(char[] apiSecret)
+  {
+    Preconditions.checkEmptyString(apiSecret, "Invalid Api secret");
+    return this.apiSecret(new String(apiSecret));
   }
   
   /**
