@@ -164,6 +164,17 @@ public class ServiceBuilder
     return this;
   }
 
+  public ServiceBuilder signatureTypeHeader()
+  {
+    this.signatureType = SignatureType.Header;
+    return this;
+  }
+  public ServiceBuilder signatureTypeQuery()
+  {
+    this.signatureType = SignatureType.QueryString;
+    return this;
+  }
+
   public ServiceBuilder debugStream(OutputStream stream)
   {
     Preconditions.checkNotNull(stream, "debug stream can't be null");

@@ -337,45 +337,41 @@ public final class GroupServlet
             }
             
         case Tail.DataJson:
-            if (req.isOAuth){
 
-                if (req.isContentTypeJson()){
+            if (req.isContentTypeJson()){
 
-                    final Json json = req.getBodyJson();
-                    /*
-                     * User Update
-                     */
-                    if (json.isNull()){
+                final Json json = req.getBodyJson();
+                /*
+                 * User Update
+                 */
+                if (json.isNull()){
 
-                        this.error(req,rep,400,"Missing request entity body");
-                    }
+                    this.error(req,rep,400,"Missing request entity body");
+                }
+                else {
+                    String identifier = (String)json.getValue("identifier");
+                    if (null == identifier || 1 > identifier.length())
+                        this.error(req,rep,400,"Missing request entity property named identifier");
                     else {
-                        String identifier = (String)json.getValue("identifier");
-                        if (null == identifier || 1 > identifier.length())
-                            this.error(req,rep,400,"Missing request entity property named identifier");
-                        else {
-                            Group group = Group.ForLongIdentifier(identifier);
+                        Group group = Group.ForLongIdentifier(identifier);
 
-                            if (null != group && group.hasGroupAccess(req.getViewer())){
+                        if (null != group){
 
-                                if (group.fromJson(json)){
+                            if (group.fromJson(json)){
 
-                                    group.save();
-                                }
-
-                                rep.setContentTypeJson();
-
-                                rep.println(group.toJson().toString());
-
-                                this.ok(req,rep);
+                                group.save();
                             }
-                            else
-                                this.error(req,rep,404,"Not found");
+
+                            rep.setContentTypeJson();
+
+                            rep.println(group.toJson().toString());
+
+                            this.ok(req,rep);
                         }
+                        else
+                            this.error(req,rep,404,"Not found");
                     }
                 }
-                else 
-                    this.error(req,rep,400,"Unrecognized request entity content type");
             }
             else {
 

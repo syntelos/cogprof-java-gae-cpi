@@ -6,16 +6,41 @@ import org.scribe.model.Verb;
 /**
  * 
  * <pre>
+ * 
  *  OAuthService service = new ServiceBuilder()
  *      .provider(CpiApi.class)
- *      .apiKey("Api_Consumer_Key")
- *      .apiSecret("Api_Consumer_Secret")
+ *      .apiKey(consumerKey)
+ *      .apiSecret(consumerSecret)
  *      .build();
  * </pre>
  */
-public class CpiApi 
+public final class CpiApi 
     extends org.scribe.builder.api.DefaultApi10a
 {
+
+    protected enum API {
+
+        Appspot( "https://cognitiveprofile.appspot.com/_ah/OAuthGetAccessToken",
+                 "https://cognitiveprofile.appspot.com/_ah/OAuthGetRequestToken",
+                 "https://cognitiveprofile.appspot.com/_ah/OAuthAuthorizeToken?oauth_token=%s"), 
+
+        Cogprof( "https://cpi.cognitiveprofile.com/_ah/OAuthGetAccessToken",
+                 "https://cpi.cognitiveprofile.com/_ah/OAuthGetRequestToken",
+                 "https://cpi.cognitiveprofile.com/_ah/OAuthAuthorizeToken?oauth_token=%s");
+
+
+        protected final String access, request, auth;
+
+        private API(String access, String request, String auth){
+
+            this.access = access;
+            this.request = request;
+            this.auth = auth;
+        }
+    }
+
+    private final static API api = CpiApi.API.Cogprof;
+
 
     public CpiApi(){
         super();
@@ -25,13 +50,13 @@ public class CpiApi
     @Override
     public String getAccessTokenEndpoint()
     {
-        return "https://cognitiveprofile.appspot.com/_ah/OAuthGetAccessToken"; 
+        return CpiApi.api.access;
     }
 
     @Override
     public String getRequestTokenEndpoint()
     {
-        return "https://cognitiveprofile.appspot.com/_ah/OAuthGetRequestToken";
+        return CpiApi.api.request;
     }
 
     @Override
@@ -49,6 +74,6 @@ public class CpiApi
     @Override
     public String getAuthorizationUrl(Token requestToken)
     {
-        return  "https://cognitiveprofile.appspot.com/_ah/OAuthAuthorizeToken?oauth_token="+requestToken.getToken();
+        return String.format( CpiApi.api.request, requestToken);
     }
 }
