@@ -23,6 +23,10 @@
 
 = OAuth Services =
 
+ Each of the services protected by OAuth employ the host name "cognitiveprofile.appspot.com" in place of "cpi.cognitiveprofile.com".  These two names are equivalent and interchangeable.
+
+ The OAuth Token URLs are the following. 
+
 {{{
  https://cognitiveprofile.appspot.com/_ah/OAuthGetRequestToken
  https://cognitiveprofile.appspot.com/_ah/OAuthAuthorizeToken
