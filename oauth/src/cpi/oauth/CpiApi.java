@@ -25,13 +25,13 @@ public class CpiApi
     @Override
     public String getAccessTokenEndpoint()
     {
-        return "https://cpi.cognitiveprofile.com/_ah/OAuthGetAccessToken"; 
+        return "https://cognitiveprofile.appspot.com/_ah/OAuthGetAccessToken"; 
     }
 
     @Override
     public String getRequestTokenEndpoint()
     {
-        return "https://cpi.cognitiveprofile.com/_ah/OAuthGetRequestToken";
+        return "https://cognitiveprofile.appspot.com/_ah/OAuthGetRequestToken";
     }
 
     @Override
@@ -49,6 +49,6 @@ public class CpiApi
     @Override
     public String getAuthorizationUrl(Token requestToken)
     {
-        return  "https://cpi.cognitiveprofile.com/_ah/OAuthAuthorizeToken?oauth_token="+requestToken.getToken();
+        return  "https://cognitiveprofile.appspot.com/_ah/OAuthAuthorizeToken?oauth_token="+requestToken.getToken();
     }
 }
