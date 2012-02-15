@@ -244,13 +244,15 @@ public class ProfileServlet
                     rep.sendRedirect("/profile/"+viewer.getIdentifier()+"/groups.html");
                 else
                     rep.sendRedirect("/profile/"+source+"/index.html");
+
+                return;
             }
             /*
              */
         }
         /*
          */
-        if (req.hasViewer()){
+        if (req.isMember){
 
             Person viewer = req.getViewer();
 

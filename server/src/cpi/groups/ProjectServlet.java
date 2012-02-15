@@ -138,32 +138,32 @@ public final class ProjectServlet
             }
 
         case Tail.DataJson:
-            if (req.isOAuth || req.isAdmin){
 
-                final String projectIdentifier = ProjectIdentifier(req);
-                if (null != projectIdentifier){
+            final String projectIdentifier = ProjectIdentifier(req);
+            if (null != projectIdentifier){
 
-                    if (null != viewer){
-                        /*
-                         * User Read
-                         */
-                        Project project = Project.ForLongIdentifier(projectIdentifier);
+                if (null != viewer){
+                    /*
+                     * User Read
+                     */
+                    Project project = Project.ForLongIdentifier(projectIdentifier);
 
-                        if (null != project && project.hasProjectAccess(viewer)){
+                    if (null != project && project.hasProjectAccess(viewer)){
 
-                            rep.setContentTypeJson();
+                        rep.setContentTypeJson();
 
-                            rep.println(project.toJson().toString());
+                        rep.println(project.toJson().toString());
 
-                            this.ok(req,rep);
-                        }
-                        else 
-                            this.error(req,rep,404,"Not found");
+                        this.ok(req,rep);
+
+                        return;
                     }
-                    else
-                        this.error(req,rep,500,"Missing viewer");
+                    /*
+                     * 404
+                     */
                 }
-                else {
+                else if (req.isOAuth){
+
                     final Group group = Group.For(viewer);
                     if (null != group){
                         /*
@@ -204,10 +204,7 @@ public final class ProjectServlet
                         this.error(req,rep,401,"Viewer not group admin");
                 }
             }
-            else {
-
-                this.error(req,rep,401,"Access denied");
-            }
+            this.error(req,rep,404,"Not found");
             return;
         case Tail.None:
             rep.sendRedirect("/projects/index.html");
@@ -389,13 +386,14 @@ public final class ProjectServlet
             }
             
         case Tail.DataJson:
-            if (req.isOAuth || req.isAdmin){
+            if (req.isOAuth){
 
                 String projectIdentifier = ProjectIdentifier(req);
                 if (null != projectIdentifier && null != req.getParameter("delete")){
 
                     Project project = Project.ForLongIdentifier(projectIdentifier);
-                    if (null != project){
+
+                    if (null != project && project.hasProjectAccess(viewer)){
                         project.drop();
 
                         rep.setContentTypeJson();
@@ -421,7 +419,9 @@ public final class ProjectServlet
                             this.error(req,rep,400,"Missing request entity property named identifier");
                         else {
                             Project project = Project.ForLongIdentifier(projectIdentifier);
-                            if (null != project){
+
+                            if (null != project && project.hasProjectAccess(viewer)){
+
                                 if (null != req.getParameter("delete") || json.has("delete")){
 
                                     project.drop();

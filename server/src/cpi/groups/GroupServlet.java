@@ -131,7 +131,7 @@ public final class GroupServlet
             }
 
         case Tail.DataJson:
-            if (req.isOAuth || req.isAdmin){
+            if (req.isMember){
 
                 final String identifier = Identifier(req);
                 if (null != identifier){
@@ -154,27 +154,19 @@ public final class GroupServlet
                             group = Group.ForLongIdentifier(identifier);
                         }
                         /*
-                         * JSON
                          */
                         if (null != group && group.hasGroupAccess(viewer)){
 
                             rep.setContentTypeJson();
 
                             rep.println(group.toJson().toString());
-                        }
-                        else
-                            this.error(req,rep,404,"Not found");
-                    }
-                    else
-                        this.error(req,rep,500,"Missing viewer");
-                }
-                else
-                    this.error(req,rep,400,"Missing identifier");
-            }
-            else {
 
-                this.error(req,rep,401,"Access denied");
+                            return;
+                        }
+                    }
+                }
             }
+            this.error(req,rep,404,"Not found");
             return;
         case Tail.None:
             rep.sendRedirect("/groups/index.html");
@@ -345,7 +337,7 @@ public final class GroupServlet
             }
             
         case Tail.DataJson:
-            if (req.isOAuth || req.isAdmin){
+            if (req.isOAuth){
 
                 if (req.isContentTypeJson()){
 
@@ -363,7 +355,9 @@ public final class GroupServlet
                             this.error(req,rep,400,"Missing request entity property named identifier");
                         else {
                             Group group = Group.ForLongIdentifier(identifier);
-                            if (null != group){
+
+                            if (null != group && group.hasGroupAccess(req.getViewer())){
+
                                 if (group.fromJson(json)){
 
                                     group.save();
