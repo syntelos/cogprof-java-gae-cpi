@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /index.html
+Allow: /profile/
+Disallow: /inventory/
+Sitemap: http://cpi.cognitiveprofile.com/sitemap.xml
