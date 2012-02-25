@@ -62,3 +62,4 @@ A frame name will cause the redirect to target a browser window frame, or a new 
 
 For sequence timeout, wait for this number of milliseconds before redirecting.
 
+This value is employed as the timeout argument to [http://www.w3.org/TR/Window/#window-timers window setTimeout], for which the value zero (0) means "no timeout".
