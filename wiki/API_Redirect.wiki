@@ -35,14 +35,13 @@ The redirect link url accepts the following template variables
 || sf || Result  ||
 || nf || Result  ||
 || identifier  || Profile identifier ||
-|| project  || Project identifier ||
 
 These names may be employed with Hapax syntax in the redirect HREF string.
 
 Example
 
 {{{
- http://redirect.net/for?st={{=st}}&sf={{=sf}}&nf={{=nf}}&nt={{=nt}}&y={{=identifer}}&x={{=project}}
+ http://redirect.net/for?st={{=st}}&sf={{=sf}}&nf={{=nf}}&nt={{=nt}}&y={{=identifer}}
 }}}
 
 === Target Frame Name ===
