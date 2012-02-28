@@ -4,4 +4,5 @@
   <version>@VersionMajor@-@VersionMinor@-@VersionBuild@</version>
   <sessions-enabled>true</sessions-enabled>
   <warmup-requests-enabled>true</warmup-requests-enabled>
+  <threadsafe>true</threadsafe>
 </appengine-web-app>

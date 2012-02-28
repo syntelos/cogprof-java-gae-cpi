@@ -243,8 +243,8 @@ public final class Redirect
         Float nt = person.getNt();
         Float sf = person.getSf();
         Float st = person.getSt();
-        String id = person.getId();
-        String pr = null; //person.getProjectId()//[TODO odl]
+        String identifier = person.getIdentifier();
+
 
         if (null != nf){
             this.setVariable("nf",nf.toString());
@@ -252,8 +252,8 @@ public final class Redirect
             this.setVariable("sf",sf.toString());
             this.setVariable("st",st.toString());
         }
-        this.setVariable("identifier",id);
-        this.setVariable("project",pr);
+        this.setVariable("identifier",identifier);
+
     }
     public int hashCode(){
         return this.toJson().hashCode();

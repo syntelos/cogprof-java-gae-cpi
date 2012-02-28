@@ -275,12 +275,13 @@
       <test name="Inventory" />
       <test name="ProfileImage" />
       <test name="Serialization" />
+      <test name="RedirectTemplate" />
 
     </junit>
 
   </target>
 
-  <target name="image" depends="test.compile" description="Run unit test 'ProfileImage'">
+  <target name="test-image" depends="test.compile" description="Run unit test 'ProfileImage'">
 
     <junit haltonerror="true" includeAntRuntime="true" fork="true" dir="test">
       <classpath refid="test.lib.path"/>
@@ -291,13 +292,24 @@
 
   </target>
 
-  <target name="ser" depends="test.compile" description="Run unit test 'Serialization'">
+  <target name="test-ser" depends="test.compile" description="Run unit test 'Serialization'">
 
     <junit haltonerror="true" includeAntRuntime="true" fork="true" dir="test">
       <classpath refid="test.lib.path"/>
       <formatter type="plain" usefile="false"/>
 
       <test name="Serialization" />
+    </junit>
+
+  </target>
+
+  <target name="test-redirect" depends="test.compile" description="Run unit test 'RedirectTemplate'">
+
+    <junit haltonerror="true" includeAntRuntime="true" fork="true" dir="test">
+      <classpath refid="test.lib.path"/>
+      <formatter type="plain" usefile="false"/>
+
+      <test name="RedirectTemplate" />
     </junit>
 
   </target>
