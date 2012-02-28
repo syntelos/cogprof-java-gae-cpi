@@ -41,7 +41,7 @@ These names may be employed with Hapax syntax in the redirect HREF string.
 Example
 
 {{{
- http://redirect.net/for?st={{=st}}&sf={{=sf}}&nf={{=nf}}&nt={{=nt}}&y={{=identifer}}
+ http://redirect.net/for?st={{=st}}&sf={{=sf}}&nf={{=nf}}&nt={{=nt}}&y={{=identifier}}
 }}}
 
 === Target Frame Name ===
