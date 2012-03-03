@@ -219,7 +219,13 @@ public class ProfileServlet
                          * {{/with_redirect}}
                          */
                         TemplateDataDictionary with_redirect = req.addSection(ProfileServlet.WithRedirect);
-                        redirect.dictionaryInto(with_redirect);
+                        try {
+                            redirect.dictionaryInto(viewer,with_redirect);
+                        }
+                        catch (hapax.TemplateException exc){
+
+                            this.error(req,rep,500,String.format("Error in redirect template '%s'",redirect.href),exc);
+                        }
 
                         super.render(req,rep);
                     }

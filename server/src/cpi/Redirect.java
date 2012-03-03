@@ -34,7 +34,7 @@ import oso.data.Person;
  * @see http://code.google.com/p/cpi/wiki/API_Redirect
  */
 public final class Redirect
-    extends hapax.TemplateDictionary
+    extends Object
     implements java.io.Serializable,
                json.Builder
 {
@@ -224,9 +224,9 @@ public final class Redirect
     {
         Template template = this.getTemplate();
 
-        this.prepareTemplate(person);
+        hapax.TemplateDictionary dict = this.prepareTemplate(person);
 
-        return template.renderToString(this);
+        return template.renderToString(dict);
     }
     private Template getTemplate()
         throws hapax.TemplateException
@@ -236,9 +236,11 @@ public final class Redirect
         }
         return this.template;
     }
-    private void prepareTemplate(Person person)
+    private hapax.TemplateDictionary prepareTemplate(Person person)
         throws hapax.TemplateException
     {
+        hapax.TemplateDictionary dict = new hapax.TemplateDictionary();
+
         Float nf = person.getNf();
         Float nt = person.getNt();
         Float sf = person.getSf();
@@ -247,13 +249,14 @@ public final class Redirect
 
 
         if (null != nf){
-            this.setVariable("nf",nf.toString());
-            this.setVariable("nt",nt.toString());
-            this.setVariable("sf",sf.toString());
-            this.setVariable("st",st.toString());
+            dict.setVariable("nf",nf.toString());
+            dict.setVariable("nt",nt.toString());
+            dict.setVariable("sf",sf.toString());
+            dict.setVariable("st",st.toString());
         }
-        this.setVariable("identifier",identifier);
+        dict.setVariable("identifier",identifier);
 
+        return dict;
     }
     public int hashCode(){
         return this.toJson().hashCode();
@@ -286,9 +289,43 @@ public final class Redirect
 
         throw new Immutable();
     }
+    /**
+     * Literal HREF
+     */
     public final void dictionaryInto(gap.hapax.TemplateDataDictionary dict){
 
         dict.setVariable(TemplateNames.Href,this.href);
+        dict.setVariable(TemplateNames.Target,this.target);
+        dict.setVariable(TemplateNames.Sequence,this.sequence.toString());
+        dict.setVariable(TemplateNames.Timeout,String.valueOf(this.timeout));
+
+        if (null != this.target && 0 != this.target.length()){
+            dict.showSection(TemplateNames.WithTarget);
+        }
+        else {
+            dict.showSection(TemplateNames.WithoutTarget);
+        }
+
+        switch (this.sequence){
+        case inject:
+            dict.setVariable(TemplateNames.SequenceSelectInject,"selected");
+            break;
+        case timeout:
+            dict.setVariable(TemplateNames.SequenceSelectTimeout,"selected");
+            break;
+        default:
+            throw new IllegalArgumentException();
+        }
+        
+    }
+    /** 
+     * Interpreted HREF
+     */
+    public final void dictionaryInto(Person profile, gap.hapax.TemplateDataDictionary dict)
+        throws hapax.TemplateException
+    {
+        dict.setVariable(TemplateNames.Href,this.toString(profile)); 
+
         dict.setVariable(TemplateNames.Target,this.target);
         dict.setVariable(TemplateNames.Sequence,this.sequence.toString());
         dict.setVariable(TemplateNames.Timeout,String.valueOf(this.timeout));
