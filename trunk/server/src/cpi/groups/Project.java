@@ -33,6 +33,15 @@ public final class Project
         }
         return Project.QueryNKey(query);
     }
+    public final static BigTableIterator<Project> ListPage(Group group, Page page){
+        Query query = Project.CreateQueryFor();
+        {
+            Filter filter = new Filter(Project.KIND);
+            filter.add(Project.Field.Group,Filter.Op.eq,group.getId());
+            filter.update(query);
+        }
+        return Project.QueryN(query,page);
+    }
 
 
 
