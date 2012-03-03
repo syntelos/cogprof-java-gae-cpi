@@ -317,7 +317,8 @@ public final class ProjectServlet
                                 String pageTitle = String.format("Group '%s' Projects",group.getName());
 
                                 req.setVariable(ProjectDiv,"div.project.admin-list.html");
-                                for (Project project : Project.ListPage(req.parameters.page)){
+
+                                for (Project project : Project.ListPage(group,req.parameters.page)){
 
                                     req.addSection(ListProject,project);
                                 }
