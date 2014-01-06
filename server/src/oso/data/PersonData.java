@@ -42,7 +42,7 @@ import javax.annotation.Generated;
  *
  * @see Person
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-28T15:49:19.363Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2014-01-06T22:28:41.851Z")
 public abstract class PersonData
     extends gap.data.BigTable
     implements DataInheritance<Person>
@@ -70,6 +70,14 @@ public abstract class PersonData
         return KIND.pathto(subpath);
     }
 
+    /**
+     * Long instance key from parent key
+     */
+    public static Key KeyLong(Json json){
+        final String identifier = json.getValue("identifier",String.class);
+
+        return KeyLongIdFor( identifier);
+    }
     /**
      * Long instance key without parent key
      */
@@ -106,6 +114,14 @@ public abstract class PersonData
     }
 
     /**
+     * Instance lookup or create
+     */
+    public static Person ForLong(Json json){
+        final String identifier = json.getValue("identifier",String.class);
+
+        return ForLongIdentifier( identifier);
+    }
+    /**
      * Instance lookup
      */
     public final static Person ForLongIdentifier(String identifier){
@@ -132,6 +148,14 @@ public abstract class PersonData
     /**
      * Instance lookup or create
      */
+    public static Person GetCreateLong(Json json){
+        final String identifier = json.getValue("identifier",String.class);
+
+        return GetCreateLong( identifier);
+    }
+    /**
+     * Instance lookup or create
+     */
     public final static Person GetCreateLongIdentifier(String identifier){
         Person person = Person.ForLongIdentifier( identifier);
         if (null == person){
@@ -140,7 +164,25 @@ public abstract class PersonData
         }
         return person;
     }
-
+    /**
+     * Instance lookup or create from (presumed correct and coherent) instance key and data
+     *
+     * Used by long and short lists
+     *
+     * @param key Key derived from data
+     *
+     * @param data Data instance of this class
+     *
+     * @return Possibly dirty (in need of save)
+     */
+    public final static Person GetCreate(Key key, Json json){
+        Person instance = gap.data.Store.GetClass(key);
+        if (null == instance){
+            final String identifier = json.getValue("identifier",String.class);
+            instance = new Person( identifier);
+        }
+        return instance;
+    }
 
     public final static Key KeyLongFor(String id){
         return KeyFactory.createKey(KIND.getName(),id);
@@ -175,6 +217,15 @@ public abstract class PersonData
                 return (Person)gap.data.Store.Query1Class(q);
             }
         }
+        else
+            throw new IllegalArgumentException();
+    }
+    /**
+     * @param entity Use entity for its key (only)
+     */
+    public final static Person Get(Entity entity){
+        if (null != entity)
+            return Get(entity.getKey());
         else
             throw new IllegalArgumentException();
     }
@@ -246,6 +297,13 @@ public abstract class PersonData
 
             gap.data.Store.Delete(instanceKey);
         }
+    }
+    /**
+     * @param entity Use entity for its key (only)
+     */
+    public final static void Delete(Entity entity){
+        if (null != entity)
+            Delete(entity.getKey());
     }
     /**
      * Drop the instance from memcache, exclusively.
@@ -325,6 +383,15 @@ public abstract class PersonData
     public final static List.Primitive<Key> QueryNKey(Query query){
         if (null != query)
             return gap.data.Store.QueryNKey(query);
+        else
+            throw new IllegalArgumentException();
+    }
+    /**
+     * @return Entities having only keys, unbuffered
+     */
+    public final static Iterable<Entity> QueryNKeyUnbuffered(Query query){
+        if (null != query)
+            return gap.data.Store.QueryNKeyUnbuffered(query);
         else
             throw new IllegalArgumentException();
     }
@@ -486,18 +553,18 @@ public abstract class PersonData
                 else
                     return null;
             }
-            case Nf:{
+            case Nf:
                 return instance.getNf(MayNotInherit);
-            }
-            case Nt:{
+            
+            case Nt:
                 return instance.getNt(MayNotInherit);
-            }
-            case St:{
+            
+            case St:
                 return instance.getSt(MayNotInherit);
-            }
-            case Sf:{
+            
+            case Sf:
                 return instance.getSf(MayNotInherit);
-            }
+            
             case Created:
                 return instance.getCreated(MayNotInherit);
             case Completed:
@@ -1368,7 +1435,7 @@ public abstract class PersonData
     public boolean fromJsonLogonId(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setLogonId((String)json.getValue(String.class));
     }
     public Json toJsonIdentifier(){
@@ -1378,7 +1445,7 @@ public abstract class PersonData
     public boolean fromJsonIdentifier(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setIdentifier((String)json.getValue(String.class));
     }
     public Json toJsonInventory(){
@@ -1386,10 +1453,12 @@ public abstract class PersonData
         return Json.Wrap( inventory);
     }
     public boolean fromJsonInventory(Json json){
-        /*
-         * [TODO] json.getValue(colClas,comClas) not expressed by (e.g.) "List.Short<Component>.class"
-         */
-        return false;
+        if (null == json)
+            return false;
+        else {
+            List.Primitive<Inventory> collection = this.getInventory(Notation.MayInherit);
+            return collection.fromJson(json);
+        }
     }
     public Json toJsonNf(){
         Float nf = this.getNf();
@@ -1398,7 +1467,7 @@ public abstract class PersonData
     public boolean fromJsonNf(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setNf((Float)json.getValue(Float.class));
     }
     public final boolean setNf(Number nf){
@@ -1420,7 +1489,7 @@ public abstract class PersonData
     public boolean fromJsonNt(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setNt((Float)json.getValue(Float.class));
     }
     public final boolean setNt(Number nt){
@@ -1442,7 +1511,7 @@ public abstract class PersonData
     public boolean fromJsonSt(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setSt((Float)json.getValue(Float.class));
     }
     public final boolean setSt(Number st){
@@ -1464,7 +1533,7 @@ public abstract class PersonData
     public boolean fromJsonSf(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setSf((Float)json.getValue(Float.class));
     }
     public final boolean setSf(Number sf){
@@ -1486,7 +1555,7 @@ public abstract class PersonData
     public boolean fromJsonCreated(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setCreated((Date)json.getValue(Date.class));
     }
     public Json toJsonCompleted(){
@@ -1496,7 +1565,7 @@ public abstract class PersonData
     public boolean fromJsonCompleted(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setCompleted((Date)json.getValue(Date.class));
     }
     public Json toJsonProject(){
@@ -1506,7 +1575,7 @@ public abstract class PersonData
     public boolean fromJsonProject(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setProject((Project)json.getValue(Project.class));
     }
     /*

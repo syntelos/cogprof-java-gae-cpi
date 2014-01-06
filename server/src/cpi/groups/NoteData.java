@@ -43,7 +43,7 @@ import javax.annotation.Generated;
  *
  * @see Note
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-28T15:49:23.847Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2014-01-06T22:28:43.927Z")
 public abstract class NoteData
     extends gap.data.BigTable
     implements DataInheritance<Note>
@@ -74,6 +74,14 @@ public abstract class NoteData
         return KIND.pathto(subpath);
     }
 
+    /**
+     * Short instance key from parent key
+     */
+    public static Key KeyShort(Key ancestor, Json json){
+        final String identifier = json.getValue("identifier",String.class);
+
+        return KeyShortIdFor(ancestor, identifier);
+    }
     /**
      * Short instance key from parent key
      */
@@ -110,6 +118,14 @@ public abstract class NoteData
     }
 
     /**
+     * Instance lookup or create
+     */
+    public static Note ForShort(Key ancestor, Json json){
+        final String identifier = json.getValue("identifier",String.class);
+
+        return ForShortIdentifier(ancestor, identifier);
+    }
+    /**
      * Instance lookup from parent key
      */
     public final static Note ForShortIdentifier(Key ancestor, String identifier){
@@ -128,6 +144,14 @@ public abstract class NoteData
     }
 
     /**
+     * Instance lookup or create
+     */
+    public static Note GetCreateShort(Key ancestor, Json json){
+        final String identifier = json.getValue("identifier",String.class);
+
+        return GetCreateShort(ancestor, identifier);
+    }
+    /**
      * Instance lookup or create from parent key
      */
     public final static Note GetCreateShort(Key ancestor, String identifier){
@@ -138,7 +162,26 @@ public abstract class NoteData
         }
         return note;
     }
-
+    /**
+     * Instance lookup or create from (presumed correct and coherent) instance key and data
+     *
+     * Used by long and short lists
+     *
+     * @param key Key derived from data
+     *
+     * @param data Data instance of this class
+     *
+     * @return Possibly dirty (in need of save)
+     */
+    public final static Note GetCreate(Key key, Json json){
+        Note instance = gap.data.Store.GetClass(key);
+        if (null == instance){
+            final String identifier = json.getValue("identifier",String.class);
+            final Key ancestor = key.getParent();
+            instance = new Note(ancestor, identifier);
+        }
+        return instance;
+    }
 
     public final static Key KeyShortFor(Key ancestor, String id){
         return KeyFactory.createKey(ancestor,KIND.getName(),id);
@@ -173,6 +216,15 @@ public abstract class NoteData
                 return (Note)gap.data.Store.Query1Class(q);
             }
         }
+        else
+            throw new IllegalArgumentException();
+    }
+    /**
+     * @param entity Use entity for its key (only)
+     */
+    public final static Note Get(Entity entity){
+        if (null != entity)
+            return Get(entity.getKey());
         else
             throw new IllegalArgumentException();
     }
@@ -250,6 +302,15 @@ public abstract class NoteData
         }
     }
     /**
+     * Drop all children of the parent
+     */
+    public final static void DeleteChildrenOf(Entity parent){
+        if (null != parent){
+
+            DeleteChildrenOf(parent.getKey());
+        }
+    }
+    /**
      * Drop the instance from memcache and datastore.
      */
     public final static void Delete(Note instance){
@@ -266,6 +327,13 @@ public abstract class NoteData
 
             gap.data.Store.Delete(instanceKey);
         }
+    }
+    /**
+     * @param entity Use entity for its key (only)
+     */
+    public final static void Delete(Entity entity){
+        if (null != entity)
+            Delete(entity.getKey());
     }
     /**
      * Drop the instance from memcache, exclusively.
@@ -345,6 +413,15 @@ public abstract class NoteData
     public final static List.Primitive<Key> QueryNKey(Query query){
         if (null != query)
             return gap.data.Store.QueryNKey(query);
+        else
+            throw new IllegalArgumentException();
+    }
+    /**
+     * @return Entities having only keys, unbuffered
+     */
+    public final static Iterable<Entity> QueryNKeyUnbuffered(Query query){
+        if (null != query)
+            return gap.data.Store.QueryNKeyUnbuffered(query);
         else
             throw new IllegalArgumentException();
     }
@@ -1091,7 +1168,7 @@ public abstract class NoteData
     public boolean fromJsonIdentifier(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setIdentifier((String)json.getValue(String.class));
     }
     public Json toJsonWriter(){
@@ -1101,7 +1178,7 @@ public abstract class NoteData
     public boolean fromJsonWriter(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setWriter((Person)json.getValue(Person.class));
     }
     public Json toJsonCreated(){
@@ -1111,7 +1188,7 @@ public abstract class NoteData
     public boolean fromJsonCreated(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setCreated((Date)json.getValue(Date.class));
     }
     public Json toJsonUpdated(){
@@ -1121,7 +1198,7 @@ public abstract class NoteData
     public boolean fromJsonUpdated(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setUpdated((Date)json.getValue(Date.class));
     }
     public Json toJsonText(){
@@ -1131,7 +1208,7 @@ public abstract class NoteData
     public boolean fromJsonText(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setText((Text)json.getValue(Text.class));
     }
     /*

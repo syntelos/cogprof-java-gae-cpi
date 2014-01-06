@@ -44,7 +44,7 @@ import javax.annotation.Generated;
  *
  * @see Group
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-28T15:49:21.596Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2014-01-06T22:28:42.949Z")
 public abstract class GroupData
     extends gap.data.BigTable
     implements DataInheritance<Group>
@@ -72,6 +72,14 @@ public abstract class GroupData
         return KIND.pathto(subpath);
     }
 
+    /**
+     * Long instance key from parent key
+     */
+    public static Key KeyLong(Json json){
+        final String identifier = json.getValue("identifier",String.class);
+
+        return KeyLongIdFor( identifier);
+    }
     /**
      * Long instance key without parent key
      */
@@ -108,6 +116,14 @@ public abstract class GroupData
     }
 
     /**
+     * Instance lookup or create
+     */
+    public static Group ForLong(Json json){
+        final String identifier = json.getValue("identifier",String.class);
+
+        return ForLongIdentifier( identifier);
+    }
+    /**
      * Instance lookup
      */
     public final static Group ForLongIdentifier(String identifier){
@@ -134,6 +150,14 @@ public abstract class GroupData
     /**
      * Instance lookup or create
      */
+    public static Group GetCreateLong(Json json){
+        final String identifier = json.getValue("identifier",String.class);
+
+        return GetCreateLong( identifier);
+    }
+    /**
+     * Instance lookup or create
+     */
     public final static Group GetCreateLongIdentifier(String identifier){
         Group group = Group.ForLongIdentifier( identifier);
         if (null == group){
@@ -142,7 +166,25 @@ public abstract class GroupData
         }
         return group;
     }
-
+    /**
+     * Instance lookup or create from (presumed correct and coherent) instance key and data
+     *
+     * Used by long and short lists
+     *
+     * @param key Key derived from data
+     *
+     * @param data Data instance of this class
+     *
+     * @return Possibly dirty (in need of save)
+     */
+    public final static Group GetCreate(Key key, Json json){
+        Group instance = gap.data.Store.GetClass(key);
+        if (null == instance){
+            final String identifier = json.getValue("identifier",String.class);
+            instance = new Group( identifier);
+        }
+        return instance;
+    }
 
     public final static Key KeyLongFor(String id){
         return KeyFactory.createKey(KIND.getName(),id);
@@ -177,6 +219,15 @@ public abstract class GroupData
                 return (Group)gap.data.Store.Query1Class(q);
             }
         }
+        else
+            throw new IllegalArgumentException();
+    }
+    /**
+     * @param entity Use entity for its key (only)
+     */
+    public final static Group Get(Entity entity){
+        if (null != entity)
+            return Get(entity.getKey());
         else
             throw new IllegalArgumentException();
     }
@@ -248,6 +299,13 @@ public abstract class GroupData
 
             gap.data.Store.Delete(instanceKey);
         }
+    }
+    /**
+     * @param entity Use entity for its key (only)
+     */
+    public final static void Delete(Entity entity){
+        if (null != entity)
+            Delete(entity.getKey());
     }
     /**
      * Drop the instance from memcache, exclusively.
@@ -327,6 +385,15 @@ public abstract class GroupData
     public final static List.Primitive<Key> QueryNKey(Query query){
         if (null != query)
             return gap.data.Store.QueryNKey(query);
+        else
+            throw new IllegalArgumentException();
+    }
+    /**
+     * @return Entities having only keys, unbuffered
+     */
+    public final static Iterable<Entity> QueryNKeyUnbuffered(Query query){
+        if (null != query)
+            return gap.data.Store.QueryNKeyUnbuffered(query);
         else
             throw new IllegalArgumentException();
     }
@@ -1459,7 +1526,7 @@ public abstract class GroupData
     public boolean fromJsonIdentifier(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setIdentifier((String)json.getValue(String.class));
     }
     public Json toJsonName(){
@@ -1469,7 +1536,7 @@ public abstract class GroupData
     public boolean fromJsonName(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setName((String)json.getValue(String.class));
     }
     public Json toJsonOwner(){
@@ -1479,7 +1546,7 @@ public abstract class GroupData
     public boolean fromJsonOwner(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setOwner((Person)json.getValue(Person.class));
     }
     public Json toJsonAdmin(){
@@ -1489,7 +1556,7 @@ public abstract class GroupData
     public boolean fromJsonAdmin(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setAdmin((Person)json.getValue(Person.class));
     }
     public Json toJsonCreated(){
@@ -1499,7 +1566,7 @@ public abstract class GroupData
     public boolean fromJsonCreated(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setCreated((Date)json.getValue(Date.class));
     }
     public Json toJsonBilled(){
@@ -1509,7 +1576,7 @@ public abstract class GroupData
     public boolean fromJsonBilled(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setBilled((Date)json.getValue(Date.class));
     }
     public Json toJsonPaid(){
@@ -1519,7 +1586,7 @@ public abstract class GroupData
     public boolean fromJsonPaid(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setPaid((Date)json.getValue(Date.class));
     }
     public Json toJsonRedirect(){
@@ -1529,7 +1596,7 @@ public abstract class GroupData
     public boolean fromJsonRedirect(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setRedirect((Redirect)json.getValue(Redirect.class));
     }
     public Json toJsonMargins(){
@@ -1539,7 +1606,7 @@ public abstract class GroupData
     public boolean fromJsonMargins(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setMargins((Margins)json.getValue(Margins.class));
     }
     public Json toJsonTest(){
@@ -1549,7 +1616,7 @@ public abstract class GroupData
     public boolean fromJsonTest(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setTest((Boolean)json.getValue(Boolean.class));
     }
     public Json toJsonLabels(){
@@ -1559,7 +1626,7 @@ public abstract class GroupData
     public boolean fromJsonLabels(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setLabels((ProfileLabels)json.getValue(ProfileLabels.class));
     }
     /*

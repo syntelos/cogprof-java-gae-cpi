@@ -43,7 +43,7 @@ import javax.annotation.Generated;
  *
  * @see Project
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-28T15:49:23.223Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2014-01-06T22:28:43.456Z")
 public abstract class ProjectData
     extends gap.data.BigTable
     implements DataInheritance<Project>
@@ -71,6 +71,14 @@ public abstract class ProjectData
         return KIND.pathto(subpath);
     }
 
+    /**
+     * Long instance key from parent key
+     */
+    public static Key KeyLong(Json json){
+        final String identifier = json.getValue("identifier",String.class);
+
+        return KeyLongIdFor( identifier);
+    }
     /**
      * Long instance key without parent key
      */
@@ -107,6 +115,14 @@ public abstract class ProjectData
     }
 
     /**
+     * Instance lookup or create
+     */
+    public static Project ForLong(Json json){
+        final String identifier = json.getValue("identifier",String.class);
+
+        return ForLongIdentifier( identifier);
+    }
+    /**
      * Instance lookup
      */
     public final static Project ForLongIdentifier(String identifier){
@@ -133,6 +149,14 @@ public abstract class ProjectData
     /**
      * Instance lookup or create
      */
+    public static Project GetCreateLong(Json json){
+        final String identifier = json.getValue("identifier",String.class);
+
+        return GetCreateLong( identifier);
+    }
+    /**
+     * Instance lookup or create
+     */
     public final static Project GetCreateLongIdentifier(String identifier){
         Project project = Project.ForLongIdentifier( identifier);
         if (null == project){
@@ -141,7 +165,25 @@ public abstract class ProjectData
         }
         return project;
     }
-
+    /**
+     * Instance lookup or create from (presumed correct and coherent) instance key and data
+     *
+     * Used by long and short lists
+     *
+     * @param key Key derived from data
+     *
+     * @param data Data instance of this class
+     *
+     * @return Possibly dirty (in need of save)
+     */
+    public final static Project GetCreate(Key key, Json json){
+        Project instance = gap.data.Store.GetClass(key);
+        if (null == instance){
+            final String identifier = json.getValue("identifier",String.class);
+            instance = new Project( identifier);
+        }
+        return instance;
+    }
 
     public final static Key KeyLongFor(String id){
         return KeyFactory.createKey(KIND.getName(),id);
@@ -176,6 +218,15 @@ public abstract class ProjectData
                 return (Project)gap.data.Store.Query1Class(q);
             }
         }
+        else
+            throw new IllegalArgumentException();
+    }
+    /**
+     * @param entity Use entity for its key (only)
+     */
+    public final static Project Get(Entity entity){
+        if (null != entity)
+            return Get(entity.getKey());
         else
             throw new IllegalArgumentException();
     }
@@ -247,6 +298,13 @@ public abstract class ProjectData
 
             gap.data.Store.Delete(instanceKey);
         }
+    }
+    /**
+     * @param entity Use entity for its key (only)
+     */
+    public final static void Delete(Entity entity){
+        if (null != entity)
+            Delete(entity.getKey());
     }
     /**
      * Drop the instance from memcache, exclusively.
@@ -326,6 +384,15 @@ public abstract class ProjectData
     public final static List.Primitive<Key> QueryNKey(Query query){
         if (null != query)
             return gap.data.Store.QueryNKey(query);
+        else
+            throw new IllegalArgumentException();
+    }
+    /**
+     * @return Entities having only keys, unbuffered
+     */
+    public final static Iterable<Entity> QueryNKeyUnbuffered(Query query){
+        if (null != query)
+            return gap.data.Store.QueryNKeyUnbuffered(query);
         else
             throw new IllegalArgumentException();
     }
@@ -481,9 +548,9 @@ public abstract class ProjectData
                 return instance.getCreated(MayNotInherit);
             case Cleaned:
                 return instance.getCleaned(MayNotInherit);
-            case Count:{
+            case Count:
                 return instance.getCount(MayNotInherit);
-            }
+            
             case Redirect:{
                 Redirect _redirect = instance.getRedirect(MayNotInherit);
                 return Serialize.To(field,_redirect);
@@ -492,9 +559,9 @@ public abstract class ProjectData
                 Margins _margins = instance.getMargins(MayNotInherit);
                 return Serialize.To(field,_margins);
             }
-            case Members:{
+            case Members:
                 return null;
-            }
+            
             default:
                 throw new IllegalArgumentException(field.toString()+" in Project");
             }
@@ -1305,7 +1372,7 @@ public abstract class ProjectData
     public boolean fromJsonIdentifier(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setIdentifier((String)json.getValue(String.class));
     }
     public Json toJsonName(){
@@ -1315,7 +1382,7 @@ public abstract class ProjectData
     public boolean fromJsonName(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setName((String)json.getValue(String.class));
     }
     public Json toJsonGroup(){
@@ -1325,7 +1392,7 @@ public abstract class ProjectData
     public boolean fromJsonGroup(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setGroup((Group)json.getValue(Group.class));
     }
     public Json toJsonCreated(){
@@ -1335,7 +1402,7 @@ public abstract class ProjectData
     public boolean fromJsonCreated(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setCreated((Date)json.getValue(Date.class));
     }
     public Json toJsonCleaned(){
@@ -1345,7 +1412,7 @@ public abstract class ProjectData
     public boolean fromJsonCleaned(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setCleaned((Date)json.getValue(Date.class));
     }
     public Json toJsonCount(){
@@ -1355,7 +1422,7 @@ public abstract class ProjectData
     public boolean fromJsonCount(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setCount((Integer)json.getValue(Integer.class));
     }
     public final boolean setCount(Number count){
@@ -1377,7 +1444,7 @@ public abstract class ProjectData
     public boolean fromJsonRedirect(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setRedirect((Redirect)json.getValue(Redirect.class));
     }
     public Json toJsonMargins(){
@@ -1387,7 +1454,7 @@ public abstract class ProjectData
     public boolean fromJsonMargins(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setMargins((Margins)json.getValue(Margins.class));
     }
     public Json toJsonMembers(){
@@ -1395,10 +1462,12 @@ public abstract class ProjectData
         return Json.Wrap( members);
     }
     public boolean fromJsonMembers(Json json){
-        /*
-         * [TODO] json.getValue(colClas,comClas) not expressed by (e.g.) "List.Short<Component>.class"
-         */
-        return false;
+        if (null == json)
+            return false;
+        else {
+            List.Short<Member> collection = this.getMembers(Notation.MayInherit);
+            return collection.fromJson(json);
+        }
     }
     /*
      * Data binding supports
