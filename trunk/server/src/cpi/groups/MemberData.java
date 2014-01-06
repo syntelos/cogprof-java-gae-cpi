@@ -41,7 +41,7 @@ import javax.annotation.Generated;
  *
  * @see Member
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-28T15:49:23.128Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2014-01-06T22:28:43.400Z")
 public abstract class MemberData
     extends gap.data.BigTable
     implements DataInheritance<Member>
@@ -72,6 +72,14 @@ public abstract class MemberData
         return KIND.pathto(subpath);
     }
 
+    /**
+     * Short instance key from parent key
+     */
+    public static Key KeyShort(Key ancestor, Json json){
+        final Person person = json.getValue("person",Person.class);
+
+        return KeyShortIdFor(ancestor, person);
+    }
     /**
      * Short instance key from parent key
      */
@@ -108,6 +116,14 @@ public abstract class MemberData
     }
 
     /**
+     * Instance lookup or create
+     */
+    public static Member ForShort(Key ancestor, Json json){
+        final Person person = json.getValue("person",Person.class);
+
+        return ForShortPerson(ancestor, person);
+    }
+    /**
      * Instance lookup from parent key
      */
     public final static Member ForShortPerson(Key ancestor, Person person){
@@ -126,6 +142,14 @@ public abstract class MemberData
     }
 
     /**
+     * Instance lookup or create
+     */
+    public static Member GetCreateShort(Key ancestor, Json json){
+        final Person person = json.getValue("person",Person.class);
+
+        return GetCreateShort(ancestor, person);
+    }
+    /**
      * Instance lookup or create from parent key
      */
     public final static Member GetCreateShort(Key ancestor, Person person){
@@ -136,7 +160,26 @@ public abstract class MemberData
         }
         return member;
     }
-
+    /**
+     * Instance lookup or create from (presumed correct and coherent) instance key and data
+     *
+     * Used by long and short lists
+     *
+     * @param key Key derived from data
+     *
+     * @param data Data instance of this class
+     *
+     * @return Possibly dirty (in need of save)
+     */
+    public final static Member GetCreate(Key key, Json json){
+        Member instance = gap.data.Store.GetClass(key);
+        if (null == instance){
+            final Person person = json.getValue("person",Person.class);
+            final Key ancestor = key.getParent();
+            instance = new Member(ancestor, person);
+        }
+        return instance;
+    }
 
     public final static Key KeyShortFor(Key ancestor, String id){
         return KeyFactory.createKey(ancestor,KIND.getName(),id);
@@ -171,6 +214,15 @@ public abstract class MemberData
                 return (Member)gap.data.Store.Query1Class(q);
             }
         }
+        else
+            throw new IllegalArgumentException();
+    }
+    /**
+     * @param entity Use entity for its key (only)
+     */
+    public final static Member Get(Entity entity){
+        if (null != entity)
+            return Get(entity.getKey());
         else
             throw new IllegalArgumentException();
     }
@@ -248,6 +300,15 @@ public abstract class MemberData
         }
     }
     /**
+     * Drop all children of the parent
+     */
+    public final static void DeleteChildrenOf(Entity parent){
+        if (null != parent){
+
+            DeleteChildrenOf(parent.getKey());
+        }
+    }
+    /**
      * Drop the instance from memcache and datastore.
      */
     public final static void Delete(Member instance){
@@ -264,6 +325,13 @@ public abstract class MemberData
 
             gap.data.Store.Delete(instanceKey);
         }
+    }
+    /**
+     * @param entity Use entity for its key (only)
+     */
+    public final static void Delete(Entity entity){
+        if (null != entity)
+            Delete(entity.getKey());
     }
     /**
      * Drop the instance from memcache, exclusively.
@@ -343,6 +411,15 @@ public abstract class MemberData
     public final static List.Primitive<Key> QueryNKey(Query query){
         if (null != query)
             return gap.data.Store.QueryNKey(query);
+        else
+            throw new IllegalArgumentException();
+    }
+    /**
+     * @return Entities having only keys, unbuffered
+     */
+    public final static Iterable<Entity> QueryNKeyUnbuffered(Query query){
+        if (null != query)
+            return gap.data.Store.QueryNKeyUnbuffered(query);
         else
             throw new IllegalArgumentException();
     }
@@ -823,7 +900,7 @@ public abstract class MemberData
     public boolean fromJsonPerson(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setPerson((Person)json.getValue(Person.class));
     }
     /*

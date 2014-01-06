@@ -43,7 +43,7 @@ import javax.annotation.Generated;
  *
  * @see Account
  */
-@Generated(value={"gap.service.OD","BeanData.java"},date="2012-02-28T15:49:23.578Z")
+@Generated(value={"gap.service.OD","BeanData.java"},date="2014-01-06T22:28:43.744Z")
 public abstract class AccountData
     extends gap.data.BigTable
     implements DataInheritance<Account>
@@ -71,6 +71,14 @@ public abstract class AccountData
         return KIND.pathto(subpath);
     }
 
+    /**
+     * Long instance key from parent key
+     */
+    public static Key KeyLong(Json json){
+        final String identifier = json.getValue("identifier",String.class);
+
+        return KeyLongIdFor( identifier);
+    }
     /**
      * Long instance key without parent key
      */
@@ -107,6 +115,14 @@ public abstract class AccountData
     }
 
     /**
+     * Instance lookup or create
+     */
+    public static Account ForLong(Json json){
+        final String identifier = json.getValue("identifier",String.class);
+
+        return ForLongIdentifier( identifier);
+    }
+    /**
      * Instance lookup
      */
     public final static Account ForLongIdentifier(String identifier){
@@ -133,6 +149,14 @@ public abstract class AccountData
     /**
      * Instance lookup or create
      */
+    public static Account GetCreateLong(Json json){
+        final String identifier = json.getValue("identifier",String.class);
+
+        return GetCreateLong( identifier);
+    }
+    /**
+     * Instance lookup or create
+     */
     public final static Account GetCreateLongIdentifier(String identifier){
         Account account = Account.ForLongIdentifier( identifier);
         if (null == account){
@@ -141,7 +165,25 @@ public abstract class AccountData
         }
         return account;
     }
-
+    /**
+     * Instance lookup or create from (presumed correct and coherent) instance key and data
+     *
+     * Used by long and short lists
+     *
+     * @param key Key derived from data
+     *
+     * @param data Data instance of this class
+     *
+     * @return Possibly dirty (in need of save)
+     */
+    public final static Account GetCreate(Key key, Json json){
+        Account instance = gap.data.Store.GetClass(key);
+        if (null == instance){
+            final String identifier = json.getValue("identifier",String.class);
+            instance = new Account( identifier);
+        }
+        return instance;
+    }
 
     public final static Key KeyLongFor(String id){
         return KeyFactory.createKey(KIND.getName(),id);
@@ -176,6 +218,15 @@ public abstract class AccountData
                 return (Account)gap.data.Store.Query1Class(q);
             }
         }
+        else
+            throw new IllegalArgumentException();
+    }
+    /**
+     * @param entity Use entity for its key (only)
+     */
+    public final static Account Get(Entity entity){
+        if (null != entity)
+            return Get(entity.getKey());
         else
             throw new IllegalArgumentException();
     }
@@ -247,6 +298,13 @@ public abstract class AccountData
 
             gap.data.Store.Delete(instanceKey);
         }
+    }
+    /**
+     * @param entity Use entity for its key (only)
+     */
+    public final static void Delete(Entity entity){
+        if (null != entity)
+            Delete(entity.getKey());
     }
     /**
      * Drop the instance from memcache, exclusively.
@@ -326,6 +384,15 @@ public abstract class AccountData
     public final static List.Primitive<Key> QueryNKey(Query query){
         if (null != query)
             return gap.data.Store.QueryNKey(query);
+        else
+            throw new IllegalArgumentException();
+    }
+    /**
+     * @return Entities having only keys, unbuffered
+     */
+    public final static Iterable<Entity> QueryNKeyUnbuffered(Query query){
+        if (null != query)
+            return gap.data.Store.QueryNKeyUnbuffered(query);
         else
             throw new IllegalArgumentException();
     }
@@ -479,14 +546,14 @@ public abstract class AccountData
                 return instance.getProjectId();
             case Closed:
                 return instance.getClosed(MayNotInherit);
-            case Amount:{
+            case Amount:
                 return instance.getAmount(MayNotInherit);
-            }
+            
             case Currency:
                 return instance.getCurrency(MayNotInherit);
-            case Notes:{
+            case Notes:
                 return null;
-            }
+            
             case CheckoutSerialNumber:
                 return instance.getCheckoutSerialNumber(MayNotInherit);
             case CheckoutUrl:
@@ -1372,7 +1439,7 @@ public abstract class AccountData
     public boolean fromJsonIdentifier(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setIdentifier((String)json.getValue(String.class));
     }
     public Json toJsonGroup(){
@@ -1382,7 +1449,7 @@ public abstract class AccountData
     public boolean fromJsonGroup(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setGroup((Group)json.getValue(Group.class));
     }
     public Json toJsonProject(){
@@ -1392,7 +1459,7 @@ public abstract class AccountData
     public boolean fromJsonProject(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setProject((Project)json.getValue(Project.class));
     }
     public Json toJsonClosed(){
@@ -1402,7 +1469,7 @@ public abstract class AccountData
     public boolean fromJsonClosed(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setClosed((Boolean)json.getValue(Boolean.class));
     }
     public Json toJsonAmount(){
@@ -1412,7 +1479,7 @@ public abstract class AccountData
     public boolean fromJsonAmount(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setAmount((Float)json.getValue(Float.class));
     }
     public final boolean setAmount(Number amount){
@@ -1434,7 +1501,7 @@ public abstract class AccountData
     public boolean fromJsonCurrency(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setCurrency((String)json.getValue(String.class));
     }
     public Json toJsonNotes(){
@@ -1442,10 +1509,12 @@ public abstract class AccountData
         return Json.Wrap( notes);
     }
     public boolean fromJsonNotes(Json json){
-        /*
-         * [TODO] json.getValue(colClas,comClas) not expressed by (e.g.) "List.Short<Component>.class"
-         */
-        return false;
+        if (null == json)
+            return false;
+        else {
+            List.Short<Note> collection = this.getNotes(Notation.MayInherit);
+            return collection.fromJson(json);
+        }
     }
     public Json toJsonCheckoutSerialNumber(){
         String checkoutSerialNumber = this.getCheckoutSerialNumber();
@@ -1454,7 +1523,7 @@ public abstract class AccountData
     public boolean fromJsonCheckoutSerialNumber(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setCheckoutSerialNumber((String)json.getValue(String.class));
     }
     public Json toJsonCheckoutUrl(){
@@ -1464,7 +1533,7 @@ public abstract class AccountData
     public boolean fromJsonCheckoutUrl(Json json){
         if (null == json)
             return false;
-        else
+        else 
             return this.setCheckoutUrl((String)json.getValue(String.class));
     }
     /*
