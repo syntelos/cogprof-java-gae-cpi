@@ -142,7 +142,7 @@ public abstract class ListShortProjectMember
      * @see gap.data.List$Short#nhead(int)
      */
     public Iterable<Member> nhead(int count){
-        final BigTable[] buffer = this.buffer;
+        final TableClass[] buffer = this.buffer;
         if (null != buffer){
             final int size = this.gross;
             if (0 > count){
@@ -170,7 +170,7 @@ public abstract class ListShortProjectMember
      * @see gap.data.List$Short#ntail(int)
      */
     public Iterable<Member> ntail(int count){
-        final BigTable[] buffer = this.buffer;
+        final TableClass[] buffer = this.buffer;
         if (null != buffer){
             final int size = this.gross;
             if (0 > count){

@@ -142,7 +142,7 @@ public abstract class ListShortAccountNote
      * @see gap.data.List$Short#nhead(int)
      */
     public Iterable<Note> nhead(int count){
-        final BigTable[] buffer = this.buffer;
+        final TableClass[] buffer = this.buffer;
         if (null != buffer){
             final int size = this.gross;
             if (0 > count){
@@ -170,7 +170,7 @@ public abstract class ListShortAccountNote
      * @see gap.data.List$Short#ntail(int)
      */
     public Iterable<Note> ntail(int count){
-        final BigTable[] buffer = this.buffer;
+        final TableClass[] buffer = this.buffer;
         if (null != buffer){
             final int size = this.gross;
             if (0 > count){
