@@ -2,8 +2,7 @@
   <head>
     <title>Cognitive Profile Inventory</title>
     <link rel="stylesheet" type="text/css" href="{{=pageUrlRoot}}/top.css" />
-    <link rel="icon" href="{{=pageUrlRoot}}/favicon.ico" />
-    <link href="https://plus.google.com/102387010215882396411" rel="publisher" />{{#group}}
+    <link rel="icon" href="{{=pageUrlRoot}}/favicon.ico" />{{#group}}
     <style type="text/css">
      div#profile {
        margin: {{=margins_css}};
