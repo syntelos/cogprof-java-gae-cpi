@@ -1,50 +1,15 @@
-<?xml version="1.0"?>
+<!-- Indices written at Mon, 6 Jan 2014 17:37:58 EST -->
+
 <datastore-indexes>
-  <datastore-index ancestor="true" kind="Group" source="manual">
-    <property direction="asc" name="identifier"/>
-  </datastore-index>
-  <datastore-index ancestor="true" kind="Project" source="manual">
-    <property direction="asc" name="identifier"/>
-  </datastore-index>
 
-  <datastore-index kind="Project" ancestor="false" source="manual">
-    <property name="group" direction="asc"/>
-    <property name="identifier" direction="asc"/>
-  </datastore-index>
+    <!-- Used 69 times in query history -->
+    <datastore-index kind="Template" ancestor="true" source="auto">
+        <property name="name" direction="asc"/>
+    </datastore-index>
 
-  <datastore-index ancestor="true" kind="Note" source="manual">
-    <property direction="asc" name="identifier"/>
-  </datastore-index>
-
-  <datastore-index ancestor="false" kind="Account" source="manual">
-    <property direction="asc" name="group"/>
-    <property direction="asc" name="identifier"/>
-  </datastore-index>
-
-  <datastore-index ancestor="true" kind="Person" source="manual">
-    <property direction="asc" name="identifier"/>
-  </datastore-index>
-
-  <datastore-index ancestor="true" kind="Template" source="auto">
-    <property direction="asc" name="name"/>
-  </datastore-index>
-
-  <datastore-index ancestor="true" kind="TemplateNode" source="auto">
-    <property direction="asc" name="offset"/>
-  </datastore-index>
-
-  <datastore-index ancestor="false" kind="Group" source="auto">
-    <property direction="asc" name="admin"/>
-    <property direction="asc" name="identifier"/>
-  </datastore-index>
-
-  <datastore-index ancestor="false" kind="Group" source="auto">
-    <property direction="asc" name="owner"/>
-    <property direction="asc" name="identifier"/>
-  </datastore-index>
-
-  <datastore-index ancestor="true" kind="Member" source="auto">
-    <property direction="asc" name="person"/>
-  </datastore-index>
+    <!-- Used 498 times in query history -->
+    <datastore-index kind="TemplateNode" ancestor="true" source="auto">
+        <property name="offset" direction="asc"/>
+    </datastore-index>
 
 </datastore-indexes>
