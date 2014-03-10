@@ -221,6 +221,8 @@ public class ProfileServlet
                         TemplateDataDictionary with_redirect = req.addSection(ProfileServlet.WithRedirect);
                         try {
                             redirect.dictionaryInto(viewer,with_redirect);
+
+                            //this.info(req,redirect.toString());
                         }
                         catch (hapax.TemplateException exc){
 
