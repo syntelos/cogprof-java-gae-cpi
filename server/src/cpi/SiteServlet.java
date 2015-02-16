@@ -59,42 +59,77 @@ public class SiteServlet
     {
         String path = req.getPath(0);
 
-        if (req.isSourceTail() && Tail.ExampleHtml == Tail.For(req.getSource())){
+        switch(Tail.For(req.getSource())){
 
-            String target = req.getParameter("target");
-            if (null != target){
-                req.setVariable(InventoryServlet.ExampleTarget,target);
+        case Tail.LogonJson:
+            {
+                rep.setContentTypeJson();
+
+                final java.io.PrintWriter out = rep.getWriter();
+
+                out.println("{");
+                out.printf("  \"interface\": \"logon\",%n");
+                out.printf("  \"url\": \"%s\",%n",Replace(req.logonUrl,"%2Flogon.json","%2Finventory%2Findex.html"));
+                out.printf("  \"text\": \"%s\"%n",req.logonText);
+                out.println("}");
             }
-            else {
-                target = req.getParameter("ir");
-                if (null != target){
-                    req.setVariable(InventoryServlet.ExampleTarget,target);
+            break;
+
+        default:
+            {
+                if (req.isMember){
+                    /*
+                     * Page template "/index.html" logon redirect
+                     */
+                    Person viewer = req.getViewer();
+
+                    if (Inventory.IsComplete(viewer)){
+
+                        Inventory.Complete(viewer);
+
+                        Code.Encode enc = Inventory.Encode(viewer);
+
+                        rep.sendRedirect("/profile/"+enc.code+"/index.html");
+                    }
+                    else {
+
+                        rep.sendRedirect("/inventory/index.html");
+                    }
+                }
+                else {
+                    /*
+                     * Redirect "/" to "/index.html" and render
+                     */
+                    super.doGet(req,rep);
                 }
             }
+            break;
+        }
+    }
+
+    private final static String Replace(String string, String from, String to){
+
+        final int from_x = string.indexOf(from);
+
+        if (-1 < from_x){
+
+            StringBuilder re = new StringBuilder();
             {
-                InventoryServlet.Pair pair = InventoryServlet.Examples.get(0);
+                if (0 < from_x){
+                    re.append(string.substring(0,from_x));
+                }
+                re.append(to);
 
-                InventoryServlet.DefineInventory(req,0,pair,null);
+                final int to_x = (from_x + from.length());
+
+                if (to_x < string.length()){
+                    re.append(string.substring(to_x));
+                }
             }
-            this.render(req,rep,"example.html");
+            return re.toString();
         }
-        else if (req.isMember){
-
-            Person viewer = req.getViewer();
-
-            if (Inventory.IsComplete(viewer)){
-
-                Inventory.Complete(viewer);
-
-                Code.Encode enc = Inventory.Encode(viewer);
-
-                rep.sendRedirect("/profile/"+enc.code+"/index.html");
-            }
-            else {
-                rep.sendRedirect("/inventory/index.html");
-            }
+        else {
+            return string;
         }
-        else 
-            super.doGet(req,rep);
     }
 }

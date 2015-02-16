@@ -13,7 +13,7 @@ public abstract class Tail
     public final static int GroupsHtml = 4;
     public final static int ResultHtml = 5;
     public final static int GroupsPng = 6;
-    public final static int ExampleHtml = 7;
+    public final static int LogonJson = 7;
 
 
     public final static int For(String tail){
@@ -41,11 +41,6 @@ public abstract class Tail
                     return Tail.DataJson;
                 else
                     return Tail.None;
-            case 'e':
-                if (tail.equals("example.html"))
-                    return Tail.ExampleHtml;
-                else
-                    return Tail.None;
             case 'g':
                 if (7 < tail.length()){
                     switch(tail.charAt(7)){
@@ -63,6 +58,11 @@ public abstract class Tail
                         return Tail.None;
                     }
                 }
+                else
+                    return Tail.None;
+            case 'l':
+                if (tail.equals("logon.json"))
+                    return Tail.LogonJson;
                 else
                     return Tail.None;
             case 'r':

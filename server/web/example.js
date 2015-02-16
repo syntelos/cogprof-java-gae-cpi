@@ -28,16 +28,43 @@ function xxim(xim){
     else
         throw new Error("Example img bad ID");
 }
+function xtarget(){
+    var href = document.location.toString().split(/[\?]/);
+    if (href && href.length && 1 < href.length){
+        var qs = href[1].split(/[\&]/);
+        var qc = qs.length;
+        for (qx = 0; qx < qc; qx++){
+            var q = qs[qx];
+            var nv = q.split(/\=/);
+            if (nv && 2 == nv.length){
+                var n = nv[0];
+                var v = nv[1];
+                /*
+                 * target defined as the value of query parameter
+                 * named "target" or "ir"
+                 */
+                if ('target' == n || 'ir' == n){
 
+                    return v;
+                }
+            }
+        }
+    }
+    return null;
+}
 
-function xinit( xid){
+function xinit(){
 
     init(); // inventory.js::init()
 
+    var xid = xtarget();
     if (xid){
+
         var img = document.getElementById(xid);
-        if (img)
+        if (img){
+
             xxim(img);
+        }
         else
             throw new Error("Image '"+xid+"' not found.");
     }
