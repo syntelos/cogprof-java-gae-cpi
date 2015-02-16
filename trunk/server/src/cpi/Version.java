@@ -36,7 +36,7 @@ public final class Version
     /**
      * Minor version number.
      */
-    public final static int Minor = 1;
+    public final static int Minor = 2;
     /**
      * HTTP Product Token in <code>" Major '.' Minor "</code>.
      */
@@ -44,7 +44,7 @@ public final class Version
     /**
      * Build sequence number.
      */
-    public final static int Build = 3;
+    public final static int Build = 0;
 
     /**
      * HTTP Product Token plus comment build date and time.  

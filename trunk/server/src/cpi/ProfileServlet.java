@@ -109,13 +109,15 @@ public class ProfileServlet
                     if (null != req.getParameter("download"))
                         rep.setHeader("Content-Type","application/octet-stream");
                     else
-                        rep.setHeader("Content-Type","application/json");
+                        rep.setContentTypeJson();
 
                     out.println("{");
+                    out.printf("  \"interface\": \"profile\",%n");
                     out.printf("  \"nt\": %s,%n",dec.toStringNt());
                     out.printf("  \"nf\": %s,%n",dec.toStringNf());
                     out.printf("  \"st\": %s,%n",dec.toStringSt());
-                    out.printf("  \"sf\": %s%n",dec.toStringSf());
+                    out.printf("  \"sf\": %s,%n",dec.toStringSf());
+                    out.printf("  \"code\": \"%s\"%n",dec.code);
                     out.println("}");
                 }
                 else

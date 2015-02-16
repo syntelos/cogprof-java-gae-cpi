@@ -55,9 +55,6 @@ public class InventoryServlet
 
     private final static TemplateName WithoutRedirect = new TemplateName("without_redirect");
 
-
-    public final static TemplateName ExampleTarget = new TemplateName("example_target");
-
     final static class Pair {
 
         public final String lhs, rhs;
@@ -79,10 +76,10 @@ public class InventoryServlet
         extends java.util.ArrayList<Pair>
     {
 
-        Set(){
+        protected Set(){
             this("inventory.txt","US-ASCII");
         }
-        protected Set(String name, String charset){
+        private Set(String name, String charset){
             super(60);
             try {
                 java.io.InputStream in = this.getClass().getResourceAsStream(name);
@@ -118,8 +115,6 @@ public class InventoryServlet
             throw new Error("Inventory Incomplete");
     }
 
-    protected final static Set Examples = new Set("examples.txt","US-ASCII");
-
 
     public InventoryServlet(){
         super();
@@ -133,7 +128,8 @@ public class InventoryServlet
 
             final String source = req.getSource();
             switch (Tail.For(source)){
-            case Tail.IndexHtml:
+
+            case Tail.IndexHtml:{
                 if (req.isMember){
                     /*
                      * Request to /inventory/index.html with login
@@ -144,28 +140,8 @@ public class InventoryServlet
                     /*
                      * Request to /inventory/index.html without login
                      */
-                    rep.sendRedirect(req.getLogonUrl());
+                    rep.sendRedirect("/");
                 }
-                return;
-            case Tail.ExampleHtml:{
-
-                String target = req.getParameter("target");
-                if (null != target){
-                    req.setVariable(InventoryServlet.ExampleTarget,target);
-                }
-                else {
-                    target = req.getParameter("ir");
-                    if (null != target){
-                        req.setVariable(InventoryServlet.ExampleTarget,target);
-                    }
-                }
-                {
-                    InventoryServlet.Pair pair = InventoryServlet.Examples.get(0);
-
-                    InventoryServlet.DefineInventory(req,0,pair,null);
-                }
-                this.render(req,rep,"example.html");
-
                 return;
             }
             case Tail.None:{
@@ -208,7 +184,7 @@ public class InventoryServlet
 
                 return;
             }
-            case Tail.IndexHtml:
+            case Tail.IndexHtml:{
                 /*
                  * Login at /inventory/index.html
                  */
@@ -222,6 +198,7 @@ public class InventoryServlet
                     rep.sendRedirect(req.getLogonUrl());
                 }
                 return;
+            }
             default:{
                 Person person = Person.ForLongIdentifier(source);
                 if (null != person){
