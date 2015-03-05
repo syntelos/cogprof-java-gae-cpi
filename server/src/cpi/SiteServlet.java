@@ -69,7 +69,7 @@ public class SiteServlet
 
                 out.println("{");
                 out.printf("  \"interface\": \"logon\",%n");
-                out.printf("  \"url\": \"%s\",%n",Replace(req.logonUrl,"%2Flogon.json","%2Finventory%2Findex.html"));
+                out.printf("  \"url\": \"%s\",%n",Continue(req.logonUrl,"http%3A%2F%2Fcpi.cognitiveprofile.com%2Finventory%2Findex.html"));
                 out.printf("  \"text\": \"%s\"%n",req.logonText);
                 out.println("}");
             }
@@ -107,24 +107,26 @@ public class SiteServlet
         }
     }
 
-    private final static String Replace(String string, String from, String to){
+    /*
+     * The logon url has one parameter, "continue".  The value needs
+     * to be replaced from the JSON referrer to the UI.
+     */
+    private final static String cstring = "continue=";
+    private final static int cstring_len = cstring.length();
 
-        final int from_x = string.indexOf(from);
+    private final static String Continue(String string, String to){
+
+        final int from_x = string.indexOf(cstring);
 
         if (-1 < from_x){
 
+            final int from = (from_x + cstring_len);
+
             StringBuilder re = new StringBuilder();
             {
-                if (0 < from_x){
-                    re.append(string.substring(0,from_x));
-                }
+                re.append(string.substring(0,from));
+
                 re.append(to);
-
-                final int to_x = (from_x + from.length());
-
-                if (to_x < string.length()){
-                    re.append(string.substring(to_x));
-                }
             }
             return re.toString();
         }
