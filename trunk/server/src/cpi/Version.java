@@ -44,7 +44,7 @@ public final class Version
     /**
      * Build sequence number.
      */
-    public final static int Build = 0;
+    public final static int Build = 1;
 
     /**
      * HTTP Product Token plus comment build date and time.  
