@@ -46,7 +46,8 @@ import javax.servlet.ServletException;
 public class SiteServlet
     extends gap.service.Servlet
 {
-
+    private final static String LoginDst = "http://cpi.cognitiveprofile.com/inventory/index.html";
+    private final static String LogoutDst = "http://cpi.cognitiveprofile.com/";
 
 
     public SiteServlet(){
@@ -69,7 +70,13 @@ public class SiteServlet
 
                 out.println("{");
                 out.printf("  \"interface\": \"logon\",%n");
-                out.printf("  \"url\": \"%s\",%n",Continue(req.logonUrl,"http%3A%2F%2Fcpi.cognitiveprofile.com%2Finventory%2Findex.html"));
+
+                if (req.isMember){
+                    out.printf("  \"url\": \"%s\",%n",req.logon.service.createLoginURL(LogoutDst));
+                }
+                else {
+                    out.printf("  \"url\": \"%s\",%n",req.logon.service.createLoginURL(LoginDst));
+                }
                 out.printf("  \"text\": \"%s\"%n",req.logonText);
                 out.println("}");
             }
